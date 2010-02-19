@@ -25,6 +25,7 @@ namespace MbCache.Configuration
         public void UseCacheFor<T>(Expression<Func<T, object>> expression)
         {
             Type type = typeof (T);
+
             if (!_cachedMethods.ContainsKey(type))
                 _cachedMethods[type] = new List<string>();
             _cachedMethods[type].Add(memberName(expression.Body));                

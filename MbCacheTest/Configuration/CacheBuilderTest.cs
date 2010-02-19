@@ -1,3 +1,4 @@
+using System;
 using MbCache.Configuration;
 using MbCacheTest.TestObjects;
 using NUnit.Framework;
@@ -18,6 +19,16 @@ namespace MbCacheTest.Configuration
             Assert.IsInstanceOf<ObjectWithNonPublicCtor>(factory.Create<ObjectWithNonPublicCtor>());
         }
 
+        [Test]
+        public void MethodMustBeVirtual()
+        {
+            var builder = new CacheBuilder();
+            builder.UseCacheFor<ClassWithNonVirtualMethod>(c => c.Calculate());
+
+            var factory = builder.BuildFactory(new TestCacheFactory());
+            Assert.Throws<ArgumentException>(() => factory.Create<ClassWithNonVirtualMethod>());
+        }
+
     }
 
 
@@ -26,6 +37,14 @@ namespace MbCacheTest.Configuration
         protected ObjectWithNonPublicCtor()
         {
         }
+        public virtual object Calculate()
+        {
+            return null;
+        }
+    }
+
+    public class ClassWithNonVirtualMethod
+    {
         public object Calculate()
         {
             return null;

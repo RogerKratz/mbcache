@@ -37,5 +37,21 @@ namespace MbCacheTest.Logic
             Assert.AreNotEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.NonCachedMethod(), obj.NonCachedMethod());
         }
+
+
+        public class ObjectReturningRandomNumbers
+        {
+            private readonly Random r = new Random();
+
+            public virtual int CachedMethod()
+            {
+                return r.Next();
+            }
+
+            public virtual int NonCachedMethod()
+            {
+                return r.Next();
+            }
+        }
     }
 }

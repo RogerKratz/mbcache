@@ -1,28 +1,32 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using Castle.DynamicProxy;
 using MbCache.Core;
 
-namespace MbCache.CoreImpl
+namespace MbCache.Logic
 {
     public class MbCacheFactory : IMbCacheFactory
     {
-        private readonly IEnumerable<MethodInfo> _methods;
+        private static readonly ProxyGenerator _generator = new ProxyGenerator();
+        private readonly ICache _cache;
+        private readonly IDictionary<Type, ICollection<string>> _methods;
 
-        public MbCacheFactory(IEnumerable<MethodInfo> methods)
+        public MbCacheFactory(ICache cache, IDictionary<Type, ICollection<string>> methods)
         {
+            _cache = cache;
             _methods = methods;
         }
 
-        public T Get<T>()
+        public T Create<T>() where T : class
         {
-            T ret = createInstance<T>();
-            return ret;
+            return createInstance<T>();
         }
 
-        private static T createInstance<T>()
+        private T createInstance<T>() where T : class
         {
-            return (T)Activator.CreateInstance(typeof(T), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, null, null);
+            var cacheInterceptor = new CacheInterceptor(_cache, _methods[typeof(T)]);
+            var options = new ProxyGenerationOptions(new CacheProxyGenerationHook());
+            return (T)_generator.CreateClassProxy(typeof(T), options, cacheInterceptor);
         }
     }
 }

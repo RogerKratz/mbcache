@@ -2,6 +2,6 @@ namespace MbCache.Core
 {
     public interface IMbCacheFactory
     {
-        T Get<T>();
+        T Get<T>() where T : class;
     }
 }

@@ -15,6 +15,7 @@ namespace MbCacheTest.Logic
         {
             var builder = new CacheBuilder();
             builder.UseCacheFor<objectToCache>(c => c.CachedMethod());
+
             factory = builder.BuildFactory();
         }
 

@@ -7,14 +7,14 @@ namespace MbCacheTest.Configuration
     public class CacheBuilderTest
     {
         [Test]
-        public void CanUseNonPublicCtorOnCachedObject()
+        public void CanUseNonpublicCtorOnCachedObject()
         {
             var builder = new CacheBuilder();
             builder.UseCacheFor<ObjectWithNonPublicCtor>(c => c.Calculate());
 
             var factory = builder.BuildFactory();
 
-            Assert.IsAssignableFrom<ObjectWithNonPublicCtor>(factory.Get<ObjectWithNonPublicCtor>());
+            Assert.IsInstanceOf<ObjectWithNonPublicCtor>(factory.Get<ObjectWithNonPublicCtor>());
         }
 
     }
@@ -22,7 +22,7 @@ namespace MbCacheTest.Configuration
 
     public class ObjectWithNonPublicCtor 
     {
-        private ObjectWithNonPublicCtor()
+        protected ObjectWithNonPublicCtor()
         {
         }
         public object Calculate()

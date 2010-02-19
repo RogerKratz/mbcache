@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />
+    <Compile Include="Logic\CacheProxyGenerationHook.cs" />
     <Compile Include="Logic\ICache.cs" />
     <Compile Include="Logic\ICacheableSignatures.cs" />
     <Compile Include="Logic\ICacheFactory.cs" />

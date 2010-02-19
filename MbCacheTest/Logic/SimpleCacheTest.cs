@@ -1,7 +1,7 @@
 using System;
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCacheTest.TestCache;
+using MbCacheTest.CacheForTest;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic

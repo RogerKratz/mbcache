@@ -44,6 +44,8 @@
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestObjects\TestCache.cs" />
+    <Compile Include="TestObjects\TestCacheFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MbCache\MbCache.csproj">

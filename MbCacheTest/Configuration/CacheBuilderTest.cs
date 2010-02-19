@@ -1,4 +1,5 @@
 using MbCache.Configuration;
+using MbCacheTest.TestObjects;
 using NUnit.Framework;
 
 namespace MbCacheTest.Configuration
@@ -12,9 +13,9 @@ namespace MbCacheTest.Configuration
             var builder = new CacheBuilder();
             builder.UseCacheFor<ObjectWithNonPublicCtor>(c => c.Calculate());
 
-            var factory = builder.BuildFactory();
+            var factory = builder.BuildFactory(new TestCacheFactory());
 
-            Assert.IsInstanceOf<ObjectWithNonPublicCtor>(factory.Get<ObjectWithNonPublicCtor>());
+            Assert.IsInstanceOf<ObjectWithNonPublicCtor>(factory.Create<ObjectWithNonPublicCtor>());
         }
 
     }

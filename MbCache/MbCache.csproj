@@ -49,7 +49,9 @@
   <ItemGroup>
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />
+    <Compile Include="Logic\ICache.cs" />
     <Compile Include="Logic\ICacheableSignatures.cs" />
+    <Compile Include="Logic\ICacheFactory.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

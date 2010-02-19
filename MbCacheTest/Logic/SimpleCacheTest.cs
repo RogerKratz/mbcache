@@ -1,6 +1,7 @@
 using System;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCacheTest.TestObjects;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic
@@ -16,13 +17,13 @@ namespace MbCacheTest.Logic
             var builder = new CacheBuilder();
             builder.UseCacheFor<objectToCache>(c => c.CachedMethod());
 
-            factory = builder.BuildFactory();
+            factory = builder.BuildFactory(new TestCacheFactory());
         }
 
         [Test]
         public void CacheWorks()
         {
-            var obj = factory.Get<objectToCache>();
+            var obj = factory.Create<objectToCache>();
 
             Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.NonCachedMethod(), obj.NonCachedMethod());

@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using MbCache.Core;
+using MbCache.CoreImpl;
 using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
     public class CacheBuilder
     {
-        private readonly IDictionary<Type, ICollection<string>> _cachedMethods;
+        private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
 
         public CacheBuilder()
         {
-            _cachedMethods = new Dictionary<Type, ICollection<string>>();
+            _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
         }
 
 
@@ -22,13 +23,23 @@ namespace MbCache.Configuration
         }
 
 
-        public void UseCacheFor<T>(Expression<Func<T, object>> expression)
+        public void UseCacheForClass<T>(Expression<Func<T, object>> expression)
         {
             Type type = typeof (T);
+            addMethodToList(type, type, expression);              
+        }
 
+        public void UseCacheForInterface<TInterface, TImplementation>(Expression<Func<TInterface, object>> expression)
+        {
+            Type type = typeof (TInterface);
+            addMethodToList(type, typeof(TImplementation), expression);
+        }
+
+        private void addMethodToList<TInterface>(Type type, Type implType, Expression<Func<TInterface, object>> expression)
+        {
             if (!_cachedMethods.ContainsKey(type))
-                _cachedMethods[type] = new List<string>();
-            _cachedMethods[type].Add(memberName(expression.Body));                
+                _cachedMethods[type] = new ImplementationAndMethods(implType);
+            _cachedMethods[type].Methods.Add(memberName(expression.Body));
         }
 
         private static string memberName(Expression expression)
@@ -36,7 +47,7 @@ namespace MbCache.Configuration
             switch (expression.NodeType)
             {
                 case ExpressionType.MemberAccess:
-                    var memberExpression = (MemberExpression)expression;
+                    var memberExpression = (MemberExpression) expression;
                     var supername = memberName(memberExpression.Expression);
 
                     if (String.IsNullOrEmpty(supername))
@@ -45,11 +56,11 @@ namespace MbCache.Configuration
                     return String.Concat(supername, '.', memberExpression.Member.Name);
 
                 case ExpressionType.Call:
-                    var callExpression = (MethodCallExpression)expression;
+                    var callExpression = (MethodCallExpression) expression;
                     return callExpression.Method.Name;
 
                 case ExpressionType.Convert:
-                    var unaryExpression = (UnaryExpression)expression;
+                    var unaryExpression = (UnaryExpression) expression;
                     return memberName(unaryExpression.Operand);
 
                 case ExpressionType.Parameter:

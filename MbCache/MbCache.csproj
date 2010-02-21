@@ -53,6 +53,7 @@
     <Compile Include="CoreImpl\ICache.cs" />
     <Compile Include="CoreImpl\ICacheableSignatures.cs" />
     <Compile Include="CoreImpl\ICacheFactory.cs" />
+    <Compile Include="CoreImpl\ImplementationAndMethods.cs" />
     <Compile Include="CoreImpl\MbCacheFactory.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

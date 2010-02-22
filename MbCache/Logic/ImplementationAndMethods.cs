@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MbCache.CoreImpl
+namespace MbCache.Logic
 {
     public class ImplementationAndMethods
     {

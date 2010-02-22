@@ -44,9 +44,12 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caches\AspNetCache.cs" />
+    <Compile Include="Caches\AspNetCacheFactory.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />

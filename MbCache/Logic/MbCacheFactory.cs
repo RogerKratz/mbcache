@@ -49,7 +49,7 @@ namespace MbCache.Logic
             var type = typeof (T);
             if(type.IsInterface)
             {
-                object impl = Activator.CreateInstance(_methods[type].ImplementationType);
+                var impl = Activator.CreateInstance(_methods[type].ImplementationType);
                 return (T)_generator.CreateInterfaceProxyWithTarget(type, impl, options, cacheInterceptor);
             }
             return (T)_generator.CreateClassProxy(type, options, cacheInterceptor);

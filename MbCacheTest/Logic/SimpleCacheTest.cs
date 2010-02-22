@@ -2,6 +2,7 @@ using System;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.CacheForTest;
+using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic
@@ -44,27 +45,6 @@ namespace MbCacheTest.Logic
 
             Assert.AreNotEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.NonCachedMethod(), obj.NonCachedMethod());
-        }
-
-
-        public class ObjectReturningRandomNumbers
-        {
-            private readonly Random r = new Random();
-
-            public virtual int CachedMethod()
-            {
-                return r.Next();
-            }
-
-            public virtual int CachedMethod2()
-            {
-                return r.Next();
-            }
-
-            public virtual int NonCachedMethod()
-            {
-                return r.Next();
-            }
         }
     }
 }

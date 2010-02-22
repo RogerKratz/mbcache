@@ -48,14 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CacheBuilder.cs" />
-    <Compile Include="CoreImpl\CacheInterceptor.cs" />
-    <Compile Include="CoreImpl\CacheProxyGenerationHook.cs" />
-    <Compile Include="CoreImpl\ICache.cs" />
-    <Compile Include="CoreImpl\ICacheableSignatures.cs" />
-    <Compile Include="CoreImpl\ICacheFactory.cs" />
-    <Compile Include="CoreImpl\ImplementationAndMethods.cs" />
-    <Compile Include="CoreImpl\MbCacheFactory.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
+    <Compile Include="Logic\CacheInterceptor.cs" />
+    <Compile Include="Logic\CacheProxyGenerationHook.cs" />
+    <Compile Include="Logic\ICache.cs" />
+    <Compile Include="Logic\ICacheableSignatures.cs" />
+    <Compile Include="Logic\ICacheFactory.cs" />
+    <Compile Include="Logic\ImplementationAndMethods.cs" />
+    <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

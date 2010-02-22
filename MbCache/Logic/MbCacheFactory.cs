@@ -24,7 +24,7 @@ namespace MbCache.Logic
             _methods = methods;
         }
 
-        public T Create<T>() where T : class
+        public T Create<T>()
         {
             return createInstance<T>();
         }
@@ -42,7 +42,7 @@ namespace MbCache.Logic
             _cache.Delete(_cacheRegion.Region(ExpressionHelper.MemberName(method.Body)));
         }
 
-        private T createInstance<T>() where T : class
+        private T createInstance<T>()
         {
             var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, _methods[typeof(T)].Methods);
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook());

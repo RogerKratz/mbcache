@@ -29,28 +29,39 @@ namespace MbCache.Logic
 
         public void Invalidate<T>()
         {
-            foreach (var method in _methods[typeof(T)].Methods)
+            Type type = typeof (T);
+            foreach (var method in _methods[type].Methods)
             {
-                _cache.Delete(_cacheRegion.Region(method));
+                _cache.Delete(_cacheRegion.Region(type, method));
             }
         }
 
         public void Invalidate<T>(Expression<Func<T, object>> method)
         {
-            _cache.Delete(_cacheRegion.Region(ExpressionHelper.MemberName(method.Body)));
+            _cache.Delete(_cacheRegion.Region(typeof(T), ExpressionHelper.MemberName(method.Body)));
         }
 
         private T createInstance<T>()
         {
-            var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, _methods[typeof(T)].Methods);
+            var type = typeof(T);
+            var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, createKeys(type));
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook());
-            var type = typeof (T);
             if(type.IsInterface)
             {
                 var impl = Activator.CreateInstance(_methods[type].ImplementationType);
                 return (T)_generator.CreateInterfaceProxyWithTarget(type, impl, options, cacheInterceptor);
             }
             return (T)_generator.CreateClassProxy(type, options, cacheInterceptor);
+        }
+
+        private IEnumerable<string> createKeys(Type type)
+        {
+            var ret = new List<string>();
+            foreach (var method in _methods[type].Methods)
+            {
+                ret.Add(_cacheRegion.Region(type, method));
+            }
+            return ret;
         }
     }
 }

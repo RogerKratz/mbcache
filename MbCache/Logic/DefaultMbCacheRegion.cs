@@ -1,10 +1,11 @@
-﻿namespace MbCache.Logic
+﻿using System;
+namespace MbCache.Logic
 {
     public class DefaultMbCacheRegion : IMbCacheRegion
     {
-        public string Region(string methodName)
+        public string Region(Type type, string methodName)
         {
-            return methodName;
+            return type.ToString() + "|" + methodName;
         }
     }
 }

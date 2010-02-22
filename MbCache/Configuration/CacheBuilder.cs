@@ -28,11 +28,6 @@ namespace MbCache.Configuration
             addMethodToList(type, type, expression);              
         }
 
-        public void UseCacheForInterface<TInterface, TImplementation>(Expression<Func<TInterface, object>> expression)
-        {
-            Type type = typeof (TInterface);
-            addMethodToList(type, typeof(TImplementation), expression);
-        }
 
         private void addMethodToList<TInterface>(Type type, Type implType, Expression<Func<TInterface, object>> expression)
         {

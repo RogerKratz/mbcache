@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Castle.Core.Interceptor;
-using MbCache.Configuration;
 
 namespace MbCache.Logic
 {
@@ -9,18 +9,19 @@ namespace MbCache.Logic
         private readonly ICache _cache;
         private readonly IMbCacheRegion _cacheRegion;
 
-        public CacheInterceptor(ICache cache, IMbCacheRegion _cacheRegion, IEnumerable<string> methodNames)
+        public CacheInterceptor(ICache cache, IMbCacheRegion cacheRegion, IEnumerable<string> keys)
         {
             _cache = cache;
-            this._cacheRegion = _cacheRegion;
-            MethodNames = methodNames;
+            _cacheRegion = cacheRegion;
+            Keys = keys;
         }
 
-        public IEnumerable<string> MethodNames { get; private set; }
+        public IEnumerable<string> Keys { get; private set; }
 
         public void Intercept(IInvocation invocation)
         {
-            var key = _cacheRegion.Region(invocation.Method.Name);
+            Type targetType = invocation.TargetType;
+            var key = _cacheRegion.Region(targetType, invocation.Method.Name);
             if(matchName(key))
             {
                 object cachedValue = _cache.Get(key);
@@ -40,11 +41,11 @@ namespace MbCache.Logic
             }
         }
 
-        private bool matchName(string method)
+        private bool matchName(string key)
         {
-            foreach (var name in MethodNames)
+            foreach (var name in Keys)
             {
-                if(name.Equals(method))
+                if(name.Equals(key))
                     return true;
             }
             return false;

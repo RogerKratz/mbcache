@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MbCache.Logic;
 
@@ -23,6 +24,11 @@ namespace MbCacheTest.CacheForTest
         public void Put(string key, object value)
         {
             values[key] = value;
+        }
+
+        public void Delete(string key)
+        {
+            values.Remove(key);
         }
     }
 }

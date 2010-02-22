@@ -56,6 +56,11 @@ namespace MbCacheTest.Logic
                 return r.Next();
             }
 
+            public virtual int CachedMethod2()
+            {
+                return r.Next();
+            }
+
             public virtual int NonCachedMethod()
             {
                 return r.Next();

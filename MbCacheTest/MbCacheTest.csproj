@@ -47,8 +47,8 @@
     <Compile Include="CacheForTest\TestCacheFactory.cs" />
     <Compile Include="Caches\AspNetCacheTest.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
-    <Compile Include="Logic\InterfaceCacheTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
+    <Compile Include="Logic\MethodNameTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\ObjectReturningRandomNumbers.cs" />

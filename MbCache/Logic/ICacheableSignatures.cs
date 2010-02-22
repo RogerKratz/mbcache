@@ -4,6 +4,6 @@ namespace MbCache.Logic
 {
     public interface ICacheableSignatures
     {
-        IEnumerable<string> MethodNames { get;}
+        IEnumerable<string> Keys { get;}
     }
 }

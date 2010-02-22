@@ -39,36 +39,7 @@ namespace MbCache.Configuration
         {
             if (!_cachedMethods.ContainsKey(type))
                 _cachedMethods[type] = new ImplementationAndMethods(implType);
-            _cachedMethods[type].Methods.Add(memberName(expression.Body));
-        }
-
-        private static string memberName(Expression expression)
-        {
-            switch (expression.NodeType)
-            {
-                case ExpressionType.MemberAccess:
-                    var memberExpression = (MemberExpression) expression;
-                    var supername = memberName(memberExpression.Expression);
-
-                    if (String.IsNullOrEmpty(supername))
-                        return memberExpression.Member.Name;
-
-                    return String.Concat(supername, '.', memberExpression.Member.Name);
-
-                case ExpressionType.Call:
-                    var callExpression = (MethodCallExpression) expression;
-                    return callExpression.Method.Name;
-
-                case ExpressionType.Convert:
-                    var unaryExpression = (UnaryExpression) expression;
-                    return memberName(unaryExpression.Operand);
-
-                case ExpressionType.Parameter:
-                    return String.Empty;
-
-                default:
-                    throw new ArgumentException("The expression is not a member access or method call expression");
-            }
+            _cachedMethods[type].Methods.Add(ExpressionHelper.MemberName(expression.Body));
         }
     }
 }

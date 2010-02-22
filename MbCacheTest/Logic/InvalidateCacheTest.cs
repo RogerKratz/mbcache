@@ -33,5 +33,16 @@ namespace MbCacheTest.Logic
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreNotEqual(value2, obj.CachedMethod2());
         }
+
+        [Test]
+        public void VerifyInvalidateSpecificMethod()
+        {
+            var obj = factory.Create<SimpleCacheTest.ObjectReturningRandomNumbers>();
+            var value1 = obj.CachedMethod();
+            var value2 = obj.CachedMethod2();
+            factory.Invalidate<SimpleCacheTest.ObjectReturningRandomNumbers>(c=>c.CachedMethod());
+            Assert.AreNotEqual(value1, obj.CachedMethod());
+            Assert.AreEqual(value2, obj.CachedMethod2());
+        }
     }
 }

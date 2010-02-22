@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Castle.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Core;
@@ -34,6 +35,11 @@ namespace MbCache.Logic
             {
                 _cache.Delete(_cacheRegion.Region(method));
             }
+        }
+
+        public void Invalidate<T>(Expression<Func<T, object>> method)
+        {
+            _cache.Delete(_cacheRegion.Region(ExpressionHelper.MemberName(method.Body)));
         }
 
         private T createInstance<T>() where T : class

@@ -1,4 +1,4 @@
-﻿namespace MbCache.Configuration
+﻿namespace MbCache.Logic
 {
     public class DefaultMbCacheRegion : IMbCacheRegion
     {

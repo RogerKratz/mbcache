@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Castle.DynamicProxy;
-using MbCache.Configuration;
 using MbCache.Core;
-using MbCache.CoreImpl;
 
 namespace MbCache.Logic
 {

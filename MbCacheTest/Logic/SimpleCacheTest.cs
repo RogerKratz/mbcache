@@ -30,6 +30,14 @@ namespace MbCacheTest.Logic
         }
 
         [Test]
+        public void CacheWorksWithDifferentObjects()
+        {
+            var obj = factory.Create<ObjectReturningRandomNumbers>();
+            var obj2 = factory.Create<ObjectReturningRandomNumbers>();
+            Assert.AreEqual(obj.CachedMethod(), obj2.CachedMethod());
+        }
+
+        [Test]
         public void OriginalTypeIsNotModified()
         {
             var obj = new ObjectReturningRandomNumbers();

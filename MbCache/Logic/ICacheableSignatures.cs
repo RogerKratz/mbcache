@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace MbCache.Logic
 {
     public interface ICacheableSignatures
     {
-        IEnumerable<string> Keys { get;}
+        IEnumerable<MethodInfo> Keys { get;}
     }
 }

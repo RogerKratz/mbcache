@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace MbCache.Logic
 {
     public class ImplementationAndMethods
     {
-        public ImplementationAndMethods(Type implementationType, object[] ctorParams)
+        public ImplementationAndMethods(object[] ctorParams)
         {
-            ImplementationType = implementationType;
-            Methods = new HashSet<string>();
+            Methods = new HashSet<MethodInfo>();
             CtorParameters = ctorParams;
         }
 
-        public Type ImplementationType { get; private set; }
-        public ICollection<string> Methods { get; private set; }
+        public ICollection<MethodInfo> Methods { get; private set; }
         public object[] CtorParameters { get; private set; }
-
     }
 }

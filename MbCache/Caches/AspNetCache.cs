@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
 using MbCache.Logic;
@@ -32,9 +34,20 @@ namespace MbCache.Caches
                     null);
         }
 
-        public void Delete(string key)
+        public void Delete(string keyStartingWith)
         {
-            cache.Remove(key);
+            var keyList = new List<string>();
+            var cacheEnum = cache.GetEnumerator();
+            while (cacheEnum.MoveNext())
+            {
+                var keyString = cacheEnum.Key.ToString();
+                if(keyString.StartsWith(keyStartingWith))
+                    keyList.Add(keyString);
+            }
+            foreach (var key in keyList)
+            {
+                cache.Remove(key);
+            }
         }
     }
 }

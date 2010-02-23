@@ -25,17 +25,16 @@ namespace MbCache.Configuration
         public void UseCacheForClass<T>(Expression<Func<T, object>> expression, params object[] ctorParameters)
         {
             Type type = typeof (T);
-            addMethodToList(type, type, expression, ctorParameters);              
+            addMethodToList(type, expression, ctorParameters);              
         }
 
 
         private void addMethodToList<TInterface>(Type type, 
-                                                Type implType, 
                                                 Expression<Func<TInterface, object>> expression,
                                                 object[] ctorParameters)
         {
             if (!_cachedMethods.ContainsKey(type))
-                _cachedMethods[type] = new ImplementationAndMethods(implType, ctorParameters);
+                _cachedMethods[type] = new ImplementationAndMethods(ctorParameters);
             _cachedMethods[type].Methods.Add(ExpressionHelper.MemberName(expression.Body));
         }
     }

@@ -1,11 +1,28 @@
 ﻿using System;
+using System.Reflection;
+
 namespace MbCache.Logic
 {
     public class DefaultMbCacheRegion : IMbCacheRegion
     {
-        public string Region(Type type, string methodName)
+        public string Region(Type type, MethodInfo methodInfo)
         {
-            return type.ToString() + "|" + methodName;
+            var ret = type + "|" + methodInfo.Name + "|";
+            foreach (var parameter in methodInfo.GetParameters())
+            {
+                ret += parameter.Name + "|";
+            }
+            return ret;
+        }
+
+        public string AdditionalRegionsForParameterValues(object[] parameters)
+        {
+            string ret = string.Empty;
+            foreach (var parameter in parameters)
+            {
+                ret += parameter + "|";
+            }
+            return ret;
         }
     }
 }

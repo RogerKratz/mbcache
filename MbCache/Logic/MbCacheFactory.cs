@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using Castle.DynamicProxy;
 using MbCache.Core;
+using System.Linq;
 
 namespace MbCache.Logic
 {
@@ -37,26 +39,16 @@ namespace MbCache.Logic
         }
 
         public void Invalidate<T>(Expression<Func<T, object>> method)
-        {
+        {  
             _cache.Delete(_cacheRegion.Region(typeof(T), ExpressionHelper.MemberName(method.Body)));
         }
 
         private T createInstance<T>()
         {
             var type = typeof(T);
-            var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, createKeys(type));
+            var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, _methods[type].Methods);
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook());
             return (T)_generator.CreateClassProxy(type, new Type[0], options, _methods[type].CtorParameters, cacheInterceptor);
-        }
-
-        private IEnumerable<string> createKeys(Type type)
-        {
-            var ret = new List<string>();
-            foreach (var method in _methods[type].Methods)
-            {
-                ret.Add(_cacheRegion.Region(type, method));
-            }
-            return ret;
         }
     }
 }

@@ -25,9 +25,18 @@ namespace MbCacheTest.CacheForTest
             values[key] = value;
         }
 
-        public void Delete(string key)
+        public void Delete(string keyStartingWith)
         {
-            values.Remove(key);
+            var keysToRemove = new List<string>();
+            foreach (var key in values.Keys)
+            {
+                if (key.StartsWith(keyStartingWith))
+                    keysToRemove.Add(key);
+            }
+            foreach (var key in keysToRemove)
+            {
+                values.Remove(key);
+            }
         }
     }
 }

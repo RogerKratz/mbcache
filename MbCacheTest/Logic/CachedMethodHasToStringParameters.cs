@@ -1,4 +1,3 @@
-using MbCache.Caches;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.CacheForTest;
@@ -17,7 +16,7 @@ namespace MbCacheTest.Logic
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ObjectWithParametersOnCachedMethod>(c => c.CachedMethod(null));
 
-            factory = builder.BuildFactory(new AspNetCacheFactory(1));
+            factory = builder.BuildFactory(new TestCacheFactory());
         }
 
         [Test]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using MbCache.Core;
 
 namespace MbCache.Logic
 {
@@ -22,7 +23,7 @@ namespace MbCache.Logic
             {
                 ret += parameter + "|";
             }
-            return ret;
+            return ret;  
         }
     }
 }

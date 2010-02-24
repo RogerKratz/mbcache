@@ -54,6 +54,7 @@
     <Compile Include="Caches\AspNetCacheFactory.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
+    <Compile Include="Core\IMbCacheRegion.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />
     <Compile Include="Logic\CacheProxyGenerationHook.cs" />
     <Compile Include="Logic\DefaultMbCacheRegion.cs" />
@@ -61,7 +62,6 @@
     <Compile Include="Logic\ICache.cs" />
     <Compile Include="Logic\ICacheableSignatures.cs" />
     <Compile Include="Logic\ICacheFactory.cs" />
-    <Compile Include="Logic\IMbCacheRegion.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

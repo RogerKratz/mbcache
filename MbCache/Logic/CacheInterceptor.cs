@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Interceptor;
+using MbCache.Core;
 
 namespace MbCache.Logic
 {

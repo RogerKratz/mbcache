@@ -2,7 +2,12 @@
 
 namespace MbCacheTest.TestData
 {
-    public class ObjectWithParametersOnCachedMethod
+    public interface IObjectWithParametersOnCachedMethod
+    {
+        int CachedMethod(object parameter);
+    }
+
+    public class ObjectWithParametersOnCachedMethod : IObjectWithParametersOnCachedMethod
     {
         private static readonly Random r = new Random();
 

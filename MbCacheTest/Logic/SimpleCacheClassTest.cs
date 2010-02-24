@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace MbCacheTest.Logic
 {
     [TestFixture]
-    public class SimpleCacheTest
+    public class SimpleCacheClassTest
     {
         private IMbCacheFactory factory;
 

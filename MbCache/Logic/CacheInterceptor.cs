@@ -10,12 +10,14 @@ namespace MbCache.Logic
     {
         private readonly ICache _cache;
         private readonly IMbCacheRegion _cacheRegion;
+        private readonly Type _orgType;
 
-        public CacheInterceptor(ICache cache, IMbCacheRegion cacheRegion, IEnumerable<MethodInfo> keys)
+        public CacheInterceptor(ICache cache, IMbCacheRegion cacheRegion, Type orgType, IEnumerable<MethodInfo> keys)
         {
             _cache = cache;
             _cacheRegion = cacheRegion;
             Keys = keys;
+            _orgType = orgType;
         }
 
         public IEnumerable<MethodInfo> Keys { get; private set; }
@@ -24,7 +26,7 @@ namespace MbCache.Logic
         {
             if(methodIsCached(invocation.Method))
             {
-                var typeAndMethodKey = _cacheRegion.Region(invocation.TargetType, invocation.Method);
+                var typeAndMethodKey = _cacheRegion.Region(_orgType, invocation.Method);
                 var key = typeAndMethodKey + _cacheRegion.AdditionalRegionsForParameterValues(invocation.Arguments);
                 object cachedValue = _cache.Get(key);
                 if(cachedValue!=null)

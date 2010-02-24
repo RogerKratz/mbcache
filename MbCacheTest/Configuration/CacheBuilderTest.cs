@@ -1,5 +1,6 @@
 using System;
 using MbCache.Configuration;
+using MbCache.Logic;
 using MbCacheTest.CacheForTest;
 using NUnit.Framework;
 
@@ -14,7 +15,7 @@ namespace MbCacheTest.Configuration
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ObjectWithNonPublicCtor>(c => c.Calculate());
 
-            var factory = builder.BuildFactory(new TestCacheFactory());
+            var factory = builder.BuildFactory(new TestCacheFactory(), new DefaultMbCacheRegion());
 
             Assert.IsInstanceOf<ObjectWithNonPublicCtor>(factory.Create<ObjectWithNonPublicCtor>());
         }
@@ -25,7 +26,7 @@ namespace MbCacheTest.Configuration
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ClassWithNonVirtualMethod>(c => c.Calculate());
 
-            var factory = builder.BuildFactory(new TestCacheFactory());
+            var factory = builder.BuildFactory(new TestCacheFactory(), new DefaultMbCacheRegion());
             Assert.Throws<ArgumentException>(() => factory.Create<ClassWithNonVirtualMethod>());
         }
 

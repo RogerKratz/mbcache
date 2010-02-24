@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Interceptor;
-using MbCache.Core;
 
 namespace MbCache.Logic
 {
@@ -26,8 +25,9 @@ namespace MbCache.Logic
         {
             if(methodIsCached(invocation.Method))
             {
-                var typeAndMethodKey = _cacheRegion.Region(_orgType, invocation.Method);
-                var key = typeAndMethodKey + _cacheRegion.AdditionalRegionsForParameterValues(invocation.Arguments);
+                var method = invocation.Method;
+                var typeAndMethodKey = _cacheRegion.Region(_orgType, method);
+                var key = typeAndMethodKey + _cacheRegion.AdditionalRegionsForParameterValues(_orgType, method, invocation.Arguments);
                 object cachedValue = _cache.Get(key);
                 if(cachedValue!=null)
                 {

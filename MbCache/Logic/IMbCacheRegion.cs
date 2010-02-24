@@ -1,11 +1,11 @@
 using System;
 using System.Reflection;
 
-namespace MbCache.Core
+namespace MbCache.Logic
 {
     public interface IMbCacheRegion
     {
         string Region(Type type, MethodInfo methodInfo);
-        string AdditionalRegionsForParameterValues(object[] parameters);
+        string AdditionalRegionsForParameterValues(Type type, MethodInfo methodInfo, object[] parameters);
     }
 }

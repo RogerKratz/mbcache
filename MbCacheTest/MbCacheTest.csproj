@@ -49,10 +49,12 @@
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Logic\CachedMethodHasToStringParameters.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
+    <Compile Include="Logic\InterfaceCacheTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
     <Compile Include="Logic\MethodNameTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />
     <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />

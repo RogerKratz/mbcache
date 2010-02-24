@@ -46,9 +46,14 @@ namespace MbCache.Logic
         private T createInstance<T>()
         {
             var type = typeof(T);
-            var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, _methods[type].Methods);
+            var data = _methods[type];
+            var cacheInterceptor = new CacheInterceptor(_cache, _cacheRegion, data.Methods);
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook());
-            return (T)_generator.CreateClassProxy(type, new Type[0], options, _methods[type].CtorParameters, cacheInterceptor);
+            if(type.IsInterface)
+            {
+                return _generator.CreateInterfaceProxyWithTarget<T>(data.Implementation, options, cacheInterceptor);
+            }
+            return (T)_generator.CreateClassProxy(type, new Type[0], options, data.CtorParameters, cacheInterceptor);
         }
     }
 }

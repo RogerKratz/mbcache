@@ -24,18 +24,26 @@ namespace MbCache.Configuration
 
         public void UseCacheForClass<T>(Expression<Func<T, object>> expression, params object[] ctorParameters)
         {
-            Type type = typeof (T);
-            addMethodToList(type, expression, ctorParameters);              
+            addMethodToList(typeof(T), null, expression, ctorParameters);              
         }
 
+        public void UseCacheForInterface<T>(object impl, params Expression<Func<T, object>>[] expressions)
+        {
+            Type proxyType = typeof (T);
+            foreach (Expression<Func<T, object>> expression in expressions)
+            {
+                addMethodToList(proxyType, impl, expression, new object[0]);
+            }
+        }
 
-        private void addMethodToList<TInterface>(Type type, 
-                                                Expression<Func<TInterface, object>> expression,
+        private void addMethodToList<T>(Type proxyType,
+                                                object implementation,
+                                                Expression<Func<T, object>> expression,
                                                 object[] ctorParameters)
         {
-            if (!_cachedMethods.ContainsKey(type))
-                _cachedMethods[type] = new ImplementationAndMethods(ctorParameters);
-            _cachedMethods[type].Methods.Add(ExpressionHelper.MemberName(expression.Body));
+            if (!_cachedMethods.ContainsKey(proxyType))
+                _cachedMethods[proxyType] = new ImplementationAndMethods(ctorParameters, implementation);
+            _cachedMethods[proxyType].Methods.Add(ExpressionHelper.MemberName(expression.Body));
         }
     }
 }

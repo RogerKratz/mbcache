@@ -50,14 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caches\AspNetCache.cs" />
-    <Compile Include="Caches\AspNetCacheFactory.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Core\MbCacheRegionBase.cs" />
+    <Compile Include="DefaultImpl\AspNetCache.cs" />
+    <Compile Include="DefaultImpl\AspNetCacheFactory.cs" />
+    <Compile Include="DefaultImpl\ToStringMbCacheRegion.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />
     <Compile Include="Logic\CacheProxyGenerationHook.cs" />
-    <Compile Include="Logic\DefaultMbCacheRegion.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ICache.cs" />
     <Compile Include="Logic\ICacheableSignatures.cs" />

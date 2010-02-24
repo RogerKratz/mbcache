@@ -1,6 +1,13 @@
 ﻿namespace MbCacheTest.TestData
 {
-    public class ObjectWithCtorParameters
+    public interface IObjectWithCtorParameters
+    {
+        int Value1 { get; set; }
+        int Value2 { get; set; }
+        int CachedMethod();
+    }
+
+    public class ObjectWithCtorParameters : IObjectWithCtorParameters
     {
         private int counter;
 

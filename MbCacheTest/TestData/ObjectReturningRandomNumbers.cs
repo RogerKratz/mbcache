@@ -2,7 +2,14 @@ using System;
 
 namespace MbCacheTest.TestData
 {
-    public class ObjectReturningRandomNumbers
+    public interface IObjectReturningRandomNumbers
+    {
+        int CachedMethod();
+        int CachedMethod2();
+        int NonCachedMethod();
+    }
+
+    public class ObjectReturningRandomNumbers : IObjectReturningRandomNumbers
     {
         private readonly Random r = new Random();
 

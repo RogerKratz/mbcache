@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace MbCache.Logic
+namespace MbCache.Core
 {
     public interface IMbCacheRegion
     {

@@ -3,6 +3,7 @@ using MbCache.Core;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using MbCache.Logic;
 
 namespace MbCacheTest.Logic
 {
@@ -18,7 +19,7 @@ namespace MbCacheTest.Logic
             builder.UseCacheForInterface<IObjectWithParametersOnCachedMethod>(new ObjectWithParametersOnCachedMethod(),
                                                                                 c => c.CachedMethod(null));
 
-            factory = builder.BuildFactory(new TestCacheFactory());
+            factory = builder.BuildFactory(new TestCacheFactory(), new DefaultMbCacheRegion());
         }
 
         [Test]

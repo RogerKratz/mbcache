@@ -1,5 +1,6 @@
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Logic;
 using MbCacheTest.TestData;
 using MbCacheTest.CacheForTest;
 using NUnit.Framework;
@@ -19,7 +20,7 @@ namespace MbCacheTest.Logic
                                                                                 c => c.CachedNumber(),
                                                                                 c => c.CachedNumber2());
 
-            factory = builder.BuildFactory(new TestCacheFactory());
+            factory = builder.BuildFactory(new TestCacheFactory(), new DefaultMbCacheRegion());
         }
 
         [Test]

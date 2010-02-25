@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 using Castle.DynamicProxy;
+using log4net;
 using MbCache.Core;
-using System.Linq;
 
 namespace MbCache.Logic
 {
     public class MbCacheFactory : IMbCacheFactory
     {
+        private static ILog log = LogManager.GetLogger(typeof(MbCacheFactory));
         private static readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly ICache _cache;
         private readonly IMbCacheRegion _cacheRegion;
@@ -32,6 +32,7 @@ namespace MbCache.Logic
         public void Invalidate<T>()
         {
             Type type = typeof (T);
+            log.Debug("Invalidating all cache entries for " + type);
             foreach (var method in _methods[type].Methods)
             {
                 _cache.Delete(_cacheRegion.Region(type, method));
@@ -39,8 +40,11 @@ namespace MbCache.Logic
         }
 
         public void Invalidate<T>(Expression<Func<T, object>> method)
-        {  
-            _cache.Delete(_cacheRegion.Region(typeof(T), ExpressionHelper.MemberName(method.Body)));
+        {
+            var memberInfo = ExpressionHelper.MemberName(method.Body);
+            var type = typeof (T);
+            log.Debug("Invalidating cache entries for " + type + "." + memberInfo.Name + "()");
+            _cache.Delete(_cacheRegion.Region(type, memberInfo));
         }
 
         private T createInstance<T>()

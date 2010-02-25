@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\nunit.framework.dll</HintPath>
@@ -58,6 +62,7 @@
     <Compile Include="TestData\ObjectReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />
     <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />
+    <Compile Include="TestFixtureForAssembly.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MbCache\MbCache.csproj">

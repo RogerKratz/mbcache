@@ -28,31 +28,32 @@ namespace MbCache.Logic
         {
             var method = invocation.Method;
             var typeAndMethodName = "<" + _orgType + "." + method.Name + "()>";
+            log.Debug("Entering " + typeAndMethodName);
             if(methodIsCached(method))
             {
-                log.Debug("Intercepting " + typeAndMethodName + " using mbcache");
                 var typeAndMethodKey = _cacheRegion.Region(_orgType, method);
                 var key = typeAndMethodKey + _cacheRegion.AdditionalRegionsForParameterValues(_orgType, method, invocation.Arguments);
-                log.Debug("Trying to find cache entry <" + key +"> for " + typeAndMethodName);
+                log.Debug("Trying to find cache entry <" + key +">");
                 var cachedValue = _cache.Get(key);
                 if (cachedValue != null)
                 {
-                    log.Debug("Cache hit for " + typeAndMethodName);
+                    log.Debug("Cache hit for " + key);
                     invocation.ReturnValue = cachedValue;
                 }
                 else
                 {
-                    log.Debug("Cache miss for " + typeAndMethodName);
+                    log.Debug("Cache miss for " + key);
                     invocation.Proceed();
-                    log.Debug("Put in cache entry <" + key + "> for " + typeAndMethodName);
+                    log.Debug("Put in cache entry <" + key + ">");
                     _cache.Put(key, invocation.ReturnValue);
                 }
             }
             else
             {
-                log.Debug("Intercepting method " + typeAndMethodName + " but skip it");
+                log.Debug("Ignoring " + typeAndMethodName);
                 invocation.Proceed();                
             }
+            log.Debug("Leaving " + typeAndMethodName);
         }
 
         private bool methodIsCached(MethodInfo key)

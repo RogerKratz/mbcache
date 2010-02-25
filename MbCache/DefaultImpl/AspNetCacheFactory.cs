@@ -1,6 +1,6 @@
 ﻿using MbCache.Logic;
 
-namespace MbCache.Caches
+namespace MbCache.DefaultImpl
 {
     public class AspNetCacheFactory : ICacheFactory
     {

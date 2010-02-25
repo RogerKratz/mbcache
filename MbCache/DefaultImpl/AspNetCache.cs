@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
 using MbCache.Logic;
 
-namespace MbCache.Caches
+namespace MbCache.DefaultImpl
 {
     public class AspNetCache : ICache
     {
@@ -26,12 +25,12 @@ namespace MbCache.Caches
         public void Put(string key, object value)
         {
             cache.Insert(key,
-                    value,
-                    null,
-                    DateTime.Now.Add(TimeSpan.FromMinutes(_timeoutMinutes)),
-                    Cache.NoSlidingExpiration,
-                    CacheItemPriority.Default,
-                    null);
+                         value,
+                         null,
+                         DateTime.Now.Add(TimeSpan.FromMinutes(_timeoutMinutes)),
+                         Cache.NoSlidingExpiration,
+                         CacheItemPriority.Default,
+                         null);
         }
 
         public void Delete(string keyStartingWith)

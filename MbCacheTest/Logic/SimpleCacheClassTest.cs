@@ -1,6 +1,6 @@
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCache.Logic;
+using MbCache.DefaultImpl;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -18,7 +18,7 @@ namespace MbCacheTest.Logic
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ObjectReturningRandomNumbers>(c => c.CachedMethod());
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new DefaultMbCacheRegion());
+            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheRegion());
         }
 
         [Test]

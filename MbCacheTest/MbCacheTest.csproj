@@ -62,7 +62,6 @@
     <Compile Include="TestData\ObjectReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />
     <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />
-    <Compile Include="TestFixtureForAssembly.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MbCache\MbCache.csproj">

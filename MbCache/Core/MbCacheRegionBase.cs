@@ -4,6 +4,14 @@ using MbCache.Logic;
 
 namespace MbCache.Core
 {
+    /// <summary>
+    /// Base class for users to override to implement
+    /// their own logic for building cache regions
+    /// </summary>
+    /// <remarks>
+    /// Created by: rogerkr
+    /// Created date: 2010-03-02
+    /// </remarks>
     public abstract class MbCacheRegionBase : IMbCacheRegion
     {
         protected const string Separator = "|";
@@ -20,7 +28,7 @@ namespace MbCache.Core
 
         public string AdditionalRegionsForParameterValues(Type type, MethodInfo methodInfo, object[] parameters)
         {
-            string ret = string.Empty;
+            var ret = string.Empty;
             foreach (var parameter in parameters)
             {
                 ret += RegionPartForParameterValue(type, methodInfo, parameter) + Separator;

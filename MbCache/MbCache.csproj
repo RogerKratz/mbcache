@@ -65,7 +65,6 @@
     <Compile Include="Logic\CacheProxyGenerationHook.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ICache.cs" />
-    <Compile Include="Logic\ICacheableSignatures.cs" />
     <Compile Include="Logic\ICacheFactory.cs" />
     <Compile Include="Logic\IMbCacheRegion.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />

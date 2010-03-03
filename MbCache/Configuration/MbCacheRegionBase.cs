@@ -2,7 +2,7 @@
 using System.Reflection;
 using MbCache.Logic;
 
-namespace MbCache.Core
+namespace MbCache.Configuration
 {
     /// <summary>
     /// Base class for users to override to implement

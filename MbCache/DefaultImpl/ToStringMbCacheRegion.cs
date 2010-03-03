@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using MbCache.Core;
+using MbCache.Configuration;
 
 namespace MbCache.DefaultImpl
 {

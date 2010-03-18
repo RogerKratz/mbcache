@@ -22,7 +22,7 @@ namespace MbCacheTest.Logic
                                                                         c => c.CachedMethod(), 
                                                                         c => c.CachedMethod2());
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheRegion());
+            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]

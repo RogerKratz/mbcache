@@ -16,9 +16,9 @@ namespace MbCache.Configuration
         }
 
 
-        public IMbCacheFactory BuildFactory(ICacheFactory cacheFactory, IMbCacheRegion regionBuilder)
+        public IMbCacheFactory BuildFactory(ICacheFactory cacheFactory, IMbCacheKey keyBuilder)
         {
-            return new MbCacheFactory(cacheFactory.Create(), regionBuilder, _cachedMethods);
+            return new MbCacheFactory(cacheFactory.Create(), keyBuilder, _cachedMethods);
         }
 
 

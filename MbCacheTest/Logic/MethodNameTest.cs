@@ -20,7 +20,7 @@ namespace MbCacheTest.Logic
             builder.UseCacheForInterface<IA>(new A(), c => c.DoIt());
             builder.UseCacheForInterface<IB>(new B(), c => c.DoIt());
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheRegion());
+            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]

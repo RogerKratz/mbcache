@@ -19,7 +19,7 @@ namespace MbCacheTest.Logic
             builder.UseCacheForInterface<IObjectWithParametersOnCachedMethod>(new ObjectWithParametersOnCachedMethod(),
                                                                                 c => c.CachedMethod(null));
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheRegion());
+            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]

@@ -17,7 +17,7 @@ namespace MbCacheTest.Caches
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ObjectReturningRandomNumbers>(c => c.CachedMethod());
 
-            factory = builder.BuildFactory(new AspNetCacheFactory(1), new ToStringMbCacheRegion());
+            factory = builder.BuildFactory(new AspNetCacheFactory(1), new ToStringMbCacheKey());
         }
 
         [Test]

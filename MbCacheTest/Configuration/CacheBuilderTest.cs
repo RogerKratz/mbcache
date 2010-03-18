@@ -15,7 +15,7 @@ namespace MbCacheTest.Configuration
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ObjectWithNonPublicCtor>(c => c.Calculate());
 
-            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheRegion());
+            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
 
             Assert.IsInstanceOf<ObjectWithNonPublicCtor>(factory.Create<ObjectWithNonPublicCtor>());
         }
@@ -26,7 +26,7 @@ namespace MbCacheTest.Configuration
             var builder = new CacheBuilder();
             builder.UseCacheForClass<ClassWithNonVirtualMethod>(c => c.Calculate());
 
-            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheRegion());
+            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
             Assert.Throws<ArgumentException>(() => factory.Create<ClassWithNonVirtualMethod>());
         }
 

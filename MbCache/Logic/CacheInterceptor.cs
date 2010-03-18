@@ -11,13 +11,13 @@ namespace MbCache.Logic
         private static ILog log = LogManager.GetLogger(typeof (CacheInterceptor));
 
         private readonly ICache _cache;
-        private readonly IMbCacheRegion _cacheRegion;
+        private readonly IMbCacheKey _cacheKey;
         private readonly Type _orgType;
 
-        public CacheInterceptor(ICache cache, IMbCacheRegion cacheRegion, Type orgType)
+        public CacheInterceptor(ICache cache, IMbCacheKey cacheKey, Type orgType)
         {
             _cache = cache;
-            _cacheRegion = cacheRegion;
+            _cacheKey = cacheKey;
             _orgType = orgType;
         }
 
@@ -27,8 +27,8 @@ namespace MbCache.Logic
             var typeAndMethodName = "<" + _orgType + "." + method.Name + "()>";
             log.Debug("Entering " + typeAndMethodName);
 
-            var typeAndMethodKey = _cacheRegion.Region(_orgType, method);
-            var key = typeAndMethodKey + _cacheRegion.AdditionalRegionsForParameterValues(_orgType, method, invocation.Arguments);
+            var typeAndMethodKey = _cacheKey.CacheKey(_orgType, method);
+            var key = typeAndMethodKey + _cacheKey.AddForParameterValues(_orgType, method, invocation.Arguments);
             log.Debug("Trying to find cache entry <" + key +">");
             var cachedValue = _cache.Get(key);
             if (cachedValue != null)

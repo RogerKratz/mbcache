@@ -55,17 +55,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CacheBuilder.cs" />
-    <Compile Include="Configuration\MbCacheRegionBase.cs" />
+    <Compile Include="Configuration\MbCacheKeyBase.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="DefaultImpl\AspNetCache.cs" />
     <Compile Include="DefaultImpl\AspNetCacheFactory.cs" />
-    <Compile Include="DefaultImpl\ToStringMbCacheRegion.cs" />
+    <Compile Include="DefaultImpl\ToStringMbCacheKey.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />
     <Compile Include="Logic\CacheProxyGenerationHook.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ICache.cs" />
     <Compile Include="Logic\ICacheFactory.cs" />
-    <Compile Include="Logic\IMbCacheRegion.cs" />
+    <Compile Include="Logic\IMbCacheKey.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

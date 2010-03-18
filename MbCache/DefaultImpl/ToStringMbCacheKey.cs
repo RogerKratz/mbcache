@@ -4,9 +4,9 @@ using MbCache.Configuration;
 
 namespace MbCache.DefaultImpl
 {
-    public class ToStringMbCacheRegion : MbCacheRegionBase
+    public class ToStringMbCacheKey : MbCacheKeyBase
     {
-        protected override string RegionPartForParameterValue(Type type, MethodInfo info, object parameter)
+        protected override string KeyPartForParameterValue(Type type, MethodInfo info, object parameter)
         {
             return parameter.ToString();
         }

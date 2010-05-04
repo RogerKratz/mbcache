@@ -50,6 +50,24 @@ namespace MbCacheTest.Logic
                             factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
         }
 
+        [Test]
+        public void Class_NullAsParameter()
+        {
+            Assert.AreNotEqual(factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod(null),
+                factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
+            Assert.AreEqual(factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod(null),
+                factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod(null));
+        }
+
+        [Test]
+        public void Interface_NullAsParameter()
+        {
+            Assert.AreNotEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null),
+                factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
+            Assert.AreEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null),
+                factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null));
+        }
+
 
         [Test]
         public void Class_InvalidateOnTypeWorks()

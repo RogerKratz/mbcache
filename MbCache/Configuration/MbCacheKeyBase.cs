@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Text;
 using MbCache.Logic;
 
 namespace MbCache.Configuration
@@ -18,22 +19,34 @@ namespace MbCache.Configuration
 
         public string CacheKey(Type type, MethodInfo methodInfo)
         {
-            var ret = type + Separator + methodInfo.Name + Separator;
+            var start = string.Concat(type + Separator + methodInfo.Name + Separator);
+            var ret = new StringBuilder(start);
             foreach (var parameter in methodInfo.GetParameters())
             {
-                ret += parameter.Name + Separator;
+                ret.Append(parameter.Name);
+                ret.Append(Separator);
             }
-            return ret;
+            return ret.ToString();
+        }
+
+        protected virtual string NullReplacer 
+        {
+            get
+            {
+                return "null";
+            }
         }
 
         public string AddForParameterValues(Type type, MethodInfo methodInfo, object[] parameters)
         {
-            var ret = string.Empty;
+            var ret = new StringBuilder();
             foreach (var parameter in parameters)
             {
-                ret += KeyPartForParameterValue(type, methodInfo, parameter) + Separator;
+                ret.Append(parameter == null ? NullReplacer : KeyPartForParameterValue(type, methodInfo, parameter));
+
+                ret.Append(Separator);
             }
-            return ret;  
+            return ret.ToString();  
         }
 
         protected abstract string KeyPartForParameterValue(Type type, MethodInfo info, object parameter);

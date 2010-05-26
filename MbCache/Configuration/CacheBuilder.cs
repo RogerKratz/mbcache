@@ -15,35 +15,28 @@ namespace MbCache.Configuration
             _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
         }
 
-
         public IMbCacheFactory BuildFactory(ICacheFactory cacheFactory, IMbCacheKey keyBuilder)
         {
             return new MbCacheFactory(cacheFactory.Create(), keyBuilder, _cachedMethods);
         }
 
 
-        public void UseCacheForClass<T>(Expression<Func<T, object>> expression, params object[] ctorParameters)
+        public IFluentBuilder<T> UseCacheForClass<T>(params object[] ctorParameters)
         {
-            addMethodToList(typeof(T), null, expression, ctorParameters);              
+            return createFluentBuilder<T>(null, ctorParameters);
         }
 
-        public void UseCacheForInterface<T>(object impl, params Expression<Func<T, object>>[] expressions)
+        public IFluentBuilder<T> UseCacheForInterface<T>(object implementation)
         {
-            Type proxyType = typeof (T);
-            foreach (Expression<Func<T, object>> expression in expressions)
-            {
-                addMethodToList(proxyType, impl, expression, new object[0]);
-            }
+            return createFluentBuilder<T>(implementation, new object[0]);
         }
 
-        private void addMethodToList<T>(Type proxyType,
-                                                object implementation,
-                                                Expression<Func<T, object>> expression,
-                                                object[] ctorParameters)
+        private IFluentBuilder<T> createFluentBuilder<T>(object implementation, params object[] ctorParameters)
         {
-            if (!_cachedMethods.ContainsKey(proxyType))
-                _cachedMethods[proxyType] = new ImplementationAndMethods(ctorParameters, implementation);
-            _cachedMethods[proxyType].Methods.Add(ExpressionHelper.MemberName(expression.Body));
+            var implAndDetails = new ImplementationAndMethods(ctorParameters, implementation);
+            _cachedMethods[typeof(T)] = implAndDetails;
+            var fluentBuilder = new FluentBuilder<T>(implAndDetails);
+            return fluentBuilder;
         }
     }
 }

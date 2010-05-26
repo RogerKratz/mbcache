@@ -15,10 +15,14 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.UseCacheForClass<A>(c => c.DoIt());
-            builder.UseCacheForClass<B>(c => c.DoIt());
-            builder.UseCacheForInterface<IA>(new A(), c => c.DoIt());
-            builder.UseCacheForInterface<IB>(new B(), c => c.DoIt());
+            builder.UseCacheForClass<A>()
+                .AddMethod(c => c.DoIt());
+            builder.UseCacheForClass<B>()
+                .AddMethod(c => c.DoIt());
+            builder.UseCacheForInterface<IA>(new A())
+                .AddMethod(c => c.DoIt());
+            builder.UseCacheForInterface<IB>(new B())
+                .AddMethod(c => c.DoIt());
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }

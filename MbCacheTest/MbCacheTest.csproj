@@ -51,11 +51,10 @@
     <Compile Include="CacheForTest\TestCacheFactory.cs" />
     <Compile Include="Caches\AspNetCacheTest.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
-    <Compile Include="Logic\CachedMethodHasToStringParametersTest.cs" />
+    <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
-    <Compile Include="Logic\MethodNameTest.cs" />
     <Compile Include="Logic\SimpleCacheClassTest.cs" />
     <Compile Include="Logic\SimpleCacheInterfaceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

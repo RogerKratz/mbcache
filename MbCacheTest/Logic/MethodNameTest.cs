@@ -15,6 +15,7 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
+
             builder.ForClass<A>()
                 .CacheMethod(c => c.DoIt());
             builder.ForClass<B>()

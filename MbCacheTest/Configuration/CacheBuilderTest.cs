@@ -58,8 +58,40 @@ namespace MbCacheTest.Configuration
                                                  .CacheMethod(c => c.CachedMethod2()));
 
         }
+
+        [Test, Explicit("Fix soon")]
+        public void FactoryReturnsNewClassInstances()
+        {
+            var builder = new CacheBuilder();
+            builder.ForClass<ObjectWithIdentifier>();
+            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+            Assert.AreNotEqual(factory.Create<ObjectWithIdentifier>().Id, factory.Create<ObjectWithIdentifier>().Id);
+        }
+
+        [Test, Explicit("Fix soon")]
+        public void FactoryReturnsNewInterfaceInstances()
+        {
+            var builder = new CacheBuilder();
+            builder.ForInterface<IObjectWithIdentifier>(new ObjectWithIdentifier());
+            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+            Assert.AreNotEqual(factory.Create<IObjectWithIdentifier>().Id, factory.Create<IObjectWithIdentifier>().Id);
+        }
     }
 
+    public class ObjectWithIdentifier : IObjectWithIdentifier
+    {
+        public ObjectWithIdentifier()
+        {
+            Id = Guid.NewGuid();    
+        }
+
+        public Guid Id { get; private set; }
+    }
+
+    public interface IObjectWithIdentifier
+    {
+        Guid Id { get; }
+    }
 
     public class ObjectWithNonPublicCtor 
     {

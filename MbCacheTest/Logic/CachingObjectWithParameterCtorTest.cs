@@ -16,7 +16,7 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.ForClass<ObjectWithCtorParameters>(new object[]{1,2})
+            builder.ForClass<ObjectWithCtorParameters>()
                     .CacheMethod(c => c.CachedMethod());
             builder.ForInterface<IObjectWithCtorParameters>(new ObjectWithCtorParameters(1, 2))
                     .CacheMethod(c => c.CachedMethod());
@@ -27,7 +27,7 @@ namespace MbCacheTest.Logic
         [Test]
         public void Class_CanReadProps()
         {
-            var obj = factory.Create<ObjectWithCtorParameters>();
+            var obj = factory.Create<ObjectWithCtorParameters>(1, 2);
             Assert.AreEqual(1, obj.Value1);
             Assert.AreEqual(2, obj.Value2);
         }
@@ -35,7 +35,7 @@ namespace MbCacheTest.Logic
         [Test]
         public void Interface_CanReadProps()
         {
-            var obj = factory.Create<IObjectWithCtorParameters>();
+            var obj = factory.Create<IObjectWithCtorParameters>(1, 2);
             Assert.AreEqual(1, obj.Value1);
             Assert.AreEqual(2, obj.Value2);
         }
@@ -43,13 +43,13 @@ namespace MbCacheTest.Logic
         [Test]
         public void Class_VerifyCacheWorks()
         {
-            Assert.AreEqual(factory.Create<ObjectWithCtorParameters>().CachedMethod(), factory.Create<ObjectWithCtorParameters>().CachedMethod());
+            Assert.AreEqual(factory.Create<ObjectWithCtorParameters>(1, 2).CachedMethod(), factory.Create<ObjectWithCtorParameters>(1, 2).CachedMethod());
         }
 
         [Test]
         public void Interface_VerifyCacheWorks()
         {
-            Assert.AreEqual(factory.Create<IObjectWithCtorParameters>().CachedMethod(), factory.Create<IObjectWithCtorParameters>().CachedMethod());
+            Assert.AreEqual(factory.Create<IObjectWithCtorParameters>(1, 2).CachedMethod(), factory.Create<IObjectWithCtorParameters>(1, 2).CachedMethod());
         }
     }
 }

@@ -40,7 +40,7 @@ namespace MbCache.DefaultImpl
             while (cacheEnum.MoveNext())
             {
                 var keyString = cacheEnum.Key.ToString();
-                if(keyString.StartsWith(keyStartingWith))
+                if(keyString.StartsWith(keyStartingWith, StringComparison.InvariantCulture))
                     keyList.Add(keyString);
             }
             foreach (var key in keyList)

@@ -36,12 +36,12 @@ namespace MbCache.Logic
             var cachedValue = _cache.Get(key);
             if (cachedValue != null)
             {
-                log.Debug("Cache hit for " + key);
+                log.Debug("Cache hit for <" + key + ">");
                 invocation.ReturnValue = cachedValue;
             }
             else
             {
-                log.Debug("Cache miss for " + key);
+                log.Debug("Cache miss for <" + key + ">");
                 invocation.Proceed();
                 log.Debug("Put in cache entry <" + key + ">");
                 _cache.Put(key, invocation.ReturnValue);

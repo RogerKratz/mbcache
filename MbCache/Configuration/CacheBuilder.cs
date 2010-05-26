@@ -33,8 +33,11 @@ namespace MbCache.Configuration
 
         private IFluentBuilder<T> createFluentBuilder<T>(object implementation, params object[] ctorParameters)
         {
+            var type = typeof (T);
+            if (_cachedMethods.ContainsKey(type))
+                throw new ArgumentException("Type " + type + " is already in CacheBuilder");
             var implAndDetails = new ImplementationAndMethods(ctorParameters, implementation);
-            _cachedMethods[typeof(T)] = implAndDetails;
+            _cachedMethods[type] = implAndDetails;
             var fluentBuilder = new FluentBuilder<T>(implAndDetails);
             return fluentBuilder;
         }

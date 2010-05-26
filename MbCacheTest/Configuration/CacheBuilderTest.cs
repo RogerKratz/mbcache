@@ -37,11 +37,11 @@ namespace MbCacheTest.Configuration
         public void OnlyDeclareInterfaceOnce()
         {
             var builder = new CacheBuilder();
-            builder.ForInterface<IObjectReturningRandomNumbers, ObjectReturningRandomNumbers>()
+            builder.ForInterface<IObjectReturningNewGuids, ObjectReturningNewGuids>()
                 .CacheMethod(c => c.CachedMethod());
             Assert.Throws<ArgumentException>(()
                                              =>
-                                             builder.ForInterface<IObjectReturningRandomNumbers, ObjectReturningRandomNumbers>()
+                                             builder.ForInterface<IObjectReturningNewGuids, ObjectReturningNewGuids>()
                                                  .CacheMethod(c => c.CachedMethod2()));
 
         }
@@ -50,11 +50,11 @@ namespace MbCacheTest.Configuration
         public void OnlyDeclareClassOnce()
         {
             var builder = new CacheBuilder();
-            builder.ForClass<ObjectReturningRandomNumbers>()
+            builder.ForClass<ObjectReturningNewGuids>()
                 .CacheMethod(c => c.CachedMethod());
             Assert.Throws<ArgumentException>(()
                                              =>
-                                             builder.ForClass<ObjectReturningRandomNumbers>()
+                                             builder.ForClass<ObjectReturningNewGuids>()
                                                  .CacheMethod(c => c.CachedMethod2()));
 
         }

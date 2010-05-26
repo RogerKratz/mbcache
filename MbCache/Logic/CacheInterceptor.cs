@@ -24,11 +24,14 @@ namespace MbCache.Logic
         public void Intercept(IInvocation invocation)
         {
             var method = invocation.Method;
+            
             var typeAndMethodName = "<" + _orgType + "." + method.Name + "()>";
             log.Debug("Entering " + typeAndMethodName);
 
-            var typeAndMethodKey = _cacheKey.CacheKey(_orgType, method);
-            var key = typeAndMethodKey + _cacheKey.AddForParameterValues(_orgType, method, invocation.Arguments);
+            var key = string.Concat(_cacheKey.CacheKey(_orgType, method),
+                        _cacheKey.AddForParameterValues(_orgType, method, invocation.Arguments),
+                        _cacheKey.AddForComponent((ICachingComponent)invocation.Proxy));
+
             log.Debug("Trying to find cache entry <" + key +">");
             var cachedValue = _cache.Get(key);
             if (cachedValue != null)

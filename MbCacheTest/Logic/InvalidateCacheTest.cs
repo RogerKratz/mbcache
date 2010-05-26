@@ -17,11 +17,11 @@ namespace MbCacheTest.Logic
         {
             var builder = new CacheBuilder();
 
-            builder.ForClass<ObjectReturningRandomNumbers>()
+            builder.ForClass<ObjectReturningNewGuids>()
                     .CacheMethod(c => c.CachedMethod())
                     .CacheMethod(c => c.CachedMethod2());
 
-            builder.ForInterface<IObjectReturningRandomNumbers, ObjectReturningRandomNumbers>()
+            builder.ForInterface<IObjectReturningNewGuids, ObjectReturningNewGuids>()
                     .CacheMethod(c => c.CachedMethod())
                     .CacheMethod(c => c.CachedMethod2());
 
@@ -31,13 +31,13 @@ namespace MbCacheTest.Logic
         [Test]
         public void Class_VerifyInvalidate()
         {
-            var obj = factory.Create<ObjectReturningRandomNumbers>();
+            var obj = factory.Create<ObjectReturningNewGuids>();
             var value1 = obj.CachedMethod();
             var value2 = obj.CachedMethod2();
             Assert.AreEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
             Assert.AreNotEqual(value1, value2);
-            factory.Invalidate<ObjectReturningRandomNumbers>();
+            factory.Invalidate<ObjectReturningNewGuids>();
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreNotEqual(value2, obj.CachedMethod2());
         }
@@ -45,13 +45,13 @@ namespace MbCacheTest.Logic
         [Test]
         public void Interface_VerifyInvalidate()
         {
-            var obj = factory.Create<IObjectReturningRandomNumbers>();
+            var obj = factory.Create<IObjectReturningNewGuids>();
             var value1 = obj.CachedMethod();
             var value2 = obj.CachedMethod2();
             Assert.AreEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
             Assert.AreNotEqual(value1, value2);
-            factory.Invalidate<IObjectReturningRandomNumbers>();
+            factory.Invalidate<IObjectReturningNewGuids>();
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreNotEqual(value2, obj.CachedMethod2());
         }
@@ -59,10 +59,10 @@ namespace MbCacheTest.Logic
         [Test]
         public void Class_VerifyInvalidateSpecificMethod()
         {
-            var obj = factory.Create<ObjectReturningRandomNumbers>();
+            var obj = factory.Create<ObjectReturningNewGuids>();
             var value1 = obj.CachedMethod();
             var value2 = obj.CachedMethod2();
-            factory.Invalidate<ObjectReturningRandomNumbers>(c => c.CachedMethod());
+            factory.Invalidate<ObjectReturningNewGuids>(c => c.CachedMethod());
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
         }
@@ -70,10 +70,10 @@ namespace MbCacheTest.Logic
         [Test]
         public void Interface_VerifyInvalidateSpecificMethod()
         {
-            var obj = factory.Create<IObjectReturningRandomNumbers>();
+            var obj = factory.Create<IObjectReturningNewGuids>();
             var value1 = obj.CachedMethod();
             var value2 = obj.CachedMethod2();
-            factory.Invalidate<IObjectReturningRandomNumbers>(c => c.CachedMethod());
+            factory.Invalidate<IObjectReturningNewGuids>(c => c.CachedMethod());
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
         }

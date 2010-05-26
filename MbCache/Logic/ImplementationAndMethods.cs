@@ -14,5 +14,6 @@ namespace MbCache.Logic
 
         public ICollection<MethodInfo> Methods { get; private set; }
         public Type ConcreteType { get; private set; }
+        public bool CachePerInstance { get; set; }
     }
 }

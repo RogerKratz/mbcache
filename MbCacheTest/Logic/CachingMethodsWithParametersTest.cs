@@ -97,7 +97,7 @@ namespace MbCacheTest.Logic
             var value2 = obj.CachedMethod("hej2");
             factory.Invalidate<ObjectWithParametersOnCachedMethod>(c=>c.CachedMethod("hej"));
             Assert.AreNotEqual(value, obj.CachedMethod("hej"));
-            Assert.AreNotEqual(value2, obj.CachedMethod("hej2")); //todo: fix this later?
+            Assert.AreNotEqual(value2, obj.CachedMethod("hej2")); //todo: fix this later
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace MbCacheTest.Logic
             var value2 = obj.CachedMethod("hej2");
             factory.Invalidate<IObjectWithParametersOnCachedMethod>(c => c.CachedMethod("hej"));
             Assert.AreNotEqual(value, obj.CachedMethod("hej"));
-            Assert.AreNotEqual(value2, obj.CachedMethod("hej2")); //todo: fix this later?
+            Assert.AreNotEqual(value2, obj.CachedMethod("hej2")); //todo: fix this later
         }
     }
 }

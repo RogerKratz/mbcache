@@ -14,7 +14,7 @@ namespace MbCache.Configuration
             _details = details;
         }
 
-        public IFluentBuilder<T> AddMethod(Expression<Func<T, object>> expression)
+        public IFluentBuilder<T> CacheMethod(Expression<Func<T, object>> expression)
         {
             _details.Methods.Add(ExpressionHelper.MemberName(expression.Body));
             return this;

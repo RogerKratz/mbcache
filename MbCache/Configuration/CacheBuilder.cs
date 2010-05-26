@@ -21,12 +21,12 @@ namespace MbCache.Configuration
         }
 
 
-        public IFluentBuilder<T> UseCacheForClass<T>(params object[] ctorParameters)
+        public IFluentBuilder<T> ForClass<T>(params object[] ctorParameters)
         {
             return createFluentBuilder<T>(null, ctorParameters);
         }
 
-        public IFluentBuilder<T> UseCacheForInterface<T>(object implementation)
+        public IFluentBuilder<T> ForInterface<T>(object implementation)
         {
             return createFluentBuilder<T>(implementation, new object[0]);
         }

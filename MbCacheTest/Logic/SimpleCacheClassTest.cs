@@ -16,7 +16,8 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.UseCacheForClass<ObjectReturningRandomNumbers>(c => c.CachedMethod());
+            builder.UseCacheForClass<ObjectReturningRandomNumbers>()
+                    .AddMethod(c => c.CachedMethod());
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }

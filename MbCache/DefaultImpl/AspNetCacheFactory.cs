@@ -4,16 +4,16 @@ namespace MbCache.DefaultImpl
 {
     public class AspNetCacheFactory : ICacheFactory
     {
-        private readonly int _timeOut;
+        private readonly int _timeout;
 
-        public AspNetCacheFactory(int timeOut)
+        public AspNetCacheFactory(int timeout)
         {
-            _timeOut = timeOut;
+            _timeout = timeout;
         }
 
         public ICache Create()
         {
-            return new AspNetCache(_timeOut);
+            return new AspNetCache(_timeout);
         }
     }
 }

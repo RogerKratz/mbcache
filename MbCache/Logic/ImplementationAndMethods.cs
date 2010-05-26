@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MbCache.Logic
 {
     public class ImplementationAndMethods
     {
-        public ImplementationAndMethods(object implementation)
+        public ImplementationAndMethods(Type concreteType)
         {
             Methods = new HashSet<MethodInfo>();
-            Implementation = implementation;
+            ConcreteType = concreteType;
         }
 
         public ICollection<MethodInfo> Methods { get; private set; }
-        public object Implementation { get; private set; }
+        public Type ConcreteType { get; private set; }
     }
 }

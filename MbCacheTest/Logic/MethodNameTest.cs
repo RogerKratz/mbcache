@@ -19,9 +19,9 @@ namespace MbCacheTest.Logic
                 .CacheMethod(c => c.DoIt());
             builder.ForClass<B>()
                 .CacheMethod(c => c.DoIt());
-            builder.ForInterface<IA>(new A())
+            builder.ForInterface<IA, A>()
                 .CacheMethod(c => c.DoIt());
-            builder.ForInterface<IB>(new B())
+            builder.ForInterface<IB, B>()
                 .CacheMethod(c => c.DoIt());
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());

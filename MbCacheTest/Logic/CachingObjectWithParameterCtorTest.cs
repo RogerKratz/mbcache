@@ -16,6 +16,7 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
+
             builder.ForClass<ObjectWithCtorParameters>()
                     .CacheMethod(c => c.CachedMethod());
             builder.ForInterface<IObjectWithCtorParameters, ObjectWithCtorParameters>()

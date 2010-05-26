@@ -17,6 +17,7 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
+
             builder.ForClass<ObjectReturningNewGuids>()
                     .CacheMethod(c => c.CachedMethod())
                     .PerInstance();

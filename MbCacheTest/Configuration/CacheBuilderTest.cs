@@ -2,6 +2,7 @@ using System;
 using MbCache.Configuration;
 using MbCache.DefaultImpl;
 using MbCacheTest.CacheForTest;
+using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Configuration
@@ -32,6 +33,31 @@ namespace MbCacheTest.Configuration
             Assert.Throws<ArgumentException>(() => factory.Create<ClassWithNonVirtualMethod>());
         }
 
+        [Test]
+        public void OnlyDeclareInterfaceOnce()
+        {
+            var builder = new CacheBuilder();
+            builder.ForInterface<IObjectReturningRandomNumbers>(new ObjectReturningRandomNumbers())
+                .CacheMethod(c => c.CachedMethod());
+            Assert.Throws<ArgumentException>(()
+                                             =>
+                                             builder.ForInterface<IObjectReturningRandomNumbers>(new ObjectReturningRandomNumbers())
+                                                 .CacheMethod(c => c.CachedMethod2()));
+
+        }
+
+        [Test]
+        public void OnlyDeclareClassOnce()
+        {
+            var builder = new CacheBuilder();
+            builder.ForClass<ObjectReturningRandomNumbers>()
+                .CacheMethod(c => c.CachedMethod());
+            Assert.Throws<ArgumentException>(()
+                                             =>
+                                             builder.ForClass<ObjectReturningRandomNumbers>()
+                                                 .CacheMethod(c => c.CachedMethod2()));
+
+        }
     }
 
 

@@ -15,10 +15,10 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.UseCacheForClass<ObjectWithParametersOnCachedMethod>()
-                .AddMethod(c => c.CachedMethod(null));
-            builder.UseCacheForInterface<IObjectWithParametersOnCachedMethod>(new ObjectWithParametersOnCachedMethod())
-                .AddMethod(c => c.CachedMethod(null));
+            builder.ForClass<ObjectWithParametersOnCachedMethod>()
+                .CacheMethod(c => c.CachedMethod(null));
+            builder.ForInterface<IObjectWithParametersOnCachedMethod>(new ObjectWithParametersOnCachedMethod())
+                .CacheMethod(c => c.CachedMethod(null));
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }

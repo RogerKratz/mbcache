@@ -5,6 +5,6 @@ namespace MbCache.Configuration
 {
     public interface IFluentBuilder<T>
     {
-        IFluentBuilder<T> AddMethod(Expression<Func<T, object>> expression);
+        IFluentBuilder<T> CacheMethod(Expression<Func<T, object>> expression);
     }
 }

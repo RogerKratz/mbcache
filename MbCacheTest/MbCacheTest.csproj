@@ -58,6 +58,7 @@
     <Compile Include="Logic\SimpleCacheClassTest.cs" />
     <Compile Include="Logic\SimpleCacheInterfaceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetupFixtureForAssembly.cs" />
     <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />

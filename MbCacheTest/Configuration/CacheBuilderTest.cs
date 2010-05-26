@@ -37,11 +37,11 @@ namespace MbCacheTest.Configuration
         public void OnlyDeclareInterfaceOnce()
         {
             var builder = new CacheBuilder();
-            builder.ForInterface<IObjectReturningRandomNumbers>(new ObjectReturningRandomNumbers())
+            builder.ForInterface<IObjectReturningRandomNumbers, ObjectReturningRandomNumbers>()
                 .CacheMethod(c => c.CachedMethod());
             Assert.Throws<ArgumentException>(()
                                              =>
-                                             builder.ForInterface<IObjectReturningRandomNumbers>(new ObjectReturningRandomNumbers())
+                                             builder.ForInterface<IObjectReturningRandomNumbers, ObjectReturningRandomNumbers>()
                                                  .CacheMethod(c => c.CachedMethod2()));
 
         }
@@ -59,7 +59,7 @@ namespace MbCacheTest.Configuration
 
         }
 
-        [Test, Explicit("Fix soon")]
+        [Test]
         public void FactoryReturnsNewClassInstances()
         {
             var builder = new CacheBuilder();
@@ -68,11 +68,11 @@ namespace MbCacheTest.Configuration
             Assert.AreNotEqual(factory.Create<ObjectWithIdentifier>().Id, factory.Create<ObjectWithIdentifier>().Id);
         }
 
-        [Test, Explicit("Fix soon")]
+        [Test]
         public void FactoryReturnsNewInterfaceInstances()
         {
             var builder = new CacheBuilder();
-            builder.ForInterface<IObjectWithIdentifier>(new ObjectWithIdentifier());
+            builder.ForInterface<IObjectWithIdentifier, ObjectWithIdentifier>();
             var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
             Assert.AreNotEqual(factory.Create<IObjectWithIdentifier>().Id, factory.Create<IObjectWithIdentifier>().Id);
         }

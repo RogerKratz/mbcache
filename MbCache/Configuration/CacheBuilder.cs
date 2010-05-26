@@ -23,20 +23,20 @@ namespace MbCache.Configuration
 
         public IFluentBuilder<T> ForClass<T>()
         {
-            return createFluentBuilder<T>(null);
+            return createFluentBuilder<T>(typeof(T));
         }
 
-        public IFluentBuilder<T> ForInterface<T>(object implementation)
+        public IFluentBuilder<T> ForInterface<T, TImpl>()
         {
-            return createFluentBuilder<T>(implementation);
+            return createFluentBuilder<T>(typeof(TImpl));
         }
 
-        private IFluentBuilder<T> createFluentBuilder<T>(object implementation)
+        private IFluentBuilder<T> createFluentBuilder<T>(Type concreteType)
         {
             var type = typeof (T);
             if (_cachedMethods.ContainsKey(type))
                 throw new ArgumentException("Type " + type + " is already in CacheBuilder");
-            var implAndDetails = new ImplementationAndMethods(implementation);
+            var implAndDetails = new ImplementationAndMethods(concreteType);
             _cachedMethods[type] = implAndDetails;
             var fluentBuilder = new FluentBuilder<T>(implAndDetails);
             return fluentBuilder;

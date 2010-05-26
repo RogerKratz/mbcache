@@ -55,7 +55,7 @@ namespace MbCache.Logic
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(data.Methods));
             if(type.IsInterface)
             {
-                return (T)_generator.CreateInterfaceProxyWithTarget(typeof(T), data.Implementation, options, cacheInterceptor);
+                return (T)_generator.CreateInterfaceProxyWithTarget(typeof(T), Activator.CreateInstance(data.ConcreteType, ctorParameters), options, cacheInterceptor);
             }
             return (T)_generator.CreateClassProxy(type, new Type[0], options, ctorParameters, cacheInterceptor);
         }

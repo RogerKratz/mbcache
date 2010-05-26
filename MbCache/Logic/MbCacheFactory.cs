@@ -53,11 +53,21 @@ namespace MbCache.Logic
             var data = _methods[type];
             var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, type);
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(data.Methods));
+            options.AddMixinInstance(createCachingComponent(data));
             if(type.IsInterface)
             {
                 return (T)_generator.CreateInterfaceProxyWithTarget(typeof(T), Activator.CreateInstance(data.ConcreteType, ctorParameters), options, cacheInterceptor);
             }
-            return (T)_generator.CreateClassProxy(type, new Type[0], options, ctorParameters, cacheInterceptor);
+            return (T)_generator.CreateClassProxy(type, options, ctorParameters, cacheInterceptor);
+        }
+
+        private static ICachingComponent createCachingComponent(ImplementationAndMethods details)
+        {
+            var ret = new CachingComponent
+                          {
+                              UniqueId = details.CachePerInstance ? Guid.NewGuid().ToString() : "Global"
+                          };
+            return ret;
         }
     }
 }

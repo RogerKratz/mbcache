@@ -49,6 +49,11 @@ namespace MbCache.Configuration
             return ret.ToString();  
         }
 
+        public string AddForComponent(ICachingComponent component)
+        {
+            return component.UniqueId;
+        }
+
         protected abstract string KeyPartForParameterValue(Type type, MethodInfo info, object parameter);
     }
 }

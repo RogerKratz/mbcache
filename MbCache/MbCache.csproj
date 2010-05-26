@@ -64,9 +64,11 @@
     <Compile Include="DefaultImpl\ToStringMbCacheKey.cs" />
     <Compile Include="Logic\CacheInterceptor.cs" />
     <Compile Include="Logic\CacheProxyGenerationHook.cs" />
+    <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ICache.cs" />
     <Compile Include="Logic\ICacheFactory.cs" />
+    <Compile Include="Logic\ICachingComponent.cs" />
     <Compile Include="Logic\IMbCacheKey.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />

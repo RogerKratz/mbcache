@@ -53,13 +53,14 @@
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Logic\CachedMethodHasToStringParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
+    <Compile Include="Logic\CachingPerScopeTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
     <Compile Include="Logic\MethodNameTest.cs" />
     <Compile Include="Logic\SimpleCacheClassTest.cs" />
     <Compile Include="Logic\SimpleCacheInterfaceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
-    <Compile Include="TestData\ObjectReturningRandomNumbers.cs" />
+    <Compile Include="TestData\ObjectReturningNewGuids.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />
     <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />
   </ItemGroup>

@@ -16,7 +16,7 @@ namespace MbCacheTest.Logic
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.ForClass<ObjectReturningRandomNumbers>()
+            builder.ForClass<ObjectReturningNewGuids>()
                     .CacheMethod(c => c.CachedMethod());
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
@@ -25,7 +25,7 @@ namespace MbCacheTest.Logic
         [Test]
         public void CacheWorks()
         {
-            var obj = factory.Create<ObjectReturningRandomNumbers>();
+            var obj = factory.Create<ObjectReturningNewGuids>();
 
             Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.NonCachedMethod(), obj.NonCachedMethod());
@@ -34,15 +34,15 @@ namespace MbCacheTest.Logic
         [Test]
         public void CacheWorksWithDifferentObjects()
         {
-            var obj = factory.Create<ObjectReturningRandomNumbers>();
-            var obj2 = factory.Create<ObjectReturningRandomNumbers>();
+            var obj = factory.Create<ObjectReturningNewGuids>();
+            var obj2 = factory.Create<ObjectReturningNewGuids>();
             Assert.AreEqual(obj.CachedMethod(), obj2.CachedMethod());
         }
 
         [Test]
         public void OriginalTypeIsNotModified()
         {
-            var obj = new ObjectReturningRandomNumbers();
+            var obj = new ObjectReturningNewGuids();
 
             Assert.AreNotEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.NonCachedMethod(), obj.NonCachedMethod());

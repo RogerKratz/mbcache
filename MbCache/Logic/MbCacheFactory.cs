@@ -24,9 +24,9 @@ namespace MbCache.Logic
             _methods = methods;
         }
 
-        public T Create<T>()
+        public T Create<T>(params object[] ctorParameters)
         {
-            return createInstance<T>();
+            return createInstance<T>(ctorParameters);
         }
 
         public void Invalidate<T>()
@@ -47,7 +47,7 @@ namespace MbCache.Logic
             _cache.Delete(_cacheKey.CacheKey(type, memberInfo));
         }
 
-        private T createInstance<T>()
+        private T createInstance<T>(params object[] ctorParameters)
         {
             var type = typeof(T);
             var data = _methods[type];
@@ -57,7 +57,7 @@ namespace MbCache.Logic
             {
                 return (T)_generator.CreateInterfaceProxyWithTarget(typeof(T), data.Implementation, options, cacheInterceptor);
             }
-            return (T)_generator.CreateClassProxy(type, new Type[0], options, data.CtorParameters, cacheInterceptor);
+            return (T)_generator.CreateClassProxy(type, new Type[0], options, ctorParameters, cacheInterceptor);
         }
     }
 }

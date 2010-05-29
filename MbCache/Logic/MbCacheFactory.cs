@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Castle.DynamicProxy;
-using log4net;
 using MbCache.Core;
 
 namespace MbCache.Logic
 {
     public class MbCacheFactory : IMbCacheFactory
     {
-        private static ILog log = LogManager.GetLogger(typeof(MbCacheFactory));
         private static readonly ProxyGenerator _generator = new ProxyGenerator();
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
@@ -24,18 +22,18 @@ namespace MbCache.Logic
             _methods = methods;
         }
 
-        public T Create<T>(params object[] ctorParameters)
+        public T Create<T>()
         {
-            return createInstance<T>(ctorParameters);
+            return createInstance<T>();
         }
 
         public void Invalidate<T>()
         {
             Type type = typeof (T);
-            log.Debug("Invalidating all cache entries for " + type);
             foreach (var method in _methods[type].Methods)
             {
-                _cache.Delete(_cacheKey.CacheKey(type, method));
+                var cacheKey = _cacheKey.CacheKey(type, method);
+                _cache.Delete(cacheKey);
             }
         }
 
@@ -43,27 +41,22 @@ namespace MbCache.Logic
         {
             var memberInfo = ExpressionHelper.MemberName(method.Body);
             var type = typeof (T);
-            log.Debug("Invalidating cache entries for " + type + "." + memberInfo.Name + "()");
             _cache.Delete(_cacheKey.CacheKey(type, memberInfo));
         }
 
-        private T createInstance<T>(params object[] ctorParameters)
+        private T createInstance<T>()
         {
             var type = typeof(T);
             var data = _methods[type];
             var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, type);
             var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(data.Methods));
-            options.AddMixinInstance(createCachingComponent(data));
-            if(type.IsInterface)
-            {
-                return (T)_generator.CreateInterfaceProxyWithTarget(typeof(T), Activator.CreateInstance(data.ConcreteType, ctorParameters), options, cacheInterceptor);
-            }
-            return (T)_generator.CreateClassProxy(type, options, ctorParameters, cacheInterceptor);
+            options.AddMixinInstance(createCachingComponent(type, data));
+            return (T)_generator.CreateInterfaceProxyWithTarget(type, data.CtorDelegate.DynamicInvoke(), options, cacheInterceptor);
         }
 
-        private static ICachingComponent createCachingComponent(ImplementationAndMethods details)
+        private ICachingComponent createCachingComponent(Type type, ImplementationAndMethods details)
         {
-            var ret = new CachingComponent
+            var ret = new CachingComponent(_cache, _cacheKey, type, details)
                           {
                               UniqueId = details.CachePerInstance ? Guid.NewGuid().ToString() : "Global"
                           };

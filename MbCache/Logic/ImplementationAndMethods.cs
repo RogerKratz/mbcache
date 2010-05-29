@@ -6,14 +6,14 @@ namespace MbCache.Logic
 {
     public class ImplementationAndMethods
     {
-        public ImplementationAndMethods(Type concreteType)
+        public ImplementationAndMethods(Delegate ctorDelegate)
         {
             Methods = new HashSet<MethodInfo>();
-            ConcreteType = concreteType;
+            CtorDelegate = ctorDelegate;
         }
 
         public ICollection<MethodInfo> Methods { get; private set; }
-        public Type ConcreteType { get; private set; }
+        public Delegate CtorDelegate { get; private set; }
         public bool CachePerInstance { get; set; }
     }
 }

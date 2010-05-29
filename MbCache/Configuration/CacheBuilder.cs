@@ -21,22 +21,20 @@ namespace MbCache.Configuration
         }
 
 
-        public IFluentBuilder<T> ForClass<T>()
+        public IFluentBuilder<T> For<T>(Func<T> ctorDelegate)
         {
-            return createFluentBuilder<T>(typeof(T));
+            var type = typeof (T);
+            if(!type.IsInterface)
+                throw new ArgumentException("You need to explicitly declare an interface for " + type);
+            return createFluentBuilder(ctorDelegate);
         }
 
-        public IFluentBuilder<T> ForInterface<T, TImpl>()
-        {
-            return createFluentBuilder<T>(typeof(TImpl));
-        }
-
-        private IFluentBuilder<T> createFluentBuilder<T>(Type concreteType)
+        private IFluentBuilder<T> createFluentBuilder<T>(Func<T> ctorDelegate)
         {
             var type = typeof (T);
             if (_cachedMethods.ContainsKey(type))
                 throw new ArgumentException("Type " + type + " is already in CacheBuilder");
-            var implAndDetails = new ImplementationAndMethods(concreteType);
+            var implAndDetails = new ImplementationAndMethods(ctorDelegate);
             _cachedMethods[type] = implAndDetails;
             var fluentBuilder = new FluentBuilder<T>(implAndDetails);
             return fluentBuilder;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Castle.Core.Interceptor;
 using log4net;
+using MbCache.Configuration;
 
 namespace MbCache.Logic
 {
@@ -12,25 +13,27 @@ namespace MbCache.Logic
 
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
-        private readonly Type _orgType;
+        private readonly Type _type;
 
-        public CacheInterceptor(ICache cache, IMbCacheKey cacheKey, Type orgType)
+        public CacheInterceptor(ICache cache, IMbCacheKey cacheKey, Type type)
         {
             _cache = cache;
             _cacheKey = cacheKey;
-            _orgType = orgType;
+            _type = type;
         }
 
         public void Intercept(IInvocation invocation)
         {
             var method = invocation.Method;
-            
-            var typeAndMethodName = "<" + _orgType + "." + method.Name + "()>";
+            var typeAndMethodName = "<" + _type + "." + method.Name + "()>";
             log.Debug("Entering " + typeAndMethodName);
 
-            var key = string.Concat(_cacheKey.CacheKey(_orgType, method),
-                        _cacheKey.AddForParameterValues(_orgType, method, invocation.Arguments),
-                        _cacheKey.AddForComponent((ICachingComponent)invocation.Proxy));
+            var proxy = (ICachingComponent) invocation.Proxy;
+            var arguments = invocation.Arguments;
+
+            var key = string.Concat(_cacheKey.CacheKey(_type, method),
+                                    _cacheKey.AddForComponent(proxy),
+                                    _cacheKey.AddForParameterValues(_type, method, arguments));
 
             log.Debug("Trying to find cache entry <" + key +">");
             var cachedValue = _cache.Get(key);

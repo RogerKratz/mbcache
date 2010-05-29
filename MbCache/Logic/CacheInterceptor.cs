@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Castle.Core.Interceptor;
 using log4net;
-using MbCache.Configuration;
 
 namespace MbCache.Logic
 {

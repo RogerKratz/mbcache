@@ -1,4 +1,3 @@
-using System;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.DefaultImpl;
@@ -18,34 +17,35 @@ namespace MbCacheTest.Logic
         {
             var builder = new CacheBuilder();
 
-            builder.ForClass<ObjectReturningNewGuids>()
-                    .CacheMethod(c => c.CachedMethod())
-                    .PerInstance();
-            builder.ForInterface<IObjectReturningNewGuids, ObjectReturningNewGuids>()
+            builder.For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
                     .CacheMethod(c => c.CachedMethod())
                     .PerInstance();
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
-        [Test]
-        public void Class_DifferentObjectsHasTheirOwnCache()
-        {
-            var obj = factory.Create<ObjectReturningNewGuids>();
-            var obj2 = factory.Create<ObjectReturningNewGuids>();
-
-            Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
-            Assert.AreNotEqual(obj.CachedMethod(), obj2.CachedMethod());
-        }
 
         [Test]
-        public void Interface_DifferentObjectsHasTheirOwnCache()
+        public void DifferentObjectsHasTheirOwnCache()
         {
             var obj = factory.Create<IObjectReturningNewGuids>();
             var obj2 = factory.Create<IObjectReturningNewGuids>();
 
             Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.CachedMethod(), obj2.CachedMethod());
+        }
+
+        [Test]
+        public void InvalidateCachingComponent()
+        {
+            var obj = factory.Create<IObjectReturningNewGuids>();
+            var obj2 = factory.Create<IObjectReturningNewGuids>();
+            var value = obj.CachedMethod();
+            var value2 = obj2.CachedMethod();
+
+            ((ICachingComponent)obj).Invalidate();
+            Assert.AreNotEqual(value, obj.CachedMethod());
+            Assert.AreEqual(value2, obj2.CachedMethod());
         }
     }
 }

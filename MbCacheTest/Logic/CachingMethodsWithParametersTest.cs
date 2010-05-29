@@ -16,53 +16,28 @@ namespace MbCacheTest.Logic
         {
             var builder = new CacheBuilder();
 
-            builder.ForClass<ObjectWithParametersOnCachedMethod>()
-                .CacheMethod(c => c.CachedMethod(null));
-            builder.ForInterface<IObjectWithParametersOnCachedMethod, ObjectWithParametersOnCachedMethod>()
+            builder.For<IObjectWithParametersOnCachedMethod>(() => new ObjectWithParametersOnCachedMethod())
                 .CacheMethod(c => c.CachedMethod(null));
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]
-        public void Class_VerifySameParameterGivesCacheHit()
-        {
-            Assert.AreEqual(factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod("hej"), 
-                            factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod("hej"));
-        }
-
-        [Test]
-        public void Interface_VerifySameParameterGivesCacheHit()
+        public void VerifySameParameterGivesCacheHit()
         {
             Assert.AreEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("hej"),
                             factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("hej"));
         }
 
         [Test]
-        public void Class_VerifyDifferentParameterGivesNoCacheHit()
-        {
-            Assert.AreNotEqual(factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod("roger"),
-                            factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
-        }
-
-        [Test]
-        public void Interface_VerifyDifferentParameterGivesNoCacheHit()
+        public void VerifyDifferentParameterGivesNoCacheHit()
         {
             Assert.AreNotEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("roger"),
                             factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
         }
 
         [Test]
-        public void Class_NullAsParameter()
-        {
-            Assert.AreNotEqual(factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod(null),
-                factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
-            Assert.AreEqual(factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod(null),
-                factory.Create<ObjectWithParametersOnCachedMethod>().CachedMethod(null));
-        }
-
-        [Test]
-        public void Interface_NullAsParameter()
+        public void NullAsParameter()
         {
             Assert.AreNotEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null),
                 factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
@@ -70,18 +45,8 @@ namespace MbCacheTest.Logic
                 factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null));
         }
 
-
         [Test]
-        public void Class_InvalidateOnTypeWorks()
-        {
-            var obj = factory.Create<ObjectWithParametersOnCachedMethod>();
-            var value = obj.CachedMethod("hej");
-            factory.Invalidate<ObjectWithParametersOnCachedMethod>();
-            Assert.AreNotEqual(value, obj.CachedMethod("hej"));
-        }
-
-        [Test]
-        public void Interface_InvalidateOnTypeWorks()
+        public void InvalidateOnTypeWorks()
         {
             var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
             var value = obj.CachedMethod("hej");
@@ -90,18 +55,7 @@ namespace MbCacheTest.Logic
         }
 
         [Test]
-        public void Class_InvalidateOnMethodWorks()
-        {
-            var obj = factory.Create<ObjectWithParametersOnCachedMethod>();
-            var value = obj.CachedMethod("hej");
-            var value2 = obj.CachedMethod("hej2");
-            factory.Invalidate<ObjectWithParametersOnCachedMethod>(c=>c.CachedMethod("hej"));
-            Assert.AreNotEqual(value, obj.CachedMethod("hej"));
-            Assert.AreNotEqual(value2, obj.CachedMethod("hej2")); //todo: fix this later
-        }
-
-        [Test]
-        public void Interface_InvalidateOnMethodWorks()
+        public void InvalidateOnMethodWorks()
         {
             var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
             var value = obj.CachedMethod("hej");

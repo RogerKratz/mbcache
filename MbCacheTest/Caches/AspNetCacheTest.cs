@@ -15,7 +15,7 @@ namespace MbCacheTest.Caches
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.ForClass<ObjectReturningNewGuids>()
+            builder.For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
                 .CacheMethod(c => c.CachedMethod());
 
             factory = builder.BuildFactory(new AspNetCacheFactory(1), new ToStringMbCacheKey());
@@ -24,17 +24,17 @@ namespace MbCacheTest.Caches
         [Test]
         public void VerifyCache()
         {
-            var value = factory.Create<ObjectReturningNewGuids>().CachedMethod();
-            Assert.AreEqual(value, factory.Create<ObjectReturningNewGuids>().CachedMethod());
+            var value = factory.Create<IObjectReturningNewGuids>().CachedMethod();
+            Assert.AreEqual(value, factory.Create<IObjectReturningNewGuids>().CachedMethod());
         }
 
         [Test]
         public void CanInvalidateInvalidatedEntry()
         {
-            var value = factory.Create<ObjectReturningNewGuids>().CachedMethod();
-            factory.Invalidate<ObjectReturningNewGuids>();
-            factory.Invalidate<ObjectReturningNewGuids>();
-            Assert.AreNotEqual(value, factory.Create<ObjectReturningNewGuids>().CachedMethod());
+            var value = factory.Create<IObjectReturningNewGuids>().CachedMethod();
+            factory.Invalidate<IObjectReturningNewGuids>();
+            factory.Invalidate<IObjectReturningNewGuids>();
+            Assert.AreNotEqual(value, factory.Create<IObjectReturningNewGuids>().CachedMethod());
         }
     }
 }

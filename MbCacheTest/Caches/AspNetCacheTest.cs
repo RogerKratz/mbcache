@@ -15,7 +15,8 @@ namespace MbCacheTest.Caches
         public void Setup()
         {
             var builder = new CacheBuilder();
-            builder.For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
+            builder
+                .For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
                 .CacheMethod(c => c.CachedMethod());
 
             factory = builder.BuildFactory(new AspNetCacheFactory(1), new ToStringMbCacheKey());

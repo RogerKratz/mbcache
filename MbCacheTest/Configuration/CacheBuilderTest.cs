@@ -21,7 +21,8 @@ namespace MbCacheTest.Configuration
         [Test]
         public void OnlyDeclareInterfaceOnce()
         {
-            builder.For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
+            builder
+                .For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
                 .CacheMethod(c => c.CachedMethod());
             Assert.Throws<ArgumentException>(()
                                              =>

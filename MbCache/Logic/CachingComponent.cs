@@ -10,7 +10,7 @@ namespace MbCache.Logic
         private readonly Type _definedType;
         private readonly ImplementationAndMethods _details;
         private IEnumerable<string> _keysForThisComponent;
-        private object lockObject =new object();
+        private readonly object lockObject =new object();
 
         public CachingComponent(ICache cache, 
                                 IMbCacheKey cacheKey,

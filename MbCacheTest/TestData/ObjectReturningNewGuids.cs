@@ -11,6 +11,7 @@ namespace MbCacheTest.TestData
 
     public class ObjectReturningNewGuids : IObjectReturningNewGuids
     {
+
         public virtual Guid CachedMethod()
         {
             return Guid.NewGuid();

@@ -21,7 +21,9 @@ namespace MbCache.Logic
 
         public void NonVirtualMemberNotification(Type type, MemberInfo memberInfo)
         {
-            throw new ArgumentException("Method " + memberInfo.Name + " on type " + type + " must be virtual.");
+            var methodInfo = memberInfo as MethodInfo;
+            if(methodInfo!=null && isMethodMarkedForCaching(methodInfo))
+                throw new ArgumentException("Method " + memberInfo.Name + " on type " + type + " must be virtual.");
         }
 
         public void MethodsInspected()

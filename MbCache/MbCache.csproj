@@ -57,6 +57,7 @@
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />
     <Compile Include="Configuration\IFluentBuilder.cs" />
+    <Compile Include="Configuration\IProxyFramework.cs" />
     <Compile Include="Configuration\MbCacheKeyBase.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="DefaultImpl\AspNetCache.cs" />

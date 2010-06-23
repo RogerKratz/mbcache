@@ -22,9 +22,14 @@ namespace MbCache.Logic
             _methods = methods;
         }
 
-        public T Create<T>()
+        public T Create<T>(params object[] parameters)
         {
-            return createInstance<T>();
+            var type = typeof(T);
+            var data = _methods[type];
+            var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, type);
+            var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(data.Methods));
+            options.AddMixinInstance(createCachingComponent(type, data));
+            return (T)_generator.CreateClassProxy(data.ConcreteType, options, parameters, cacheInterceptor);
         }
 
         public void Invalidate<T>()
@@ -40,19 +45,10 @@ namespace MbCache.Logic
         public void Invalidate<T>(Expression<Func<T, object>> method)
         {
             var memberInfo = ExpressionHelper.MemberName(method.Body);
-            var type = typeof (T);
+            var type = typeof (T); 
             _cache.Delete(_cacheKey.CacheKey(type, memberInfo));
         }
 
-        private T createInstance<T>()
-        {
-            var type = typeof(T);
-            var data = _methods[type];
-            var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, type);
-            var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(data.Methods));
-            options.AddMixinInstance(createCachingComponent(type, data));
-            return (T)_generator.CreateInterfaceProxyWithTarget(type, data.CtorDelegate.DynamicInvoke(), options, cacheInterceptor);
-        }
 
         private ICachingComponent createCachingComponent(Type type, ImplementationAndMethods details)
         {

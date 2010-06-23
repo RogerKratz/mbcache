@@ -18,9 +18,10 @@ namespace MbCacheTest.Logic
             var builder = new CacheBuilder();
 
             builder
-                .For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
+                .For<ObjectReturningNewGuids>()
                 .CacheMethod(c => c.CachedMethod())
-                .PerInstance();
+                .PerInstance()
+                .As<IObjectReturningNewGuids>();
 
             factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
         }

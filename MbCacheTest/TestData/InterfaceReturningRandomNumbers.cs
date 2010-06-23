@@ -9,7 +9,7 @@ namespace MbCacheTest.TestData
         int NonCachedNumber();
     }
 
-    public sealed class ReturningRandomNumbers : IReturningRandomNumbers
+    public class ReturningRandomNumbers : IReturningRandomNumbers
     {
         Random r = new Random();
 

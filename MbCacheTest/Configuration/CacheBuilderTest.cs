@@ -19,33 +19,38 @@ namespace MbCacheTest.Configuration
         }
 
         [Test]
-        public void OnlyDeclareInterfaceOnce()
+        public void OnlyDeclareTypeOnce()
         {
             builder
-                .For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
-                .CacheMethod(c => c.CachedMethod());
+                .For<ObjectReturningNewGuids>()
+                .CacheMethod(c => c.CachedMethod())
+                .As<IObjectReturningNewGuids>();
             Assert.Throws<ArgumentException>(()
                                              =>
                                             builder
-                                                .For<IObjectReturningNewGuids>(() => new ObjectReturningNewGuids())
-                                                .CacheMethod(c => c.CachedMethod2()));
+                                                .For<ObjectReturningNewGuids>()
+                                                .CacheMethod(c => c.CachedMethod2())
+                                                .As<IObjectReturningNewGuids>());
 
+        }
+
+        [Test]
+        public void ReturnTypeMustBeDeclared()
+        {
+            builder
+                .For<ObjectReturningNewGuids>()
+                .CacheMethod(c => c.CachedMethod());
+            Assert.Throws<InvalidOperationException>(() => builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey()));
         }
 
         [Test]
         public void FactoryReturnsNewInterfaceInstances()
         {
             builder
-                .For<IObjectWithIdentifier>(() => new ObjectWithIdentifier()); 
+                .For<ObjectWithIdentifier>()
+                .As<IObjectWithIdentifier>(); 
             var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
             Assert.AreNotEqual(factory.Create<IObjectWithIdentifier>().Id, factory.Create<IObjectWithIdentifier>().Id);
-        }
-
-        [Test]
-        public void CannotSkipInterface()
-        {
-            Assert.Throws<ArgumentException>(() =>
-                        builder.For(() => new ObjectWithIdentifier()));
         }
     }
 

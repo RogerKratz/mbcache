@@ -16,7 +16,7 @@ namespace MbCache.Core
     /// </remarks>
     public interface IMbCacheFactory
     {
-        T Create<T>();
+        T Create<T>(params object[] parameters);
         void Invalidate<T>();
         void Invalidate<T>(Expression<Func<T, object>> method);
     }

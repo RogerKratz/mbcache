@@ -7,5 +7,6 @@ namespace MbCache.Configuration
     {
         IFluentBuilder<T> CacheMethod(Expression<Func<T, object>> expression);
         IFluentBuilder<T> PerInstance();
+        void As<TInterface>();
     }
 }

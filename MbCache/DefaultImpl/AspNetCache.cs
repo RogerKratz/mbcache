@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
-using log4net;
 using MbCache.Logic;
 
 namespace MbCache.DefaultImpl
 {
     public class AspNetCache : ICache
     {
-        private static ILog log = LogManager.GetLogger(typeof(AspNetCache));
         private readonly int _timeoutMinutes;
         private readonly Cache cache;
 

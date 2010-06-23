@@ -52,6 +52,16 @@ namespace MbCacheTest.Configuration
             var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
             Assert.AreNotEqual(factory.Create<IObjectWithIdentifier>().Id, factory.Create<IObjectWithIdentifier>().Id);
         }
+
+        [Test]
+        public void CachedMethodNeedToBeVirtual()
+        {
+            Assert.Throws<InvalidOperationException>(() => 
+            builder
+                .For<HasNonVirtualMethod>()
+                .CacheMethod(m => m.DoIt())
+                ); 
+        }
     }
 
     public class ObjectWithIdentifier : IObjectWithIdentifier
@@ -67,5 +77,18 @@ namespace MbCacheTest.Configuration
     public interface IObjectWithIdentifier
     {
         Guid Id { get; }
+    }
+
+    public interface IHasNonVirtualMethod
+    {
+        int DoIt();
+    }
+
+    public class HasNonVirtualMethod : IHasNonVirtualMethod
+    {
+        public int DoIt()
+        {
+            return 0;
+        }
     }
 }

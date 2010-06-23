@@ -21,7 +21,7 @@ namespace MbCache.Configuration
         {
             var method = ExpressionHelper.MemberName(expression.Body);
             if(!method.IsVirtual || method.IsFinal)
-                throw new InvalidOperationException("Method " + method.Name + " must be virtual.");
+                throw new InvalidOperationException("Method " + method.Name + " on type " + method.DeclaringType.Name + " must be virtual.");
             _details.Methods.Add(method);
             return this;
         }

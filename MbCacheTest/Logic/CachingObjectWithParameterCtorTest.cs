@@ -48,7 +48,7 @@ namespace MbCacheTest.Logic
         }
 
         [Test]
-        public void VerifyNoCacheDifferentParameters()
+        public void VerifyCacheDifferentParameters()
         {
             Assert.AreEqual(factory.Create<IObjectWithCtorParameters>(4, 4).CachedMethod(),
                             factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod());

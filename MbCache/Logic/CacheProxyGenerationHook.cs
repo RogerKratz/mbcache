@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 
@@ -35,6 +36,23 @@ namespace MbCache.Logic
                     return true;
             }
             return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var casted = obj as CacheProxyGenerationHook;
+            if (casted == null)
+            {
+                return false;
+            }
+
+            return casted._methods.Equals(_methods);
+            
+        }
+
+        public override int GetHashCode()
+        {
+            return _methods.GetHashCode();
         }
     }
 }

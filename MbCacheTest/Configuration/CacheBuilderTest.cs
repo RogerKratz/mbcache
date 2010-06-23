@@ -44,6 +44,19 @@ namespace MbCacheTest.Configuration
         }
 
         [Test]
+        public void CreatingProxiesOfSameDeclaredTypeShouldReturnIdenticalTypes()
+        {
+            builder
+                .For<ObjectReturningNewGuids>()
+                .CacheMethod(c => c.CachedMethod())
+                .As<IObjectReturningNewGuids>();
+
+            var factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+
+            Assert.AreEqual(factory.Create<IObjectReturningNewGuids>().GetType(), factory.Create<IObjectReturningNewGuids>().GetType());
+        }
+
+        [Test]
         public void FactoryReturnsNewInterfaceInstances()
         {
             builder

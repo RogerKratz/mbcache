@@ -21,10 +21,17 @@ namespace MbCache.Logic
             _cache = cache;
             _cacheKey = cacheKey;
             _methods = methods;
-            var proxyFactoryFactory = new ProxyFactoryFactory();
-              
-            _proxyFactory = proxyFactoryFactory.CreateProxyFactory(proxyFactoryClass, cache, cacheKey);
+
+            _proxyFactory = createProxyFactory(proxyFactoryClass);
         }
+
+        private IProxyFactory createProxyFactory(string proxyFactoryClass)
+        {
+            var proxyFactoryType = Type.GetType(proxyFactoryClass, true, true);
+            var proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyFactoryType, _cache, _cacheKey);
+            return proxyFactory;
+        }
+
 
         public T Create<T>(params object[] parameters)
         {

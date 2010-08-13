@@ -14,13 +14,13 @@ namespace MbCacheTest.Caches
         [SetUp]
         public void Setup()
         {
-            var builder = new CacheBuilder();
+            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new AspNetCacheFactory(1), new ToStringMbCacheKey());
             builder
                 .For<ObjectReturningNewGuids>()
                 .CacheMethod(c => c.CachedMethod())
                 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new AspNetCacheFactory(1), new ToStringMbCacheKey());
+            factory = builder.BuildFactory();
         }
 
         [Test]

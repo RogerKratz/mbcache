@@ -15,7 +15,7 @@ namespace MbCacheTest.Configuration
         [SetUp]        
         public void Setup()
         {
-            builder=new CacheBuilder();
+            builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace MbCacheTest.Configuration
             builder
                 .For<ObjectReturningNewGuids>()
                 .CacheMethod(c => c.CachedMethod());
-            Assert.Throws<InvalidOperationException>(() => builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey()));
+            Assert.Throws<InvalidOperationException>(() => builder.BuildFactory());
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace MbCacheTest.Configuration
                 .CacheMethod(c => c.CachedMethod())
                 .As<IObjectReturningNewGuids>();
 
-            var factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
+            var factory = builder.BuildFactory();
 
             Assert.AreEqual(factory.Create<IObjectReturningNewGuids>().GetType(), factory.Create<IObjectReturningNewGuids>().GetType());
         }
@@ -62,7 +62,7 @@ namespace MbCacheTest.Configuration
             builder
                 .For<ObjectWithIdentifier>()
                 .As<IObjectWithIdentifier>();
-            var factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
+            var factory = builder.BuildFactory();
             Assert.AreNotEqual(factory.Create<IObjectWithIdentifier>().Id, factory.Create<IObjectWithIdentifier>().Id);
         }
 

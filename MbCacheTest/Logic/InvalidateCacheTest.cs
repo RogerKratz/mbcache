@@ -16,7 +16,7 @@ namespace MbCacheTest.Logic
         [SetUp]
         public void Setup()
         {
-            var builder = new CacheBuilder();
+            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
 
             builder
                 .For<ObjectReturningNewGuids>()
@@ -24,7 +24,7 @@ namespace MbCacheTest.Logic
                 .CacheMethod(c => c.CachedMethod2())
                 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory();
         }
 
 

@@ -8,22 +8,28 @@ namespace MbCache.Configuration
 {
     public class CacheBuilder
     {
+        private readonly string _proxyFactoryClass;
+        private readonly ICacheFactory _cacheFactory;
+        private readonly IMbCacheKey _keyBuilder;
         private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
         private readonly ICollection<ImplementationAndMethods> _details;
 
 
-        public CacheBuilder()
+        public CacheBuilder(string proxyFactoryClass,
+                                            ICacheFactory cacheFactory,
+                                            IMbCacheKey keyBuilder)
         {
+            _proxyFactoryClass = proxyFactoryClass;
+            _cacheFactory = cacheFactory;
+            _keyBuilder = keyBuilder;
             _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
             _details = new List<ImplementationAndMethods>();
         }
 
-        public IMbCacheFactory BuildFactory(string proxyFactoryClass,
-                                            ICacheFactory cacheFactory, 
-                                            IMbCacheKey keyBuilder)
+        public IMbCacheFactory BuildFactory()
         {
             checkAllImplementationAndMethodsAreOk();
-            return new MbCacheFactory(proxyFactoryClass, cacheFactory.Create(), keyBuilder, _cachedMethods);
+            return new MbCacheFactory(_proxyFactoryClass, _cacheFactory.Create(), _keyBuilder, _cachedMethods);
         }
 
         private void checkAllImplementationAndMethodsAreOk()

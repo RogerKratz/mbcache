@@ -15,14 +15,14 @@ namespace MbCacheTest.Logic
         [SetUp]
         public void Setup()
         {
-            var builder = new CacheBuilder();
+            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
 
             builder.For<ReturningRandomNumbers>()
                 .CacheMethod(c => c.CachedNumber())
                 .CacheMethod(c => c.CachedNumber2())
                 .As<IReturningRandomNumbers>();
 
-            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory();
         }
 
         [Test]

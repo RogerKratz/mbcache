@@ -16,14 +16,14 @@ namespace MbCacheTest.Logic
         [SetUp]
         public void Setup()
         {
-            var builder = new CacheBuilder();
+            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
 
             builder
                 .For<ObjectWithCtorParameters>()
                 .CacheMethod(c => c.CachedMethod())
                 .As<IObjectWithCtorParameters>();
 
-            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory();
         }
 
         [Test]

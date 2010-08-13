@@ -50,6 +50,7 @@
     <Compile Include="CacheForTest\TestCache.cs" />
     <Compile Include="CacheForTest\TestCacheFactory.cs" />
     <Compile Include="Caches\AspNetCacheTest.cs" />
+    <Compile Include="ConfigurationData.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
@@ -79,4 +80,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

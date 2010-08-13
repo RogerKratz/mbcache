@@ -22,7 +22,7 @@ namespace MbCacheTest.Logic
                 .CacheMethod(c => c.CachedNumber2())
                 .As<IReturningRandomNumbers>();
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]

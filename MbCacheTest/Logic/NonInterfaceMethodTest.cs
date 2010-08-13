@@ -21,7 +21,7 @@ namespace MbCacheTest.Logic
                 .For<ObjectWithNonInterfaceMethod>()
                 .As<IObjectWithNonInterfaceMethod>();
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
         [Test]

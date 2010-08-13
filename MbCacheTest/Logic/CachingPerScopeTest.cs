@@ -23,7 +23,7 @@ namespace MbCacheTest.Logic
                 .PerInstance()
                 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
 

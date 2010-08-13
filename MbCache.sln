@@ -4,11 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCache", "MbCache\MbCache.csproj", "{45BA5406-F8E5-4931-8114-FFFC821DE7A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCacheTest", "MbCacheTest\MbCacheTest.csproj", "{E6434E94-11CE-471C-9652-1571EB3A87C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFF76416-A68E-4A11-A46E-2C1B6C307F58} = {DFF76416-A68E-4A11-A46E-2C1B6C307F58}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D24957B8-C6D1-4F10-A48E-F637BF3F4D79}"
 	ProjectSection(SolutionItems) = preProject
 		BreakingChanges.txt = BreakingChanges.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCache.ProxyImpl.Castle", "MbCache.ProxyGenerator.Castle\MbCache.ProxyImpl.Castle.csproj", "{DFF76416-A68E-4A11-A46E-2C1B6C307F58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +29,10 @@ Global
 		{E6434E94-11CE-471C-9652-1571EB3A87C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6434E94-11CE-471C-9652-1571EB3A87C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6434E94-11CE-471C-9652-1571EB3A87C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -63,7 +63,6 @@
     <Compile Include="Logic\IMbCacheKey.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
-    <Compile Include="Logic\ProxyFactoryFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

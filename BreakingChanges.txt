@@ -1,4 +1,5 @@
 --- BREAKING CHANGES ---
 
 - TRUNK (compared to latest release) -
-None
+* A MbCache.Configuration.IProxyFactory needs to be provided when building the mbfactory. 
+This removes the strong dependency to Castle and other proxy framework can be used.

@@ -20,7 +20,7 @@ namespace MbCacheTest.Caches
                 .CacheMethod(c => c.CachedMethod())
                 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory(new AspNetCacheFactory(1), new ToStringMbCacheKey());
+            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new AspNetCacheFactory(1), new ToStringMbCacheKey());
         }
 
         [Test]

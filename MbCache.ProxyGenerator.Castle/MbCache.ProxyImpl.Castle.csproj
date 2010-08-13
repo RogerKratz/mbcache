@@ -5,15 +5,15 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{45BA5406-F8E5-4931-8114-FFFC821DE7A7}</ProjectGuid>
+    <ProjectGuid>{DFF76416-A68E-4A11-A46E-2C1B6C307F58}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MbCache</RootNamespace>
-    <AssemblyName>MbCache</AssemblyName>
+    <RootNamespace>MbCache.ProxyImpl.Castle</RootNamespace>
+    <AssemblyName>MbCache.ProxyImpl.Castle</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>mbcachekey.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>mbcacheProxyKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\log4net.dll</HintPath>
@@ -41,33 +49,22 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\CacheBuilder.cs" />
-    <Compile Include="Configuration\FluentBuilder.cs" />
-    <Compile Include="Configuration\IFluentBuilder.cs" />
-    <Compile Include="Configuration\IProxyFactory.cs" />
-    <Compile Include="Configuration\MbCacheKeyBase.cs" />
-    <Compile Include="Core\IMbCacheFactory.cs" />
-    <Compile Include="DefaultImpl\AspNetCache.cs" />
-    <Compile Include="DefaultImpl\AspNetCacheFactory.cs" />
-    <Compile Include="DefaultImpl\ToStringMbCacheKey.cs" />
-    <Compile Include="Logic\CachingComponent.cs" />
-    <Compile Include="Logic\ExpressionHelper.cs" />
-    <Compile Include="Logic\ICache.cs" />
-    <Compile Include="Logic\ICacheFactory.cs" />
-    <Compile Include="Logic\ICachingComponent.cs" />
-    <Compile Include="Logic\IMbCacheKey.cs" />
-    <Compile Include="Logic\ImplementationAndMethods.cs" />
-    <Compile Include="Logic\MbCacheFactory.cs" />
-    <Compile Include="Logic\ProxyFactoryFactory.cs" />
+    <Compile Include="CacheInterceptor.cs" />
+    <Compile Include="CacheProxyGenerationHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="mbcachekey.snk" />
+    <ProjectReference Include="..\MbCache\MbCache.csproj">
+      <Project>{45BA5406-F8E5-4931-8114-FFFC821DE7A7}</Project>
+      <Name>MbCache</Name>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mbcacheProxyKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -78,7 +75,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PostBuildEvent>xcopy $(TargetPath) $(ProjectDir)\..\mbcachetest\$(OutDir) /y
+xcopy $(ProjectDir)\..\dlls\castle.*  $(ProjectDir)\..\mbcachetest\$(OutDir) /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

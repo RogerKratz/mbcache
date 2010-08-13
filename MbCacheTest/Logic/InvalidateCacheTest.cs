@@ -24,7 +24,7 @@ namespace MbCacheTest.Logic
                 .CacheMethod(c => c.CachedMethod2())
                 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory(new TestCacheFactory(), new ToStringMbCacheKey());
+            factory = builder.BuildFactory(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
         }
 
 

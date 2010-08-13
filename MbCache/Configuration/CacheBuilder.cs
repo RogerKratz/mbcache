@@ -18,10 +18,12 @@ namespace MbCache.Configuration
             _details = new List<ImplementationAndMethods>();
         }
 
-        public IMbCacheFactory BuildFactory(ICacheFactory cacheFactory, IMbCacheKey keyBuilder)
+        public IMbCacheFactory BuildFactory(string proxyFactoryClass,
+                                            ICacheFactory cacheFactory, 
+                                            IMbCacheKey keyBuilder)
         {
             checkAllImplementationAndMethodsAreOk();
-            return new MbCacheFactory(cacheFactory.Create(), keyBuilder, _cachedMethods);
+            return new MbCacheFactory(proxyFactoryClass, cacheFactory.Create(), keyBuilder, _cachedMethods);
         }
 
         private void checkAllImplementationAndMethodsAreOk()

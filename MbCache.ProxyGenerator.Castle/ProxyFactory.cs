@@ -18,16 +18,6 @@ namespace MbCache.ProxyImpl.Castle
             _mbCacheKey = mbCacheKey;
         }
 
-        public ProxyFactory()
-        {
-            
-        }
-
-        public void SetGlobalData(ICache cache, IMbCacheKey mbCacheKey)
-        {
-            throw new NotImplementedException();
-        }
-
         public T CreateProxy<T>(ImplementationAndMethods methodData,
                                 params object[] parameters)
         {

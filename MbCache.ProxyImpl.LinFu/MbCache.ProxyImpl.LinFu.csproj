@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CacheInterceptorAndComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyFactory.cs" />
   </ItemGroup>
@@ -62,4 +63,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(TargetPath) $(ProjectDir)\..\mbcachetest\$(OutDir) /y
+xcopy $(ProjectDir)\..\dlls\linfu.*  $(ProjectDir)\..\mbcachetest\$(OutDir) /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

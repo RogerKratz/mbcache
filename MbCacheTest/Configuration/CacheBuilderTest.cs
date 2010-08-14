@@ -63,7 +63,10 @@ namespace MbCacheTest.Configuration
                 .For<ObjectWithIdentifier>()
                 .As<IObjectWithIdentifier>();
             var factory = builder.BuildFactory();
-            Assert.AreNotEqual(factory.Create<IObjectWithIdentifier>().Id, factory.Create<IObjectWithIdentifier>().Id);
+            var obj1 = factory.Create<IObjectWithIdentifier>();
+            var obj2 = factory.Create<IObjectWithIdentifier>();
+            Assert.AreNotSame(obj1, obj2);
+            Assert.AreNotEqual(obj1.Id, obj2.Id);
         }
 
         [Test]

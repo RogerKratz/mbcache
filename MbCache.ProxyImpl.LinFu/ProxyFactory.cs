@@ -18,7 +18,8 @@ namespace MbCache.ProxyImpl.LinFu
 
         public T CreateProxy<T>(ImplementationAndMethods methodData, params object[] parameters)
         {
-            throw new NotImplementedException();
+            var proxyFactory = new global::LinFu.DynamicProxy.ProxyFactory();
+            return (T)proxyFactory.CreateProxy(methodData.ConcreteType, new CacheInterceptorAndComponent(_cache, _mbCacheKey, typeof(T), methodData, parameters), typeof(ICachingComponent));
         }
     }
 }

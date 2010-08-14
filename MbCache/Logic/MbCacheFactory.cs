@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using log4net;
 using MbCache.Configuration;
 using MbCache.Core;
 
@@ -8,10 +9,12 @@ namespace MbCache.Logic
 {
     public class MbCacheFactory : IMbCacheFactory
     {
+        private static ILog log = LogManager.GetLogger(typeof(MbCacheFactory));
         private readonly IProxyFactory _proxyFactory;
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly IDictionary<Type, ImplementationAndMethods> _methods;
+
 
         public MbCacheFactory(string proxyFactoryClass,
                             ICache cache, 
@@ -29,6 +32,7 @@ namespace MbCache.Logic
         {
             var proxyFactoryType = Type.GetType(proxyFactoryClass, true, true);
             var proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyFactoryType, _cache, _cacheKey);
+            log.Debug("Successfully created type " + proxyFactory + " as IProxyFactory.");
             return proxyFactory;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 
@@ -29,12 +30,7 @@ namespace MbCache.ProxyImpl.Castle
 
         private bool isMethodMarkedForCaching(MethodInfo key)
         {
-            foreach (var methodInfo in _methods)
-            {
-                if (methodInfo.Equals(key))
-                    return true;
-            }
-            return false;
+            return _methods.Contains(key);
         }
 
         public override bool Equals(object obj)

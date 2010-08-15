@@ -7,28 +7,29 @@ using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.LinFu
 {
-    public class CacheInterceptorAndComponent : CachingComponent, IInterceptor
+    public class CacheInterceptor : IInterceptor
     {
-        private static ILog log = LogManager.GetLogger(typeof(CacheInterceptorAndComponent));
+        private static ILog log = LogManager.GetLogger(typeof(CacheInterceptor));
 
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly Type _type;
         private readonly ImplementationAndMethods _methodData;
         private readonly object _target;
+        private readonly ICachingComponent _cachingComponent;
 
-        public CacheInterceptorAndComponent(ICache cache, 
+        public CacheInterceptor(ICache cache, 
                                                 IMbCacheKey cacheKey, 
                                                 Type type,
                                                 ImplementationAndMethods methodData,
                                                 params object[] ctorParameters) 
-            : base(cache, cacheKey, type, methodData)
         {
             _cache = cache;
             _cacheKey = cacheKey;
             _type = type;
             _methodData = methodData;
             _target = createTarget(ctorParameters);
+            _cachingComponent = new CachingComponent(cache, cacheKey, type, methodData);
         }
 
         private object createTarget(object[] ctorParameters)
@@ -71,7 +72,7 @@ namespace MbCache.ProxyImpl.LinFu
             var arguments = info.Arguments;
 
             var key = string.Concat(_cacheKey.CacheKey(_type, method),
-                                    _cacheKey.AddForComponent(this),
+                                    _cacheKey.AddForComponent(_cachingComponent),
                                     _cacheKey.AddForParameterValues(_type, method, arguments));
 
             log.Debug("Trying to find cache entry <" + key + ">");
@@ -95,19 +96,11 @@ namespace MbCache.ProxyImpl.LinFu
 
         private object callOriginalMethod(InvocationInfo info)
         {
-            try
+            if(info.TargetMethod.DeclaringType.Equals(typeof(ICachingComponent)))
             {
-                return info.TargetMethod.Invoke(_target, info.Arguments);
+                return info.TargetMethod.Invoke(_cachingComponent, info.Arguments);
             }
-            catch (TargetException)
-            {
-                if(log.IsDebugEnabled)
-                {
-                    var logMess = "Cannot find method " + info.TargetMethod + " on type " + info.Target + ". Trying to call CachingComponent instead.";
-                    log.Debug(logMess);                    
-                }
-                return info.TargetMethod.Invoke(this, info.Arguments);
-            }
+            return info.TargetMethod.Invoke(_target, info.Arguments);
         }
     }
 }

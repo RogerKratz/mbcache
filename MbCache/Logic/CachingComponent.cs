@@ -21,10 +21,10 @@ namespace MbCache.Logic
             _cacheKey = cacheKey;
             _definedType = definedType;
             _details = details;
-            UniqueId = "Global";
+            UniqueId = details.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
         }
 
-        public string UniqueId { get; set; }
+        public string UniqueId { get; private set; }
 
         public IEnumerable<string> KeysForThisComponent
         {

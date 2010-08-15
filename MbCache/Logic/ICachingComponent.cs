@@ -2,7 +2,7 @@ namespace MbCache.Logic
 {
     public interface ICachingComponent
     {
-        string UniqueId { get; set; }
+        string UniqueId { get; }
         void Invalidate();
     }
 }

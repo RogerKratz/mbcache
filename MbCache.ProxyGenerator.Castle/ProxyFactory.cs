@@ -31,11 +31,7 @@ namespace MbCache.ProxyImpl.Castle
 
         private ICachingComponent createCachingComponent(Type type, ImplementationAndMethods details)
         {
-            var ret = new CachingComponent(_cache, _mbCacheKey, type, details)
-            {
-                UniqueId = details.CachePerInstance ? Guid.NewGuid().ToString() : "Global"
-            };
-            return ret;
+            return new CachingComponent(_cache, _mbCacheKey, type, details);
         }
     }
 }

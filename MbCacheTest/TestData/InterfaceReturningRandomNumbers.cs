@@ -11,7 +11,12 @@ namespace MbCacheTest.TestData
 
     public class ReturningRandomNumbers : IReturningRandomNumbers
     {
-        Random r = new Random();
+        private Random r = new Random();
+
+        public ReturningRandomNumbers()
+        {
+            
+        }
 
         public virtual int CachedNumber()
         {

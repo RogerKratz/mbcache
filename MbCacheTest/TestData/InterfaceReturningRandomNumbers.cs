@@ -28,7 +28,7 @@ namespace MbCacheTest.TestData
             return r.Next();
         }
 
-        public int NonCachedNumber()
+        public virtual int NonCachedNumber()
         {
             return r.Next();
         }

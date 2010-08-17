@@ -20,21 +20,18 @@ namespace MbCache.Configuration
 
         private void checkAccessibleMembersAreVirtual(Type type)
         {
-            MemberInfo[] members = type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var members = type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
             foreach (var member in members)
             {
                 if (member is PropertyInfo)
                 {
                     var property = (PropertyInfo)member;
-                    MethodInfo[] accessors = property.GetAccessors(false);
+                    var accessors = property.GetAccessors(false);
 
-                    if (accessors != null)
+                    foreach (var accessor in accessors)
                     {
-                        foreach (var accessor in accessors)
-                        {
-                            checkMethodIsVirtual(type, accessor);
-                        }
+                        checkMethodIsVirtual(type, accessor);
                     }
                 }
                 else if (member is MethodInfo)
@@ -66,8 +63,6 @@ namespace MbCache.Configuration
                             _proxyFactory.Name + " does not allow this.");
             }
         }
-
-
 
         private static bool isProxeable(MethodInfo method)
         {

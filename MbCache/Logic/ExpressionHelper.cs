@@ -10,15 +10,6 @@ namespace MbCache.Logic
         {
             switch (expression.NodeType)
             {
-                //case ExpressionType.MemberAccess:
-                //    var memberExpression = (MemberExpression)expression;
-                //    var supername = MemberName(memberExpression.Expression);
-
-                //    if (String.IsNullOrEmpty(supername))
-                //        return memberExpression.Member.Name;
-
-                //    return String.Concat(supername, '.', memberExpression.Member.Name);
-
                 case ExpressionType.Call:
                     var callExpression = (MethodCallExpression)expression;
                     return callExpression.Method;

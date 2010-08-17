@@ -9,14 +9,12 @@ namespace MbCache.Logic
 {
     public class MbCacheFactory : IMbCacheFactory
     {
-        private static ILog log = LogManager.GetLogger(typeof(MbCacheFactory));
         private readonly IProxyFactory _proxyFactory;
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
-
-        public MbCacheFactory(string proxyFactoryClass,
+        public MbCacheFactory(IProxyFactory proxyFactory,
                             ICache cache, 
                             IMbCacheKey cacheKey,
                             IDictionary<Type, ImplementationAndMethods> methods)
@@ -25,17 +23,8 @@ namespace MbCache.Logic
             _cacheKey = cacheKey;
             _methods = methods;
 
-            _proxyFactory = createProxyFactory(proxyFactoryClass);
+            _proxyFactory = proxyFactory;
         }
-
-        private IProxyFactory createProxyFactory(string proxyFactoryClass)
-        {
-            var proxyFactoryType = Type.GetType(proxyFactoryClass, true, true);
-            var proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyFactoryType, _cache, _cacheKey);
-            log.Debug("Successfully created type " + proxyFactory + " as IProxyFactory.");
-            return proxyFactory;
-        }
-
 
         public T Create<T>(params object[] parameters)
         {

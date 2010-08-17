@@ -35,6 +35,31 @@ namespace MbCacheTest.Configuration
         }
 
         [Test]
+        public void ProxyFactoryCanBeCreated()
+        {
+            StringAssert.Contains(builder.ProxyFactory.GetType().ToString(), ConfigurationData.ProxyImpl);
+        }
+
+        [Test]
+        public void NonVirtualNonCachedMethod()
+        {
+            if(builder.ProxyFactory.AllowNonVirtualMember)
+            {
+                Assert.DoesNotThrow(() => 
+                                builder
+                                    .For<HasNonVirtualMethod>()
+                                );
+            }
+            else
+            {
+                Assert.Throws<InvalidOperationException>(() =>
+                                builder
+                                    .For<HasNonVirtualMethod>()
+                                );                
+            }
+        }
+
+        [Test]
         public void ReturnTypeMustBeDeclared()
         {
             builder

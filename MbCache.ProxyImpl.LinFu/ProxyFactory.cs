@@ -1,5 +1,4 @@
 using System;
-using LinFu.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Logic;
 
@@ -7,8 +6,8 @@ namespace MbCache.ProxyImpl.LinFu
 {
     public class ProxyFactory : IProxyFactory
     {
-        private ICache _cache;
-        private IMbCacheKey _mbCacheKey;
+        private readonly ICache _cache;
+        private readonly IMbCacheKey _mbCacheKey;
 
         public ProxyFactory(ICache cache,
                             IMbCacheKey mbCacheKey)
@@ -21,6 +20,16 @@ namespace MbCache.ProxyImpl.LinFu
         {
             var proxyFactory = new global::LinFu.DynamicProxy.ProxyFactory();
             return (T)proxyFactory.CreateProxy(methodData.ConcreteType, new CacheInterceptor(_cache, _mbCacheKey, typeof(T), methodData, parameters), typeof(ICachingComponent));
+        }
+
+        public bool AllowNonVirtualMember
+        {
+            get { return false; }
+        }
+
+        public string Name
+        {
+            get { return "Linfu"; }
         }
     }
 }

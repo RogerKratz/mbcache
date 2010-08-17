@@ -2,7 +2,7 @@ namespace MbCacheTest.TestData
 {
     public class ObjectWithNonInterfaceMethod : IObjectWithNonInterfaceMethod
     {
-        public int ReturnsFour()
+        public virtual int ReturnsFour()
         {
             return 4;
         }

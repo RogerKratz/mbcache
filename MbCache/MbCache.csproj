@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CacheBuilder.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Configuration\IFluentBuilder.cs" />
     <Compile Include="Configuration\IProxyFactory.cs" />
     <Compile Include="Configuration\MbCacheKeyBase.cs" />
+    <Compile Include="Configuration\ProxyValidator.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="DefaultImpl\AspNetCache.cs" />
     <Compile Include="DefaultImpl\AspNetCacheFactory.cs" />

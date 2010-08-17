@@ -3,17 +3,36 @@ using MbCache.Logic;
 namespace MbCache.Configuration
 {
     /// <summary>
-    /// Creates the proxies. Handled in external dll to make
-    /// mbcache unaware of underlying proxy framework.
-    /// 
+    /// Creates the proxy. 
+    ///  
     /// To implementors
     /// The implementation of this interface needs a ctor with this signature
     /// public ProxyFactory(ICache cache, IMbCacheKey mbCacheKey)
-    /// 
     /// </summary>
     public interface IProxyFactory
     {
-        T CreateProxy<T>(ImplementationAndMethods methodData,
-                            params object[] parameters);
+        /// <summary>
+        /// Creates the proxy.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="methodData">The method data.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        T CreateProxy<T>(ImplementationAndMethods methodData, params object[] parameters);
+
+        /// <summary>
+        /// Gets a value indicating whether [allow non virtual member]
+        /// for methods not marked for caching.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if [allow non virtual member]; otherwise, <c>false</c>.
+        /// </value>
+        bool AllowNonVirtualMember { get; }
+
+        /// <summary>
+        /// Gets the name of the proxy framework.
+        /// </summary>
+        /// <value>The name.</value>
+        string Name { get; }
     }
 }

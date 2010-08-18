@@ -28,11 +28,5 @@ namespace MbCache.Configuration
         /// 	<c>true</c> if [allow non virtual member]; otherwise, <c>false</c>.
         /// </value>
         bool AllowNonVirtualMember { get; }
-
-        /// <summary>
-        /// Gets the name of the proxy framework.
-        /// </summary>
-        /// <value>The name.</value>
-        string Name { get; }
     }
 }

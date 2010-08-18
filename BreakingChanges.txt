@@ -4,7 +4,7 @@
 
 - TRUNK (compared to latest release) -
 
-
+* IProxyFactory.Name removed
 
 - VERSION 0.6 -
 

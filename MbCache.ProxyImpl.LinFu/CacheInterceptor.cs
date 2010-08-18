@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using LinFu.DynamicProxy;
 using log4net;
 using MbCache.Logic;

@@ -7,7 +7,7 @@ namespace MbCache.ProxyImpl.Castle
 {
     public class CacheInterceptor : IInterceptor
     {
-        private static ILog log = LogManager.GetLogger(typeof (CacheInterceptor));
+        private static readonly ILog log = LogManager.GetLogger(typeof (CacheInterceptor));
 
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;

@@ -54,7 +54,7 @@ namespace MbCache.Configuration
 
         private void checkAllImplementationAndMethodsAreOk()
         {
-            if(_details.Count > _cachedMethods.Count)
+            if (_details.Count > _cachedMethods.Count)
             {
                 var excText = new StringBuilder();
                 excText.AppendLine("Missing return type (.As) for");
@@ -63,7 +63,7 @@ namespace MbCache.Configuration
                 {
                     if (!fullyDefined.Contains(declared))
                         excText.AppendLine(declared.ConcreteType.ToString());
-                }   
+                }
                 throw new InvalidOperationException(excText.ToString());
             }
         }
@@ -71,7 +71,7 @@ namespace MbCache.Configuration
 
         public IFluentBuilder<T> For<T>()
         {
-            Type concreteType = typeof(T);
+            var concreteType = typeof(T);
             _proxyValidator.Validate(concreteType);
             var details = new ImplementationAndMethods(concreteType);
             _details.Add(details);

@@ -49,7 +49,7 @@ namespace MbCache.Configuration
                     if (memberField.IsPublic || memberField.IsAssembly || memberField.IsFamilyOrAssembly)
                     {
                         throw new InvalidOperationException("Type " + type + "'s field " + member.Name + " is public. Proxy factory " +
-                                            _proxyFactory.Name + " does not allow this.");
+                                            _proxyFactory.GetType().FullName + " does not allow this.");
                     }
                 }
             }
@@ -60,7 +60,7 @@ namespace MbCache.Configuration
             if (!isProxeable(method))
             {
                 throw new InvalidOperationException("Type " + type + "'s member " + method.Name + " is non virtual. Proxy factory " +
-                            _proxyFactory.Name + " does not allow this.");
+                            _proxyFactory.GetType().FullName + " does not allow this.");
             }
         }
 

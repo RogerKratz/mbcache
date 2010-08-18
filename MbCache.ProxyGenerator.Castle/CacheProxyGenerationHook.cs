@@ -36,13 +36,7 @@ namespace MbCache.ProxyImpl.Castle
         public override bool Equals(object obj)
         {
             var casted = obj as CacheProxyGenerationHook;
-            if (casted == null)
-            {
-                return false;
-            }
-
-            return casted._methods.Equals(_methods);
-            
+            return casted != null && casted._methods.Equals(_methods);
         }
 
         public override int GetHashCode()

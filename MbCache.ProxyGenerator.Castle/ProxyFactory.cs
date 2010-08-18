@@ -34,11 +34,6 @@ namespace MbCache.ProxyImpl.Castle
             get { return true; }
         }
 
-        public string Name
-        {
-            get { return "Castle"; }
-        }
-
         private ICachingComponent createCachingComponent(Type type, ImplementationAndMethods details)
         {
             return new CachingComponent(_cache, _mbCacheKey, type, details);

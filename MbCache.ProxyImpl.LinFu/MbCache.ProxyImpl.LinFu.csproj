@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LinFu.DynamicProxy, Version=1.0.3.28303, Culture=neutral, PublicKeyToken=62a6874124340d6e, processorArchitecture=MSIL">
+    <Reference Include="LinFu.DynamicProxy, Version=1.0.4.18998, Culture=neutral, PublicKeyToken=62a6874124340d6e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\LinFu.DynamicProxy.dll</HintPath>
     </Reference>

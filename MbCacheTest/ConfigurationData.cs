@@ -6,6 +6,6 @@ namespace MbCacheTest
         private const string linFuProxy = "MbCache.ProxyImpl.LinFu.ProxyFactory, MbCache.ProxyImpl.Linfu";
 
         //conf values
-        public static string ProxyImpl = castleProxy;
+        public const string ProxyImpl = castleProxy;
     }
 }

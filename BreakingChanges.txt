@@ -5,6 +5,8 @@
 - TRUNK (compared to latest release) -
 
 * IProxyFactory.Name removed
+* IMbCacheKey completely changed. 
+* MbCacheKeyBase completely changed
 
 - VERSION 0.6 -
 

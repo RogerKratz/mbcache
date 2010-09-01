@@ -33,19 +33,14 @@ namespace MbCache.Logic
 
         public void Invalidate<T>()
         {
-            var type = typeof (T);
-            foreach (var method in _methods[type].Methods)
-            {
-                var cacheKey = _cacheKey.CacheKey(type, method);
-                _cache.Delete(cacheKey);
-            }
+            _cache.Delete(_cacheKey.Key(typeof(T)));
         }
 
         public void Invalidate<T>(Expression<Func<T, object>> method)
         {
             var memberInfo = ExpressionHelper.MemberName(method.Body);
             var type = typeof (T); 
-            _cache.Delete(_cacheKey.CacheKey(type, memberInfo));
+            _cache.Delete(_cacheKey.Key(type, memberInfo));
         }
     }
 }

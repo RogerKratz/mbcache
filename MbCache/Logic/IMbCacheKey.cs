@@ -22,8 +22,8 @@ namespace MbCache.Logic
     public interface IMbCacheKey
     {
         string Key(Type type);
-        string Key(Type type, MethodInfo method);
-        string Key(Type type, MethodInfo method, ICachingComponent component);
-        string Key(Type type, MethodInfo method, ICachingComponent component, object[] parameters);
+        string Key(Type type, ICachingComponent component);
+        string Key(Type type, ICachingComponent component, MethodInfo method);
+        string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters);
     }
 }

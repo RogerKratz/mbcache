@@ -57,14 +57,12 @@ namespace MbCacheTest.Logic
         }
 
         [Test]
-        public void InvalidateOnMethodWorks()
+        public void InvalidateOnInstanceWorks()
         {
             var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
             var value = obj.CachedMethod("hej");
-            var value2 = obj.CachedMethod("hej2");
-            factory.Invalidate<IObjectWithParametersOnCachedMethod>(c => c.CachedMethod("hej"));
+            factory.Invalidate(obj);
             Assert.AreNotEqual(value, obj.CachedMethod("hej"));
-            Assert.AreNotEqual(value2, obj.CachedMethod("hej2")); //todo: fix this later
         }
     }
 }

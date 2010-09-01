@@ -26,7 +26,7 @@ namespace MbCache.ProxyImpl.Castle
             var proxy = (ICachingComponent) invocation.Proxy;
             var arguments = invocation.Arguments;
 
-            var key = _cacheKey.Key(_type, method, proxy, arguments);
+            var key = _cacheKey.Key(_type, proxy, method, arguments);
 
             log.Debug("Trying to find cache entry <" + key +">");
             var cachedValue = _cache.Get(key);

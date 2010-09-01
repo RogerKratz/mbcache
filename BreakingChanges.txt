@@ -7,6 +7,7 @@
 * IProxyFactory.Name removed
 * IMbCacheKey completely changed. 
 * MbCacheKeyBase completely changed
+* Some API changes how to invalidate types, objects and methods. See Wiki for current syntax.
 
 - VERSION 0.6 -
 

@@ -15,13 +15,17 @@ namespace MbCache.Configuration
     /// </remarks>
     public abstract class MbCacheKeyBase : IMbCacheKey
     {
-        protected const string Separator = "|";
-
-        public string CacheKey(Type type, MethodInfo methodInfo)
+        public string Key(Type type)
         {
-            var start = string.Concat(type + Separator + methodInfo.Name + Separator);
-            var ret = new StringBuilder(start);
-            foreach (var parameter in methodInfo.GetParameters())
+            return string.Concat(KeyStart + type + Separator);
+        }
+
+        public string Key(Type type, MethodInfo method)
+        {
+            var ret = new StringBuilder(Key(type));
+            ret.Append(method.Name);
+            ret.Append(Separator);
+            foreach (var parameter in method.GetParameters())
             {
                 ret.Append(parameter.Name);
                 ret.Append(Separator);
@@ -29,31 +33,38 @@ namespace MbCache.Configuration
             return ret.ToString();
         }
 
-        protected virtual string NullReplacer 
+        public string Key(Type type, MethodInfo method, ICachingComponent component)
         {
-            get
-            {
-                return "null";
-            }
+            return string.Concat(Key(type, method) + component.UniqueId + Separator);
         }
 
-        public string AddForParameterValues(Type type, MethodInfo methodInfo, object[] parameters)
+        public string Key(Type type, MethodInfo method, ICachingComponent component, object[] parameters)
         {
-            var ret = new StringBuilder();
+            var ret = new StringBuilder(Key(type, method, component) + Separator);
             foreach (var parameter in parameters)
             {
-                ret.Append(parameter == null ? NullReplacer : KeyPartForParameterValue(type, methodInfo, parameter));
-
+                ret.Append(parameter == null ? NullKey : ParameterValue(parameter));
                 ret.Append(Separator);
             }
             return ret.ToString();  
         }
 
-        public string AddForComponent(ICachingComponent component)
+
+        protected virtual string Separator
         {
-            return component.UniqueId;
+            get { return "|"; }
         }
 
-        protected abstract string KeyPartForParameterValue(Type type, MethodInfo info, object parameter);
+        protected virtual string KeyStart
+        {
+            get { return "MbCache" + Separator; }
+        }
+
+        protected virtual string NullKey
+        {
+            get { return "Null"; }
+        }
+
+        protected abstract string ParameterValue(object parameter);
     }
 }

@@ -39,8 +39,7 @@ namespace MbCache.Logic
                             var keys = new List<string>();
                             foreach (var method in _details.Methods)
                             {
-                                keys.Add(string.Concat(_cacheKey.CacheKey(_definedType, method),
-                                                        _cacheKey.AddForComponent(this)));
+                                keys.Add(_cacheKey.Key(_definedType, method, this));
                             }
                             _keysForThisComponent = keys;                            
                         }

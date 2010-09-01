@@ -13,7 +13,7 @@ namespace MbCache.Logic
     /// 
     /// Eg, if Key(Type) returns Roger, 
     /// it's valid for Key(Type, MethodInfo) to return Roger2
-    /// but _not_ Rog2.
+    /// but not Rog2.
     /// </summary>
     /// <remarks>
     /// Created by: rogerkr

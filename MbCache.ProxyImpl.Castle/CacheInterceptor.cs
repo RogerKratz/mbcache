@@ -23,9 +23,6 @@ namespace MbCache.ProxyImpl.Castle
         public void Intercept(IInvocation invocation)
         {
             var method = invocation.Method;
-            var typeAndMethodName = "<" + _type + "." + method.Name + "()>";
-            log.Debug("Entering " + typeAndMethodName);
-
             var proxy = (ICachingComponent) invocation.Proxy;
             var arguments = invocation.Arguments;
 
@@ -47,8 +44,6 @@ namespace MbCache.ProxyImpl.Castle
                 log.Debug("Put in cache entry <" + key + ">");
                 _cache.Put(key, invocation.ReturnValue);
             }
-
-            log.Debug("Leaving " + typeAndMethodName);
         }
     }
 }

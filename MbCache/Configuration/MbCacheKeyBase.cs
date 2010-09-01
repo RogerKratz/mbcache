@@ -8,6 +8,9 @@ namespace MbCache.Configuration
     /// <summary>
     /// Base class for users to override to implement
     /// their own logic for building cache keys
+    /// 
+    /// Will build cache key in format
+    /// MbCache|Type|Component|Method|ParamValue1|ParamValue2
     /// </summary>
     /// <remarks>
     /// Created by: rogerkr

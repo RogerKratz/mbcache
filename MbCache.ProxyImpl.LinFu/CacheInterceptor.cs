@@ -66,7 +66,7 @@ namespace MbCache.ProxyImpl.LinFu
             object retVal;
             var method = info.TargetMethod;
             var arguments = info.Arguments;
-            var key = _cacheKey.Key(_type, method, _cachingComponent, arguments);
+            var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
 
             log.Debug("Trying to find cache entry <" + key + ">");
             var cachedValue = _cache.Get(key);

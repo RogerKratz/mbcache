@@ -20,9 +20,14 @@ namespace MbCache.Configuration
             return string.Concat(KeyStart + type + Separator);
         }
 
-        public string Key(Type type, MethodInfo method)
+        public string Key(Type type, ICachingComponent component)
         {
-            var ret = new StringBuilder(Key(type));
+            return string.Concat(Key(type), component.UniqueId, Separator);
+        }
+
+        public string Key(Type type, ICachingComponent component, MethodInfo method)
+        {
+            var ret = new StringBuilder(Key(type, component));
             ret.Append(method.Name);
             ret.Append(Separator);
             foreach (var parameter in method.GetParameters())
@@ -33,14 +38,9 @@ namespace MbCache.Configuration
             return ret.ToString();
         }
 
-        public string Key(Type type, MethodInfo method, ICachingComponent component)
+        public string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters)
         {
-            return string.Concat(Key(type, method) + component.UniqueId + Separator);
-        }
-
-        public string Key(Type type, MethodInfo method, ICachingComponent component, object[] parameters)
-        {
-            var ret = new StringBuilder(Key(type, method, component) + Separator);
+            var ret = new StringBuilder(Key(type, component, method) + Separator);
             foreach (var parameter in parameters)
             {
                 ret.Append(parameter == null ? NullKey : ParameterValue(parameter));

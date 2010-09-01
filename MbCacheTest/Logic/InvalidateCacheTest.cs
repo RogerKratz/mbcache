@@ -1,4 +1,5 @@
-﻿using MbCache.Configuration;
+﻿using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.DefaultImpl;
 using MbCache.Logic;
@@ -29,7 +30,7 @@ namespace MbCacheTest.Logic
 
 
         [Test]
-        public void VerifyInvalidate()
+        public void VerifyInvalidateByType()
         {
             var obj = factory.Create<IObjectReturningNewGuids>();
             var value1 = obj.CachedMethod();
@@ -44,14 +45,29 @@ namespace MbCacheTest.Logic
 
 
         [Test]
-        public void VerifyInvalidateSpecificMethod()
+        public void VerifyInvalidateByInstance()
         {
             var obj = factory.Create<IObjectReturningNewGuids>();
             var value1 = obj.CachedMethod();
             var value2 = obj.CachedMethod2();
-            factory.Invalidate<IObjectReturningNewGuids>(c => c.CachedMethod());
-            Assert.AreNotEqual(value1, obj.CachedMethod());
+            Assert.AreEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
+            Assert.AreNotEqual(value1, value2);
+            factory.Invalidate(obj);
+            Assert.AreNotEqual(value1, obj.CachedMethod());
+            Assert.AreNotEqual(value2, obj.CachedMethod2());
+        }
+
+        [Test]
+        public void InvalidatingNonCachingComponentThrows()
+        {
+            Assert.Throws<ArgumentException>(() => factory.Invalidate(3));
+        }
+
+        [Test]
+        public void InvalidatingNonCachingComponentAndMethodThrows()
+        {
+            Assert.Throws<ArgumentException>(() => factory.Invalidate(3, theInt => theInt.CompareTo(44)));
         }
 
         [Test]
@@ -62,6 +78,20 @@ namespace MbCacheTest.Logic
 
             ((ICachingComponent) obj).Invalidate();
             Assert.AreNotEqual(value, obj.CachedMethod());
+        }
+
+        [Test]
+        public void InvalidateSpecificMethod()
+        {
+            var obj = factory.Create<IObjectReturningNewGuids>();
+            var value1 = obj.CachedMethod();
+            var value2 = obj.CachedMethod2();
+            Assert.AreEqual(value1, obj.CachedMethod());
+            Assert.AreEqual(value2, obj.CachedMethod2());
+            Assert.AreNotEqual(value1, value2);
+            factory.Invalidate(obj, method => obj.CachedMethod());
+            Assert.AreNotEqual(value1, obj.CachedMethod());
+            Assert.AreEqual(value2, obj.CachedMethod2());
         }
     }
 }

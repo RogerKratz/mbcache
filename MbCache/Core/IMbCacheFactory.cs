@@ -29,7 +29,7 @@ namespace MbCache.Core
         T Create<T>(params object[] parameters);
 
         /// <summary>
-        /// Invalidates all cache entrys for instance T.
+        /// Invalidates all cached methods for type T.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <remarks>
@@ -39,14 +39,27 @@ namespace MbCache.Core
         void Invalidate<T>();
 
         /// <summary>
-        /// Invalidates all cache entrys for method T.method.
+        /// Invalidates all cached methods for instance component.
+        /// Note: If PerInstance() not is used, this may include several instances.
+        /// </summary>
+        /// <param name="component">The component.</param>
+        /// <remarks>
+        /// Created by: rogerkr
+        /// Created date: 2010-09-01
+        /// </remarks>
+        void Invalidate(object component);
+
+        /// <summary>
+        /// Invalidates method for component instance.
+        /// Note: If PerInstance() not is used, this may include several cache entries.
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="component">The component.</param>
         /// <param name="method">The method.</param>
         /// <remarks>
         /// Created by: rogerkr
-        /// Created date: 2010-08-17
+        /// Created date: 2010-09-01
         /// </remarks>
-        void Invalidate<T>(Expression<Func<T, object>> method);
+        void Invalidate<T>(T component, Expression<Func<T, object>> method);
     }
 }

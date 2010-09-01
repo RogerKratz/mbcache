@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace MbCache.Logic
 {
@@ -8,9 +8,6 @@ namespace MbCache.Logic
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly Type _definedType;
-        private readonly ImplementationAndMethods _details;
-        private IEnumerable<string> _keysForThisComponent;
-        private readonly object lockObject =new object();
 
         public CachingComponent(ICache cache, 
                                 IMbCacheKey cacheKey,
@@ -20,42 +17,19 @@ namespace MbCache.Logic
             _cache = cache;
             _cacheKey = cacheKey;
             _definedType = definedType;
-            _details = details;
             UniqueId = details.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
         }
 
         public string UniqueId { get; private set; }
 
-        public IEnumerable<string> KeysForThisComponent
-        {
-            get
-            {
-                if(_keysForThisComponent==null)
-                {
-                    lock(lockObject)
-                    {
-                        if(_keysForThisComponent==null)
-                        {
-                            var keys = new List<string>();
-                            foreach (var method in _details.Methods)
-                            {
-                                keys.Add(_cacheKey.Key(_definedType, method, this));
-                            }
-                            _keysForThisComponent = keys;                            
-                        }
-                    }
-                }
-
-                return _keysForThisComponent;
-            }
-        }
-
         public void Invalidate()
         {
-            foreach (var key in KeysForThisComponent)
-            {
-                _cache.Delete(key);   
-            }
+            _cache.Delete(_cacheKey.Key(_definedType, this));
+        }
+
+        public void Invalidate<T>(Expression<Func<T, object>> method)
+        {
+            _cache.Delete(_cacheKey.Key(_definedType, this, ExpressionHelper.MemberName(method.Body)));
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using log4net;
 using MbCache.Configuration;
 using MbCache.Core;
 
@@ -36,11 +35,20 @@ namespace MbCache.Logic
             _cache.Delete(_cacheKey.Key(typeof(T)));
         }
 
-        public void Invalidate<T>(Expression<Func<T, object>> method)
+        public void Invalidate(object component)
         {
-            var memberInfo = ExpressionHelper.MemberName(method.Body);
-            var type = typeof (T); 
-            _cache.Delete(_cacheKey.Key(type, memberInfo));
+            var comp = component as ICachingComponent;
+            if(comp==null)
+                throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
+            comp.Invalidate();
+        }
+
+        public void Invalidate<T>(T component, Expression<Func<T, object>> method)
+        {
+            var comp = component as ICachingComponent;
+            if (comp == null)
+                throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
+            comp.Invalidate(method);
         }
     }
 }

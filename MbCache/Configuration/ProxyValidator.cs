@@ -24,24 +24,12 @@ namespace MbCache.Configuration
 
             foreach (var member in members)
             {
-                if (member is PropertyInfo)
+                if(!checkProperty(type, member))
                 {
-                    var property = (PropertyInfo)member;
-                    var accessors = property.GetAccessors(false);
-
-                    foreach (var accessor in accessors)
+                    if(!checkMethod(type, member))
                     {
-                        checkMethodIsVirtual(type, accessor);
+                        checkField(type, member);
                     }
-                }
-                else if (member is MethodInfo)
-                {
-                    if (member.DeclaringType == typeof(object) && member.Name == "GetType")
-                    {
-                        // object.GetType is ignored
-                        continue;
-                    }
-                    checkMethodIsVirtual(type, (MethodInfo)member);
                 }
                 else if (member is FieldInfo)
                 {
@@ -53,6 +41,51 @@ namespace MbCache.Configuration
                     }
                 }
             }
+        }
+
+        private bool checkField(Type type, MemberInfo member)
+        {
+            var field = member as FieldInfo;
+            if(field!=null)
+            {
+                if (field.IsPublic || field.IsAssembly || field.IsFamilyOrAssembly)
+                {
+                    throw new InvalidOperationException("Type " + type + "'s field " + member.Name + " is public. Proxy factory " +
+                                        _proxyFactory.GetType().FullName + " does not allow this.");
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool checkMethod(Type type, MemberInfo member)
+        {
+            var method = member as MethodInfo;
+            if(method!=null)
+            {
+                if (method.Name != "GetType" || method.DeclaringType != typeof(object))
+                {
+                    checkMethodIsVirtual(type, method);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool checkProperty(Type type, MemberInfo member)
+        {
+            var prop = member as PropertyInfo;
+            if (prop != null)
+            {
+                var accessors = prop.GetAccessors(false);
+
+                foreach (var accessor in accessors)
+                {
+                    checkMethodIsVirtual(type, accessor);
+                }
+                return true;
+            }
+            return false;
         }
 
         private void checkMethodIsVirtual(Type type, MethodInfo method)

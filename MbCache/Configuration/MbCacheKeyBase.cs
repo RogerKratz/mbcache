@@ -40,7 +40,7 @@ namespace MbCache.Configuration
 
         public string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters)
         {
-            var ret = new StringBuilder(Key(type, component, method) + Separator);
+            var ret = new StringBuilder(Key(type, component, method));
             foreach (var parameter in parameters)
             {
                 ret.Append(parameter == null ? NullKey : ParameterValue(parameter));

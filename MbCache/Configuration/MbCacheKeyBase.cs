@@ -68,6 +68,15 @@ namespace MbCache.Configuration
             get { return "Null"; }
         }
 
+        /// <summary>
+        /// Adds string to cache key for parameter values  
+        /// </summary>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Created by: rogerkr
+        /// Created date: 2010-09-02
+        /// </remarks>
         protected abstract string ParameterValue(object parameter);
     }
 }

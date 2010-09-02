@@ -5,6 +5,8 @@ namespace MbCache.Logic
 {
     /// <summary>
     /// Builds the cache keys. 
+    /// 
+    /// For implementers:
     /// In most cases, derive from MbCacheKeyBase instead.
     /// 
     /// If you implement this interface directly, 

@@ -51,7 +51,7 @@ namespace MbCache.Logic
             comp.Invalidate(method);
         }
 
-        public bool KnownInstance(object component)
+        public bool IsKnownInstance(object component)
         {
             return component is ICachingComponent;
         }

@@ -71,6 +71,6 @@ namespace MbCache.Core
         /// Created by: rogerkr
         /// Created date: 2010-09-03
         /// </remarks>
-        bool KnownInstance(object component);
+        bool IsKnownInstance(object component);
     }
 }

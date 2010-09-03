@@ -50,5 +50,10 @@ namespace MbCache.Logic
                 throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
             comp.Invalidate(method);
         }
+
+        public bool KnownInstance(object component)
+        {
+            return component is ICachingComponent;
+        }
     }
 }

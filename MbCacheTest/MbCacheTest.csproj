@@ -54,6 +54,7 @@
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
+    <Compile Include="Logic\NonCacheTest.cs" />
     <Compile Include="Logic\NonInterfaceMethodTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

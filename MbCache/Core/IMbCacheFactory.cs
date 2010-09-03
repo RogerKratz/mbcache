@@ -61,5 +61,16 @@ namespace MbCache.Core
         /// Created date: 2010-09-01
         /// </remarks>
         void Invalidate<T>(T component, Expression<Func<T, object>> method);
+
+        /// <summary>
+        /// Determines if component instance is created by mbcache
+        /// </summary>
+        /// <param name="component">The component.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Created by: rogerkr
+        /// Created date: 2010-09-03
+        /// </remarks>
+        bool KnownInstance(object component);
     }
 }

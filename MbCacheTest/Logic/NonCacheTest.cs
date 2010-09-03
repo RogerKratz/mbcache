@@ -29,8 +29,8 @@ namespace MbCacheTest.Logic
         [Test]
         public void CanAskFactoryIfComponentIsKnownType()
         {
-            Assert.IsTrue(factory.KnownInstance(factory.Create<IObjectReturningNewGuids>()));
-            Assert.IsFalse(factory.KnownInstance(new object()));
+            Assert.IsTrue(factory.IsKnownInstance(factory.Create<IObjectReturningNewGuids>()));
+            Assert.IsFalse(factory.IsKnownInstance(new object()));
         }
     }
 }

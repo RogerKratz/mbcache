@@ -21,7 +21,6 @@ namespace MbCache.Logic
             _cache = cache;
             _cacheKey = cacheKey;
             _methods = methods;
-
             _proxyFactory = proxyFactory;
         }
 
@@ -37,23 +36,26 @@ namespace MbCache.Logic
 
         public void Invalidate(object component)
         {
-            var comp = component as ICachingComponent;
-            if(comp==null)
-                throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
-            comp.Invalidate();
+            castToCachingComponentOrThrow(component).Invalidate();
         }
 
         public void Invalidate<T>(T component, Expression<Func<T, object>> method)
         {
-            var comp = component as ICachingComponent;
-            if (comp == null)
-                throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
-            comp.Invalidate(method);
+            castToCachingComponentOrThrow(component).Invalidate(method);
         }
 
         public bool IsKnownInstance(object component)
         {
             return component is ICachingComponent;
         }
+
+        private static ICachingComponent castToCachingComponentOrThrow(object component)
+        {
+            var comp = component as ICachingComponent;
+            if (comp == null)
+                throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
+            return comp;
+        }
+
     }
 }

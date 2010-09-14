@@ -14,7 +14,7 @@ namespace MbCacheTest.Caches
         [SetUp]
         public void Setup()
         {
-            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new AspNetCacheFactory(1), new ToStringMbCacheKey());
+            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new AspNetCache(1), new ToStringMbCacheKey());
             builder
                 .For<ObjectReturningNewGuids>()
                 .CacheMethod(c => c.CachedMethod())

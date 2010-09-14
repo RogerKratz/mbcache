@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheForTest\TestCache.cs" />
-    <Compile Include="CacheForTest\TestCacheFactory.cs" />
     <Compile Include="Caches\AspNetCacheTest.cs" />
     <Compile Include="ConfigurationData.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />

@@ -20,11 +20,11 @@ namespace MbCache.Configuration
 
 
         public CacheBuilder(string proxyFactoryClass,
-                                            ICacheFactory cacheFactory,
-                                            IMbCacheKey keyBuilder)
+                                ICache cache,
+                                IMbCacheKey keyBuilder)
         {
             _proxyFactoryClass = proxyFactoryClass;
-            _cache = cacheFactory.Create();
+            _cache = cache;
             _keyBuilder = keyBuilder;
             _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
             _details = new List<ImplementationAndMethods>();

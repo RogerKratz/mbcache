@@ -15,7 +15,7 @@ namespace MbCacheTest.Configuration
         [SetUp]        
         public void Setup()
         {
-            builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCacheFactory(), new ToStringMbCacheKey());
+            builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCache(), new ToStringMbCacheKey());
         }
 
         [Test]

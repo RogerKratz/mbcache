@@ -31,34 +31,21 @@ namespace MbCache.Configuration
                         checkField(type, member);
                     }
                 }
-                else
-                {
-                    var field = member as FieldInfo;
-                    if (field!=null)
-                    {
-                        if (field.IsPublic || field.IsAssembly || field.IsFamilyOrAssembly)
-                        {
-                            throw new InvalidOperationException("Type " + type + "'s field " + member.Name + " is public. Proxy factory " +
-                                                _proxyFactory.GetType().FullName + " does not allow this.");
-                        }
-                    }        
-                }
             }
         }
 
-        private bool checkField(Type type, MemberInfo member)
+        private void checkField(Type type, MemberInfo member)
         {
             var field = member as FieldInfo;
-            if(field!=null)
+            if (field != null)
             {
                 if (field.IsPublic || field.IsAssembly || field.IsFamilyOrAssembly)
                 {
-                    throw new InvalidOperationException("Type " + type + "'s field " + member.Name + " is public. Proxy factory " +
-                                        _proxyFactory.GetType().FullName + " does not allow this.");
+                    throw new InvalidOperationException("Type " + type + "'s field " + member.Name +
+                                                        " is public. Proxy factory " +
+                                                        _proxyFactory.GetType().FullName + " does not allow this.");
                 }
-                return true;
             }
-            return false;
         }
 
         private bool checkMethod(Type type, MemberInfo member)

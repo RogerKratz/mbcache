@@ -53,7 +53,7 @@
     <Compile Include="Core\IStatistics.cs" />
     <Compile Include="DefaultImpl\AspNetCache.cs" />
     <Compile Include="DefaultImpl\ToStringMbCacheKey.cs" />
-    <Compile Include="Logic\CacheWrapper.cs" />
+    <Compile Include="Logic\LogAndStatisticCacheDecorator.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ICache.cs" />

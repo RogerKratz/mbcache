@@ -4,14 +4,14 @@ using MbCache.Core;
 
 namespace MbCache.Logic
 {
-    public class CacheWrapper : ICache, IStatistics
+    public class LogAndStatisticCacheDecorator : ICache, IStatistics
     {
         private ILog log;
         private readonly ICache _cache;
         private long _cacheHits;
         private long _cacheMisses;
 
-        public CacheWrapper(ICache cache)
+        public LogAndStatisticCacheDecorator(ICache cache)
         {
             _cache = cache;
             log = LogManager.GetLogger(cache.GetType());

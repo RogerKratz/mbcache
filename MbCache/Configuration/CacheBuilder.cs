@@ -11,7 +11,7 @@ namespace MbCache.Configuration
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CacheBuilder));
         private readonly string _proxyFactoryClass;
-        private readonly CacheWrapper _cache;
+        private readonly LogAndStatisticCacheDecorator _cache;
         private readonly IMbCacheKey _keyBuilder;
         private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
         private readonly ICollection<ImplementationAndMethods> _details;
@@ -24,7 +24,7 @@ namespace MbCache.Configuration
                                 IMbCacheKey keyBuilder)
         {
             _proxyFactoryClass = proxyFactoryClass;
-            _cache = new CacheWrapper(cache);
+            _cache = new LogAndStatisticCacheDecorator(cache);
             _keyBuilder = keyBuilder;
             _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
             _details = new List<ImplementationAndMethods>();

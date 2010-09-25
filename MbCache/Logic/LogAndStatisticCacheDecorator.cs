@@ -1,4 +1,3 @@
-using System;
 using log4net;
 using MbCache.Core;
 
@@ -8,14 +7,15 @@ namespace MbCache.Logic
     {
         private ILog log;
         private readonly ICache _cache;
-        private long _cacheHits;
-        private long _cacheMisses;
 
         public LogAndStatisticCacheDecorator(ICache cache)
         {
             _cache = cache;
             log = LogManager.GetLogger(cache.GetType());
         }
+
+        public long CacheHits { get; private set; }
+        public long CacheMisses { get; private set; }
 
         public object Get(string key)
         {
@@ -24,12 +24,12 @@ namespace MbCache.Logic
             if(ret == null)
             {
                 log.Debug("Cache miss for <" + key + ">");
-                _cacheMisses++;
+                CacheMisses++;
             }
             else
             {
                 log.Debug("Cache hit for <" + key + ">");
-                _cacheHits++;
+                CacheHits++;
             }
             return ret;
         }
@@ -47,18 +47,9 @@ namespace MbCache.Logic
 
         public void Clear()
         {
-            _cacheHits = 0;
-            _cacheMisses = 0;
+            CacheHits = 0;
+            CacheMisses = 0;
         }
 
-        public long CacheHits
-        {
-            get { return _cacheHits; }
-        }
-
-        public long CacheMisses
-        {
-            get { return _cacheMisses; }
-        }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using LinFu.DynamicProxy;
-using log4net;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.LinFu

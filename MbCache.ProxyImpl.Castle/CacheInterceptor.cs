@@ -1,6 +1,5 @@
 ﻿using System;
 using Castle.Core.Interceptor;
-using log4net;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.Castle

@@ -73,6 +73,9 @@ namespace MbCache.Core
         /// </remarks>
         bool IsKnownInstance(object component);
 
+        /// <summary>
+        /// Returns statistic for this instance
+        /// </summary>
         IStatistics Statistics { get; }
     }
 }

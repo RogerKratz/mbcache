@@ -7,8 +7,6 @@ namespace MbCache.ProxyImpl.Castle
 {
     public class CacheInterceptor : IInterceptor
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof (CacheInterceptor));
-
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly Type _type;
@@ -27,19 +25,14 @@ namespace MbCache.ProxyImpl.Castle
             var arguments = invocation.Arguments;
 
             var key = _cacheKey.Key(_type, proxy, method, arguments);
-
-            log.Debug("Trying to find cache entry <" + key +">");
             var cachedValue = _cache.Get(key);
             if (cachedValue != null)
             {
-                log.Debug("Cache hit for <" + key + ">");
                 invocation.ReturnValue = cachedValue;
             }
             else
             {
-                log.Debug("Cache miss for <" + key + ">");
                 invocation.Proceed();
-                log.Debug("Put in cache entry <" + key + ">");
                 _cache.Put(key, invocation.ReturnValue);
             }
         }

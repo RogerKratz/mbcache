@@ -9,12 +9,12 @@ namespace MbCache.Logic
     public class MbCacheFactory : IMbCacheFactory
     {
         private readonly IProxyFactory _proxyFactory;
-        private readonly ICache _cache;
+        private readonly CacheWrapper _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
         public MbCacheFactory(IProxyFactory proxyFactory,
-                            ICache cache, 
+                            CacheWrapper cache, 
                             IMbCacheKey cacheKey,
                             IDictionary<Type, ImplementationAndMethods> methods)
         {
@@ -47,6 +47,11 @@ namespace MbCache.Logic
         public bool IsKnownInstance(object component)
         {
             return component is ICachingComponent;
+        }
+
+        public IStatistics Statistics
+        {
+            get { return _cache; }
         }
 
         private static ICachingComponent castToCachingComponentOrThrow(object component)

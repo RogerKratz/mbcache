@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{45BA5406-F8E5-4931-8114-FFFC821DE7A7}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -52,8 +52,10 @@
     <Compile Include="Configuration\MbCacheKeyBase.cs" />
     <Compile Include="Configuration\ProxyValidator.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
+    <Compile Include="Core\IStatistics.cs" />
     <Compile Include="DefaultImpl\AspNetCache.cs" />
     <Compile Include="DefaultImpl\ToStringMbCacheKey.cs" />
+    <Compile Include="Logic\CacheWrapper.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ICache.cs" />

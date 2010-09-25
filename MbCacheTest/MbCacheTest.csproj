@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E6434E94-11CE-471C-9652-1571EB3A87C9}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -58,6 +58,7 @@
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetupFixtureForAssembly.cs" />
+    <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />

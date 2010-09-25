@@ -72,5 +72,7 @@ namespace MbCache.Core
         /// Created date: 2010-09-03
         /// </remarks>
         bool IsKnownInstance(object component);
+
+        IStatistics Statistics { get; }
     }
 }

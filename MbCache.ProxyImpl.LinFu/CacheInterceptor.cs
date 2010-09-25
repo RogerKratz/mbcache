@@ -8,8 +8,6 @@ namespace MbCache.ProxyImpl.LinFu
 {
     public class CacheInterceptor : IInterceptor
     {
-        private static ILog log = LogManager.GetLogger(typeof(CacheInterceptor));
-
         private readonly ICache _cache;
         private readonly IMbCacheKey _cacheKey;
         private readonly Type _type;
@@ -68,18 +66,14 @@ namespace MbCache.ProxyImpl.LinFu
             var arguments = info.Arguments;
             var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
 
-            log.Debug("Trying to find cache entry <" + key + ">");
             var cachedValue = _cache.Get(key);
             if (cachedValue != null)
             {
-                log.Debug("Cache hit for <" + key + ">");
                 retVal = cachedValue;
             }
             else
             {
-                log.Debug("Cache miss for <" + key + ">");
                 retVal = callOriginalMethod(info);
-                log.Debug("Put in cache entry <" + key + ">");
                 _cache.Put(key, retVal);
             }
 

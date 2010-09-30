@@ -17,10 +17,10 @@ namespace MbCache.ProxyImpl.LinFu
         private readonly ICachingComponent _cachingComponent;
 
         public CacheInterceptor(ICache cache, 
-                                                IMbCacheKey cacheKey, 
-                                                Type type,
-                                                ImplementationAndMethods methodData,
-                                                params object[] ctorParameters) 
+                                IMbCacheKey cacheKey, 
+                                Type type,
+                                ImplementationAndMethods methodData,
+                                params object[] ctorParameters) 
         {
             _cache = cache;
             _cacheKey = cacheKey;

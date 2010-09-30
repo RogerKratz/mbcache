@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using MbCache.Core;
 using MbCache.Logic;
 
@@ -48,10 +49,9 @@ namespace MbCache.Configuration
                 var excText = new StringBuilder();
                 excText.AppendLine("Missing return type (.As) for");
                 var fullyDefined = _cachedMethods.Values;
-                foreach (var declared in _details)
+                foreach(var undefined in _details.Except(fullyDefined))
                 {
-                    if (!fullyDefined.Contains(declared))
-                        excText.AppendLine(declared.ConcreteType.ToString());
+                    excText.AppendLine(undefined.ConcreteType.ToString());
                 }
                 throw new InvalidOperationException(excText.ToString());
             }

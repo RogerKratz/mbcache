@@ -1,4 +1,5 @@
 using log4net;
+using MbCache.Configuration;
 using MbCache.Core;
 
 namespace MbCache.Logic

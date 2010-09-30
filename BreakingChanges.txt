@@ -10,6 +10,7 @@
 * Some API changes how to invalidate types, objects and methods. See Wiki for current syntax.
 * Removed ICacheFactory, instead an ICache is injected directly to CacheBuilder
 * CacheBuilder now accepts an ICacheFactory instance instead of a type string
+* Better structure of namespaces.
 
 - VERSION 0.6 -
 

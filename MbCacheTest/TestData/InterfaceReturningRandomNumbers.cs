@@ -13,11 +13,6 @@ namespace MbCacheTest.TestData
     {
         private Random r = new Random();
 
-        public ReturningRandomNumbers()
-        {
-            
-        }
-
         public virtual int CachedNumber()
         {
             return r.Next();

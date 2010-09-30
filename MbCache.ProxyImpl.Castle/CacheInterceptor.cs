@@ -1,6 +1,7 @@
 ﻿using System;
 using Castle.Core.Interceptor;
-using MbCache.Logic;
+using MbCache.Configuration;
+using MbCache.Core;
 
 namespace MbCache.ProxyImpl.Castle
 {

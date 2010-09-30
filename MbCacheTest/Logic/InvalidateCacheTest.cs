@@ -1,8 +1,6 @@
 ﻿using System;
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCache.DefaultImpl;
-using MbCache.Logic;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;

@@ -1,5 +1,7 @@
 using System;
 using System.Linq.Expressions;
+using MbCache.Configuration;
+using MbCache.Core;
 
 namespace MbCache.Logic
 {

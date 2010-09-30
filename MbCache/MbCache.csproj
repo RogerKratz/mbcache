@@ -43,22 +43,22 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AspNetCache.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />
+    <Compile Include="Configuration\ICache.cs" />
     <Compile Include="Configuration\IFluentBuilder.cs" />
+    <Compile Include="Configuration\IMbCacheKey.cs" />
     <Compile Include="Configuration\IProxyFactory.cs" />
     <Compile Include="Configuration\MbCacheKeyBase.cs" />
     <Compile Include="Configuration\ProxyValidator.cs" />
+    <Compile Include="Configuration\ToStringMbCacheKey.cs" />
+    <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Core\IStatistics.cs" />
-    <Compile Include="DefaultImpl\AspNetCache.cs" />
-    <Compile Include="DefaultImpl\ToStringMbCacheKey.cs" />
     <Compile Include="Logic\LogAndStatisticCacheDecorator.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
-    <Compile Include="Logic\ICache.cs" />
-    <Compile Include="Logic\ICachingComponent.cs" />
-    <Compile Include="Logic\IMbCacheKey.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

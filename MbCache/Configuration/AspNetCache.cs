@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
-using MbCache.Logic;
 
-namespace MbCache.DefaultImpl
+namespace MbCache.Configuration
 {
     public class AspNetCache : ICache
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Text;
-using MbCache.Logic;
+using MbCache.Core;
 
 namespace MbCache.Configuration
 {

@@ -1,6 +1,4 @@
-﻿using MbCache.Configuration;
-
-namespace MbCache.DefaultImpl
+﻿namespace MbCache.Configuration
 {
     public class ToStringMbCacheKey : MbCacheKeyBase
     {

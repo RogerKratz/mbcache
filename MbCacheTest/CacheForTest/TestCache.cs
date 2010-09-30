@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MbCache.Logic;
+using MbCache.Configuration;
 
 namespace MbCacheTest.CacheForTest
 {

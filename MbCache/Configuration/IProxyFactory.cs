@@ -12,6 +12,11 @@ namespace MbCache.Configuration
     public interface IProxyFactory
     {
         /// <summary>
+        /// Called once
+        /// </summary>
+        void Initialize(ICache cache, IMbCacheKey mbCacheKey);
+
+        /// <summary>
         /// Creates the proxy.
         /// </summary>
         /// <typeparam name="T"></typeparam>

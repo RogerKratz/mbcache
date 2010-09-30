@@ -10,46 +10,29 @@ namespace MbCache.Configuration
     public class CacheBuilder
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CacheBuilder));
-        private readonly string _proxyFactoryClass;
         private readonly LogAndStatisticCacheDecorator _cache;
         private readonly IMbCacheKey _keyBuilder;
         private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
         private readonly ICollection<ImplementationAndMethods> _details;
         private readonly IProxyFactory _proxyFactory;
-        private readonly ProxyValidator _proxyValidator;
 
 
-        public CacheBuilder(string proxyFactoryClass,
+        public CacheBuilder(IProxyFactory proxyFactory,
                                 ICache cache,
                                 IMbCacheKey keyBuilder)
         {
-            _proxyFactoryClass = proxyFactoryClass;
             _cache = new LogAndStatisticCacheDecorator(cache);
             _keyBuilder = keyBuilder;
             _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
             _details = new List<ImplementationAndMethods>();
-            _proxyFactory = createProxyFactory();
-            _proxyValidator = new ProxyValidator(ProxyFactory);
+            proxyFactory.Initialize(_cache, keyBuilder);
+            _proxyFactory = proxyFactory;
         }
-
-        public IProxyFactory ProxyFactory
-        {
-            get { return _proxyFactory; }
-        }
-
 
         public IMbCacheFactory BuildFactory()
         {
             checkAllImplementationAndMethodsAreOk();
-            return new MbCacheFactory(ProxyFactory, _cache, _keyBuilder, _cachedMethods);
-        }
-
-        private IProxyFactory createProxyFactory()
-        {
-            var proxyFactoryType = Type.GetType(_proxyFactoryClass, true, true);
-            var proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyFactoryType, _cache, _keyBuilder);
-            log.Debug("Successfully created type " + proxyFactory + " as IProxyFactory.");
-            return proxyFactory;
+            return new MbCacheFactory(_proxyFactory, _cache, _keyBuilder, _cachedMethods);
         }
 
         private void checkAllImplementationAndMethodsAreOk()
@@ -72,7 +55,7 @@ namespace MbCache.Configuration
         public IFluentBuilder<T> For<T>()
         {
             var concreteType = typeof(T);
-            _proxyValidator.Validate(concreteType);
+            new ProxyValidator(_proxyFactory).Validate(concreteType);
             var details = new ImplementationAndMethods(concreteType);
             _details.Add(details);
             var fluentBuilder = new FluentBuilder<T>(_cachedMethods, details);

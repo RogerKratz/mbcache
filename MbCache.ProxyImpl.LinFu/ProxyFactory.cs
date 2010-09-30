@@ -1,3 +1,4 @@
+using System;
 using MbCache.Configuration;
 using MbCache.Logic;
 
@@ -5,11 +6,10 @@ namespace MbCache.ProxyImpl.LinFu
 {
     public class ProxyFactory : IProxyFactory
     {
-        private readonly ICache _cache;
-        private readonly IMbCacheKey _mbCacheKey;
+        private ICache _cache;
+        private IMbCacheKey _mbCacheKey;
 
-        public ProxyFactory(ICache cache,
-                            IMbCacheKey mbCacheKey)
+        public void Initialize(ICache cache, IMbCacheKey mbCacheKey)
         {
             _cache = cache;
             _mbCacheKey = mbCacheKey;

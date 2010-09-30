@@ -7,12 +7,11 @@ namespace MbCache.ProxyImpl.Castle
 {
     public class ProxyFactory : IProxyFactory
     {
-        private readonly ICache _cache;
-        private readonly IMbCacheKey _mbCacheKey;
         private static readonly ProxyGenerator _generator = new ProxyGenerator();
+        private ICache _cache;
+        private IMbCacheKey _mbCacheKey;
 
-        public ProxyFactory(ICache cache,
-                            IMbCacheKey mbCacheKey)
+        public void Initialize(ICache cache, IMbCacheKey mbCacheKey)
         {
             _cache = cache;
             _mbCacheKey = mbCacheKey;

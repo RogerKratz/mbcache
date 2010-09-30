@@ -14,7 +14,7 @@ namespace MbCacheTest.Statistic
         [SetUp]
         public void Setup()
         {
-            var builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCache(), new ToStringMbCacheKey());
+            var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
 
             builder
                 .For<ObjectReturningNewGuids>()

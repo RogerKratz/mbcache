@@ -15,7 +15,7 @@ namespace MbCacheTest.Configuration
         [SetUp]        
         public void Setup()
         {
-            builder = new CacheBuilder(ConfigurationData.ProxyImpl, new TestCache(), new ToStringMbCacheKey());
+            builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
         }
 
         [Test]
@@ -34,16 +34,11 @@ namespace MbCacheTest.Configuration
 
         }
 
-        [Test]
-        public void ProxyFactoryCanBeCreated()
-        {
-            StringAssert.Contains(builder.ProxyFactory.GetType().ToString(), ConfigurationData.ProxyImpl);
-        }
 
         [Test]
         public void NonVirtualNonCachedMethod()
         {
-            if(builder.ProxyFactory.AllowNonVirtualMember)
+            if (ConfigurationData.ProxyFactory.AllowNonVirtualMember)
             {
                 Assert.DoesNotThrow(() => 
                                 builder

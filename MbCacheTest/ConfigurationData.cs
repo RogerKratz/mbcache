@@ -1,11 +1,13 @@
+using MbCache.Configuration;
+
 namespace MbCacheTest
 {
     public static class ConfigurationData
     {
-        private const string castleProxy = "MbCache.ProxyImpl.Castle.ProxyFactory, MbCache.ProxyImpl.Castle";
-        private const string linFuProxy = "MbCache.ProxyImpl.LinFu.ProxyFactory, MbCache.ProxyImpl.Linfu";
+        private static readonly IProxyFactory castleProxy = new MbCache.ProxyImpl.Castle.ProxyFactory();
+        private static readonly IProxyFactory linFuProxy = new MbCache.ProxyImpl.LinFu.ProxyFactory();
 
         //conf values
-        public const string ProxyImpl = linFuProxy;
+        public static readonly IProxyFactory ProxyFactory = castleProxy;
     }
 }

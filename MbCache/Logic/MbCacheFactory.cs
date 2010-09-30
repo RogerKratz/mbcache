@@ -14,14 +14,15 @@ namespace MbCache.Logic
         private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
         public MbCacheFactory(IProxyFactory proxyFactory,
-                            LogAndStatisticCacheDecorator cache, 
+                            ICache cache, 
                             IMbCacheKey cacheKey,
                             IDictionary<Type, ImplementationAndMethods> methods)
         {
-            _cache = cache;
+            _cache = new LogAndStatisticCacheDecorator(cache);
             _cacheKey = cacheKey;
             _methods = methods;
             _proxyFactory = proxyFactory;
+            _proxyFactory.Initialize(_cache, cacheKey);
         }
 
         public T Create<T>(params object[] parameters)

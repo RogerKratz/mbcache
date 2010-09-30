@@ -9,30 +9,37 @@ namespace MbCache.Configuration
 {
     public class CacheBuilder
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(CacheBuilder));
-        private readonly LogAndStatisticCacheDecorator _cache;
-        private readonly IMbCacheKey _keyBuilder;
         private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
         private readonly ICollection<ImplementationAndMethods> _details;
         private readonly IProxyFactory _proxyFactory;
-
+        private readonly ICache _cache;
+        private readonly IMbCacheKey _keyBuilder;
 
         public CacheBuilder(IProxyFactory proxyFactory,
                                 ICache cache,
                                 IMbCacheKey keyBuilder)
         {
-            _cache = new LogAndStatisticCacheDecorator(cache);
-            _keyBuilder = keyBuilder;
             _cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
             _details = new List<ImplementationAndMethods>();
-            proxyFactory.Initialize(_cache, keyBuilder);
-            _proxyFactory = proxyFactory;
+             _proxyFactory = proxyFactory;
+            _cache = cache;
+            _keyBuilder = keyBuilder;
         }
 
         public IMbCacheFactory BuildFactory()
         {
             checkAllImplementationAndMethodsAreOk();
             return new MbCacheFactory(_proxyFactory, _cache, _keyBuilder, _cachedMethods);
+        }
+
+        public IFluentBuilder<T> For<T>()
+        {
+            var concreteType = typeof(T);
+            new ProxyValidator(_proxyFactory).Validate(concreteType);
+            var details = new ImplementationAndMethods(concreteType);
+            _details.Add(details);
+            var fluentBuilder = new FluentBuilder<T>(_cachedMethods, details);
+            return fluentBuilder;
         }
 
         private void checkAllImplementationAndMethodsAreOk()
@@ -49,17 +56,6 @@ namespace MbCache.Configuration
                 }
                 throw new InvalidOperationException(excText.ToString());
             }
-        }
-
-
-        public IFluentBuilder<T> For<T>()
-        {
-            var concreteType = typeof(T);
-            new ProxyValidator(_proxyFactory).Validate(concreteType);
-            var details = new ImplementationAndMethods(concreteType);
-            _details.Add(details);
-            var fluentBuilder = new FluentBuilder<T>(_cachedMethods, details);
-            return fluentBuilder;
         }
     }
 }

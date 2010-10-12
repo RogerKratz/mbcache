@@ -8,7 +8,7 @@ namespace MbCache.ProxyImpl.Castle
 {
     public class ProxyFactory : IProxyFactory
     {
-        private static readonly ProxyGenerator _generator = new ProxyGenerator();
+        private static readonly ProxyGenerator _generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
         private ICache _cache;
         private IMbCacheKey _mbCacheKey;
 

@@ -4,6 +4,9 @@
 
 - TRUNK (compared to latest release) -
 
+
+- VERSION 0.8 -
+
 * IProxyFactory.Name removed
 * IMbCacheKey completely changed. 
 * MbCacheKeyBase completely changed

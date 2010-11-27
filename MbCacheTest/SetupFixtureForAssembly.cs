@@ -9,7 +9,12 @@ namespace MbCacheTest
         [SetUp]
         public void RunOnce()
         {
-            BasicConfigurator.Configure();
+            StartLog4Net();
+        }
+
+        public static void StartLog4Net()
+        {
+            BasicConfigurator.Configure();            
         }
     }
 }

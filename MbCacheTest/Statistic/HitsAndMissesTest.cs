@@ -21,7 +21,6 @@ namespace MbCacheTest.Statistic
                 .As<IObjectReturningNewGuids>();
 
             factory = builder.BuildFactory();
-            factory.Statistics.Clear();
         }
 
         [Test]
@@ -33,7 +32,9 @@ namespace MbCacheTest.Statistic
             comp.CachedMethod();
             Assert.AreEqual(1, factory.Statistics.CacheHits);
             comp.CachedMethod2();
-            Assert.AreEqual(1, factory.Statistics.CacheHits);            
+            Assert.AreEqual(1, factory.Statistics.CacheHits);
+            factory.Statistics.Clear();
+            Assert.AreEqual(0, factory.Statistics.CacheHits);
         }
 
         [Test]
@@ -46,6 +47,8 @@ namespace MbCacheTest.Statistic
             Assert.AreEqual(1, factory.Statistics.CacheMisses);
             comp.CachedMethod2();
             Assert.AreEqual(1, factory.Statistics.CacheMisses);
+            factory.Statistics.Clear();
+            Assert.AreEqual(0, factory.Statistics.CacheMisses);
         }
 
     }

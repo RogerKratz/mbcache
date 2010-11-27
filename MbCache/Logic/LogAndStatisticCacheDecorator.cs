@@ -8,6 +8,8 @@ namespace MbCache.Logic
     {
         private ILog log;
         private readonly ICache _cache;
+        private readonly object cacheMissLocker = new object();
+        private readonly object cacheHitLocker = new object();
 
         public LogAndStatisticCacheDecorator(ICache cache)
         {
@@ -24,13 +26,11 @@ namespace MbCache.Logic
             var ret = _cache.Get(key);
             if(ret == null)
             {
-                log.Debug("Cache miss for <" + key + ">");
-                CacheMisses++;
+                cacheMiss(key);
             }
             else
             {
-                log.Debug("Cache hit for <" + key + ">");
-                CacheHits++;
+                cacheHit(key);
             }
             return ret;
         }
@@ -48,9 +48,32 @@ namespace MbCache.Logic
 
         public void Clear()
         {
-            CacheHits = 0;
-            CacheMisses = 0;
+            lock(cacheMissLocker)
+            {
+                CacheMisses = 0;                
+            }
+            lock (cacheHitLocker)
+            {
+                CacheHits = 0;
+            }
         }
 
+        private void cacheHit(string key)
+        {
+            log.Debug("Cache hit for <" + key + ">");
+            lock (cacheHitLocker)
+            {
+                CacheHits++;
+            }
+        }
+
+        private void cacheMiss(string key)
+        {
+            log.Debug("Cache miss for <" + key + ">");
+            lock (cacheMissLocker)
+            {
+                CacheMisses++;
+            }
+        }
     }
 }

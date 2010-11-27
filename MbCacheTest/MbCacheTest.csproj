@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CacheForTest\NoCache.cs" />
     <Compile Include="CacheForTest\TestCache.cs" />
     <Compile Include="Caches\AspNetCacheTest.cs" />
     <Compile Include="ConfigurationData.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetupFixtureForAssembly.cs" />
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
+    <Compile Include="Statistic\ThreadingTest.cs" />
     <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />

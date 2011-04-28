@@ -41,21 +41,6 @@ namespace MbCacheTest.Logic
             Assert.AreNotEqual(value2, obj.CachedMethod2());
         }
 
-
-        [Test]
-        public void VerifyInvalidateByInstance()
-        {
-            var obj = factory.Create<IObjectReturningNewGuids>();
-            var value1 = obj.CachedMethod();
-            var value2 = obj.CachedMethod2();
-            Assert.AreEqual(value1, obj.CachedMethod());
-            Assert.AreEqual(value2, obj.CachedMethod2());
-            Assert.AreNotEqual(value1, value2);
-            factory.Invalidate(obj);
-            Assert.AreNotEqual(value1, obj.CachedMethod());
-            Assert.AreNotEqual(value2, obj.CachedMethod2());
-        }
-
         [Test]
         public void InvalidatingNonCachingComponentThrows()
         {
@@ -67,6 +52,23 @@ namespace MbCacheTest.Logic
         {
             Assert.Throws<ArgumentException>(() => factory.Invalidate(3, theInt => theInt.CompareTo(44)));
         }
+
+
+		[Test]
+		public void VerifyInvalidateByInstance()
+		{
+			var obj = factory.Create<IObjectReturningNewGuids>();
+			var obj2 = factory.Create<IObjectReturningNewGuids>();
+			var value1 = obj.CachedMethod();
+			var value2 = obj2.CachedMethod2();
+			Assert.AreEqual(value1, obj.CachedMethod());
+			Assert.AreEqual(value2, obj.CachedMethod2());
+			Assert.AreNotEqual(value1, value2);
+			factory.Invalidate(obj);
+			Assert.AreNotEqual(value1, obj.CachedMethod());
+			Assert.AreNotEqual(value2, obj.CachedMethod2());
+		}
+
 
         [Test]
         public void InvalidateByCachingComponent()
@@ -90,6 +92,6 @@ namespace MbCacheTest.Logic
             factory.Invalidate(obj, method => obj.CachedMethod());
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
-        }
-    }
+		}
+	}
 }

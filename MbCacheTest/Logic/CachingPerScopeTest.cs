@@ -34,18 +34,5 @@ namespace MbCacheTest.Logic
             Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
             Assert.AreNotEqual(obj.CachedMethod(), obj2.CachedMethod());
         }
-
-        [Test]
-        public void InvalidateCachingComponent()
-        {
-            var obj = factory.Create<IObjectReturningNewGuids>();
-            var obj2 = factory.Create<IObjectReturningNewGuids>();
-            var value = obj.CachedMethod();
-            var value2 = obj2.CachedMethod();
-
-            ((ICachingComponent)obj).Invalidate();
-            Assert.AreNotEqual(value, obj.CachedMethod());
-            Assert.AreEqual(value2, obj2.CachedMethod());
-        }
     }
 }

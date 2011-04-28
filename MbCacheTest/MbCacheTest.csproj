@@ -56,9 +56,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.5.8.10295, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dlls\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpTestsEx">
+      <HintPath>..\dlls\SharpTestsEx.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -73,6 +76,7 @@
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />
+    <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
     <Compile Include="Logic\NonCacheTest.cs" />
     <Compile Include="Logic\NonInterfaceMethodTest.cs" />

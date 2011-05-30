@@ -26,6 +26,12 @@ namespace MbCacheTest.Logic
 				.PerInstance()
 				.As<IObjectReturningNewGuids>();
 
+			builder
+				.For<ObjectWithParametersOnCachedMethod>()
+				.CacheMethod(c => c.CachedMethod(null))
+				.PerInstance()
+				.As<IObjectWithParametersOnCachedMethod>();
+
 			factory = builder.BuildFactory();
 			obj1 = factory.Create<IObjectReturningNewGuids>();
 			obj2 = factory.Create<IObjectReturningNewGuids>();
@@ -53,6 +59,19 @@ namespace MbCacheTest.Logic
 
 			value1.Should().Not.Be.EqualTo(obj1.CachedMethod());
 			value2.Should().Be.EqualTo(obj2.CachedMethod());
+		}
+
+		[Test]
+		public void InvalidateSpecificMethodWithSpecificParameter()
+		{
+			var objWithParam = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var objWithParam2 = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var value1 = objWithParam.CachedMethod("roger");
+			var value2 = objWithParam2.CachedMethod("roger");
+			factory.Invalidate(objWithParam, method => method.CachedMethod("roger"), true);
+
+			value1.Should().Not.Be.EqualTo(objWithParam.CachedMethod("roger"));
+			value2.Should().Be.EqualTo(objWithParam2.CachedMethod("roger"));
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Core;
 
@@ -27,6 +28,6 @@ namespace MbCache.Configuration
         string Key(Type type);
         string Key(Type type, ICachingComponent component);
         string Key(Type type, ICachingComponent component, MethodInfo method);
-        string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters);
+        string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
     }
 }

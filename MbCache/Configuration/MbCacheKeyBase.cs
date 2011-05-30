@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using MbCache.Core;
@@ -41,7 +42,7 @@ namespace MbCache.Configuration
             return ret.ToString();
         }
 
-        public string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters)
+        public string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
         {
             var ret = new StringBuilder(Key(type, component, method));
             foreach (var parameter in parameters)

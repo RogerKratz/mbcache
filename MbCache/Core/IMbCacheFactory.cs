@@ -62,6 +62,19 @@ namespace MbCache.Core
         /// </remarks>
         void Invalidate<T>(T component, Expression<Func<T, object>> method);
 
+		/// <summary>
+		/// Invalidates method for component instance
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="component">The component</param>
+		/// <param name="method">The method</param>
+		/// <param name="matchParameterValues">
+		/// Determines if parameters sent to <para>method</para> should decide what to invalidate.
+		/// If <code>false</code>, all method caches are invalidated, 
+		/// if <code>true</code>, only the one matching with matching paramater values are invalidated.
+		/// </param>
+    	void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues);
+
         /// <summary>
         /// Determines if component instance is created by mbcache
         /// </summary>

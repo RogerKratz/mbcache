@@ -4,6 +4,7 @@ using MbCache.Core;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
@@ -22,6 +23,11 @@ namespace MbCacheTest.Logic
                 .CacheMethod(c => c.CachedMethod())
                 .CacheMethod(c => c.CachedMethod2())
                 .As<IObjectReturningNewGuids>();
+
+			builder
+				.For<ObjectWithParametersOnCachedMethod>()
+				.CacheMethod(c => c.CachedMethod(null))
+				.As<IObjectWithParametersOnCachedMethod>();
 
             factory = builder.BuildFactory();
         }
@@ -92,6 +98,30 @@ namespace MbCacheTest.Logic
             factory.Invalidate(obj, method => obj.CachedMethod());
             Assert.AreNotEqual(value1, obj.CachedMethod());
             Assert.AreEqual(value2, obj.CachedMethod2());
+		}
+
+		[Test]
+		public void InvalidateSpecificMethodWithSpecificParameter()
+		{
+			var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var value1 = obj.CachedMethod("roger");
+			var value2 = obj.CachedMethod("moore");
+			factory.Invalidate(obj, method => method.CachedMethod("roger"), true);
+
+			value1.Should().Not.Be.EqualTo(obj.CachedMethod("roger"));
+			value2.Should().Be.EqualTo(obj.CachedMethod("moore"));
+		}
+
+		[Test]
+		public void InvalidateSpecificMethodWithSpecificParameterNotUsed()
+		{
+			var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var value1 = obj.CachedMethod("roger");
+			var value2 = obj.CachedMethod("moore");
+			factory.Invalidate(obj, method => method.CachedMethod("roger"), false);
+
+			value1.Should().Not.Be.EqualTo(obj.CachedMethod("roger"));
+			value2.Should().Not.Be.EqualTo(obj.CachedMethod("moore"));
 		}
 	}
 }

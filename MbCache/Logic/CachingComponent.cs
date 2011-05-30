@@ -31,7 +31,23 @@ namespace MbCache.Logic
 
         public void Invalidate<T>(Expression<Func<T, object>> method)
         {
-            _cache.Delete(_cacheKey.Key(_definedType, this, ExpressionHelper.MemberName(method.Body)));
+        	Invalidate(method, false);
         }
+
+    	public void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues)
+    	{
+    		var methodInfo = ExpressionHelper.MemberName(method.Body);
+    		string key;
+			if(matchParameterValues)
+			{
+				var arguments = ExpressionHelper.ExtractArguments(method.Body);
+				key = _cacheKey.Key(_definedType, this, methodInfo, arguments);
+			}
+			else
+			{
+				key = _cacheKey.Key(_definedType, this, methodInfo);
+			}
+			_cache.Delete(key);
+    	}
     }
 }

@@ -45,7 +45,12 @@ namespace MbCache.Logic
             castToCachingComponentOrThrow(component).Invalidate(method);
         }
 
-        public bool IsKnownInstance(object component)
+    	public void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues)
+    	{
+			castToCachingComponentOrThrow(component).Invalidate(method, matchParameterValues);
+    	}
+
+    	public bool IsKnownInstance(object component)
         {
             return component is ICachingComponent;
         }

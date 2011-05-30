@@ -8,5 +8,6 @@ namespace MbCache.Core
         string UniqueId { get; }
         void Invalidate();
         void Invalidate<T>(Expression<Func<T, object>> method);
+    	void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues);
     }
 }

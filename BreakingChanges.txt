@@ -4,6 +4,10 @@
 
 - TRUNK (compared to latest release) -
 
+* string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters)
+  ...changed to...
+  string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+
 
 - VERSION 0.8 -
 

@@ -4,6 +4,12 @@
 
 - TRUNK (compared to latest release) -
 
+* Removed ICachingComponent.Invalidate<T>(Expression<Func<T, object>>. Use Invalidate<T>(Expression<Func<T, object>>, bool) instead.
+* Removed IMbCacheFactory.Invalidate<T>(Expression<Func<T, object>>. Use Invalidate<T>(Expression<Func<T, object>>, bool) instead.
+
+
+- VERSION 0.9 -
+
 * string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters)
   ...changed to...
   string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);

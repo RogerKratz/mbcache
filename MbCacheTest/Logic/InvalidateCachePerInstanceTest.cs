@@ -49,7 +49,7 @@ namespace MbCacheTest.Logic
 			var value1 = obj1.CachedMethod();
 			var value2 = obj2.CachedMethod();
 
-			factory.Invalidate(obj1, method => obj1.CachedMethod());
+			factory.Invalidate(obj1, method => obj1.CachedMethod(), false);
 
 			value1.Should().Not.Be.EqualTo(obj1.CachedMethod());
 			value2.Should().Be.EqualTo(obj2.CachedMethod());

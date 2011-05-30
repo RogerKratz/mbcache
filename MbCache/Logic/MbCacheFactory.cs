@@ -6,67 +6,62 @@ using MbCache.Core;
 
 namespace MbCache.Logic
 {
-    public class MbCacheFactory : IMbCacheFactory
-    {
-        private readonly IProxyFactory _proxyFactory;
-        private readonly LogAndStatisticCacheDecorator _cache;
-        private readonly IMbCacheKey _cacheKey;
-        private readonly IDictionary<Type, ImplementationAndMethods> _methods;
+	public class MbCacheFactory : IMbCacheFactory
+	{
+		private readonly IProxyFactory _proxyFactory;
+		private readonly LogAndStatisticCacheDecorator _cache;
+		private readonly IMbCacheKey _cacheKey;
+		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
-        public MbCacheFactory(IProxyFactory proxyFactory,
-                            ICache cache, 
-                            IMbCacheKey cacheKey,
-                            IDictionary<Type, ImplementationAndMethods> methods)
-        {
-            _cache = new LogAndStatisticCacheDecorator(cache);
-            _cacheKey = cacheKey;
-            _methods = methods;
-            _proxyFactory = proxyFactory;
-            _proxyFactory.Initialize(_cache, cacheKey);
-        }
+		public MbCacheFactory(IProxyFactory proxyFactory,
+								  ICache cache,
+								  IMbCacheKey cacheKey,
+								  IDictionary<Type, ImplementationAndMethods> methods)
+		{
+			_cache = new LogAndStatisticCacheDecorator(cache);
+			_cacheKey = cacheKey;
+			_methods = methods;
+			_proxyFactory = proxyFactory;
+			_proxyFactory.Initialize(_cache, cacheKey);
+		}
 
-        public T Create<T>(params object[] parameters)
-        {
-            return _proxyFactory.CreateProxy<T>(_methods[typeof(T)], parameters);
-        }
+		public T Create<T>(params object[] parameters)
+		{
+			return _proxyFactory.CreateProxy<T>(_methods[typeof(T)], parameters);
+		}
 
-        public void Invalidate<T>()
-        {
-            _cache.Delete(_cacheKey.Key(typeof(T)));
-        }
+		public void Invalidate<T>()
+		{
+			_cache.Delete(_cacheKey.Key(typeof(T)));
+		}
 
-        public void Invalidate(object component)
-        {
-            castToCachingComponentOrThrow(component).Invalidate();
-        }
+		public void Invalidate(object component)
+		{
+			castToCachingComponentOrThrow(component).Invalidate();
+		}
 
-        public void Invalidate<T>(T component, Expression<Func<T, object>> method)
-        {
-            castToCachingComponentOrThrow(component).Invalidate(method);
-        }
-
-    	public void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues)
-    	{
+		public void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues)
+		{
 			castToCachingComponentOrThrow(component).Invalidate(method, matchParameterValues);
-    	}
+		}
 
-    	public bool IsKnownInstance(object component)
-        {
-            return component is ICachingComponent;
-        }
+		public bool IsKnownInstance(object component)
+		{
+			return component is ICachingComponent;
+		}
 
-        public IStatistics Statistics
-        {
-            get { return _cache; }
-        }
+		public IStatistics Statistics
+		{
+			get { return _cache; }
+		}
 
-        private static ICachingComponent castToCachingComponentOrThrow(object component)
-        {
-            var comp = component as ICachingComponent;
-            if (comp == null)
-                throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
-            return comp;
-        }
+		private static ICachingComponent castToCachingComponentOrThrow(object component)
+		{
+			var comp = component as ICachingComponent;
+			if (comp == null)
+				throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
+			return comp;
+		}
 
-    }
+	}
 }

@@ -4,6 +4,11 @@
 
 - TRUNK (compared to latest release) -
 
+
+
+
+- VERSION 0.9.1 -
+
 * Removed ICachingComponent.Invalidate<T>(Expression<Func<T, object>>. Use Invalidate<T>(Expression<Func<T, object>>, bool) instead.
 * Removed IMbCacheFactory.Invalidate<T>(Expression<Func<T, object>>. Use Invalidate<T>(Expression<Func<T, object>>, bool) instead.
 

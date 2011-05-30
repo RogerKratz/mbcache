@@ -113,6 +113,21 @@ namespace MbCacheTest.Logic
 		}
 
 		[Test]
+		public void InvalidateSpecificMethodWithSpecificParameterNoConstant()
+		{
+			var invalidParamObject = new ObjectImplToString(Guid.NewGuid());
+			var anotherParamObject = new ObjectImplToString(Guid.NewGuid());
+
+			var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var value1 = obj.CachedMethod(invalidParamObject);
+			var value2 = obj.CachedMethod(anotherParamObject);
+			factory.Invalidate(obj, method => method.CachedMethod(invalidParamObject), true);
+
+			value1.Should().Not.Be.EqualTo(obj.CachedMethod(invalidParamObject));
+			value2.Should().Be.EqualTo(obj.CachedMethod(anotherParamObject));
+		}
+
+		[Test]
 		public void InvalidateSpecificMethodWithSpecificParameterNotUsed()
 		{
 			var obj = factory.Create<IObjectWithParametersOnCachedMethod>();

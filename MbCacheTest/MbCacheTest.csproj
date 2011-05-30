@@ -86,6 +86,7 @@
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Statistic\ThreadingTest.cs" />
     <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
+    <Compile Include="TestData\ObjectImplToString.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />
     <Compile Include="TestData\ObjectWithNonInterfaceMethod.cs" />

@@ -78,6 +78,8 @@
     <Compile Include="Logic\CachingPerScopeTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
+    <Compile Include="Logic\MbCacheKeyBaseReturnNullTest.cs" />
+    <Compile Include="Logic\MbCacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\NonCacheTest.cs" />
     <Compile Include="Logic\NonInterfaceMethodTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />

@@ -7,7 +7,7 @@ namespace MbCache.Logic
 {
 	public class LogAndStatisticCacheDecorator : ICache, IStatistics
 	{
-		private ILog log;
+		private readonly ILog log;
 		private readonly ICache _cache;
 		private long _cacheHits;
 		private long _cacheMisses;
@@ -51,7 +51,11 @@ namespace MbCache.Logic
 
 		public void Delete(string keyStartingWith)
 		{
-			_cache.Delete(keyStartingWith);
+			if (keyStartingWith != null)
+			{
+				log.DebugFormat("Removing cache entries starting with {0}", keyStartingWith);
+				_cache.Delete(keyStartingWith);				
+			}
 		}
 
 		public void Clear()

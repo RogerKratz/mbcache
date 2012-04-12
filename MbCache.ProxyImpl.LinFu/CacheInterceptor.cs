@@ -75,17 +75,22 @@ namespace MbCache.ProxyImpl.LinFu
 				return cachedValue;
 			}
 			var lockObject = _cache.LockObjectGenerator.GetFor(key);
+			if (lockObject == null)
+			{
+				return executeAndPutInCache(info, key);
+			}
 			lock (lockObject)
 			{
 				var cachedValue2 = _cache.Get(key);
-				if (cachedValue2 != null)
-				{
-					return cachedValue2;
-				}
-				var retVal = callOriginalMethod(info);
-				_cache.Put(key, retVal);
-				return retVal;				
+				return cachedValue2 ?? executeAndPutInCache(info, key);
 			}
+		}
+
+		private object executeAndPutInCache(InvocationInfo info, string key)
+		{
+			var retVal = callOriginalMethod(info);
+			_cache.Put(key, retVal);
+			return retVal;
 		}
 
 		private object callOriginalMethod(InvocationInfo info)

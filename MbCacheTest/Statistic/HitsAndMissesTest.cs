@@ -43,16 +43,12 @@ namespace MbCacheTest.Statistic
 			var comp = factory.Create<IObjectReturningNewGuids>();
 			comp.CachedMethod();
 			Assert.AreEqual(1, factory.Statistics.CacheMisses);
-			Assert.AreEqual(2, factory.Statistics.PhysicalCacheMisses);
 			comp.CachedMethod();
 			Assert.AreEqual(1, factory.Statistics.CacheMisses);
-			Assert.AreEqual(2, factory.Statistics.PhysicalCacheMisses);
 			comp.CachedMethod2();
 			Assert.AreEqual(1, factory.Statistics.CacheMisses);
-			Assert.AreEqual(2, factory.Statistics.PhysicalCacheMisses);
 			factory.Statistics.Clear();
 			Assert.AreEqual(0, factory.Statistics.CacheMisses);
-			Assert.AreEqual(0, factory.Statistics.PhysicalCacheMisses);
 		}
 	}
 }

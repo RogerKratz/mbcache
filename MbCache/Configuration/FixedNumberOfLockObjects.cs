@@ -6,11 +6,11 @@ namespace MbCache.Configuration
 	/// Holds an array of lock objects.
 	/// Based on key, it will return one of these.
 	/// </summary>
-	public class DefaultLockObjectGenerator : ILockObjectGenerator
+	public class FixedNumberOfLockObjects : ILockObjectGenerator
 	{
 		private readonly object[] _lockobjects;
 
-		public DefaultLockObjectGenerator(int spread)
+		public FixedNumberOfLockObjects(int spread)
 		{
 			_lockobjects = Enumerable.Range(0, spread)
 				.Select(x => new object())

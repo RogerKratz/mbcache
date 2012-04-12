@@ -13,7 +13,7 @@ namespace MbCacheTest.Logic.Concurrency
 		[Test]
 		public void ShouldNotMakeTheSameCallMoreThanOnce()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(new DefaultLockObjectGenerator(50)), new ToStringMbCacheKey());
+			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(new FixedNumberOfLockObjects(50)), new ToStringMbCacheKey());
 
 			builder.For<ObjectWithCallCounter>()
 				 .CacheMethod(c => c.Increment())

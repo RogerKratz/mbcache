@@ -6,50 +6,53 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Statistic
 {
-    public class HitsAndMissesTest
-    {
-        private IMbCacheFactory factory;
+	public class HitsAndMissesTest
+	{
+		private IMbCacheFactory factory;
 
-        [SetUp]
-        public void Setup()
-        {
-            var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+		[SetUp]
+		public void Setup()
+		{
+			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
 
-            builder
-                .For<ObjectReturningNewGuids>()
-                .CacheMethod(c => c.CachedMethod())
-                .As<IObjectReturningNewGuids>();
+			builder
+				 .For<ObjectReturningNewGuids>()
+				 .CacheMethod(c => c.CachedMethod())
+				 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory();
-        }
+			factory = builder.BuildFactory();
+		}
 
-        [Test]
-        public void VerifyCacheHits()
-        {
-            var comp = factory.Create<IObjectReturningNewGuids>();
-            comp.CachedMethod();
-            Assert.AreEqual(0, factory.Statistics.CacheHits);
-            comp.CachedMethod();
-            Assert.AreEqual(1, factory.Statistics.CacheHits);
-            comp.CachedMethod2();
-            Assert.AreEqual(1, factory.Statistics.CacheHits);
-            factory.Statistics.Clear();
-            Assert.AreEqual(0, factory.Statistics.CacheHits);
-        }
+		[Test]
+		public void VerifyCacheHits()
+		{
+			var comp = factory.Create<IObjectReturningNewGuids>();
+			comp.CachedMethod();
+			Assert.AreEqual(0, factory.Statistics.CacheHits);
+			comp.CachedMethod();
+			Assert.AreEqual(1, factory.Statistics.CacheHits);
+			comp.CachedMethod2();
+			Assert.AreEqual(1, factory.Statistics.CacheHits);
+			factory.Statistics.Clear();
+			Assert.AreEqual(0, factory.Statistics.CacheHits);
+		}
 
-        [Test]
-        public void VerifyCacheMisses()
-        {
-            var comp = factory.Create<IObjectReturningNewGuids>();
-            comp.CachedMethod();
-            Assert.AreEqual(1, factory.Statistics.CacheMisses);
-            comp.CachedMethod();
-            Assert.AreEqual(1, factory.Statistics.CacheMisses);
-            comp.CachedMethod2();
-            Assert.AreEqual(1, factory.Statistics.CacheMisses);
-            factory.Statistics.Clear();
-            Assert.AreEqual(0, factory.Statistics.CacheMisses);
-        }
-
-    }
+		[Test]
+		public void VerifyCacheMisses()
+		{
+			var comp = factory.Create<IObjectReturningNewGuids>();
+			comp.CachedMethod();
+			Assert.AreEqual(1, factory.Statistics.CacheMisses);
+			Assert.AreEqual(2, factory.Statistics.PhysicalCacheMisses);
+			comp.CachedMethod();
+			Assert.AreEqual(1, factory.Statistics.CacheMisses);
+			Assert.AreEqual(2, factory.Statistics.PhysicalCacheMisses);
+			comp.CachedMethod2();
+			Assert.AreEqual(1, factory.Statistics.CacheMisses);
+			Assert.AreEqual(2, factory.Statistics.PhysicalCacheMisses);
+			factory.Statistics.Clear();
+			Assert.AreEqual(0, factory.Statistics.CacheMisses);
+			Assert.AreEqual(0, factory.Statistics.PhysicalCacheMisses);
+		}
+	}
 }

@@ -20,7 +20,7 @@ namespace MbCacheTest.CacheForTest
 
 		public ILockObjectGenerator LockObjectGenerator
 		{
-			get { throw new NotImplementedException(); }
+			get { return null; }
 		}
 	}
 }

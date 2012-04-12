@@ -7,16 +7,20 @@ namespace MbCache.Logic
 {
 	public class LogAndStatisticCacheDecorator : ICache, IStatistics
 	{
+		private static readonly ILockObjectGenerator noSharedLocks = new noSharedLocksGenerator();
 		private readonly ILog log;
 		private readonly ICache _cache;
 		private long _cacheHits;
-		private long _cacheMisses;
+		private long _physicalCacheMisses;
 
 		public LogAndStatisticCacheDecorator(ICache cache)
 		{
 			_cache = cache;
 			log = LogManager.GetLogger(cache.GetType());
+			LockObjectGenerator = _cache.LockObjectGenerator ?? noSharedLocks;
 		}
+
+		public ILockObjectGenerator LockObjectGenerator { get; private set; }
 
 		public long CacheHits
 		{
@@ -25,7 +29,15 @@ namespace MbCache.Logic
 
 		public long CacheMisses
 		{
-			get { return _cacheMisses; }
+			get
+			{
+				return _physicalCacheMisses / 2;
+			}
+		}
+
+		public long PhysicalCacheMisses
+		{
+			get { return _physicalCacheMisses; }
 		}
 
 		public object Get(string key)
@@ -58,14 +70,9 @@ namespace MbCache.Logic
 			}
 		}
 
-		public ILockObjectGenerator LockObjectGenerator
-		{
-			get { return _cache.LockObjectGenerator; }
-		}
-
 		public void Clear()
 		{
-			_cacheMisses = 0;                
+			_physicalCacheMisses = 0;                
 			_cacheHits = 0;
 		}
 
@@ -78,7 +85,16 @@ namespace MbCache.Logic
 		private void cacheMiss(string key)
 		{
 			log.Debug("Cache miss for <" + key + ">");
-			Interlocked.Increment(ref _cacheMisses);
+			Interlocked.Increment(ref _physicalCacheMisses);
+		}
+
+		//fix this - should probably be a generator that does not produce lock(object) at all...
+		private class noSharedLocksGenerator : ILockObjectGenerator
+		{
+			public object GetFor(string key)
+			{
+				return new object();
+			}
 		}
 	}
 }

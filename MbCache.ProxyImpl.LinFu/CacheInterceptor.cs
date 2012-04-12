@@ -62,29 +62,30 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private object interceptUsingCache(InvocationInfo info)
 		{
-			object retVal;
 			var method = info.TargetMethod;
 			var arguments = info.Arguments;
 			var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
 			if (key == null)
 			{
-				retVal = callOriginalMethod(info);
+				return callOriginalMethod(info);
 			}
-			else
+			var cachedValue = _cache.Get(key);
+			if (cachedValue != null)
 			{
-				var cachedValue = _cache.Get(key);
-				if (cachedValue != null)
-				{
-					retVal = cachedValue;
-				}
-				else
-				{
-					retVal = callOriginalMethod(info);
-					_cache.Put(key, retVal);
-				}				
+				return cachedValue;
 			}
-
-			return retVal;
+			var lockObject = _cache.LockObjectGenerator.GetFor(key);
+			lock (lockObject)
+			{
+				var cachedValue2 = _cache.Get(key);
+				if (cachedValue2 != null)
+				{
+					return cachedValue2;
+				}
+				var retVal = callOriginalMethod(info);
+				_cache.Put(key, retVal);
+				return retVal;				
+			}
 		}
 
 		private object callOriginalMethod(InvocationInfo info)

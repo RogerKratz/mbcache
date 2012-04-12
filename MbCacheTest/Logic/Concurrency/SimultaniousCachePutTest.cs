@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿
+using System.Threading;
 using MbCache.Configuration;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
@@ -10,7 +11,7 @@ namespace MbCacheTest.Logic.Concurrency
 	[TestFixture]
 	public class SimultaniousCachePutTest
 	{
-		[Test, Ignore("Issue 6 - not yet fixed")]
+		[Test]
 		public void ShouldNotMakeTheSameCallMoreThanOnce()
 		{
 			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
@@ -26,10 +27,15 @@ namespace MbCacheTest.Logic.Concurrency
 			{
 				var instance = factory.Create<IObjectWithCallCounter>();
 
-				var task1 = Task.Factory.StartNew(() => instance.Increment());
-				var task2 = Task.Factory.StartNew(() => instance.Increment());
-				var task3 = Task.Factory.StartNew(() => instance.Increment());
-				Task.WaitAll(task1, task2, task3);
+				var task1 = new Thread(() => instance.Increment());
+				var task2 = new Thread(() => instance.Increment());
+				var task3 = new Thread(() => instance.Increment());
+				task1.Start();
+				task2.Start();
+				task3.Start();
+				task1.Join();
+				task2.Join();
+				task3.Join();
 
 				instance.Count.Should().Be(1);
 			});

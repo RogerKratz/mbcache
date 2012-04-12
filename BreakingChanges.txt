@@ -4,7 +4,7 @@
 
 - TRUNK (compared to latest release) -
 
-
+* ICache.LockObjectGenerator added.
 
 
 - VERSION 0.9.1 -

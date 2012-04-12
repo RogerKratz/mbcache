@@ -58,6 +58,11 @@ namespace MbCache.Logic
 			}
 		}
 
+		public ILockObjectGenerator LockObjectGenerator
+		{
+			get { return _cache.LockObjectGenerator; }
+		}
+
 		public void Clear()
 		{
 			_cacheMisses = 0;                

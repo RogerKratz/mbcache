@@ -31,17 +31,29 @@ namespace MbCache.ProxyImpl.Castle
 			}
 			else
 			{
-				var cachedValue = _cache.Get(key);
-				if (cachedValue != null)
+				if (tryGetValueFromCache(invocation, key))
+					return;
+
+				var lockObject = _cache.LockObjectGenerator.GetFor(key);
+				lock (lockObject)
 				{
-					invocation.ReturnValue = cachedValue;
-				}
-				else
-				{
+					if (tryGetValueFromCache(invocation, key))
+						return;
 					invocation.Proceed();
 					_cache.Put(key, invocation.ReturnValue);
 				}
 			}
+		}
+
+		private bool tryGetValueFromCache(IInvocation invocation, string key)
+		{
+			var cachedValue = _cache.Get(key);
+			if (cachedValue != null)
+			{
+				invocation.ReturnValue = cachedValue;
+				return true;
+			}
+			return false;
 		}
 	}
 }

@@ -12,7 +12,7 @@
 		/// but that could result in more locking than needed.
 		/// </summary>
 		/// <param name="key"></param>
-		/// <returns></returns>
+		/// <returns>Lock object for the key. Returns null if no locking should occur</returns>
 		object GetFor(string key);
 	}
 }

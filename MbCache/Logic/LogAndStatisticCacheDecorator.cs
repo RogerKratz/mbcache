@@ -7,7 +7,7 @@ namespace MbCache.Logic
 {
 	public class LogAndStatisticCacheDecorator : ICache, IStatistics
 	{
-		private static readonly ILockObjectGenerator noSharedLocks = new noSharedLocksGenerator();
+		private static readonly ILockObjectGenerator noSharedLocks = new noLocks();
 		private readonly ILog log;
 		private readonly ICache _cache;
 		private long _cacheHits;
@@ -31,13 +31,8 @@ namespace MbCache.Logic
 		{
 			get
 			{
-				return _physicalCacheMisses / 2;
+				return _physicalCacheMisses;
 			}
-		}
-
-		public long PhysicalCacheMisses
-		{
-			get { return _physicalCacheMisses; }
 		}
 
 		public object Get(string key)
@@ -88,12 +83,11 @@ namespace MbCache.Logic
 			Interlocked.Increment(ref _physicalCacheMisses);
 		}
 
-		//fix this - should probably be a generator that does not produce lock(object) at all...
-		private class noSharedLocksGenerator : ILockObjectGenerator
+		private class noLocks : ILockObjectGenerator
 		{
 			public object GetFor(string key)
 			{
-				return new object();
+				return null;
 			}
 		}
 	}

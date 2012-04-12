@@ -35,14 +35,26 @@ namespace MbCache.ProxyImpl.Castle
 					return;
 
 				var lockObject = _cache.LockObjectGenerator.GetFor(key);
-				lock (lockObject)
+				if (lockObject == null)
 				{
-					if (tryGetValueFromCache(invocation, key))
-						return;
-					invocation.Proceed();
-					_cache.Put(key, invocation.ReturnValue);
+					executeAndPutInCache(invocation, key);
+				}
+				else
+				{
+					lock (lockObject)
+					{
+						if (tryGetValueFromCache(invocation, key))
+							return;
+						executeAndPutInCache(invocation, key);
+					}				
 				}
 			}
+		}
+
+		private void executeAndPutInCache(IInvocation invocation, string key)
+		{
+			invocation.Proceed();
+			_cache.Put(key, invocation.ReturnValue);
 		}
 
 		private bool tryGetValueFromCache(IInvocation invocation, string key)

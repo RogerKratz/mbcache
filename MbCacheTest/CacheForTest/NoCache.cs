@@ -1,4 +1,3 @@
-using System;
 using MbCache.Configuration;
 
 namespace MbCacheTest.CacheForTest

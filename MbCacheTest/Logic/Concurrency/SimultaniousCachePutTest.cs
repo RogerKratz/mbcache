@@ -1,5 +1,4 @@
-﻿
-using System.Threading;
+﻿using System.Threading;
 using MbCache.Configuration;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
@@ -14,7 +13,7 @@ namespace MbCacheTest.Logic.Concurrency
 		[Test]
 		public void ShouldNotMakeTheSameCallMoreThanOnce()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(new DefaultLockObjectGenerator(50)), new ToStringMbCacheKey());
 
 			builder.For<ObjectWithCallCounter>()
 				 .CacheMethod(c => c.Increment())

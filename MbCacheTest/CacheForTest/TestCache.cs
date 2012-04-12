@@ -10,8 +10,12 @@ namespace MbCacheTest.CacheForTest
 
 		public TestCache()
 		{
-			_lockObjectGenerator = new DefaultLockObjectGenerator(50);
 			_values = new Dictionary<string, object>();
+		}
+
+		public TestCache(ILockObjectGenerator lockObjectGenerator) :this()
+		{
+			_lockObjectGenerator = lockObjectGenerator;
 		}
 
 		public object Get(string key)

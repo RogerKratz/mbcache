@@ -6,7 +6,7 @@
 		public virtual object Increment()
 		{
 			Count++;
-			return null;
+			return new object();
 		}
 	}
 }

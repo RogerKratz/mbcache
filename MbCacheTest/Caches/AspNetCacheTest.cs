@@ -41,7 +41,7 @@ namespace MbCacheTest.Caches
 		[Test]
 		public void VerifyCacheWhenLockObjectGeneratorIsUsed()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new AspNetCache(1, new DefaultLockObjectGenerator(40)), new ToStringMbCacheKey());
+			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new AspNetCache(1, new FixedNumberOfLockObjects(40)), new ToStringMbCacheKey());
 			builder
 				 .For<ObjectReturningNewGuids>()
 				 .CacheMethod(c => c.CachedMethod())

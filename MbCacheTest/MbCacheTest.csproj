@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MbCacheTest</RootNamespace>
     <AssemblyName>MbCacheTest</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,6 +31,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,9 +73,11 @@
     <Compile Include="Caches\AspNetCacheTest.cs" />
     <Compile Include="ConfigurationData.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />
+    <Compile Include="Logic\Concurrency\SimultaniousCachePutTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
     <Compile Include="Logic\MbCacheKeyBaseReturnNullTest.cs" />
@@ -87,8 +90,10 @@
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Statistic\ThreadingTest.cs" />
     <Compile Include="TestData\InterfaceReturningRandomNumbers.cs" />
+    <Compile Include="TestData\IObjectWithCallCounter.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />
+    <Compile Include="TestData\ObjectWithCallCounter.cs" />
     <Compile Include="TestData\ObjectWithCtorParameters.cs" />
     <Compile Include="TestData\ObjectWithNonInterfaceMethod.cs" />
     <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />

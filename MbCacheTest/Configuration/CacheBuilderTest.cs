@@ -83,17 +83,4 @@ namespace MbCacheTest.Configuration
 	{
 		Guid Id { get; }
 	}
-
-	public interface IHasNonVirtualMethod
-	{
-		int DoIt();
-	}
-
-	public class HasNonVirtualMethod : IHasNonVirtualMethod
-	{
-		public int DoIt()
-		{
-			return 0;
-		}
-	}
 }

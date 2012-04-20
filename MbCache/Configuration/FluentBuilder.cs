@@ -9,12 +9,15 @@ namespace MbCache.Configuration
 	{
 		private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
 		private readonly ImplementationAndMethods _details;
+		private readonly ProxyValidator _proxyValidator;
 
-		public FluentBuilder(IDictionary<Type, ImplementationAndMethods> cachedMethods,
-								  ImplementationAndMethods details)
+		public FluentBuilder(IDictionary<Type, ImplementationAndMethods> cachedMethods, 
+									ImplementationAndMethods details, 
+									ProxyValidator proxyValidator)
 		{
 			_cachedMethods = cachedMethods;
 			_details = details;
+			_proxyValidator = proxyValidator;
 		}
 
 		public IFluentBuilder<T> CacheMethod(Expression<Func<T, object>> expression)
@@ -39,6 +42,7 @@ namespace MbCache.Configuration
 
 		public void AsImplemented()
 		{
+			_proxyValidator.Validate(_details);
 			addToCachedMethods(_details.ConcreteType);	
 		}
 

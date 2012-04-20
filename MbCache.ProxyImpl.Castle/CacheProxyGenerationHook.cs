@@ -6,43 +6,43 @@ using Castle.DynamicProxy;
 
 namespace MbCache.ProxyImpl.Castle
 {
-    public class CacheProxyGenerationHook : IProxyGenerationHook
-    {
-        private readonly IEnumerable<MethodInfo> _methods;
+	public class CacheProxyGenerationHook : IProxyGenerationHook
+	{
+		private readonly IEnumerable<string> _methodNames;
 
-        public CacheProxyGenerationHook(IEnumerable<MethodInfo> methods)
-        {
-            _methods = methods;
-        }
+		public CacheProxyGenerationHook(IEnumerable<MethodInfo> methods)
+		{
+			_methodNames = methods.Select(methodInfo => methodInfo.Name).ToArray();
+		}
 
-        public bool ShouldInterceptMethod(Type type, MethodInfo methodInfo)
-        {
-            return isMethodMarkedForCaching(methodInfo);
-        }
+		public bool ShouldInterceptMethod(Type type, MethodInfo methodInfo)
+		{
+			return isMethodMarkedForCaching(methodInfo);
+		}
 
-        public void NonProxyableMemberNotification(Type type, MemberInfo memberInfo)
-        {
-        }
+		public void NonProxyableMemberNotification(Type type, MemberInfo memberInfo)
+		{
+		}
 
 
-        public void MethodsInspected()
-        {
-        }
+		public void MethodsInspected()
+		{
+		}
 
-        private bool isMethodMarkedForCaching(MethodInfo key)
-        {
-            return _methods.Contains(key);
-        }
+		private bool isMethodMarkedForCaching(MethodInfo key)
+		{
+			return _methodNames.Contains(key.Name);
+		}
 
-        public override bool Equals(object obj)
-        {
-            var casted = obj as CacheProxyGenerationHook;
-            return casted != null && casted._methods.Equals(_methods);
-        }
+		public override bool Equals(object obj)
+		{
+			var casted = obj as CacheProxyGenerationHook;
+			return casted != null && casted._methodNames.SequenceEqual(_methodNames);
+		}
 
-        public override int GetHashCode()
-        {
-            return _methods.GetHashCode();
-        }
-    }
+		public override int GetHashCode()
+		{
+			return _methodNames.GetHashCode();
+		}
+	}
 }

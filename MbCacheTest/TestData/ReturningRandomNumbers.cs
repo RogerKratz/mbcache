@@ -11,19 +11,19 @@ namespace MbCacheTest.TestData
 
     public class ReturningRandomNumbers : IReturningRandomNumbers
     {
-        private Random r = new Random();
+        private readonly Random r = new Random();
 
-        public virtual int CachedNumber()
+        public int CachedNumber()
         {
             return r.Next();
         }
 
-        public virtual int CachedNumber2()
+        public int CachedNumber2()
         {
             return r.Next();
         }
 
-        public virtual int NonCachedNumber()
+        public int NonCachedNumber()
         {
             return r.Next();
         }

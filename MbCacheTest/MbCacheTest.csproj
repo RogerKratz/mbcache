@@ -79,6 +79,7 @@
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />
+    <Compile Include="Logic\ClassProxyTest.cs" />
     <Compile Include="Logic\Concurrency\SimultaniousCachePutTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />

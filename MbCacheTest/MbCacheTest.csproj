@@ -80,6 +80,7 @@
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />
     <Compile Include="Logic\ClassProxyTest.cs" />
+    <Compile Include="Logic\ClassProxy\SimpleCacheAndInvalidationTest.cs" />
     <Compile Include="Logic\Concurrency\SimultaniousCachePutTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="SetupFixtureForAssembly.cs" />
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Statistic\ThreadingTest.cs" />
+    <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />

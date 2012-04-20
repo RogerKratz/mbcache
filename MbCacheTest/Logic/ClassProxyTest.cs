@@ -5,6 +5,7 @@ namespace MbCacheTest.Logic
 	[TestFixture]
 	public class ClassProxyTest
 	{
+
 		 //cachebuilder
 		//[Test]
 		//public void CachedMethodNeedToBeVirtual()

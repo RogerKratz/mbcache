@@ -8,6 +8,6 @@ namespace MbCacheTest
 		private static readonly IProxyFactory linFuProxy = new MbCache.ProxyImpl.LinFu.ProxyFactory();
 
 		//conf values
-		public static readonly IProxyFactory ProxyFactory = linFuProxy;
+		public static readonly IProxyFactory ProxyFactory = castleProxy;
 	}
 }

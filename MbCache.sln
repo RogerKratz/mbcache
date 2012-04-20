@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D24957B8-C6D1-4F10-A48E-F637BF3F4D79}"
 	ProjectSection(SolutionItems) = preProject
-		BreakingChanges.txt = BreakingChanges.txt
+		ReleaseNotes.txt = ReleaseNotes.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCache", "MbCache\MbCache.csproj", "{45BA5406-F8E5-4931-8114-FFFC821DE7A7}"

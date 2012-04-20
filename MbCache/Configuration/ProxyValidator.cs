@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
@@ -12,10 +14,19 @@ namespace MbCache.Configuration
 			_proxyFactory = proxyFactory;
 		}
 
-		public void Validate(Type proxyType)
+		public void Validate(ImplementationAndMethods implementationAndMethods)
 		{
+			checkCachedMethodsAreVirtual(implementationAndMethods);
 			if (!_proxyFactory.AllowNonVirtualMember)
-				checkAccessibleMembersAreVirtual(proxyType);
+				checkAccessibleMembersAreVirtual(implementationAndMethods.ConcreteType);
+		}
+
+		private void checkCachedMethodsAreVirtual(ImplementationAndMethods implementationAndMethods)
+		{
+			foreach (var methodInfo in implementationAndMethods.Methods)
+			{
+				checkMethod(implementationAndMethods.ConcreteType, methodInfo);
+			}
 		}
 
 		private void checkAccessibleMembersAreVirtual(Type type)
@@ -80,8 +91,6 @@ namespace MbCache.Configuration
 
 		private void checkMethodIsVirtual(Type type, MethodInfo method)
 		{
-			//todo: fix soon
-			return;
 			if (!isProxeable(method))
 			{
 				throw new InvalidOperationException("Type " + type + "'s member " + method.Name + " is non virtual. Proxy factory " +

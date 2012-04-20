@@ -3,6 +3,8 @@
 - VERSION 1.1.CR1 -
 * IProxyFactory.Create() now only accept reference types
 * IMbCacheFactory.Create() now only accept reference types
+* When As<IMyComponent>() is used in CacheBuilder, interface proxies now is created. To use old behaviour, class proxies, use AsImplemented() instead.
+
 
 - VERSION 1.0.0 -
 

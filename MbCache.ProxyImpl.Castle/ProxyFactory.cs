@@ -27,6 +27,10 @@ namespace MbCache.ProxyImpl.Castle
 			options.AddMixinInstance(createCachingComponent(type, methodData));
 			try
 			{
+				if (type.IsClass)
+				{
+					return (T)_generator.CreateClassProxy(methodData.ConcreteType, options, parameters, cacheInterceptor);
+				}
 				var target = Activator.CreateInstance(methodData.ConcreteType, parameters);
 				return _generator.CreateInterfaceProxyWithTarget((T)target, options, cacheInterceptor);
 			}

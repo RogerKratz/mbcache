@@ -21,7 +21,7 @@ namespace MbCache.Configuration
 	{
 		public string Key(Type type)
 		{
-			return string.Concat(KeyStart + type + Separator);
+			return string.Concat(KeyStart, type, Separator);
 		}
 
 		public string Key(Type type, ICachingComponent component)

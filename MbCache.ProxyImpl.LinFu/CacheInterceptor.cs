@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using LinFu.DynamicProxy;
 using MbCache.Configuration;
@@ -51,13 +52,7 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private bool methodMarkedForCaching(MethodInfo method)
 		{
-			//why?
-			foreach (var cachedMethod in _methodData.Methods)
-			{
-				if (cachedMethod.Name.Equals(method.Name))
-					return true;
-			}
-			return false;
+			return _methodData.Methods.Any(cachedMethod => cachedMethod.Name.Equals(method.Name));
 		}
 
 		private object interceptUsingCache(InvocationInfo info)

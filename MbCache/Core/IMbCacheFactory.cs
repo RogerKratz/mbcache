@@ -10,10 +10,6 @@ namespace MbCache.Core
 	/// 
 	/// Also have methods to invalidate types or its specific methods
 	/// </summary>
-	/// <remarks>
-	/// Created by: rogerkr
-	/// Created date: 2010-03-02
-	/// </remarks>
 	public interface IMbCacheFactory
 	{
 		/// <summary>
@@ -22,20 +18,13 @@ namespace MbCache.Core
 		/// <typeparam name="T"></typeparam>
 		/// <param name="parameters">The parameters.</param>
 		/// <returns></returns>
-		/// <remarks>
-		/// Created by: rogerkr
-		/// Created date: 2010-08-17
-		/// </remarks>
-		T Create<T>(params object[] parameters);
+		T Create<T>(params object[] parameters)
+			where T : class;
 
 		/// <summary>
 		/// Invalidates all cached methods for type T.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <remarks>
-		/// Created by: rogerkr
-		/// Created date: 2010-08-17
-		/// </remarks>
 		void Invalidate<T>();
 
 		/// <summary>
@@ -43,10 +32,6 @@ namespace MbCache.Core
 		/// Note: If PerInstance() not is used, this may include several instances.
 		/// </summary>
 		/// <param name="component">The component.</param>
-		/// <remarks>
-		/// Created by: rogerkr
-		/// Created date: 2010-09-01
-		/// </remarks>
 		void Invalidate(object component);
 
 		/// <summary>
@@ -68,10 +53,6 @@ namespace MbCache.Core
 		/// </summary>
 		/// <param name="component">The component.</param>
 		/// <returns></returns>
-		/// <remarks>
-		/// Created by: rogerkr
-		/// Created date: 2010-09-03
-		/// </remarks>
 		bool IsKnownInstance(object component);
 
 		/// <summary>

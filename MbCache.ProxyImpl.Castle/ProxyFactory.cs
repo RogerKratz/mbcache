@@ -19,7 +19,7 @@ namespace MbCache.ProxyImpl.Castle
 		}
 
 		public T CreateProxy<T>(ImplementationAndMethods methodData,
-										params object[] parameters)
+										params object[] parameters) where T : class
 		{
 			var type = typeof(T);
 			var cacheInterceptor = new CacheInterceptor(_cache, _mbCacheKey, type);
@@ -27,11 +27,12 @@ namespace MbCache.ProxyImpl.Castle
 			options.AddMixinInstance(createCachingComponent(type, methodData));
 			try
 			{
-				return (T)_generator.CreateClassProxy(methodData.ConcreteType, options, parameters, cacheInterceptor);
+				var target = Activator.CreateInstance(methodData.ConcreteType, parameters);
+				return _generator.CreateInterfaceProxyWithTarget((T)target, options, cacheInterceptor);
 			}
-			catch (InvalidProxyConstructorArgumentsException castleEx)
+			catch (MissingMethodException createInstanceEx)
 			{
-				throw new ArgumentException("Cannot instantiate proxy", castleEx);
+				throw new ArgumentException("Cannot instantiate proxy", createInstanceEx);
 			}
 		}
 

@@ -25,7 +25,7 @@ namespace MbCache.Logic
 			_proxyFactory.Initialize(_cache, cacheKey);
 		}
 
-		public T Create<T>(params object[] parameters)
+		public T Create<T>(params object[] parameters) where T : class
 		{
 			return _proxyFactory.CreateProxy<T>(_methods[typeof(T)], parameters);
 		}
@@ -62,6 +62,5 @@ namespace MbCache.Logic
 				throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
 			return comp;
 		}
-
 	}
 }

@@ -8,8 +8,8 @@
 
 	public class ObjectWithCallCounter : IObjectWithCallCounter
 	{
-		public virtual int Count { get; set; }
-		public virtual object Increment()
+		public int Count { get; set; }
+		public object Increment()
 		{
 			Count++;
 			return new object();

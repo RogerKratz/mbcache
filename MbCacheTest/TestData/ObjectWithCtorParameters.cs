@@ -17,10 +17,10 @@ namespace MbCacheTest.TestData
             Value2 = value2;
         }
 
-        public virtual int Value1 { get; set; }
-        public virtual int Value2 { get; set; }
+        public int Value1 { get; set; }
+        public int Value2 { get; set; }
 
-        public virtual Guid CachedMethod()
+        public Guid CachedMethod()
         {
             return Guid.NewGuid();
         }

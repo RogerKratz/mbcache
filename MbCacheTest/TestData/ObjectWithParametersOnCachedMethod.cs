@@ -11,7 +11,7 @@ namespace MbCacheTest.TestData
     {
         private static readonly Random r = new Random();
 
-        public virtual int CachedMethod(object parameter)
+        public int CachedMethod(object parameter)
         {
             return r.Next();
         }

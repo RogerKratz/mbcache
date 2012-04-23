@@ -87,12 +87,14 @@
     <Compile Include="Logic\MbCacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\MbCacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\NonCacheTest.cs" />
+    <Compile Include="Logic\ReturnNullTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetupFixtureForAssembly.cs" />
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Statistic\ThreadingTest.cs" />
     <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />
+    <Compile Include="TestData\ObjectReturningParameter.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />

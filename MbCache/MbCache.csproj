@@ -80,7 +80,7 @@
     <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Core\IStatistics.cs" />
-    <Compile Include="Logic\LogAndStatisticCacheDecorator.cs" />
+    <Compile Include="Logic\CacheDecorator.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />

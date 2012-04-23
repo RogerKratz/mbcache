@@ -5,7 +5,10 @@ using MbCache.Core;
 
 namespace MbCache.Logic
 {
-	public class LogAndStatisticCacheDecorator : ICache, IStatistics
+	/// <summary>
+	/// Adds logging, statistics and null replacement for <see cref="ICache"/>.
+	/// </summary>
+	public class CacheDecorator : ICache, IStatistics
 	{
 		private static readonly ILockObjectGenerator noSharedLocks = new noLocks();
 		private readonly ILog log;
@@ -13,7 +16,7 @@ namespace MbCache.Logic
 		private long _cacheHits;
 		private long _physicalCacheMisses;
 
-		public LogAndStatisticCacheDecorator(ICache cache)
+		public CacheDecorator(ICache cache)
 		{
 			_cache = cache;
 			log = LogManager.GetLogger(cache.GetType());
@@ -38,8 +41,8 @@ namespace MbCache.Logic
 		public object Get(string key)
 		{
 			log.Debug("Trying to find cache entry <" + key + ">");
-			var ret = _cache.Get(key);
-			if(ret == null)
+			var cacheValue = _cache.Get(key);
+			if(cacheValue == null)
 			{
 				cacheMiss(key);
 			}
@@ -47,13 +50,15 @@ namespace MbCache.Logic
 			{
 				cacheHit(key);
 			}
-			return ret;
+			return cacheValue is nullValue ? null : cacheValue;
 		}
 
 		public void Put(string key, object value)
 		{
 			log.Debug("Put in cache entry <" + key + ">");
-			_cache.Put(key, value);
+			//creating new nullValue instance here - not really necessary with current aspnetcache impl
+			//but gives a possibility for ICache implementations to use call backs
+			_cache.Put(key, value ?? new nullValue());
 		}
 
 		public void Delete(string keyStartingWith)
@@ -90,5 +95,7 @@ namespace MbCache.Logic
 				return null;
 			}
 		}
+
+		private class nullValue { }
 	}
 }

@@ -82,6 +82,7 @@
     <Compile Include="Logic\ClassProxy\NonVirtualTest.cs" />
     <Compile Include="Logic\ClassProxy\SimpleCacheAndInvalidationTest.cs" />
     <Compile Include="Logic\Concurrency\SimultaniousCachePutTest.cs" />
+    <Compile Include="Logic\ImplementationTypeForTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
     <Compile Include="Logic\MbCacheKeyBaseReturnNullTest.cs" />

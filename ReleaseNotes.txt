@@ -1,4 +1,8 @@
---- BREAKING CHANGES ---
+--- RELEASE NOTES ---
+
+- Version 1.1 (v 1.1.0.5)
+* Added IMbCacheFactory.ImplementationTypeFor(Type)
+* Support to cache null return values
 
 - VERSION 1.1.CR1 -
 * IProxyFactory.Create() now only accept reference types

@@ -1,38 +1,35 @@
-using MbCache.Configuration;
 using MbCache.Core;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-    public class CachingPerScopeTest
-    {
-        private IMbCacheFactory factory;
+	public class CachingPerScopeTest : TestBothProxyFactories
+	{
+		private IMbCacheFactory factory;
 
-        [SetUp]
-        public void Setup()
-        {
-            var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+		public CachingPerScopeTest(string proxyTypeString) : base(proxyTypeString) {}
 
-            builder
-                .For<ObjectReturningNewGuids>()
-                .CacheMethod(c => c.CachedMethod())
-                .PerInstance()
-                .As<IObjectReturningNewGuids>();
+		protected override void TestSetup()
+		{
+			CacheBuilder
+				 .For<ObjectReturningNewGuids>()
+				 .CacheMethod(c => c.CachedMethod())
+				 .PerInstance()
+				 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory();
-        }
+			factory = CacheBuilder.BuildFactory();
+		}
 
 
-        [Test]
-        public void DifferentObjectsHasTheirOwnCache()
-        {
-            var obj = factory.Create<IObjectReturningNewGuids>();
-            var obj2 = factory.Create<IObjectReturningNewGuids>();
+		[Test]
+		public void DifferentObjectsHasTheirOwnCache()
+		{
+			var obj = factory.Create<IObjectReturningNewGuids>();
+			var obj2 = factory.Create<IObjectReturningNewGuids>();
 
-            Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
-            Assert.AreNotEqual(obj.CachedMethod(), obj2.CachedMethod());
-        }
-    }
+			Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
+			Assert.AreNotEqual(obj.CachedMethod(), obj2.CachedMethod());
+		}
+	}
 }

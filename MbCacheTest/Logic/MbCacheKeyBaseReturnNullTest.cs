@@ -1,25 +1,33 @@
 ﻿using MbCache.Configuration;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	[TestFixture]
-	public class MbCacheKeyBaseReturnNullTest
+	public class MbCacheKeyBaseReturnNullTest : TestBothProxyFactories
 	{
+		private mbCacheStub cacheKey;
+
+		public MbCacheKeyBaseReturnNullTest(string proxyTypeString) : base(proxyTypeString)
+		{
+		}
+
+		protected override IMbCacheKey CreateCacheKey()
+		{
+			cacheKey = new mbCacheStub();
+			return cacheKey;
+		}
+
 		[Test]
 		public void ShouldNotAddToCacheUsingParameters()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new mbCacheStub());
-
-			builder
+			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
 				 .CacheMethod(c => c.CachedMethod(null))
 				 .As<IObjectWithParametersOnCachedMethod>();
 
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 
 			var svc = factory.Create<IObjectWithParametersOnCachedMethod>();
 			var obj = new object();
@@ -30,24 +38,23 @@ namespace MbCacheTest.Logic
 		[Test]
 		public void ShouldNotInvalidateMethod()
 		{
-			var stub = new mbCacheStub { TheKey = "aKey" };
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), stub);
+			cacheKey.TheKey = "aKey";
 
-			builder
+			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
 				 .CacheMethod(c => c.CachedMethod(null))
 				 .As<IObjectWithParametersOnCachedMethod>();
 
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 
 			var svc = factory.Create<IObjectWithParametersOnCachedMethod>();
 			var parameter = new object();
 
 			var result = svc.CachedMethod(parameter);
 
-			stub.TheKey = null;
+			cacheKey.TheKey = null;
 			factory.Invalidate(svc, method => method.CachedMethod(parameter), true);
-			stub.TheKey = "aKey";
+			cacheKey.TheKey = "aKey";
 
 			svc.CachedMethod(parameter).Should().Be.EqualTo(result);
 		}

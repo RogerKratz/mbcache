@@ -1,50 +1,39 @@
 ﻿using System;
-using MbCache.Configuration;
-using MbCacheTest.CacheForTest;
+using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic.ClassProxy
 {
-	[TestFixture]
-	public class NonVirtualTest
+	public class NonVirtualTest : TestBothProxyFactories
 	{
+		public NonVirtualTest(string proxyTypeString) : base(proxyTypeString)
+		{
+		}
+
 		[Test]
 		public void CachedMethodNeedToBeVirtual()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey())
+			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
 				.CacheMethod(m => m.NonVirtual());
-			Assert.Throws<InvalidOperationException>(builder.AsImplemented);
+			Assert.Throws<InvalidOperationException>(fluentBuilder.AsImplemented);
 		}
 
 		[Test]
 		public void NonVirtualNonCachedMethod()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey())
+			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
 				.CacheMethod(m => m.Virtual());
 
-			if (ConfigurationData.ProxyFactory.AllowNonVirtualMember)
+			if (ProxyFactory.AllowNonVirtualMember)
 			{
-				Assert.DoesNotThrow(builder.AsImplemented);
+				Assert.DoesNotThrow(fluentBuilder.AsImplemented);
 			}
 			else
 			{
-				Assert.Throws<InvalidOperationException>(builder.AsImplemented);
+				Assert.Throws<InvalidOperationException>(fluentBuilder.AsImplemented);
 			}
-		}
-	}
-
-	public class HasNonVirtualMethod
-	{
-		public int NonVirtual()
-		{
-			return 0;
-		}
-
-		public virtual int Virtual()
-		{
-			return 0;
 		}
 	}
 }

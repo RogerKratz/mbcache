@@ -1,26 +1,23 @@
-using MbCache.Configuration;
 using MbCache.Core;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Statistic
 {
-	public class HitsAndMissesTest
+	public class HitsAndMissesTest : TestBothProxyFactories
 	{
 		private IMbCacheFactory factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+		public HitsAndMissesTest(string proxyTypeString) : base(proxyTypeString) {}
 
-			builder
+		protected override void TestSetup()
+		{
+			CacheBuilder
 				 .For<ObjectReturningNewGuids>()
 				 .CacheMethod(c => c.CachedMethod())
 				 .As<IObjectReturningNewGuids>();
 
-			factory = builder.BuildFactory();
+			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]

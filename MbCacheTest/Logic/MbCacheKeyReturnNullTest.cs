@@ -3,27 +3,35 @@ using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	[TestFixture]
-	public class MbCacheKeyReturnNullTest
+	public class MbCacheKeyReturnNullTest : TestBothProxyFactories
 	{
+		private mbCacheStub cacheKey;
+
+		public MbCacheKeyReturnNullTest(string proxyTypeString) : base(proxyTypeString)
+		{
+		}
+
+		protected override IMbCacheKey CreateCacheKey()
+		{
+			cacheKey = new mbCacheStub();
+			return cacheKey;
+		}
+
 		[Test]
 		public void ShouldNotAddToCache()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new mbCacheStub());
-
-			builder
+			CacheBuilder
 				 .For<ObjectReturningNewGuids>()
 				 .CacheMethod(c => c.CachedMethod())
 				 .As<IObjectReturningNewGuids>();
 
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 
 			var svc = factory.Create<IObjectReturningNewGuids>();
 			svc.CachedMethod()
@@ -33,14 +41,12 @@ namespace MbCacheTest.Logic
 		[Test]
 		public void ShouldNotAddToCacheUsingParameters()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new mbCacheStub());
-
-			builder
+			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
 				 .CacheMethod(c => c.CachedMethod(null))
 				 .As<IObjectWithParametersOnCachedMethod>();
 
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 
 			var svc = factory.Create<IObjectWithParametersOnCachedMethod>();
 			var obj = new object();
@@ -51,27 +57,25 @@ namespace MbCacheTest.Logic
 		[Test]
 		public void ShouldNotInvalidate()
 		{
-			var stub = new mbCacheStub {TheKey = "aKey"};
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), stub);
-
-			builder
+			cacheKey.TheKey = "aKey";
+			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
 				 .CacheMethod(c => c.CachedMethod(null))
 				 .As<IObjectWithParametersOnCachedMethod>();
 
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 
 			var svc = factory.Create<IObjectWithParametersOnCachedMethod>();
 			var parameter = new object();
 
 			var result = svc.CachedMethod(parameter);
 
-			stub.TheKey = null;
+			cacheKey.TheKey = null;
 			factory.Invalidate<IObjectWithParametersOnCachedMethod>();
 			factory.Invalidate(svc);
 			factory.Invalidate(svc, method => method.CachedMethod(null), false);
 			factory.Invalidate(svc, method => method.CachedMethod(parameter), true);
-			stub.TheKey = "aKey";
+			cacheKey.TheKey = "aKey";
 
 			svc.CachedMethod(parameter).Should().Be.EqualTo(result);
 		}

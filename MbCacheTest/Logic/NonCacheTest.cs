@@ -1,35 +1,31 @@
-using MbCache.Configuration;
 using MbCache.Core;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-    [TestFixture]
-    public class NonCacheTest
-    {
-        private IMbCacheFactory factory;
+	public class NonCacheTest : TestBothProxyFactories
+	{
+		private IMbCacheFactory factory;
 
-        [SetUp]
-        public void Setup()
-        {
-            var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+		public NonCacheTest(string proxyTypeString) : base(proxyTypeString) { }
 
-            builder
-                .For<ObjectReturningNewGuids>()
-                .CacheMethod(c => c.CachedMethod())
-                .CacheMethod(c => c.CachedMethod2())
-                .As<IObjectReturningNewGuids>();
+		protected override void TestSetup()
+		{
+			CacheBuilder
+				 .For<ObjectReturningNewGuids>()
+				 .CacheMethod(c => c.CachedMethod())
+				 .CacheMethod(c => c.CachedMethod2())
+				 .As<IObjectReturningNewGuids>();
 
-            factory = builder.BuildFactory();
-        }
+			factory = CacheBuilder.BuildFactory();
+		}
 
-        [Test]
-        public void CanAskFactoryIfComponentIsKnownType()
-        {
-            Assert.IsTrue(factory.IsKnownInstance(factory.Create<IObjectReturningNewGuids>()));
-            Assert.IsFalse(factory.IsKnownInstance(new object()));
-        }
-    }
+		[Test]
+		public void CanAskFactoryIfComponentIsKnownType()
+		{
+			Assert.IsTrue(factory.IsKnownInstance(factory.Create<IObjectReturningNewGuids>()));
+			Assert.IsFalse(factory.IsKnownInstance(new object()));
+		}
+	}
 }

@@ -7,20 +7,24 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Concurrency
 {
-	[TestFixture]
-	public class SimultaniousCachePutTest
+	public class SimultaniousCachePutTest : TestBothProxyFactories
 	{
+		public SimultaniousCachePutTest(string proxyTypeString) : base(proxyTypeString) { }
+
+		protected override ICache CreateCache()
+		{
+			return new TestCache(new FixedNumberOfLockObjects(50));
+		}
+
 		[Test]
 		public void ShouldNotMakeTheSameCallMoreThanOnce()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(new FixedNumberOfLockObjects(50)), new ToStringMbCacheKey());
-
-			builder.For<ObjectWithCallCounter>()
+			CacheBuilder.For<ObjectWithCallCounter>()
 				 .CacheMethod(c => c.Increment())
 				 .PerInstance()
 				 .As<IObjectWithCallCounter>();
 
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 
 			10.Times(() =>
 			{

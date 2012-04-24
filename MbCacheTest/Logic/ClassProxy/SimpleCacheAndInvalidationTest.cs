@@ -1,28 +1,24 @@
-﻿using MbCache.Configuration;
-using MbCache.Core;
-using MbCacheTest.CacheForTest;
+﻿using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic.ClassProxy
 {
-	[TestFixture]
-	public class SimpleCacheAndInvalidationTest
+	public class SimpleCacheAndInvalidationTest : TestBothProxyFactories
 	{
 		private IMbCacheFactory factory;
 
-		[SetUp]
-		public void Setup()
-		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+		public SimpleCacheAndInvalidationTest(string proxyTypeString) : base(proxyTypeString) {}
 
-			builder.For<ObjectReturningNewGuidsNoInterface>()
+		protected override void TestSetup()
+		{
+			CacheBuilder.For<ObjectReturningNewGuidsNoInterface>()
 				 .CacheMethod(c => c.CachedMethod())
 				 .CacheMethod(c => c.CachedMethod2())
 				 .AsImplemented();
 
-			factory = builder.BuildFactory();
+			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]

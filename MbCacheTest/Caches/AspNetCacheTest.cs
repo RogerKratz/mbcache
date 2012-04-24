@@ -5,21 +5,25 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Caches
 {
-	[TestFixture]
-	public class AspNetCacheTest
+	public class AspNetCacheTest : TestBothProxyFactories
 	{
 		private IMbCacheFactory factory;
 
-		[SetUp]
-		public void Setup()
+		public AspNetCacheTest(string proxyTypeString) : base(proxyTypeString) { }
+
+		protected override ICache CreateCache()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new AspNetCache(1), new ToStringMbCacheKey());
-			builder
+			return new AspNetCache(1);
+		}
+
+		protected override void TestSetup()
+		{
+			CacheBuilder
 				 .For<ObjectReturningNewGuids>()
 				 .CacheMethod(c => c.CachedMethod())
 				 .As<IObjectReturningNewGuids>();
 
-			factory = builder.BuildFactory();
+			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]
@@ -36,21 +40,6 @@ namespace MbCacheTest.Caches
 			factory.Invalidate<IObjectReturningNewGuids>();
 			factory.Invalidate<IObjectReturningNewGuids>();
 			Assert.AreNotEqual(value, factory.Create<IObjectReturningNewGuids>().CachedMethod());
-		}
-
-		[Test]
-		public void VerifyCacheWhenLockObjectGeneratorIsUsed()
-		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new AspNetCache(1, new FixedNumberOfLockObjects(40)), new ToStringMbCacheKey());
-			builder
-				 .For<ObjectReturningNewGuids>()
-				 .CacheMethod(c => c.CachedMethod())
-				 .As<IObjectReturningNewGuids>();
-
-			factory = builder.BuildFactory();
-
-			var value = factory.Create<IObjectReturningNewGuids>().CachedMethod();
-			Assert.AreEqual(value, factory.Create<IObjectReturningNewGuids>().CachedMethod());
 		}
 	}
 }

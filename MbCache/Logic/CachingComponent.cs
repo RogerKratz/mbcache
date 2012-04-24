@@ -29,11 +29,6 @@ namespace MbCache.Logic
 			_cache.Delete(_cacheKey.Key(_definedType, this));
 		}
 
-		public void Invalidate<T>(Expression<Func<T, object>> method)
-		{
-			Invalidate(method, false);
-		}
-
 		public void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues)
 		{
 			var methodInfo = ExpressionHelper.MemberName(method.Body);

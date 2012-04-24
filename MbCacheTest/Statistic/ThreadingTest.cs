@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Statistic
 {
-	public class ThreadingTest : TestBothProxyFactories
+	public class ThreadingTest : FullTest
 	{
 		private IObjectReturningNewGuids component;
 		private const int noOfThreads = 100;

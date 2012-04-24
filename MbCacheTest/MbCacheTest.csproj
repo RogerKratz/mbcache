@@ -95,7 +95,7 @@
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Statistic\ThreadingTest.cs" />
     <Compile Include="SimpleTest.cs" />
-    <Compile Include="TestBothProxyFactories.cs" />
+    <Compile Include="FullTest.cs" />
     <Compile Include="TestData\HasNonVirtualMethod.cs" />
     <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />
     <Compile Include="TestData\ObjectReturningParameter.cs" />

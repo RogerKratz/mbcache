@@ -12,7 +12,7 @@ namespace MbCacheTest
 
 		public T CreateProxy<T>(ImplementationAndMethods methodData, params object[] parameters) where T : class
 		{
-			throw new NotSupportedException("This test creates proxies. Please derive from " + typeof(TestBothProxyFactories).Name + " instead.");
+			throw new NotSupportedException("This test creates proxies. Please derive from " + typeof(FullTest).Name + " instead.");
 		}
 
 		public bool AllowNonVirtualMember

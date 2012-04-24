@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-	public class CachingObjectWithParameterCtorTest : TestBothProxyFactories
+	public class CachingObjectWithParameterCtorTest : FullTest
 	{
 		private IMbCacheFactory factory;
 

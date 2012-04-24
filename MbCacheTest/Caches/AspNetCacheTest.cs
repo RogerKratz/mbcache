@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Caches
 {
-	public class AspNetCacheTest : TestBothProxyFactories
+	public class AspNetCacheTest : FullTest
 	{
 		private IMbCacheFactory factory;
 

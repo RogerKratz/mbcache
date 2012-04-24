@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Configuration
 {
-	public class CacheBuilderTest : TestBothProxyFactories
+	public class CacheBuilderTest : FullTest
 	{
 		public CacheBuilderTest(string proxyTypeString) : base(proxyTypeString)
 		{

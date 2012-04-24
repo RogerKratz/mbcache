@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-	public class SimpleCacheInterfaceTest : TestBothProxyFactories
+	public class SimpleCacheInterfaceTest : FullTest
 	{
 		private IMbCacheFactory factory;
 

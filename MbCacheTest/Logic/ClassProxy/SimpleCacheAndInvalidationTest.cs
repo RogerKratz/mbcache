@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.ClassProxy
 {
-	public class SimpleCacheAndInvalidationTest : TestBothProxyFactories
+	public class SimpleCacheAndInvalidationTest : FullTest
 	{
 		private IMbCacheFactory factory;
 

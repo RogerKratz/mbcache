@@ -5,9 +5,9 @@ namespace MbCacheTest
 
 	[TestFixture("MbCache.ProxyImpl.Castle.ProxyFactory, MbCache.ProxyImpl.Castle")]
 	[TestFixture("MbCache.ProxyImpl.LinFu.ProxyFactory, MbCache.ProxyImpl.LinFu")]
-	public abstract class TestBothProxyFactories : SimpleTest
+	public abstract class FullTest : SimpleTest
 	{
-		protected TestBothProxyFactories(string proxyTypeString) : base(proxyTypeString)
+		protected FullTest(string proxyTypeString) : base(proxyTypeString)
 		{
 		}
 	}

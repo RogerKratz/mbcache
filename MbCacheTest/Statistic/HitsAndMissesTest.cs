@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Statistic
 {
-	public class HitsAndMissesTest : TestBothProxyFactories
+	public class HitsAndMissesTest : FullTest
 	{
 		private IMbCacheFactory factory;
 

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Caches
 {
-	public class LockObjectGeneratorTest : TestBothProxyFactories
+	public class LockObjectGeneratorTest : FullTest
 	{
 		public LockObjectGeneratorTest(string proxyTypeString) : base(proxyTypeString)
 		{

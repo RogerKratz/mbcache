@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class MbCacheKeyBaseReturnNullTest : TestBothProxyFactories
+	public class MbCacheKeyBaseReturnNullTest : FullTest
 	{
 		private mbCacheStub cacheKey;
 

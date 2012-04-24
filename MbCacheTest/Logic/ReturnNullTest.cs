@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class ReturnNullTest : TestBothProxyFactories
+	public class ReturnNullTest : FullTest
 	{
 		private IMbCacheFactory factory;
 

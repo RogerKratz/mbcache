@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class InvalidateCachePerInstanceTest : TestBothProxyFactories
+	public class InvalidateCachePerInstanceTest : FullTest
 	{
 		private IMbCacheFactory factory;
 		private IObjectReturningNewGuids obj1;

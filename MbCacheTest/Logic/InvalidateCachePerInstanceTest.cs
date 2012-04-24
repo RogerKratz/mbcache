@@ -1,38 +1,34 @@
-using MbCache.Configuration;
 using MbCache.Core;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class InvalidateCachePerInstanceTest
+	public class InvalidateCachePerInstanceTest : TestBothProxyFactories
 	{
 		private IMbCacheFactory factory;
 		private IObjectReturningNewGuids obj1;
 		private IObjectReturningNewGuids obj2;
 
+		public InvalidateCachePerInstanceTest(string proxyTypeString) : base(proxyTypeString) {}
 
-		[SetUp]
-		public void Setup()
+		protected override void TestSetup()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
-
-			builder
+			CacheBuilder
 				.For<ObjectReturningNewGuids>()
 				.CacheMethod(c => c.CachedMethod())
 				.CacheMethod(c => c.CachedMethod2())
 				.PerInstance()
 				.As<IObjectReturningNewGuids>();
 
-			builder
+			CacheBuilder
 				.For<ObjectWithParametersOnCachedMethod>()
 				.CacheMethod(c => c.CachedMethod(null))
 				.PerInstance()
 				.As<IObjectWithParametersOnCachedMethod>();
 
-			factory = builder.BuildFactory();
+			factory = CacheBuilder.BuildFactory();
 			obj1 = factory.Create<IObjectReturningNewGuids>();
 			obj2 = factory.Create<IObjectReturningNewGuids>();
 		}

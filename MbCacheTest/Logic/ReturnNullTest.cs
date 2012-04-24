@@ -1,26 +1,23 @@
-﻿using MbCache.Configuration;
-using MbCache.Core;
-using MbCacheTest.CacheForTest;
+﻿using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	[TestFixture]
-	public class ReturnNullTest
+	public class ReturnNullTest : TestBothProxyFactories
 	{
 		private IMbCacheFactory factory;
 
-		[SetUp]
-		public void Setup()
+		public ReturnNullTest(string proxyTypeString) : base(proxyTypeString) {}
+
+		protected override void TestSetup()
 		{
-			var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new AspNetCache(1), new ToStringMbCacheKey());
-			builder
+			CacheBuilder
 				.For<ObjectReturningNull>()
 				.CacheMethod(c => c.ReturnNullIfZero(0))
 				.As<IObjectReturningNull>();
-			factory = builder.BuildFactory();
+			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]

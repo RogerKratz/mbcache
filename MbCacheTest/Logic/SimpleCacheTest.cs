@@ -1,38 +1,34 @@
-using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
-using MbCacheTest.CacheForTest;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-    [TestFixture]
-    public class SimpleCacheInterfaceTest
-    {
-        private IMbCacheFactory factory;
+	public class SimpleCacheInterfaceTest : TestBothProxyFactories
+	{
+		private IMbCacheFactory factory;
 
-        [SetUp]
-        public void Setup()
-        {
-            var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new TestCache(), new ToStringMbCacheKey());
+		public SimpleCacheInterfaceTest(string proxyTypeString) : base(proxyTypeString) { }
 
-            builder.For<ReturningRandomNumbers>()
-                .CacheMethod(c => c.CachedNumber())
-                .CacheMethod(c => c.CachedNumber2())
-                .As<IReturningRandomNumbers>();
+		protected override void TestSetup()
+		{
+			CacheBuilder.For<ReturningRandomNumbers>()
+				 .CacheMethod(c => c.CachedNumber())
+				 .CacheMethod(c => c.CachedNumber2())
+				 .As<IReturningRandomNumbers>();
 
-            factory = builder.BuildFactory();
-        }
+			factory = CacheBuilder.BuildFactory();
+		}
 
-        [Test]
-        public void VerifyCacheIsWorking()
-        {
-            var obj1 = factory.Create<IReturningRandomNumbers>();
-            var obj2 = factory.Create<IReturningRandomNumbers>();
-            Assert.AreEqual(obj1.CachedNumber(), obj2.CachedNumber());
-            Assert.AreEqual(obj1.CachedNumber2(), obj2.CachedNumber2());
-            Assert.AreNotEqual(obj1.CachedNumber(), obj1.CachedNumber2());
-            Assert.AreNotEqual(obj1.NonCachedNumber(), obj2.NonCachedNumber());
-        }
-    }
+		[Test]
+		public void VerifyCacheIsWorking()
+		{
+			var obj1 = factory.Create<IReturningRandomNumbers>();
+			var obj2 = factory.Create<IReturningRandomNumbers>();
+			Assert.AreEqual(obj1.CachedNumber(), obj2.CachedNumber());
+			Assert.AreEqual(obj1.CachedNumber2(), obj2.CachedNumber2());
+			Assert.AreNotEqual(obj1.CachedNumber(), obj1.CachedNumber2());
+			Assert.AreNotEqual(obj1.NonCachedNumber(), obj2.NonCachedNumber());
+		}
+	}
 }

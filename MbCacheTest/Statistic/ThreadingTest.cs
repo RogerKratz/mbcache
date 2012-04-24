@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Collections.Generic;
-using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
@@ -8,60 +7,63 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Statistic
 {
-    [TestFixture]
-    public class ThreadingTest
-    {
-        private IObjectReturningNewGuids component;
-        private const int noOfThreads = 100;
-        private IMbCacheFactory factory;
+	public class ThreadingTest : TestBothProxyFactories
+	{
+		private IObjectReturningNewGuids component;
+		private const int noOfThreads = 100;
+		private IMbCacheFactory factory;
 
-        [SetUp]
-        public void Setup()
-        {
-            var builder = new CacheBuilder(ConfigurationData.ProxyFactory, new NoCache(), new ToStringMbCacheKey());
+		public ThreadingTest(string proxyTypeString) : base(proxyTypeString) { }
 
-            builder
-                .For<ObjectReturningNewGuids>()
-                .CacheMethod(c => c.CachedMethod())
-                .As<IObjectReturningNewGuids>();
+		protected override MbCache.Configuration.ICache CreateCache()
+		{
+			return new NoCache();
+		}
 
-            factory = builder.BuildFactory();
-            component = factory.Create<IObjectReturningNewGuids>();
-            log4net.LogManager.Shutdown();
-        }
+		protected override void TestSetup()
+		{
+			CacheBuilder
+				 .For<ObjectReturningNewGuids>()
+				 .CacheMethod(c => c.CachedMethod())
+				 .As<IObjectReturningNewGuids>();
 
-        [TearDown]
-        public void AfterTest()
-        {
-            SetupFixtureForAssembly.StartLog4Net();
-        }
+			factory = CacheBuilder.BuildFactory();
+			component = factory.Create<IObjectReturningNewGuids>();
+			log4net.LogManager.Shutdown();
+		}
 
-        [Test]
-        public void StatisticConcurrency()
-        {
-            var ts = new ThreadStart(createCacheHitOrMiss);
+		[TearDown]
+		public void AfterTest()
+		{
+			SetupFixtureForAssembly.StartLog4Net();
+		}
 
-            var tColl = new List<Thread>(noOfThreads);
-            for (var threadLoop = 0; threadLoop < noOfThreads; threadLoop++)
-            {
-                tColl.Add(new Thread(ts));
-            }
-            foreach (var thread in tColl)
-            {
-                thread.Start();
-            }
-            for (var i = tColl.Count - 1; i >= 0; i--)
-            {
-                tColl[i].Join();
-            }
+		[Test]
+		public void StatisticConcurrency()
+		{
+			var ts = new ThreadStart(createCacheHitOrMiss);
 
-            Assert.AreEqual(noOfThreads, factory.Statistics.CacheMisses);
-            factory.Statistics.Clear();
-        }
+			var tColl = new List<Thread>(noOfThreads);
+			for (var threadLoop = 0; threadLoop < noOfThreads; threadLoop++)
+			{
+				tColl.Add(new Thread(ts));
+			}
+			foreach (var thread in tColl)
+			{
+				thread.Start();
+			}
+			for (var i = tColl.Count - 1; i >= 0; i--)
+			{
+				tColl[i].Join();
+			}
 
-        private void createCacheHitOrMiss()
-        {
-            component.CachedMethod();
-        }
-    }
+			Assert.AreEqual(noOfThreads, factory.Statistics.CacheMisses);
+			factory.Statistics.Clear();
+		}
+
+		private void createCacheHitOrMiss()
+		{
+			component.CachedMethod();
+		}
+	}
 }

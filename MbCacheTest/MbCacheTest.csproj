@@ -73,7 +73,7 @@
     <Compile Include="CacheForTest\NoCache.cs" />
     <Compile Include="CacheForTest\TestCache.cs" />
     <Compile Include="Caches\AspNetCacheTest.cs" />
-    <Compile Include="ConfigurationData.cs" />
+    <Compile Include="Caches\LockObjectGeneratorTest.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
@@ -93,8 +93,11 @@
     <Compile Include="SetupFixtureForAssembly.cs" />
     <Compile Include="Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Statistic\ThreadingTest.cs" />
+    <Compile Include="TestBothProxyFactories.cs" />
+    <Compile Include="TestData\HasNonVirtualMethod.cs" />
     <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />
     <Compile Include="TestData\ObjectReturningParameter.cs" />
+    <Compile Include="TestData\ObjectWithIdentifier.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />

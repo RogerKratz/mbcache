@@ -6,8 +6,7 @@ namespace MbCache.Configuration
 	 /// Creates the proxy. 
 	 ///  
 	 /// To implementors
-	 /// The implementation of this interface needs a ctor with this signature
-	 /// public ProxyFactory(ICache cache, IMbCacheKey mbCacheKey)
+	 /// The implementation of this interface needs a default ctor
 	 /// </summary>
 	 public interface IProxyFactory
 	 {

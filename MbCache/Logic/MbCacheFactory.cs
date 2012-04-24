@@ -55,6 +55,14 @@ namespace MbCache.Logic
 			get { return _cache; }
 		}
 
+		public Type ImplementationTypeFor(Type componentType)
+		{
+			ImplementationAndMethods methods;
+			if(!_methods.TryGetValue(componentType, out methods))
+				throw new ArgumentException(componentType.FullName + " is not a registered component.");
+			return methods.ConcreteType;
+		}
+
 		private static ICachingComponent castToCachingComponentOrThrow(object component)
 		{
 			var comp = component as ICachingComponent;

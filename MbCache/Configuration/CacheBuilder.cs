@@ -14,6 +14,7 @@ namespace MbCache.Configuration
 		private readonly IProxyFactory _proxyFactory;
 		private readonly ICache _cache;
 		private readonly IMbCacheKey _keyBuilder;
+		private readonly ILockObjectGenerator _lockObjectGenerator;
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 										ICache cache,
@@ -26,10 +27,23 @@ namespace MbCache.Configuration
 			_keyBuilder = keyBuilder;
 		}
 
+		public CacheBuilder(IProxyFactory proxyFactory,
+								ICache cache,
+								IMbCacheKey keyBuilder,
+								ILockObjectGenerator lockObjectGenerator)
+		{
+			_cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
+			_details = new List<ImplementationAndMethods>();
+			_proxyFactory = proxyFactory;
+			_cache = cache;
+			_keyBuilder = keyBuilder;
+			_lockObjectGenerator = lockObjectGenerator;
+		}
+
 		public IMbCacheFactory BuildFactory()
 		{
 			checkAllImplementationAndMethodsAreOk();
-			return new MbCacheFactory(_proxyFactory, _cache, _keyBuilder, _cachedMethods);
+			return new MbCacheFactory(_proxyFactory, _cache, _keyBuilder, _lockObjectGenerator, _cachedMethods);
 		}
 
 		public IFluentBuilder<T> For<T>()

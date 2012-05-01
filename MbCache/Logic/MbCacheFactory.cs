@@ -14,15 +14,16 @@ namespace MbCache.Logic
 		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
-								  ICache cache,
-								  IMbCacheKey cacheKey,
-								  IDictionary<Type, ImplementationAndMethods> methods)
+									ICache cache,
+									IMbCacheKey cacheKey,
+									ILockObjectGenerator lockObjectGenerator,
+									IDictionary<Type, ImplementationAndMethods> methods)
 		{
 			_cache = new CacheDecorator(cache);
 			_cacheKey = cacheKey;
 			_methods = methods;
+			proxyFactory.Initialize(_cache, cacheKey, lockObjectGeneratorOrNullObject(lockObjectGenerator));
 			_proxyFactory = proxyFactory;
-			_proxyFactory.Initialize(_cache, cacheKey);
 		}
 
 		public T Create<T>(params object[] parameters) where T : class
@@ -69,6 +70,19 @@ namespace MbCache.Logic
 			if (comp == null)
 				throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
 			return comp;
+		}
+
+		private ILockObjectGenerator lockObjectGeneratorOrNullObject(ILockObjectGenerator lockObjectGenerator)
+		{
+			return lockObjectGenerator ?? new nullLockObjectGenerator();
+		}
+
+		private class nullLockObjectGenerator : ILockObjectGenerator
+		{
+			public object GetFor(string key)
+			{
+				return null;
+			}
 		}
 	}
 }

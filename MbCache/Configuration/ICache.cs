@@ -23,12 +23,5 @@
 		/// </summary>
 		/// <param name="keyStartingWith">The key to search for.</param>
 		void Delete(string keyStartingWith);
-
-		/// <summary>
-		/// An implementation of <see cref="ILockObjectGenerator"/>.
-		/// This only needs to be set if two simultanious threads must
-		/// not modify cache at the same time.
-		/// </summary>
-		ILockObjectGenerator LockObjectGenerator { get; }
 	}
 }

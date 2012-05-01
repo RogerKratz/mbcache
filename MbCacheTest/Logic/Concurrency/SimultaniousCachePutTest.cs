@@ -11,9 +11,9 @@ namespace MbCacheTest.Logic.Concurrency
 	{
 		public SimultaniousCachePutTest(string proxyTypeString) : base(proxyTypeString) { }
 
-		protected override ICache CreateCache()
+		protected override ILockObjectGenerator CreateLockObjectGenerator()
 		{
-			return new TestCache(new FixedNumberOfLockObjects(50));
+			return new FixedNumberOfLockObjects(40);
 		}
 
 		[Test]

@@ -10,7 +10,6 @@ namespace MbCache.Logic
 	/// </summary>
 	public class CacheDecorator : ICache, IStatistics
 	{
-		private static readonly ILockObjectGenerator noSharedLocks = new noLocks();
 		private readonly ILog log;
 		private readonly ICache _cache;
 		private long _cacheHits;
@@ -20,7 +19,6 @@ namespace MbCache.Logic
 		{
 			_cache = cache;
 			log = LogManager.GetLogger(cache.GetType());
-			LockObjectGenerator = _cache.LockObjectGenerator ?? noSharedLocks;
 		}
 
 		public ILockObjectGenerator LockObjectGenerator { get; private set; }
@@ -86,14 +84,6 @@ namespace MbCache.Logic
 		{
 			log.Debug("Cache miss for <" + key + ">");
 			Interlocked.Increment(ref _physicalCacheMisses);
-		}
-
-		private class noLocks : ILockObjectGenerator
-		{
-			public object GetFor(string key)
-			{
-				return null;
-			}
 		}
 
 		private class nullValue { }

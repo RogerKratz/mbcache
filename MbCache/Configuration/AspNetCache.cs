@@ -10,18 +10,11 @@ namespace MbCache.Configuration
 		private readonly int _timeoutMinutes;
 		private readonly Cache _cache;
 
-		public AspNetCache(int timeoutMinutes) : this(timeoutMinutes, null)
-		{
-		}
-
-		public AspNetCache(int timeoutMinutes, ILockObjectGenerator lockObjectGenerator)
+		public AspNetCache(int timeoutMinutes)
 		{
 			_timeoutMinutes = timeoutMinutes;
 			_cache = HttpRuntime.Cache;
-			LockObjectGenerator = lockObjectGenerator;
 		}
-
-		public ILockObjectGenerator LockObjectGenerator { get; private set; }
 
 		public object Get(string key)
 		{

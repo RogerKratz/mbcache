@@ -5,17 +5,11 @@ namespace MbCacheTest.CacheForTest
 {
 	public class TestCache : ICache
 	{
-		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly IDictionary<string, object> _values;
 
 		public TestCache()
 		{
 			_values = new Dictionary<string, object>();
-		}
-
-		public TestCache(ILockObjectGenerator lockObjectGenerator) :this()
-		{
-			_lockObjectGenerator = lockObjectGenerator;
 		}
 
 		public object Get(string key)
@@ -43,11 +37,6 @@ namespace MbCacheTest.CacheForTest
 			{
 				_values.Remove(key);
 			}
-		}
-
-		public ILockObjectGenerator LockObjectGenerator
-		{
-			get { return _lockObjectGenerator; }
 		}
 	}
 }

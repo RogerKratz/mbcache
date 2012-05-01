@@ -12,6 +12,7 @@ namespace MbCache.ProxyImpl.LinFu
 	{
 		private readonly ICache _cache;
 		private readonly IMbCacheKey _cacheKey;
+		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
 		private readonly ImplementationAndMethods _methodData;
 		private readonly object _target;
@@ -19,12 +20,14 @@ namespace MbCache.ProxyImpl.LinFu
 
 		public CacheInterceptor(ICache cache,
 										IMbCacheKey cacheKey,
+										ILockObjectGenerator lockObjectGenerator, 
 										Type type,
 										ImplementationAndMethods methodData,
 										params object[] ctorParameters)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
+			_lockObjectGenerator = lockObjectGenerator;
 			_type = type;
 			_methodData = methodData;
 			_target = createTarget(ctorParameters);
@@ -69,7 +72,7 @@ namespace MbCache.ProxyImpl.LinFu
 			{
 				return cachedValue;
 			}
-			var lockObject = _cache.LockObjectGenerator.GetFor(key);
+			var lockObject = _lockObjectGenerator.GetFor(key);
 			if (lockObject == null)
 			{
 				return executeAndPutInCache(info, key);

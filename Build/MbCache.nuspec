@@ -13,7 +13,7 @@
 		<projectUrl>http://code.google.com/p/mbcache/</projectUrl>
 		<dependencies>
 			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />
-			<dependency id="log4net" version="1.2.11" />
+			<dependency id="log4net" version="2.0" />
 		</dependencies>
 	</metadata>
 	<files>

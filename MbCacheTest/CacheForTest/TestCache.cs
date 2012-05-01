@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MbCache.Configuration;
 
 namespace MbCacheTest.CacheForTest
@@ -27,12 +28,7 @@ namespace MbCacheTest.CacheForTest
 
 		public void Delete(string keyStartingWith)
 		{
-			var keysToRemove = new List<string>();
-			foreach (var key in _values.Keys)
-			{
-				if (key.StartsWith(keyStartingWith))
-					keysToRemove.Add(key);
-			}
+			var keysToRemove = _values.Keys.Where(key => key.StartsWith(keyStartingWith)).ToList();
 			foreach (var key in keysToRemove)
 			{
 				_values.Remove(key);

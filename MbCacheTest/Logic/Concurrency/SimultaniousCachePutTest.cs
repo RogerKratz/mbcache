@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using MbCache.Configuration;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;

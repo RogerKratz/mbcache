@@ -1,8 +1,15 @@
 --- RELEASE NOTES ---
 
+- Version vNext
+* ICache.LockObjectGenerator removed
+* ILockObjectGenerator added as parameter to IProxyFactory.Initialize
+* AspNetCache ctor accepting ILockObjectGenerator removed
+* CacheBuilder now have an overloaded ctor accepting an ILockObjectGenerator
+
 - Version 1.1 (v 1.1.0.5)
 * Added IMbCacheFactory.ImplementationTypeFor(Type)
 * Support to cache null return values
+
 
 - VERSION 1.1.CR1 -
 * IProxyFactory.Create() now only accept reference types

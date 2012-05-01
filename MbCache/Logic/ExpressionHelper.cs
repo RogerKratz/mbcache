@@ -32,7 +32,7 @@ namespace MbCache.Logic
 			{
 				case ExpressionType.Call:
 					var callExpression = (MethodCallExpression)expression;
-					return ExtractConstants(callExpression);
+					return extractConstants(callExpression);
 
 				case ExpressionType.Convert:
 					var unaryExpression = (UnaryExpression)expression;
@@ -43,48 +43,48 @@ namespace MbCache.Logic
 			}
 		}
 
-		private static IEnumerable<object> ExtractConstants(MethodCallExpression methodCallExpression)
+		private static IEnumerable<object> extractConstants(MethodCallExpression methodCallExpression)
 		{
 			foreach (var arg in methodCallExpression.Arguments)
 			{
-				foreach (var constant in ExtractConstants(arg))
+				foreach (var constant in extractConstants(arg))
 					yield return constant;
 			}
 
-			foreach (var constant in ExtractConstants(methodCallExpression.Object))
+			foreach (var constant in extractConstants(methodCallExpression.Object))
 				yield return constant;
 		}
 
-		private static IEnumerable<object> ExtractConstants(Expression expression)
+		private static IEnumerable<object> extractConstants(Expression expression)
 		{
 			if (expression == null || expression is ParameterExpression)
 				return new object[0];
 
 			var memberExpression = expression as MemberExpression;
 			if (memberExpression != null)
-				return ExtractConstants(memberExpression).ToArray();
+				return extractConstants(memberExpression).ToArray();
 
 			var constantExpression = expression as ConstantExpression;
 			if (constantExpression != null)
-				return ExtractConstants(constantExpression);
+				return extractConstants(constantExpression);
 
 			var newArrayExpression = expression as NewArrayExpression;
 			if (newArrayExpression != null)
-				return ExtractConstants(newArrayExpression);
+				return extractConstants(newArrayExpression);
 
 			var unaryExpression = expression as UnaryExpression;
 			if (unaryExpression != null)
-				return ExtractConstants(unaryExpression);
+				return extractConstants(unaryExpression);
 
 			throw new InvalidOperationException("Could not fetch the arguments from the provided exception. This may be a bug so please report it");
 		}
 
-		private static IEnumerable<object> ExtractConstants(UnaryExpression unaryExpression)
+		private static IEnumerable<object> extractConstants(UnaryExpression unaryExpression)
 		{
-			return ExtractConstants(unaryExpression.Operand);
+			return extractConstants(unaryExpression.Operand);
 		}
 
-		private static IEnumerable<object> ExtractConstants(NewArrayExpression newArrayExpression)
+		private static IEnumerable<object> extractConstants(NewArrayExpression newArrayExpression)
 		{
 			var arrayElements = new ArrayList();
 			Type type = newArrayExpression.Type.GetElementType();
@@ -98,11 +98,11 @@ namespace MbCache.Logic
 
 		}
 
-		private static IEnumerable<object> ExtractConstants(ConstantExpression constantExpression)
+		private static IEnumerable<object> extractConstants(ConstantExpression constantExpression)
 		{
 			if (constantExpression.Value is Expression)
 			{
-				foreach (var constant in ExtractConstants((Expression)constantExpression.Value))
+				foreach (var constant in extractConstants((Expression)constantExpression.Value))
 				{
 					yield return constant;
 				}
@@ -114,7 +114,7 @@ namespace MbCache.Logic
 			}
 		}
 
-		private static IEnumerable<object> ExtractConstants(MemberExpression memberExpression)
+		private static IEnumerable<object> extractConstants(MemberExpression memberExpression)
 		{
 			var constExpression = (ConstantExpression)memberExpression.Expression;
 			var type = constExpression.Type;

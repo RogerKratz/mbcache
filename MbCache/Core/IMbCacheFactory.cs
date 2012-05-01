@@ -64,7 +64,6 @@ namespace MbCache.Core
 		/// Returns the "real" type for a registered interface.
 		/// Returns the same type as registered type if AsImplemented (class proxy) is used.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		Type ImplementationTypeFor(Type componentType);
 	}

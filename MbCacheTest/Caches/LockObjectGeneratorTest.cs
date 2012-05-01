@@ -10,9 +10,14 @@ namespace MbCacheTest.Caches
 		{
 		}
 
+		protected override ILockObjectGenerator CreateLockObjectGenerator()
+		{
+			return new FixedNumberOfLockObjects(40);
+		}
+
 		protected override ICache CreateCache()
 		{
-			return new AspNetCache(1, new FixedNumberOfLockObjects(40));
+			return new AspNetCache(1);
 		}
 
 		[Test]

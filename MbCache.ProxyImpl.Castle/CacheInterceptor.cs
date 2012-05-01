@@ -9,12 +9,17 @@ namespace MbCache.ProxyImpl.Castle
 	{
 		private readonly ICache _cache;
 		private readonly IMbCacheKey _cacheKey;
+		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
 
-		public CacheInterceptor(ICache cache, IMbCacheKey cacheKey, Type type)
+		public CacheInterceptor(ICache cache, 
+										IMbCacheKey cacheKey, 
+										ILockObjectGenerator lockObjectGenerator, 
+										Type type)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
+			_lockObjectGenerator = lockObjectGenerator;
 			_type = type;
 		}
 
@@ -34,7 +39,7 @@ namespace MbCache.ProxyImpl.Castle
 				if (tryGetValueFromCache(invocation, key))
 					return;
 
-				var lockObject = _cache.LockObjectGenerator.GetFor(key);
+				var lockObject = _lockObjectGenerator.GetFor(key);
 				if (lockObject == null)
 				{
 					executeAndPutInCache(invocation, key);

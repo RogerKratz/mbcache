@@ -4,8 +4,6 @@ namespace MbCache.Configuration
 {
 	 /// <summary>
 	 /// Creates the proxy. 
-	 ///  
-	 /// To implementors
 	 /// The implementation of this interface needs a default ctor
 	 /// </summary>
 	 public interface IProxyFactory
@@ -13,7 +11,7 @@ namespace MbCache.Configuration
 		  /// <summary>
 		  /// Called once
 		  /// </summary>
-		  void Initialize(ICache cache, IMbCacheKey mbCacheKey);
+		  void Initialize(ICache cache, IMbCacheKey mbCacheKey, ILockObjectGenerator lockObjectGenerator);
 
 		  /// <summary>
 		  /// Creates the proxy.

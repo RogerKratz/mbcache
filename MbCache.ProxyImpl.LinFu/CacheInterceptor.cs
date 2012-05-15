@@ -93,11 +93,14 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private object callOriginalMethod(InvocationInfo info)
 		{
-			if (info.TargetMethod.DeclaringType == typeof(ICachingComponent))
+			var targetMethod = info.TargetMethod;
+			if (targetMethod.DeclaringType == typeof(ICachingComponent))
 			{
-				return info.TargetMethod.Invoke(_cachingComponent, info.Arguments);
+				if (targetMethod.ContainsGenericParameters)
+					targetMethod = targetMethod.MakeGenericMethod(info.TypeArguments);
+				return targetMethod.Invoke(_cachingComponent, info.Arguments);
 			}
-			return info.TargetMethod.Invoke(_target, info.Arguments);
+			return targetMethod.Invoke(_target, info.Arguments);
 		}
 	}
 }

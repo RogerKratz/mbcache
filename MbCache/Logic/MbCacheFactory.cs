@@ -28,7 +28,13 @@ namespace MbCache.Logic
 
 		public T Create<T>(params object[] parameters) where T : class
 		{
-			return _proxyFactory.CreateProxy<T>(_methods[typeof(T)], parameters);
+			var type = typeof (T);
+			ImplementationAndMethods methods;
+			if (_methods.TryGetValue(type, out methods))
+			{
+				return _proxyFactory.CreateProxy<T>(_methods[type], parameters);	
+			}
+			throw new ArgumentException(type + " is not registered as a MbCache component!");
 		}
 
 		public void Invalidate<T>()

@@ -75,6 +75,8 @@
     <Compile Include="Caches\AspNetCacheTest.cs" />
     <Compile Include="Caches\LockObjectGeneratorTest.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
+    <Compile Include="Configuration\NullProxyFactory.cs" />
+    <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />

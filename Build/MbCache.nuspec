@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>MbCache</id>
-		<version>1.2</version>
+		<version>1.3</version>
 		<authors>Roger Kratz</authors>
 		<summary>Cache method results.</summary>
 		<description>

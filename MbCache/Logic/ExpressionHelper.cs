@@ -87,7 +87,7 @@ namespace MbCache.Logic
 		private static IEnumerable<object> extractConstants(NewArrayExpression newArrayExpression)
 		{
 			var arrayElements = new ArrayList();
-			Type type = newArrayExpression.Type.GetElementType();
+			var type = newArrayExpression.Type.GetElementType();
 			foreach (var arrayElementExpression in newArrayExpression.Expressions)
 			{
 				var arrayElement = ((ConstantExpression)arrayElementExpression).Value;

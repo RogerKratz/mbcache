@@ -78,7 +78,7 @@ namespace MbCache.Logic
 			return comp;
 		}
 
-		private ILockObjectGenerator lockObjectGeneratorOrNullObject(ILockObjectGenerator lockObjectGenerator)
+		private static ILockObjectGenerator lockObjectGeneratorOrNullObject(ILockObjectGenerator lockObjectGenerator)
 		{
 			return lockObjectGenerator ?? new nullLockObjectGenerator();
 		}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
+		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
+		<DeployFolderNuget>$(MSBuildProjectDirectory)\nuget</DeployFolderNuget>
+	</PropertyGroup>
+	
+	<Target Name="BuildNugetPackage" DependsOnTargets="RunBuild;MakeBuildDirectory;CopyNuget">
+		<Exec Command="$(NugetFolder)\NuGet pack MbCache.nuspec -o $(DeployFolderNuget) -symbols -Prop Configuration=Release"
+			  WorkingDirectory="$(MSBuildProjectDirectory)"/>
+	</Target>
+	
+	<Target Name="RunBuild">
+		<MSBuild Projects="$(SourceDir)\MbCache.ProxyImpl.LinFu\MbCache.ProxyImpl.LinFu.csproj" Targets="Clean;Build" >
+			<Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
+		</MSBuild>
+	</Target>
+	
+	<Target Name="CopyNuget">
+		<!-- copying nuget.exe to deplayfolder - to make easier manual push to nuget server -->
+		<Copy SourceFiles="$(NugetFolder)\NuGet.exe"
+				DestinationFolder="$(DeployFolderNuget)"/>
+	</Target>
+	
+	<Target Name="MakeBuildDirectory">
+		<RemoveDir Directories="$(DeployFolderNuget)" />
+		<MakeDir Directories="$(DeployFolderNuget)" />
+	</Target>
+</Project>

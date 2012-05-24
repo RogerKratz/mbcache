@@ -13,10 +13,6 @@ namespace MbCache.Configuration
 	/// Will build cache key in format
 	/// MbCache|Type|Component|Method|ParamValue1|ParamValue2
 	/// </summary>
-	/// <remarks>
-	/// Created by: rogerkr
-	/// Created date: 2010-03-02
-	/// </remarks>
 	public abstract class MbCacheKeyBase : IMbCacheKey
 	{
 		public string Key(Type type)

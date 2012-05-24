@@ -19,10 +19,6 @@ namespace MbCache.Configuration
 	/// it's valid for Key(Type, MethodInfo) to return Roger2
 	/// but not Rog2.
 	/// </summary>
-	/// <remarks>
-	/// Created by: rogerkr
-	/// Created date: 2010-09-01
-	/// </remarks>
 	public interface IMbCacheKey
 	{
 		/// <summary>

@@ -8,7 +8,7 @@ namespace MbCache.Core
 		void Clear();
 
 		/// <summary>
-		/// Number of cache hits
+		/// Number of cache hits to the underlying cache framework.
 		/// </summary>
 		long CacheHits { get; }
 

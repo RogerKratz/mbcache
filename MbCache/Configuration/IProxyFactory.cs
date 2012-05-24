@@ -9,7 +9,7 @@ namespace MbCache.Configuration
 	 public interface IProxyFactory
 	 {
 		  /// <summary>
-		  /// Called once
+		  /// Called once after this object is instansiated.
 		  /// </summary>
 		  void Initialize(ICache cache, IMbCacheKey mbCacheKey, ILockObjectGenerator lockObjectGenerator);
 

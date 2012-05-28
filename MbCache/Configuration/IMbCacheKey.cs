@@ -53,7 +53,7 @@ namespace MbCache.Configuration
 		string Key(Type type, ICachingComponent component);
 
 		/// <summary>
-		/// Creates a cache key for a specific component.
+		/// Creates a cache key for a specific method.
 		/// </summary>
 		/// <param name="type">Type of the component</param>
 		/// <param name="component">
@@ -63,7 +63,7 @@ namespace MbCache.Configuration
 		/// The method of the component.
 		/// </param>
 		/// <remarks>
-		/// Used by MbCache when invalidating all cache entries for a specific component.
+		/// Used by MbCache when invalidating all cache entries for a specific method.
 		/// </remarks>
 		/// <returns>
 		/// A string representation of the method.
@@ -86,7 +86,7 @@ namespace MbCache.Configuration
 		/// The parameters sent to the component.
 		/// </param>
 		/// <remarks>
-		/// Used by MbCache when invalidating all cache entries for a specific component,
+		/// Used by MbCache when invalidating all cache entries for a specific method,
 		/// and when adding an entry to the cache.
 		/// </remarks>
 		/// <returns>

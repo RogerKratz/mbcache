@@ -60,7 +60,7 @@ namespace MbCache.Configuration
 			if (_details.Count > _cachedMethods.Count)
 			{
 				var excText = new StringBuilder();
-				excText.AppendLine("Missing return type (.As) for");
+				excText.AppendLine("Missing return type (.As<T>() or .AsImplemented()) for");
 				var fullyDefined = _cachedMethods.Values;
 				foreach (var undefined in _details.Except(fullyDefined))
 				{

@@ -32,7 +32,7 @@ namespace MbCache.Configuration
 			ret.Append(Separator);
 			foreach (var parameter in method.GetParameters())
 			{
-				ret.Append(parameter.Name);
+				ret.Append(parameter.ParameterType);
 				ret.Append(Separator);
 			}
 			return ret.ToString();

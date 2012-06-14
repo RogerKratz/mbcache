@@ -1,8 +1,9 @@
- using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using MbCache.Core;
+using log4net;
 
 namespace MbCache.Configuration
 {
@@ -15,6 +16,10 @@ namespace MbCache.Configuration
 	/// </summary>
 	public abstract class MbCacheKeyBase : IMbCacheKey
 	{
+		private static readonly ILog logger = LogManager.GetLogger(typeof (MbCacheKeyBase));
+		private const string suspisiousParam =
+			"Cache key of type {0} equals its own type name. Possible bug in your IMbCacheKey implementation.";
+
 		public string Key(Type type)
 		{
 			return string.Concat(KeyStart, type, Separator);
@@ -46,12 +51,24 @@ namespace MbCache.Configuration
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
+				checkIfSuspiousParameter(parameter, parameterKey);
 				ret.Append(parameterKey);
 				ret.Append(Separator);
 			}
 			return ret.ToString();
 		}
 
+		private static void checkIfSuspiousParameter(object parameter, string parameterKey)
+		{
+			if (parameter !=null && logger.IsWarnEnabled)
+			{
+				var parameterType = parameter.GetType();
+				if (parameterKey.Equals(parameterType.ToString()))
+				{
+					logger.WarnFormat(suspisiousParam, parameterType);
+				}
+			}
+		}
 
 		protected virtual string Separator
 		{

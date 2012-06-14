@@ -78,6 +78,8 @@
     <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="LogSpy.cs" />
+    <Compile Include="Logic\CacheKeyTest.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
     <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
     <Compile Include="Logic\CachingPerScopeTest.cs" />

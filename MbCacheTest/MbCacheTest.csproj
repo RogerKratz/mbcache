@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E6434E94-11CE-471C-9652-1571EB3A87C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MbCacheTest</RootNamespace>
+    <AssemblyName>MbCacheTest</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.0\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpTestsEx, Version=1.1.1.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpTestsEx.1.1.1\lib\SharpTestsEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CacheForTest\NoCache.cs" />
+    <Compile Include="CacheForTest\TestCache.cs" />
+    <Compile Include="Caches\AspNetCacheTest.cs" />
+    <Compile Include="Caches\LockObjectGeneratorTest.cs" />
+    <Compile Include="Configuration\CacheBuilderTest.cs" />
+    <Compile Include="Configuration\NullProxyFactory.cs" />
+    <Compile Include="Configuration\UnknownComponentTest.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="LogSpy.cs" />
+    <Compile Include="Logic\CacheKeyTest.cs" />
+    <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
+    <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
+    <Compile Include="Logic\CachingPerScopeTest.cs" />
+    <Compile Include="Logic\ClassProxy\NonVirtualTest.cs" />
+    <Compile Include="Logic\ClassProxy\SimpleCacheAndInvalidationTest.cs" />
+    <Compile Include="Logic\Concurrency\SimultaniousCachePutTest.cs" />
+    <Compile Include="Logic\ImplementationTypeForTest.cs" />
+    <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
+    <Compile Include="Logic\InvalidateCacheTest.cs" />
+    <Compile Include="Logic\MbCacheKeyBaseReturnNullTest.cs" />
+    <Compile Include="Logic\MbCacheKeyReturnNullTest.cs" />
+    <Compile Include="Logic\NonCacheTest.cs" />
+    <Compile Include="Logic\ReturnNullTest.cs" />
+    <Compile Include="Logic\SameParameterNamesTest.cs" />
+    <Compile Include="Logic\SimpleCacheTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyImplThatThrows.cs" />
+    <Compile Include="SetupFixtureForAssembly.cs" />
+    <Compile Include="Statistic\HitsAndMissesTest.cs" />
+    <Compile Include="Statistic\ThreadingTest.cs" />
+    <Compile Include="SimpleTest.cs" />
+    <Compile Include="FullTest.cs" />
+    <Compile Include="TestData\HasNonVirtualMethod.cs" />
+    <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />
+    <Compile Include="TestData\ObjectReturningParameter.cs" />
+    <Compile Include="TestData\ObjectWithIdentifier.cs" />
+    <Compile Include="TestData\ReturningRandomNumbers.cs" />
+    <Compile Include="TestData\ObjectImplToString.cs" />
+    <Compile Include="TestData\ObjectReturningNewGuids.cs" />
+    <Compile Include="TestData\ObjectWithCallCounter.cs" />
+    <Compile Include="TestData\ObjectWithCtorParameters.cs" />
+    <Compile Include="TestData\ObjectWithNonInterfaceMethod.cs" />
+    <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MbCache.ProxyImpl.Castle\MbCache.ProxyImpl.Castle.csproj">
+      <Project>{DFF76416-A68E-4A11-A46E-2C1B6C307F58}</Project>
+      <Name>MbCache.ProxyImpl.Castle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MbCache.ProxyImpl.LinFu\MbCache.ProxyImpl.LinFu.csproj">
+      <Project>{58384CBB-86FC-4A8D-B47C-D7949C1CC31B}</Project>
+      <Name>MbCache.ProxyImpl.LinFu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MbCache\MbCache.csproj">
+      <Project>{45BA5406-F8E5-4931-8114-FFFC821DE7A7}</Project>
+      <Name>MbCache</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>

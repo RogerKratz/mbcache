@@ -10,7 +10,7 @@ namespace MbCacheTest.Configuration
 		[Test]
 		public void ShouldThrowArgumentException()
 		{
-			var builder = new CacheBuilder(new NullProxyFactory(), new NoCache(), new ToStringMbCacheKey());
+			var builder = new CacheBuilder(new NullProxyFactory(), new NoCache(), new ToStringCacheKey());
 			var factory = builder.BuildFactory();
 			Assert.Throws<ArgumentException>(() =>
 			                                 factory.Create<object>());

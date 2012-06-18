@@ -9,17 +9,17 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class MbCacheKeyReturnNullTest : FullTest
+	public class CacheKeyReturnNullTest : FullTest
 	{
-		private mbCacheStub cacheKey;
+		private cacheKeyStub cacheKey;
 
-		public MbCacheKeyReturnNullTest(string proxyTypeString) : base(proxyTypeString)
+		public CacheKeyReturnNullTest(string proxyTypeString) : base(proxyTypeString)
 		{
 		}
 
-		protected override IMbCacheKey CreateCacheKey()
+		protected override ICacheKey CreateCacheKey()
 		{
-			cacheKey = new mbCacheStub();
+			cacheKey = new cacheKeyStub();
 			return cacheKey;
 		}
 
@@ -80,7 +80,7 @@ namespace MbCacheTest.Logic
 			svc.CachedMethod(parameter).Should().Be.EqualTo(result);
 		}
 
-		private class mbCacheStub : IMbCacheKey
+		private class cacheKeyStub : ICacheKey
 		{
 			public string TheKey { get; set; }
 

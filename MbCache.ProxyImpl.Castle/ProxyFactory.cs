@@ -10,13 +10,13 @@ namespace MbCache.ProxyImpl.Castle
 	{
 		private static readonly ProxyGenerator _generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
 		private ICache _cache;
-		private IMbCacheKey _mbCacheKey;
+		private ICacheKey _cacheKey;
 		private ILockObjectGenerator _lockObjectGenerator;
 
-		public void Initialize(ICache cache, IMbCacheKey mbCacheKey, ILockObjectGenerator lockObjectGenerator)
+		public void Initialize(ICache cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
 		{
 			_cache = cache;
-			_mbCacheKey = mbCacheKey;
+			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
 		}
 
@@ -24,7 +24,7 @@ namespace MbCache.ProxyImpl.Castle
 										params object[] parameters) where T : class
 		{
 			var type = typeof(T);
-			var cacheInterceptor = new CacheInterceptor(_cache, _mbCacheKey, _lockObjectGenerator, type);
+			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, type);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(methodData.Methods));
 			options.AddMixinInstance(createCachingComponent(type, methodData));
 			try
@@ -49,7 +49,7 @@ namespace MbCache.ProxyImpl.Castle
 
 		private ICachingComponent createCachingComponent(Type type, ImplementationAndMethods details)
 		{
-			return new CachingComponent(_cache, _mbCacheKey, type, details);
+			return new CachingComponent(_cache, _cacheKey, type, details);
 		}
 	}
 }

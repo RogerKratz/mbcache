@@ -72,11 +72,11 @@
     <Compile Include="Configuration\ICache.cs" />
     <Compile Include="Configuration\IFluentBuilder.cs" />
     <Compile Include="Configuration\ILockObjectGenerator.cs" />
-    <Compile Include="Configuration\IMbCacheKey.cs" />
+    <Compile Include="Configuration\ICacheKey.cs" />
     <Compile Include="Configuration\IProxyFactory.cs" />
-    <Compile Include="Configuration\MbCacheKeyBase.cs" />
+    <Compile Include="Configuration\CacheKeyBase.cs" />
     <Compile Include="Configuration\ProxyValidator.cs" />
-    <Compile Include="Configuration\ToStringMbCacheKey.cs" />
+    <Compile Include="Configuration\ToStringCacheKey.cs" />
     <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Core\IStatistics.cs" />

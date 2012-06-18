@@ -5,7 +5,7 @@ namespace MbCacheTest.Configuration
 {
 	public class NullProxyFactory : IProxyFactory
 	{
-		public void Initialize(ICache cache, IMbCacheKey mbCacheKey, ILockObjectGenerator lockObjectGenerator)
+		public void Initialize(ICache cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
 		{
 		}
 

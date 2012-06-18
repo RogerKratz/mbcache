@@ -7,20 +7,20 @@ namespace MbCache.ProxyImpl.LinFu
 	public class ProxyFactory : IProxyFactory
 	{
 		private ICache _cache;
-		private IMbCacheKey _mbCacheKey;
+		private ICacheKey _cacheKey;
 		private ILockObjectGenerator _lockObjectGenerator;
 
-		public void Initialize(ICache cache, IMbCacheKey mbCacheKey, ILockObjectGenerator lockObjectGenerator)
+		public void Initialize(ICache cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
 		{
 			_cache = cache;
-			_mbCacheKey = mbCacheKey;
+			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
 		}
 
 		public T CreateProxy<T>(ImplementationAndMethods methodData, params object[] parameters) where T : class
 		{
 			var proxyFactory = new global::LinFu.DynamicProxy.ProxyFactory();
-			var interceptor = new CacheInterceptor(_cache, _mbCacheKey, _lockObjectGenerator, typeof(T), methodData, parameters);
+			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, typeof(T), methodData, parameters);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 

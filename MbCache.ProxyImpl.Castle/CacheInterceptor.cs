@@ -8,12 +8,12 @@ namespace MbCache.ProxyImpl.Castle
 	public class CacheInterceptor : IInterceptor
 	{
 		private readonly ICache _cache;
-		private readonly IMbCacheKey _cacheKey;
+		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
 
 		public CacheInterceptor(ICache cache, 
-										IMbCacheKey cacheKey, 
+										ICacheKey cacheKey, 
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type)
 		{

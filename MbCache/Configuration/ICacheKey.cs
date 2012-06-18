@@ -9,7 +9,7 @@ namespace MbCache.Configuration
 	/// Builds the cache keys. 
 	/// 
 	/// For implementers:
-	/// In most cases, derive from MbCacheKeyBase instead.
+	/// In most cases, derive from CacheKeyBase instead.
 	/// 
 	/// If you implement this interface directly, 
 	/// remember every overload with more params
@@ -19,7 +19,7 @@ namespace MbCache.Configuration
 	/// it's valid for Key(Type, MethodInfo) to return Roger2
 	/// but not Rog2.
 	/// </summary>
-	public interface IMbCacheKey
+	public interface ICacheKey
 	{
 		/// <summary>
 		/// Creates a cache key for a specific type.

@@ -1,6 +1,6 @@
 ﻿namespace MbCache.Configuration
 {
-	public class ToStringMbCacheKey : MbCacheKeyBase
+	public class ToStringCacheKey : CacheKeyBase
 	{
 		private const string nullKey = "Null";
 

@@ -10,12 +10,12 @@ namespace MbCache.Logic
 	{
 		private readonly IProxyFactory _proxyFactory;
 		private readonly CacheDecorator _cache;
-		private readonly IMbCacheKey _cacheKey;
+		private readonly ICacheKey _cacheKey;
 		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
 									ICache cache,
-									IMbCacheKey cacheKey,
+									ICacheKey cacheKey,
 									ILockObjectGenerator lockObjectGenerator,
 									IDictionary<Type, ImplementationAndMethods> methods)
 		{

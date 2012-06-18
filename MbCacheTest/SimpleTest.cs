@@ -35,9 +35,9 @@ namespace MbCacheTest
 			return new TestCache();
 		}
 
-		protected virtual IMbCacheKey CreateCacheKey()
+		protected virtual ICacheKey CreateCacheKey()
 		{
-			return new ToStringMbCacheKey();
+			return new ToStringCacheKey();
 		}
 
 		protected virtual ILockObjectGenerator CreateLockObjectGenerator()

@@ -8,11 +8,11 @@ namespace MbCache.Logic
 	public class CachingComponent : ICachingComponent
 	{
 		private readonly ICache _cache;
-		private readonly IMbCacheKey _cacheKey;
+		private readonly ICacheKey _cacheKey;
 		private readonly Type _definedType;
 
 		public CachingComponent(ICache cache,
-										IMbCacheKey cacheKey,
+										ICacheKey cacheKey,
 										Type definedType,
 										ImplementationAndMethods details)
 		{

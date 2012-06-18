@@ -13,7 +13,7 @@ namespace MbCacheNet4Test
 		[Test]
 		public void InvalidateSpecificMethod()
 		{
-			var cacheBuilder = new CacheBuilder(new ProxyFactory(), new TestCache(), new ToStringMbCacheKey());
+			var cacheBuilder = new CacheBuilder(new ProxyFactory(), new TestCache(), new ToStringCacheKey());
 			cacheBuilder
 				.For<ObjectReturningNewGuids>()
 				.CacheMethod(c => c.CachedMethod())

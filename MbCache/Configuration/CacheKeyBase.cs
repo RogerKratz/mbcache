@@ -14,11 +14,11 @@ namespace MbCache.Configuration
 	/// Will build cache key in format
 	/// MbCache|Type|Component|Method|ParamValue1|ParamValue2
 	/// </summary>
-	public abstract class MbCacheKeyBase : IMbCacheKey
+	public abstract class CacheKeyBase : ICacheKey
 	{
-		private static readonly ILog logger = LogManager.GetLogger(typeof (MbCacheKeyBase));
+		private static readonly ILog logger = LogManager.GetLogger(typeof (CacheKeyBase));
 		private const string suspisiousParam =
-			"Cache key of type {0} equals its own type name. Possible bug in your IMbCacheKey implementation.";
+			"Cache key of type {0} equals its own type name. Possible bug in your ICacheKey implementation.";
 
 		public string Key(Type type)
 		{

@@ -30,7 +30,7 @@ namespace MbCacheTest.Logic
 		public void ShouldGiveLogWarningIfSuspectedParameterIsUsed()
 		{
 			var comp = factory.Create<IObjectWithParametersOnCachedMethod>();
-			using (var log = new LogSpy(LogManager.GetLogger(typeof(MbCacheKeyBase)), Level.Warn))
+			using (var log = new LogSpy(LogManager.GetLogger(typeof(CacheKeyBase)), Level.Warn))
 			{
 				comp.CachedMethod(this);
 				var logOutput = log.RenderedMessages();

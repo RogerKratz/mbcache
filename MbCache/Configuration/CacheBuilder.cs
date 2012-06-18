@@ -13,12 +13,12 @@ namespace MbCache.Configuration
 		private readonly ICollection<ImplementationAndMethods> _details;
 		private readonly IProxyFactory _proxyFactory;
 		private readonly ICache _cache;
-		private readonly IMbCacheKey _keyBuilder;
+		private readonly ICacheKey _keyBuilder;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 										ICache cache,
-										IMbCacheKey keyBuilder)
+										ICacheKey keyBuilder)
 		{
 			_cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
 			_details = new List<ImplementationAndMethods>();
@@ -29,7 +29,7 @@ namespace MbCache.Configuration
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 								ICache cache,
-								IMbCacheKey keyBuilder,
+								ICacheKey keyBuilder,
 								ILockObjectGenerator lockObjectGenerator)
 		{
 			_cachedMethods = new Dictionary<Type, ImplementationAndMethods>();

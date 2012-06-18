@@ -78,6 +78,7 @@
     <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Logic\ProxyExceptionTest.cs" />
     <Compile Include="LogSpy.cs" />
     <Compile Include="Logic\CacheKeyTest.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="TestData\HasNonVirtualMethod.cs" />
     <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />
     <Compile Include="TestData\ObjectReturningParameter.cs" />
+    <Compile Include="TestData\ObjectThrowingError.cs" />
     <Compile Include="TestData\ObjectWithIdentifier.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />

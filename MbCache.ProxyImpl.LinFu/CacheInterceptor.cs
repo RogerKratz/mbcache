@@ -10,6 +10,10 @@ namespace MbCache.ProxyImpl.LinFu
 {
 	public class CacheInterceptor : IInterceptor
 	{
+		[NonSerialized]
+		private static readonly MethodInfo exceptionInternalPreserveStackTrace =
+			typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
+
 		private readonly ICache _cache;
 		private readonly IMbCacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
@@ -98,9 +102,22 @@ namespace MbCache.ProxyImpl.LinFu
 			{
 				if (targetMethod.ContainsGenericParameters)
 					targetMethod = targetMethod.MakeGenericMethod(info.TypeArguments);
-				return targetMethod.Invoke(_cachingComponent, info.Arguments);
+				return invokeMethod(_cachingComponent, targetMethod, info.Arguments);
 			}
-			return targetMethod.Invoke(_target, info.Arguments);
+			return invokeMethod(_target, targetMethod, info.Arguments);
+		}
+
+		private static object invokeMethod(object target, MethodInfo method, object[] arguments)
+		{
+			try
+			{
+				return method.Invoke(target, arguments);
+			}
+			catch (TargetInvocationException ex)
+			{
+				exceptionInternalPreserveStackTrace.Invoke(ex.InnerException, new Object[] { });
+				throw ex.InnerException;
+			}
 		}
 	}
 }

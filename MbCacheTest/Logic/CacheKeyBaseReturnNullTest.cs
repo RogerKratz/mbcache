@@ -15,7 +15,8 @@ namespace MbCacheTest.Logic
 
 		protected override ICacheKey CreateCacheKey()
 		{
-			return new cacheKeyStub();
+			cacheKey =  new cacheKeyStub();
+			return cacheKey;
 		}
 
 		[Test]

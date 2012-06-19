@@ -78,6 +78,8 @@
     <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
+    <Compile Include="Logic\CacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\ProxyExceptionTest.cs" />
     <Compile Include="LogSpy.cs" />
     <Compile Include="Logic\CacheKeyTest.cs" />
@@ -90,8 +92,6 @@
     <Compile Include="Logic\ImplementationTypeForTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
-    <Compile Include="Logic\MbCacheKeyBaseReturnNullTest.cs" />
-    <Compile Include="Logic\MbCacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\NonCacheTest.cs" />
     <Compile Include="Logic\ReturnNullTest.cs" />
     <Compile Include="Logic\SameParameterNamesTest.cs" />

@@ -1,4 +1,4 @@
- using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,11 +16,11 @@ namespace MbCache.Logic
 			var xParams = x.GetParameters();
 			var yParams = y.GetParameters();
 			var xParamCount = xParams.Count();
-			if(xParamCount != yParams.Count())
+			if (xParamCount != yParams.Count())
 				return false;
 			for (var i = 0; i < xParamCount; i++)
 			{
-				if(xParams[i].ParameterType != yParams[i].ParameterType)
+				if (xParams[i].ParameterType != yParams[i].ParameterType)
 					return false;
 			}
 			return true;

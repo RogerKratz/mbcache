@@ -85,6 +85,7 @@
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
+    <Compile Include="Logic\MethodInfoComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -59,7 +59,7 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private bool methodMarkedForCaching(MethodInfo method)
 		{
-			return _methodData.Methods.Any(cachedMethod => cachedMethod.Name.Equals(method.Name));
+			return _methodData.Methods.Contains(method, new MethodInfoComparer());
 		}
 
 		private object interceptUsingCache(InvocationInfo info)

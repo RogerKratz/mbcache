@@ -4,11 +4,11 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-	public class NonCacheTest : FullTest
+	public class KnownInstanceTest : FullTest
 	{
 		private IMbCacheFactory factory;
 
-		public NonCacheTest(string proxyTypeString) : base(proxyTypeString) { }
+		public KnownInstanceTest(string proxyTypeString) : base(proxyTypeString) { }
 
 		protected override void TestSetup()
 		{

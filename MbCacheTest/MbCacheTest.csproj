@@ -92,7 +92,7 @@
     <Compile Include="Logic\ImplementationTypeForTest.cs" />
     <Compile Include="Logic\InvalidateCachePerInstanceTest.cs" />
     <Compile Include="Logic\InvalidateCacheTest.cs" />
-    <Compile Include="Logic\NonCacheTest.cs" />
+    <Compile Include="Logic\KnownInstanceTest.cs" />
     <Compile Include="Logic\ReturnNullTest.cs" />
     <Compile Include="Logic\SameParameterNamesTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />

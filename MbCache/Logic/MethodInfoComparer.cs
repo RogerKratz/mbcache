@@ -1,4 +1,4 @@
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +9,7 @@ namespace MbCache.Logic
 	{
 		public bool Equals(MethodInfo x, MethodInfo y)
 		{
-			//no need to check what type methodinfo is on - already check before entering this method
+			//no need to check what type methodinfo is on - already checked before entering this method
 
 			if (!x.Name.Equals(y.Name))
 				return false;

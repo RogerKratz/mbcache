@@ -29,8 +29,11 @@ namespace MbCacheTest.Logic
 		[Test]
 		public void ShouldGiveLogWarningIfSuspectedParameterIsUsed()
 		{
+			var logger = LogManager.GetLogger(typeof (CacheKeyBase));
+			if(!logger.IsWarnEnabled)
+				Assert.Ignore("log4net logging is not enabled - cannot verify test");
 			var comp = factory.Create<IObjectWithParametersOnCachedMethod>();
-			using (var log = new LogSpy(LogManager.GetLogger(typeof(CacheKeyBase)), Level.Warn))
+			using (var log = new LogSpy(logger, Level.Warn))
 			{
 				comp.CachedMethod(this);
 				var logOutput = log.RenderedMessages();

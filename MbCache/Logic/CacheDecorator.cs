@@ -71,14 +71,13 @@ namespace MbCache.Logic
 
 		public void Delete(string keyStartingWith)
 		{
-			if (keyStartingWith != null)
+			if (keyStartingWith == null) 
+				return;
+			if (_log.IsDebugEnabled)
 			{
-				if (_log.IsDebugEnabled)
-				{
-					_log.DebugFormat(deleteMessage, keyStartingWith);					
-				}
-				_cache.Delete(keyStartingWith);				
+				_log.DebugFormat(deleteMessage, keyStartingWith);					
 			}
+			_cache.Delete(keyStartingWith);
 		}
 
 		public void Clear()

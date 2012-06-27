@@ -56,7 +56,7 @@ namespace MbCache.Logic
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat("Put in cache entry <{0}>", key);				
+				_log.DebugFormat("Adding cache entry for <{0}>", key);				
 			}
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs

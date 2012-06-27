@@ -10,6 +10,12 @@ namespace MbCache.Logic
 	/// </summary>
 	public class CacheDecorator : ICache, IStatistics
 	{
+		private const string putMessage = "Adding cache entry for <{0}>";
+		private const string getMessage = "Trying to find cache entry <{0}>";
+		private const string deleteMessage = "Removing cache entries starting with {0}";
+		private const string cacheHitLogMessage = "Cache hit for <{0}>";
+		private const string cacheMissLogMessage = "Cache miss for <{0}>";
+
 		private readonly ILog _log;
 		private readonly ICache _cache;
 		private long _cacheHits;
@@ -38,7 +44,7 @@ namespace MbCache.Logic
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat("Trying to find cache entry <{0}>", key);				
+				_log.DebugFormat(getMessage, key);				
 			}
 			var cacheValue = _cache.Get(key);
 			if(cacheValue == null)
@@ -56,7 +62,7 @@ namespace MbCache.Logic
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat("Adding cache entry for <{0}>", key);				
+				_log.DebugFormat(putMessage, key);				
 			}
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs
@@ -69,7 +75,7 @@ namespace MbCache.Logic
 			{
 				if (_log.IsDebugEnabled)
 				{
-					_log.DebugFormat("Removing cache entries starting with {0}", keyStartingWith);					
+					_log.DebugFormat(deleteMessage, keyStartingWith);					
 				}
 				_cache.Delete(keyStartingWith);				
 			}
@@ -85,7 +91,7 @@ namespace MbCache.Logic
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat("Cache hit for <{0}>", key);				
+				_log.DebugFormat(cacheHitLogMessage, key);				
 			}
 			Interlocked.Increment(ref _cacheHits);
 		}
@@ -94,7 +100,7 @@ namespace MbCache.Logic
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat("Cache miss for <{0}>", key);				
+				_log.DebugFormat(cacheMissLogMessage, key);				
 			}
 			Interlocked.Increment(ref _physicalCacheMisses);
 		}

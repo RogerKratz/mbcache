@@ -36,7 +36,10 @@ namespace MbCache.Logic
 
 		public object Get(string key)
 		{
-			_log.DebugFormat("Trying to find cache entry <{0}>", key);
+			if (_log.IsDebugEnabled)
+			{
+				_log.DebugFormat("Trying to find cache entry <{0}>", key);				
+			}
 			var cacheValue = _cache.Get(key);
 			if(cacheValue == null)
 			{
@@ -51,7 +54,10 @@ namespace MbCache.Logic
 
 		public void Put(string key, object value)
 		{
-			_log.DebugFormat("Put in cache entry <{0}>", key);
+			if (_log.IsDebugEnabled)
+			{
+				_log.DebugFormat("Put in cache entry <{0}>", key);				
+			}
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs
 			_cache.Put(key, value ?? new nullValue());
@@ -61,7 +67,10 @@ namespace MbCache.Logic
 		{
 			if (keyStartingWith != null)
 			{
-				_log.DebugFormat("Removing cache entries starting with {0}", keyStartingWith);
+				if (_log.IsDebugEnabled)
+				{
+					_log.DebugFormat("Removing cache entries starting with {0}", keyStartingWith);					
+				}
 				_cache.Delete(keyStartingWith);				
 			}
 		}
@@ -74,13 +83,19 @@ namespace MbCache.Logic
 
 		private void cacheHit(string key)
 		{
-			_log.DebugFormat("Cache hit for <{0}>", key);
+			if (_log.IsDebugEnabled)
+			{
+				_log.DebugFormat("Cache hit for <{0}>", key);				
+			}
 			Interlocked.Increment(ref _cacheHits);
 		}
 
 		private void cacheMiss(string key)
 		{
-			_log.DebugFormat("Cache miss for <{0}>", key);
+			if (_log.IsDebugEnabled)
+			{
+				_log.DebugFormat("Cache miss for <{0}>", key);				
+			}
 			Interlocked.Increment(ref _physicalCacheMisses);
 		}
 

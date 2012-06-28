@@ -9,7 +9,7 @@
 			MbCache, or Method based Cache, is used to define certain methods to be cached in a centralized way, independed on the underlying caching framework(s).
 		</description>
 		<language>en-US</language>
-		<tags>cache, c#, centralized, configure, .net, mbcache, memoization</tags>
+		<tags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize</tags>
 		<projectUrl>http://code.google.com/p/mbcache/</projectUrl>
 		<dependencies>
 			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />

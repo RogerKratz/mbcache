@@ -12,7 +12,7 @@ namespace MbCacheTest.Logic.ClassProxy
 			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
 				.CacheMethod(m => m.NonVirtual());
-			Assert.Throws<InvalidOperationException>(fluentBuilder.AsImplemented);
+			Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());
 		}
 
 		[Test]
@@ -24,11 +24,11 @@ namespace MbCacheTest.Logic.ClassProxy
 
 			if (ProxyFactory.AllowNonVirtualMember)
 			{
-				Assert.DoesNotThrow(fluentBuilder.AsImplemented);
+				Assert.DoesNotThrow(() => fluentBuilder.AsImplemented());
 			}
 			else
 			{
-				Assert.Throws<InvalidOperationException>(fluentBuilder.AsImplemented);
+				Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());
 			}
 		}
 	}

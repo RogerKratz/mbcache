@@ -22,11 +22,11 @@ namespace MbCache.Configuration
 		/// Registers the component to specified interface.
 		/// </summary>
 		/// <typeparam name="TInterface"></typeparam>
-		void As<TInterface>();
+		CacheBuilder As<TInterface>();
 
 		/// <summary>
 		/// Registers the component on the class itself.
 		/// </summary>
-		void AsImplemented();
+		CacheBuilder AsImplemented();
 	}
 }

@@ -7,14 +7,17 @@ namespace MbCache.Configuration
 {
 	public class FluentBuilder<T> : IFluentBuilder<T>
 	{
+		private readonly CacheBuilder _cacheBuilder;
 		private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
 		private readonly ImplementationAndMethods _details;
 		private readonly ProxyValidator _proxyValidator;
 
-		public FluentBuilder(IDictionary<Type, ImplementationAndMethods> cachedMethods, 
+		public FluentBuilder(CacheBuilder cacheBuilder,
+									IDictionary<Type, ImplementationAndMethods> cachedMethods, 
 									ImplementationAndMethods details, 
 									ProxyValidator proxyValidator)
 		{
+			_cacheBuilder = cacheBuilder;
 			_cachedMethods = cachedMethods;
 			_details = details;
 			_proxyValidator = proxyValidator;
@@ -33,15 +36,17 @@ namespace MbCache.Configuration
 			return this;
 		}
 
-		public void As<TInterface>()
+		public CacheBuilder As<TInterface>()
 		{
 			addToCachedMethods(typeof(TInterface));
+			return _cacheBuilder;
 		}
 
-		public void AsImplemented()
+		public CacheBuilder AsImplemented()
 		{
 			_proxyValidator.Validate(_details);
-			addToCachedMethods(_details.ConcreteType);	
+			addToCachedMethods(_details.ConcreteType);
+			return _cacheBuilder;
 		}
 
 		private void addToCachedMethods(Type type)

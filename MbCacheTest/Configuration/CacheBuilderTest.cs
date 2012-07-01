@@ -1,6 +1,7 @@
 using System;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Configuration
 {
@@ -59,6 +60,23 @@ namespace MbCacheTest.Configuration
 			var obj2 = factory.Create<IObjectWithIdentifier>();
 			Assert.AreNotSame(obj1, obj2);
 			Assert.AreNotEqual(obj1.Id, obj2.Id);
+		}
+
+		[Test]
+		public void CanConfigureMultipleComponents()
+		{
+			var factory = CacheBuilder
+				.For<ObjectReturningNewGuids>()
+					.CacheMethod(m => m.CachedMethod())
+					.As<IObjectReturningNewGuids>()
+				.For<ObjectReturningNewGuidsNoInterface>()
+					.CacheMethod(m => m.CachedMethod())
+					.AsImplemented()
+				.BuildFactory();
+			factory.Create<IObjectReturningNewGuids>().CachedMethod()
+				.Should().Be.EqualTo(factory.Create<IObjectReturningNewGuids>().CachedMethod());
+			factory.Create<ObjectReturningNewGuidsNoInterface>().CachedMethod()
+				.Should().Be.EqualTo(factory.Create<ObjectReturningNewGuidsNoInterface>().CachedMethod());
 		}
 	}
 }

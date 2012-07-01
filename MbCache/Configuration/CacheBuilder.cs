@@ -51,7 +51,7 @@ namespace MbCache.Configuration
 			var concreteType = typeof(T);
 			var details = new ImplementationAndMethods(concreteType);
 			_details.Add(details);
-			var fluentBuilder = new FluentBuilder<T>(_cachedMethods, details, new ProxyValidator(_proxyFactory));
+			var fluentBuilder = new FluentBuilder<T>(this, _cachedMethods, details, new ProxyValidator(_proxyFactory));
 			return fluentBuilder;
 		}
 

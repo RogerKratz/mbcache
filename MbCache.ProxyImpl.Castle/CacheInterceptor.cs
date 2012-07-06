@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Castle.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.Castle
 {
@@ -11,21 +15,30 @@ namespace MbCache.ProxyImpl.Castle
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
+		private readonly IEnumerable<MethodInfo> _methods; //only needed cause IProxyGenerationHook doesn't seem to offer closed generic types
 
 		public CacheInterceptor(ICache cache, 
 										ICacheKey cacheKey, 
 										ILockObjectGenerator lockObjectGenerator, 
-										Type type)
+										Type type,
+										IEnumerable<MethodInfo> methods)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
 			_type = type;
+			_methods = methods;
 		}
 
 		public void Intercept(IInvocation invocation)
 		{
 			var method = invocation.Method;
+			//ugly hack
+			if (method.IsGenericMethod && !_methods.Contains(method, new MethodInfoComparer()))
+			{
+				invocation.Proceed();
+				return;
+			}
 			var proxy = (ICachingComponent)invocation.Proxy;
 			var arguments = invocation.Arguments;
 

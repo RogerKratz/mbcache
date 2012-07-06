@@ -32,6 +32,9 @@ namespace MbCache.ProxyImpl.Castle
 
 		private bool isMethodMarkedForCaching(MethodInfo key)
 		{
+			//ugly hack for now
+			if (key.IsGenericMethod)
+				return true;
 			return _methods.Contains(key, new MethodInfoComparer());
 		}
 

@@ -15,6 +15,7 @@ namespace MbCache.Configuration
 		private readonly ICache _cache;
 		private readonly ICacheKey _keyBuilder;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
+		private ProxyValidator _proxyValidator;
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 										ICache cache,
@@ -25,6 +26,7 @@ namespace MbCache.Configuration
 			_proxyFactory = proxyFactory;
 			_cache = cache;
 			_keyBuilder = keyBuilder;
+			_proxyValidator = new ProxyValidator(_proxyFactory);
 		}
 
 		public CacheBuilder(IProxyFactory proxyFactory,
@@ -51,7 +53,7 @@ namespace MbCache.Configuration
 			var concreteType = typeof(T);
 			var details = new ImplementationAndMethods(concreteType);
 			_details.Add(details);
-			var fluentBuilder = new FluentBuilder<T>(this, _cachedMethods, details, new ProxyValidator(_proxyFactory));
+			var fluentBuilder = new FluentBuilder<T>(this, _cachedMethods, details, _proxyValidator);
 			return fluentBuilder;
 		}
 

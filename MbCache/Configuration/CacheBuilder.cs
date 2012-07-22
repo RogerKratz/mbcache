@@ -15,7 +15,7 @@ namespace MbCache.Configuration
 		private readonly ICache _cache;
 		private readonly ICacheKey _keyBuilder;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
-		private ProxyValidator _proxyValidator;
+		private readonly ProxyValidator _proxyValidator;
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 										ICache cache,

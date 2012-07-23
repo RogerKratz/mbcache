@@ -19,7 +19,7 @@ namespace MbCache.Logic
 		private readonly ILog _log;
 		private readonly ICache _cache;
 		private long _cacheHits;
-		private long _physicalCacheMisses;
+		private long _cacheMisses;
 
 		public CacheDecorator(ICache cache)
 		{
@@ -36,7 +36,7 @@ namespace MbCache.Logic
 		{
 			get
 			{
-				return _physicalCacheMisses;
+				return _cacheMisses;
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace MbCache.Logic
 
 		public void Clear()
 		{
-			_physicalCacheMisses = 0;                
+			_cacheMisses = 0;                
 			_cacheHits = 0;
 		}
 
@@ -101,7 +101,7 @@ namespace MbCache.Logic
 			{
 				_log.DebugFormat(cacheMissLogMessage, key);				
 			}
-			Interlocked.Increment(ref _physicalCacheMisses);
+			Interlocked.Increment(ref _cacheMisses);
 		}
 
 		private class nullValue { }

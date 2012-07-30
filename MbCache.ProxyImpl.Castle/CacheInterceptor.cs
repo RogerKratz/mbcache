@@ -50,36 +50,35 @@ namespace MbCache.ProxyImpl.Castle
 			}
 			else
 			{
-				if (tryGetValueFromCache(invocation, key))
+				var eventInfo = new EventInformation(key, _type, invocation.Method, invocation.Arguments);
+				if (tryGetValueFromCache(invocation, eventInfo))
 					return;
 
 				var lockObject = _lockObjectGenerator.GetFor(key);
 				if (lockObject == null)
 				{
-					executeAndPutInCache(invocation, key);
+					executeAndPutInCache(invocation, eventInfo);
 				}
 				else
 				{
 					lock (lockObject)
 					{
-						if (tryGetValueFromCache(invocation, key))
+						if (tryGetValueFromCache(invocation, eventInfo))
 							return;
-						executeAndPutInCache(invocation, key);
+						executeAndPutInCache(invocation, eventInfo);
 					}				
 				}
 			}
 		}
 
-		private void executeAndPutInCache(IInvocation invocation, string key)
+		private void executeAndPutInCache(IInvocation invocation, EventInformation eventInfo)
 		{
 			invocation.Proceed();
-			var eventInfo = new EventInformation(key, _type, invocation.Method, invocation.Arguments);
 			_cache.Put(eventInfo, invocation.ReturnValue);
 		}
 
-		private bool tryGetValueFromCache(IInvocation invocation, string key)
+		private bool tryGetValueFromCache(IInvocation invocation, EventInformation eventInfo)
 		{
-			var eventInfo = new EventInformation(key, _type, invocation.Method, invocation.Arguments);
 			var cachedValue = _cache.Get(eventInfo);
 			if (cachedValue != null)
 			{

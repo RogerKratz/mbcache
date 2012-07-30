@@ -6,11 +6,11 @@ namespace MbCache.ProxyImpl.LinFu
 {
 	public class ProxyFactory : IProxyFactory
 	{
-		private ICache _cache;
+		private CacheAdapter _cache;
 		private ICacheKey _cacheKey;
 		private ILockObjectGenerator _lockObjectGenerator;
 
-		public void Initialize(ICache cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
+		public void Initialize(CacheAdapter cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;

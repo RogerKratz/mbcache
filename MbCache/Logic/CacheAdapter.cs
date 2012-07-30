@@ -8,7 +8,7 @@ namespace MbCache.Logic
 	/// <summary>
 	/// Adds logging, statistics and null replacement for <see cref="ICache"/>.
 	/// </summary>
-	public class CacheDecorator : ICache, IStatistics
+	public class CacheAdapter : IStatistics
 	{
 		private const string putMessage = "Adding cache entry for <{0}>";
 		private const string getMessage = "Trying to find cache entry <{0}>";
@@ -21,7 +21,7 @@ namespace MbCache.Logic
 		private long _cacheHits;
 		private long _cacheMisses;
 
-		public CacheDecorator(ICache cache)
+		public CacheAdapter(ICache cache)
 		{
 			_cache = cache;
 			_log = LogManager.GetLogger(cache.GetType());

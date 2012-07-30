@@ -14,7 +14,7 @@ namespace MbCache.ProxyImpl.LinFu
 		private static readonly MethodInfo exceptionInternalPreserveStackTrace =
 			typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 
-		private readonly ICache _cache;
+		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
@@ -22,7 +22,7 @@ namespace MbCache.ProxyImpl.LinFu
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
 
-		public CacheInterceptor(ICache cache,
+		public CacheInterceptor(CacheAdapter cache,
 										ICacheKey cacheKey,
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type,

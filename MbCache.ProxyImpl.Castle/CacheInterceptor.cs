@@ -11,13 +11,13 @@ namespace MbCache.ProxyImpl.Castle
 {
 	public class CacheInterceptor : IInterceptor
 	{
-		private readonly ICache _cache;
+		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
 		private readonly IEnumerable<MethodInfo> _methods; //only needed cause IProxyGenerationHook doesn't seem to offer closed generic types
 
-		public CacheInterceptor(ICache cache, 
+		public CacheInterceptor(CacheAdapter cache, 
 										ICacheKey cacheKey, 
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type,

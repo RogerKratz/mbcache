@@ -14,7 +14,7 @@ namespace MbCache.Core.Events
 		void OnGet(EventInformation info);
 
 		/// <summary>
-		/// Called after a cache entry has been invalidated.
+		/// Called after cache entries has been invalidated.
 		/// </summary>
 		void OnDelete(EventInformation info);
 

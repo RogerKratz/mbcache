@@ -4,6 +4,7 @@ using System.Reflection;
 using LinFu.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.LinFu
@@ -67,11 +68,12 @@ namespace MbCache.ProxyImpl.LinFu
 			var method = info.TargetMethod;
 			var arguments = info.Arguments;
 			var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
+			var getInfo = new GetInfo(key, _type, method, arguments);
 			if (key == null)
 			{
 				return callOriginalMethod(info);
 			}
-			var cachedValue = _cache.Get(key);
+			var cachedValue = _cache.Get(getInfo);
 			if (cachedValue != null)
 			{
 				return cachedValue;
@@ -83,15 +85,16 @@ namespace MbCache.ProxyImpl.LinFu
 			}
 			lock (lockObject)
 			{
-				var cachedValue2 = _cache.Get(key);
+				var cachedValue2 = _cache.Get(getInfo);
 				return cachedValue2 ?? executeAndPutInCache(info, key);
 			}
 		}
 
 		private object executeAndPutInCache(InvocationInfo info, string key)
 		{
+			var putInfo = new PutInfo(key, _type, info.TargetMethod, info.Arguments);
 			var retVal = callOriginalMethod(info);
-			_cache.Put(key, retVal);
+			_cache.Put(putInfo, retVal);
 			return retVal;
 		}
 

@@ -5,6 +5,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.Castle
@@ -72,12 +73,14 @@ namespace MbCache.ProxyImpl.Castle
 		private void executeAndPutInCache(IInvocation invocation, string key)
 		{
 			invocation.Proceed();
-			_cache.Put(key, invocation.ReturnValue);
+			var putInfo = new PutInfo(key, _type, invocation.Method, invocation.Arguments);
+			_cache.Put(putInfo, invocation.ReturnValue);
 		}
 
 		private bool tryGetValueFromCache(IInvocation invocation, string key)
 		{
-			var cachedValue = _cache.Get(key);
+			var getInfo = new GetInfo(key, _type, invocation.Method, invocation.Arguments);
+			var cachedValue = _cache.Get(getInfo);
 			if (cachedValue != null)
 			{
 				invocation.ReturnValue = cachedValue;

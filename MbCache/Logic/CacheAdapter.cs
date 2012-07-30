@@ -1,4 +1,5 @@
 using System.Threading;
+using MbCache.Core.Events;
 using log4net;
 using MbCache.Configuration;
 using MbCache.Core;
@@ -40,44 +41,44 @@ namespace MbCache.Logic
 			}
 		}
 
-		public object Get(string key)
+		public object Get(GetInfo getInfo)
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(getMessage, key);				
+				_log.DebugFormat(getMessage, getInfo.CacheKey);				
 			}
-			var cacheValue = _cache.Get(key);
+			var cacheValue = _cache.Get(getInfo.CacheKey);
 			if(cacheValue == null)
 			{
-				cacheMiss(key);
+				cacheMiss(getInfo.CacheKey);
 			}
 			else
 			{
-				cacheHit(key);
+				cacheHit(getInfo.CacheKey);
 			}
 			return cacheValue is nullValue ? null : cacheValue;
 		}
 
-		public void Put(string key, object value)
+		public void Put(PutInfo putInfo, object value)
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(putMessage, key);				
+				_log.DebugFormat(putMessage, putInfo.CacheKey);				
 			}
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs
-			_cache.Put(key, value ?? new nullValue());
+			_cache.Put(putInfo.CacheKey, value ?? new nullValue());
 		}
 
-		public void Delete(string keyStartingWith)
+		public void Delete(DeleteInfo deleteInfo)
 		{
-			if (keyStartingWith == null) 
+			if (deleteInfo.CacheKeyStartsWith == null) 
 				return;
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(deleteMessage, keyStartingWith);					
+				_log.DebugFormat(deleteMessage, deleteInfo.CacheKeyStartsWith);					
 			}
-			_cache.Delete(keyStartingWith);
+			_cache.Delete(deleteInfo.CacheKeyStartsWith);
 		}
 
 		public void Clear()

@@ -1,4 +1,5 @@
 ﻿using MbCache.Core;
+using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -8,36 +9,36 @@ namespace MbCacheTest.Logic
 	public class ReturnNullTest : FullTest
 	{
 		private IMbCacheFactory factory;
+		private StatisticsEventListener eventListener;
 
 		public ReturnNullTest(string proxyTypeString) : base(proxyTypeString) {}
 
 		protected override void TestSetup()
 		{
+			eventListener = new StatisticsEventListener();
 			CacheBuilder
 				.For<ObjectReturningNull>()
 				.CacheMethod(c => c.ReturnNullIfZero(0))
 				.As<IObjectReturningNull>();
-			factory = CacheBuilder.BuildFactory();
+			factory = CacheBuilder.BuildFactory(eventListener);
 		}
 
 		[Test]
 		public void ShouldCacheNullParameterAndReturnValue()
 		{
-			factory.Statistics.Clear();
 			var component = factory.Create<IObjectReturningNull>();
 			component.ReturnNullIfZero(0).Should().Be.Null();
 			component.ReturnNullIfZero(0).Should().Be.Null();
-			factory.Statistics.CacheHits.Should().Be.EqualTo(1);
+			eventListener.CacheHits.Should().Be.EqualTo(1);
 		}
 
 		[Test]
 		public void ShouldCacheNormalForNullableComponent()
 		{
-			factory.Statistics.Clear();
 			var component = factory.Create<IObjectReturningNull>();
 			component.ReturnNullIfZero(1).Should().Be.EqualTo(1);
 			component.ReturnNullIfZero(1).Should().Be.EqualTo(1);
-			factory.Statistics.CacheHits.Should().Be.EqualTo(1);
+			eventListener.CacheHits.Should().Be.EqualTo(1);
 		}
 	}
 }

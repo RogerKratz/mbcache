@@ -73,14 +73,14 @@ namespace MbCache.ProxyImpl.Castle
 		private void executeAndPutInCache(IInvocation invocation, string key)
 		{
 			invocation.Proceed();
-			var putInfo = new PutInfo(key, _type, invocation.Method, invocation.Arguments);
-			_cache.Put(putInfo, invocation.ReturnValue);
+			var eventInfo = new EventInformation(key, _type, invocation.Method, invocation.Arguments);
+			_cache.Put(eventInfo, invocation.ReturnValue);
 		}
 
 		private bool tryGetValueFromCache(IInvocation invocation, string key)
 		{
-			var getInfo = new GetInfo(key, _type, invocation.Method, invocation.Arguments);
-			var cachedValue = _cache.Get(getInfo);
+			var eventInfo = new EventInformation(key, _type, invocation.Method, invocation.Arguments);
+			var cachedValue = _cache.Get(eventInfo);
 			if (cachedValue != null)
 			{
 				invocation.ReturnValue = cachedValue;

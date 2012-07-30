@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.Configuration
@@ -42,10 +43,11 @@ namespace MbCache.Configuration
 			_lockObjectGenerator = lockObjectGenerator;
 		}
 
-		public IMbCacheFactory BuildFactory()
+		public IMbCacheFactory BuildFactory(params IEventListener[] eventListener)
 		{
 			checkAllImplementationAndMethodsAreOk();
-			return new MbCacheFactory(_proxyFactory, _cache, _keyBuilder, _lockObjectGenerator, _cachedMethods);
+			var cacheAdapter = new CacheAdapter(_cache, eventListener);
+			return new MbCacheFactory(_proxyFactory, cacheAdapter, _keyBuilder, _lockObjectGenerator, _cachedMethods);
 		}
 
 		public IFluentBuilder<T> For<T>()

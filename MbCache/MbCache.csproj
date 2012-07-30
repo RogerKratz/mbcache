@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="Configuration\AspNetCache.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
-    <Compile Include="Core\Events\DeleteInfo.cs" />
+    <Compile Include="Core\Events\EventInformation.cs" />
     <Compile Include="Configuration\FixedNumberOfLockObjects.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />
     <Compile Include="Configuration\ICache.cs" />
@@ -78,11 +78,10 @@
     <Compile Include="Configuration\CacheKeyBase.cs" />
     <Compile Include="Configuration\ProxyValidator.cs" />
     <Compile Include="Configuration\ToStringCacheKey.cs" />
-    <Compile Include="Core\Events\GetInfo.cs" />
-    <Compile Include="Core\Events\PutInfo.cs" />
+    <Compile Include="Core\Events\IEventListener.cs" />
+    <Compile Include="Core\Events\StatisticsEventListener.cs" />
     <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
-    <Compile Include="Core\IStatistics.cs" />
     <Compile Include="Logic\CacheAdapter.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />

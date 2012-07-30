@@ -15,12 +15,12 @@ namespace MbCache.Logic
 		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
-									ICache cache,
+									CacheAdapter cache,
 									ICacheKey cacheKey,
 									ILockObjectGenerator lockObjectGenerator,
 									IDictionary<Type, ImplementationAndMethods> methods)
 		{
-			_cache = new CacheAdapter(cache);
+			_cache = cache;
 			_cacheKey = cacheKey;
 			_methods = methods;
 			proxyFactory.Initialize(_cache, cacheKey, lockObjectGeneratorOrNullObject(lockObjectGenerator));
@@ -42,7 +42,7 @@ namespace MbCache.Logic
 		{
 			var type = typeof (T);
 			var cacheKey = _cacheKey.Key(type);
-			var deleteInfo = new DeleteInfo(cacheKey, type, null, null);
+			var deleteInfo = new EventInformation(cacheKey, type, null, null);
 			_cache.Delete(deleteInfo);
 		}
 
@@ -59,11 +59,6 @@ namespace MbCache.Logic
 		public bool IsKnownInstance(object component)
 		{
 			return component is ICachingComponent;
-		}
-
-		public IStatistics Statistics
-		{
-			get { return _cache; }
 		}
 
 		public Type ImplementationTypeFor(Type componentType)

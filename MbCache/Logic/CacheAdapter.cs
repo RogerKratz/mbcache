@@ -44,18 +44,18 @@ namespace MbCache.Logic
 			else
 			{
 				logCacheHit(eventInformation.CacheKey);
-				callEventHandlersGet(eventInformation);
+				callEventHandlersGet(eventInformation, cacheValue);
 			}
 			return cacheValue is nullValue ? null : cacheValue;
 		}
 
-		private void callEventHandlersGet(EventInformation eventInformation)
+		private void callEventHandlersGet(EventInformation eventInformation, object cachedValue)
 		{
 			if (!_hasEventHandlers)
 				return;
 			foreach (var eventHandler in _eventHandlers)
 			{
-				eventHandler.OnGet(eventInformation);
+				eventHandler.OnGet(eventInformation, cachedValue);
 			}
 		}
 
@@ -68,16 +68,16 @@ namespace MbCache.Logic
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs
 			_cache.Put(eventInformation.CacheKey, value ?? new nullValue());
-			callEventHandlersPut(eventInformation);
+			callEventHandlersPut(eventInformation, value);
 		}
 
-		private void callEventHandlersPut(EventInformation eventInformation)
+		private void callEventHandlersPut(EventInformation eventInformation, object cachedValue)
 		{
 			if (!_hasEventHandlers)
 				return;
 			foreach (var eventHandler in _eventHandlers)
 			{
-				eventHandler.OnPut(eventInformation);
+				eventHandler.OnPut(eventInformation, cachedValue);
 			}
 		}
 

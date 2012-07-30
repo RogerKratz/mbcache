@@ -11,7 +11,7 @@ namespace MbCache.Core.Events
 		/// Called after a successful <see cref="ICache.Get"/> has occured.
 		/// Will not fire after a cache miss (use <see cref="OnPut"/> instead)
 		/// </summary>
-		void OnGet(EventInformation info);
+		void OnGet(EventInformation info, object cachedValue);
 
 		/// <summary>
 		/// Called after cache entries has been invalidated.
@@ -21,6 +21,6 @@ namespace MbCache.Core.Events
 		/// <summary>
 		/// Called after a cache miss and the target's returned value has been put into the cache.
 		/// </summary>
-		void OnPut(EventInformation info);
+		void OnPut(EventInformation info, object cachedValue);
 	}
 }

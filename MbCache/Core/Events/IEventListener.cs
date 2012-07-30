@@ -19,7 +19,7 @@ namespace MbCache.Core.Events
 		void OnDelete(EventInformation info);
 
 		/// <summary>
-		/// Called after a cache miss and the returned value has been put into the cache.
+		/// Called after a cache miss and the target's returned value has been put into the cache.
 		/// </summary>
 		void OnPut(EventInformation info);
 	}

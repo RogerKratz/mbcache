@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Core.Events;
 
 namespace MbCache.Logic
 {
@@ -26,23 +28,20 @@ namespace MbCache.Logic
 
 		public void Invalidate()
 		{
-			_cache.Delete(_cacheKey.Key(_definedType, this));
+			var cacheKey = _cacheKey.Key(_definedType, this);
+			var deleteArgs = new DeleteInfo(cacheKey, _definedType, null, null);
+			_cache.Delete(deleteArgs);
 		}
 
 		public void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues)
 		{
 			var methodInfo = ExpressionHelper.MemberName(method.Body);
-			string key;
-			if (matchParameterValues)
-			{
-				var arguments = ExpressionHelper.ExtractArguments(method.Body);
-				key = _cacheKey.Key(_definedType, this, methodInfo, arguments);
-			}
-			else
-			{
-				key = _cacheKey.Key(_definedType, this, methodInfo);
-			}
-			_cache.Delete(key);
+			var arguments = ExpressionHelper.ExtractArguments(method.Body).ToArray();
+			var key = matchParameterValues ? 
+						_cacheKey.Key(_definedType, this, methodInfo, arguments) : 
+						_cacheKey.Key(_definedType, this, methodInfo);
+			var deleteInfo = new DeleteInfo(key, _definedType, methodInfo, arguments);
+			_cache.Delete(deleteInfo);
 		}
 	}
 }

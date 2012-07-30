@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Core.Events;
 
 namespace MbCache.Logic
 {
@@ -39,7 +40,10 @@ namespace MbCache.Logic
 
 		public void Invalidate<T>()
 		{
-			_cache.Delete(_cacheKey.Key(typeof(T)));
+			var type = typeof (T);
+			var cacheKey = _cacheKey.Key(type);
+			var deleteInfo = new DeleteInfo(cacheKey, type, null, null);
+			_cache.Delete(deleteInfo);
 		}
 
 		public void Invalidate(object component)

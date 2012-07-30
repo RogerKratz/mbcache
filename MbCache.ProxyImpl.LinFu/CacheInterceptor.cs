@@ -68,12 +68,12 @@ namespace MbCache.ProxyImpl.LinFu
 			var method = info.TargetMethod;
 			var arguments = info.Arguments;
 			var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
-			var getInfo = new EventInformation(key, _type, method, arguments);
+			var eventInformation = new EventInformation(key, _type, method, arguments);
 			if (key == null)
 			{
 				return callOriginalMethod(info);
 			}
-			var cachedValue = _cache.Get(getInfo);
+			var cachedValue = _cache.Get(eventInformation);
 			if (cachedValue != null)
 			{
 				return cachedValue;
@@ -85,16 +85,16 @@ namespace MbCache.ProxyImpl.LinFu
 			}
 			lock (lockObject)
 			{
-				var cachedValue2 = _cache.Get(getInfo);
+				var cachedValue2 = _cache.Get(eventInformation);
 				return cachedValue2 ?? executeAndPutInCache(info, key);
 			}
 		}
 
 		private object executeAndPutInCache(InvocationInfo info, string key)
 		{
-			var putInfo = new EventInformation(key, _type, info.TargetMethod, info.Arguments);
+			var eventInformation = new EventInformation(key, _type, info.TargetMethod, info.Arguments);
 			var retVal = callOriginalMethod(info);
-			_cache.Put(putInfo, retVal);
+			_cache.Put(eventInformation, retVal);
 			return retVal;
 		}
 

@@ -43,6 +43,13 @@ namespace MbCache.Configuration
 			_lockObjectGenerator = lockObjectGenerator;
 		}
 
+		/// <summary>
+		/// Builds the <see cref="IMbCacheFactory"/>.
+		/// </summary>
+		/// <param name="eventListener">
+		/// The event listeners that will be called in runtime. 
+		/// They will be called in the same order as here.
+		/// </param>
 		public IMbCacheFactory BuildFactory(params IEventListener[] eventListener)
 		{
 			checkAllImplementationAndMethodsAreOk();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MbCache.Core.Events;
 using log4net;
 using MbCache.Configuration;
+using System.Linq;
 
 namespace MbCache.Logic
 {
@@ -19,11 +20,13 @@ namespace MbCache.Logic
 		private readonly ILog _log;
 		private readonly ICache _cache;
 		private readonly IEnumerable<IEventListener> _eventHandlers;
+		private readonly bool _hasEventHandlers; //just for perf reasons - minimize enumerators
 
 		public CacheAdapter(ICache cache, IEnumerable<IEventListener> eventHandlers)
 		{
 			_cache = cache;
 			_eventHandlers = eventHandlers;
+			_hasEventHandlers = _eventHandlers.Any();
 			_log = LogManager.GetLogger(cache.GetType());
 		}
 
@@ -36,11 +39,11 @@ namespace MbCache.Logic
 			var cacheValue = _cache.Get(eventInformation.CacheKey);
 			if(cacheValue == null)
 			{
-				cacheMiss(eventInformation.CacheKey);
+				logCacheMiss(eventInformation.CacheKey);
 			}
 			else
 			{
-				cacheHit(eventInformation.CacheKey);
+				logCacheHit(eventInformation.CacheKey);
 				callEventHandlersGet(eventInformation);
 			}
 			return cacheValue is nullValue ? null : cacheValue;
@@ -48,6 +51,8 @@ namespace MbCache.Logic
 
 		private void callEventHandlersGet(EventInformation eventInformation)
 		{
+			if (!_hasEventHandlers)
+				return;
 			foreach (var eventHandler in _eventHandlers)
 			{
 				eventHandler.OnGet(eventInformation);
@@ -68,6 +73,8 @@ namespace MbCache.Logic
 
 		private void callEventHandlersPut(EventInformation eventInformation)
 		{
+			if (!_hasEventHandlers)
+				return;
 			foreach (var eventHandler in _eventHandlers)
 			{
 				eventHandler.OnPut(eventInformation);
@@ -88,14 +95,15 @@ namespace MbCache.Logic
 
 		private void callEventHandlersDelete(EventInformation eventInformation)
 		{
+			if (!_hasEventHandlers)
+				return;
 			foreach (var eventHandler in _eventHandlers)
 			{
 				eventHandler.OnDelete(eventInformation);
 			}
 		}
 
-
-		private void cacheHit(string key)
+		private void logCacheHit(string key)
 		{
 			if (_log.IsDebugEnabled)
 			{
@@ -103,7 +111,7 @@ namespace MbCache.Logic
 			}
 		}
 
-		private void cacheMiss(string key)
+		private void logCacheMiss(string key)
 		{
 			if (_log.IsDebugEnabled)
 			{

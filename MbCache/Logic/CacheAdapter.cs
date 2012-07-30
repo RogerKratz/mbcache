@@ -43,10 +43,14 @@ namespace MbCache.Logic
 			}
 			else
 			{
+				if (cacheValue is nullValue)
+				{
+					cacheValue = null;
+				}
 				logCacheHit(eventInformation.CacheKey);
 				callEventHandlersGet(eventInformation, cacheValue);
 			}
-			return cacheValue is nullValue ? null : cacheValue;
+			return cacheValue;
 		}
 
 		private void callEventHandlersGet(EventInformation eventInformation, object cachedValue)

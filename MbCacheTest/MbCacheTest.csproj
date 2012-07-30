@@ -104,8 +104,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyImplThatThrows.cs" />
     <Compile Include="SetupFixtureForAssembly.cs" />
-    <Compile Include="Statistic\HitsAndMissesTest.cs" />
-    <Compile Include="Statistic\ThreadingTest.cs" />
+    <Compile Include="Events\Statistic\HitsAndMissesTest.cs" />
+    <Compile Include="Events\Statistic\ThreadingTest.cs" />
     <Compile Include="SimpleTest.cs" />
     <Compile Include="FullTest.cs" />
     <Compile Include="TestData\HasNonVirtualMethod.cs" />

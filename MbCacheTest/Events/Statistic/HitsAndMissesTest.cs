@@ -3,7 +3,7 @@ using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
-namespace MbCacheTest.Statistic
+namespace MbCacheTest.Events.Statistic
 {
 	public class HitsAndMissesTest : FullTest
 	{

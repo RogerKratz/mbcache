@@ -6,7 +6,7 @@ using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
-namespace MbCacheTest.Statistic
+namespace MbCacheTest.Events.Statistic
 {
 	public class ThreadingTest : FullTest
 	{

@@ -9,7 +9,7 @@ namespace MbCache.Logic
 	public class MbCacheFactory : IMbCacheFactory
 	{
 		private readonly IProxyFactory _proxyFactory;
-		private readonly CacheDecorator _cache;
+		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
 
@@ -19,7 +19,7 @@ namespace MbCache.Logic
 									ILockObjectGenerator lockObjectGenerator,
 									IDictionary<Type, ImplementationAndMethods> methods)
 		{
-			_cache = new CacheDecorator(cache);
+			_cache = new CacheAdapter(cache);
 			_cacheKey = cacheKey;
 			_methods = methods;
 			proxyFactory.Initialize(_cache, cacheKey, lockObjectGeneratorOrNullObject(lockObjectGenerator));

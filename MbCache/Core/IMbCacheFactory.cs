@@ -56,11 +56,6 @@ namespace MbCache.Core
 		bool IsKnownInstance(object component);
 
 		/// <summary>
-		/// Returns statistic for this instance
-		/// </summary>
-		IStatistics Statistics { get; }
-
-		/// <summary>
 		/// Returns the "real" type for a registered interface.
 		/// Returns the same type as registered type if AsImplemented (class proxy) is used.
 		/// </summary>

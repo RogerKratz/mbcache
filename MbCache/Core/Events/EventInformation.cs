@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace MbCache.Core.Events
 {
-	public class PutInfo
+	public class EventInformation
 	{
-		public PutInfo(string cacheKey, Type type, MethodInfo method, object[] arguments)
+		public EventInformation(string cacheKeyStartsWith, Type type, MethodInfo method, object[] arguments)
 		{
-			CacheKey = cacheKey;
+			CacheKey = cacheKeyStartsWith;
 			Type = type;
 			Method = method;
 			Arguments = arguments;

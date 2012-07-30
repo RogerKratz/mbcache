@@ -1,15 +1,14 @@
-using System.Threading;
+using System.Collections.Generic;
 using MbCache.Core.Events;
 using log4net;
 using MbCache.Configuration;
-using MbCache.Core;
 
 namespace MbCache.Logic
 {
 	/// <summary>
 	/// Adds logging, statistics and null replacement for <see cref="ICache"/>.
 	/// </summary>
-	public class CacheAdapter : IStatistics
+	public class CacheAdapter
 	{
 		private const string putMessage = "Adding cache entry for <{0}>";
 		private const string getMessage = "Trying to find cache entry <{0}>";
@@ -19,73 +18,82 @@ namespace MbCache.Logic
 
 		private readonly ILog _log;
 		private readonly ICache _cache;
-		private long _cacheHits;
-		private long _cacheMisses;
+		private readonly IEnumerable<IEventListener> _eventHandlers;
 
-		public CacheAdapter(ICache cache)
+		public CacheAdapter(ICache cache, IEnumerable<IEventListener> eventHandlers)
 		{
 			_cache = cache;
+			_eventHandlers = eventHandlers;
 			_log = LogManager.GetLogger(cache.GetType());
 		}
 
-		public long CacheHits
-		{
-			get { return _cacheHits; }
-		}
-
-		public long CacheMisses
-		{
-			get
-			{
-				return _cacheMisses;
-			}
-		}
-
-		public object Get(GetInfo getInfo)
+		public object Get(EventInformation eventInformation)
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(getMessage, getInfo.CacheKey);				
+				_log.DebugFormat(getMessage, eventInformation.CacheKey);				
 			}
-			var cacheValue = _cache.Get(getInfo.CacheKey);
+			var cacheValue = _cache.Get(eventInformation.CacheKey);
 			if(cacheValue == null)
 			{
-				cacheMiss(getInfo.CacheKey);
+				cacheMiss(eventInformation.CacheKey);
 			}
 			else
 			{
-				cacheHit(getInfo.CacheKey);
+				cacheHit(eventInformation.CacheKey);
+				callEventHandlersGet(eventInformation);
 			}
 			return cacheValue is nullValue ? null : cacheValue;
 		}
 
-		public void Put(PutInfo putInfo, object value)
+		private void callEventHandlersGet(EventInformation eventInformation)
+		{
+			foreach (var eventHandler in _eventHandlers)
+			{
+				eventHandler.OnGet(eventInformation);
+			}
+		}
+
+		public void Put(EventInformation eventInformation, object value)
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(putMessage, putInfo.CacheKey);				
+				_log.DebugFormat(putMessage, eventInformation.CacheKey);				
 			}
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs
-			_cache.Put(putInfo.CacheKey, value ?? new nullValue());
+			_cache.Put(eventInformation.CacheKey, value ?? new nullValue());
+			callEventHandlersPut(eventInformation);
 		}
 
-		public void Delete(DeleteInfo deleteInfo)
+		private void callEventHandlersPut(EventInformation eventInformation)
 		{
-			if (deleteInfo.CacheKeyStartsWith == null) 
+			foreach (var eventHandler in _eventHandlers)
+			{
+				eventHandler.OnPut(eventInformation);
+			}
+		}
+
+		public void Delete(EventInformation eventInformation)
+		{
+			if (eventInformation.CacheKey == null) 
 				return;
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(deleteMessage, deleteInfo.CacheKeyStartsWith);					
+				_log.DebugFormat(deleteMessage, eventInformation.CacheKey);					
 			}
-			_cache.Delete(deleteInfo.CacheKeyStartsWith);
+			_cache.Delete(eventInformation.CacheKey);
+			callEventHandlersDelete(eventInformation);
 		}
 
-		public void Clear()
+		private void callEventHandlersDelete(EventInformation eventInformation)
 		{
-			_cacheMisses = 0;                
-			_cacheHits = 0;
+			foreach (var eventHandler in _eventHandlers)
+			{
+				eventHandler.OnDelete(eventInformation);
+			}
 		}
+
 
 		private void cacheHit(string key)
 		{
@@ -93,7 +101,6 @@ namespace MbCache.Logic
 			{
 				_log.DebugFormat(cacheHitLogMessage, key);				
 			}
-			Interlocked.Increment(ref _cacheHits);
 		}
 
 		private void cacheMiss(string key)
@@ -102,7 +109,6 @@ namespace MbCache.Logic
 			{
 				_log.DebugFormat(cacheMissLogMessage, key);				
 			}
-			Interlocked.Increment(ref _cacheMisses);
 		}
 
 		private class nullValue { }

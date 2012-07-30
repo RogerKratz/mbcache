@@ -68,7 +68,7 @@ namespace MbCache.ProxyImpl.LinFu
 			var method = info.TargetMethod;
 			var arguments = info.Arguments;
 			var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
-			var getInfo = new GetInfo(key, _type, method, arguments);
+			var getInfo = new EventInformation(key, _type, method, arguments);
 			if (key == null)
 			{
 				return callOriginalMethod(info);
@@ -92,7 +92,7 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private object executeAndPutInCache(InvocationInfo info, string key)
 		{
-			var putInfo = new PutInfo(key, _type, info.TargetMethod, info.Arguments);
+			var putInfo = new EventInformation(key, _type, info.TargetMethod, info.Arguments);
 			var retVal = callOriginalMethod(info);
 			_cache.Put(putInfo, retVal);
 			return retVal;

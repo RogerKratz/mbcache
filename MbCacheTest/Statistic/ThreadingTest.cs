@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Collections.Generic;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -12,6 +13,7 @@ namespace MbCacheTest.Statistic
 		private IObjectReturningNewGuids component;
 		private const int noOfThreads = 100;
 		private IMbCacheFactory factory;
+		private StatisticsEventListener eventListener;
 
 		public ThreadingTest(string proxyTypeString) : base(proxyTypeString) { }
 
@@ -22,12 +24,13 @@ namespace MbCacheTest.Statistic
 
 		protected override void TestSetup()
 		{
+			eventListener = new StatisticsEventListener();
 			CacheBuilder
 				 .For<ObjectReturningNewGuids>()
 				 .CacheMethod(c => c.CachedMethod())
 				 .As<IObjectReturningNewGuids>();
 
-			factory = CacheBuilder.BuildFactory();
+			factory = CacheBuilder.BuildFactory(eventListener);
 			component = factory.Create<IObjectReturningNewGuids>();
 			log4net.LogManager.Shutdown();
 		}
@@ -57,8 +60,7 @@ namespace MbCacheTest.Statistic
 				tColl[i].Join();
 			}
 
-			Assert.AreEqual(noOfThreads, factory.Statistics.CacheMisses);
-			factory.Statistics.Clear();
+			Assert.AreEqual(noOfThreads, eventListener.CacheMisses);
 		}
 
 		private void createCacheHitOrMiss()

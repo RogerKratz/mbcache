@@ -29,7 +29,7 @@ namespace MbCache.Logic
 		public void Invalidate()
 		{
 			var cacheKey = _cacheKey.Key(_definedType, this);
-			var deleteArgs = new DeleteInfo(cacheKey, _definedType, null, null);
+			var deleteArgs = new EventInformation(cacheKey, _definedType, null, null);
 			_cache.Delete(deleteArgs);
 		}
 
@@ -40,7 +40,7 @@ namespace MbCache.Logic
 			var key = matchParameterValues ? 
 						_cacheKey.Key(_definedType, this, methodInfo, arguments) : 
 						_cacheKey.Key(_definedType, this, methodInfo);
-			var deleteInfo = new DeleteInfo(key, _definedType, methodInfo, arguments);
+			var deleteInfo = new EventInformation(key, _definedType, methodInfo, arguments);
 			_cache.Delete(deleteInfo);
 		}
 	}

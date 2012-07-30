@@ -2,6 +2,7 @@ using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Events.Statistic
 {
@@ -45,6 +46,17 @@ namespace MbCacheTest.Events.Statistic
 			Assert.AreEqual(1, eventListener.CacheMisses);
 			comp.CachedMethod2();
 			Assert.AreEqual(1, eventListener.CacheMisses);
+		}
+
+		[Test]
+		public void VerifyClear()
+		{
+			var comp = factory.Create<IObjectReturningNewGuids>();
+			comp.CachedMethod();
+			comp.CachedMethod();
+			eventListener.Clear();
+			eventListener.CacheHits.Should().Be.EqualTo(0);
+			eventListener.CacheMisses.Should().Be.EqualTo(0);
 		}
 	}
 }

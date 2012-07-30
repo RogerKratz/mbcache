@@ -33,5 +33,11 @@ namespace MbCache.Core.Events
 				return _cacheMisses;
 			}
 		}
+
+		public void Clear()
+		{
+			_cacheHits = 0;
+			_cacheMisses = 0;
+		}
 	}
 }

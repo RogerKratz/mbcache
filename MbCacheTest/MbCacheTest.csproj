@@ -77,7 +77,10 @@
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
+    <Compile Include="Events\Statistic\DeleteTest.cs" />
     <Compile Include="Events\Statistic\GetTest.cs" />
+    <Compile Include="Events\Statistic\MultipleEventHandlers.cs" />
+    <Compile Include="Events\Statistic\PutTest.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\CacheKeyReturnNullTest.cs" />

@@ -26,11 +26,12 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener = new StatisticsEventListener();
 			CacheBuilder
-				 .For<ObjectReturningNewGuids>()
-				 .CacheMethod(c => c.CachedMethod())
-				 .As<IObjectReturningNewGuids>();
+				.AddEventListener(eventListener)
+				.For<ObjectReturningNewGuids>()
+					.CacheMethod(c => c.CachedMethod())
+					.As<IObjectReturningNewGuids>();
 
-			factory = CacheBuilder.BuildFactory(eventListener);
+			factory = CacheBuilder.BuildFactory();
 			component = factory.Create<IObjectReturningNewGuids>();
 			log4net.LogManager.Shutdown();
 		}

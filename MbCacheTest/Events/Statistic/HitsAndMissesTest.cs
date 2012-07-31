@@ -18,10 +18,11 @@ namespace MbCacheTest.Events.Statistic
 			eventListener = new StatisticsEventListener();
 			CacheBuilder
 				 .For<ObjectReturningNewGuids>()
-				 .CacheMethod(c => c.CachedMethod())
-				 .As<IObjectReturningNewGuids>();
+					.CacheMethod(c => c.CachedMethod())
+					.As<IObjectReturningNewGuids>()
+				 .AddEventListener(eventListener);
 
-			factory = CacheBuilder.BuildFactory(eventListener);
+			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]

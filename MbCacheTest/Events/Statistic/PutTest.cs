@@ -19,11 +19,12 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener = new eventListenerForGet();
 			CacheBuilder
-				 .For<ObjectReturningNull>()
-				 .CacheMethod(c => c.ReturnNullIfZero(0))
-				 .As<IObjectReturningNull>();
+				.For<ObjectReturningNull>()
+					.CacheMethod(c => c.ReturnNullIfZero(0))
+					.As<IObjectReturningNull>()
+				.AddEventListener(eventListener);
 
-			var factory = CacheBuilder.BuildFactory(eventListener);
+			var factory = CacheBuilder.BuildFactory();
 			var comp = factory.Create<IObjectReturningNull>();
 			comp.ReturnNullIfZero(0);
 			comp.ReturnNullIfZero(1);

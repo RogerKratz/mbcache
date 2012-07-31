@@ -27,11 +27,14 @@ namespace MbCacheTest.Events.Statistic
 			eventListenerForMultiple.FirstCallOnPut = true;
 
 			CacheBuilder
-				 .For<ReturningRandomNumbers>()
-				 .CacheMethod(c => c.CachedNumber())
-				 .As<IReturningRandomNumbers>();
+				.For<ReturningRandomNumbers>()
+					.CacheMethod(c => c.CachedNumber())
+					.As<IReturningRandomNumbers>()
+				.AddEventListener(firstEventListener)
+				.AddEventListener(secondEventListener)
+				.AddEventListener(thirdEventListener);
 
-			var factory = CacheBuilder.BuildFactory(firstEventListener, secondEventListener, thirdEventListener);
+			var factory = CacheBuilder.BuildFactory();
 			var comp = factory.Create<IReturningRandomNumbers>();
 			comp.CachedNumber();
 			comp.CachedNumber();

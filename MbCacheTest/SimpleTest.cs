@@ -21,7 +21,9 @@ namespace MbCacheTest
 		public void Setup()
 		{
 			var lockObjectGenerator = CreateLockObjectGenerator();
-			CacheBuilder = lockObjectGenerator==null ? new CacheBuilder(ProxyFactory, CreateCache(), CreateCacheKey()) : new CacheBuilder(ProxyFactory, CreateCache(), CreateCacheKey(), lockObjectGenerator);
+			CacheBuilder = new CacheBuilder(ProxyFactory, CreateCache(), CreateCacheKey());
+			if (lockObjectGenerator != null)
+				CacheBuilder.SetLockObjectGenerator(lockObjectGenerator);
 			TestSetup();
 		}
 

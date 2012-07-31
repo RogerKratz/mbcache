@@ -15,9 +15,9 @@ namespace MbCache.Configuration
 		private readonly IProxyFactory _proxyFactory;
 		private readonly ICache _cache;
 		private readonly ICacheKey _keyBuilder;
-		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly ProxyValidator _proxyValidator;
 		private readonly ICollection<IEventListener> _eventListeners;
+		private ILockObjectGenerator _lockObjectGenerator;
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 										ICache cache,
@@ -29,20 +29,6 @@ namespace MbCache.Configuration
 			_cache = cache;
 			_keyBuilder = keyBuilder;
 			_proxyValidator = new ProxyValidator(_proxyFactory);
-			_eventListeners = new List<IEventListener>();
-		}
-
-		public CacheBuilder(IProxyFactory proxyFactory,
-								ICache cache,
-								ICacheKey keyBuilder,
-								ILockObjectGenerator lockObjectGenerator)
-		{
-			_cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
-			_details = new List<ImplementationAndMethods>();
-			_proxyFactory = proxyFactory;
-			_cache = cache;
-			_keyBuilder = keyBuilder;
-			_lockObjectGenerator = lockObjectGenerator;
 			_eventListeners = new List<IEventListener>();
 		}
 
@@ -88,6 +74,12 @@ namespace MbCache.Configuration
 		public CacheBuilder AddEventListener(IEventListener eventListener)
 		{
 			_eventListeners.Add(eventListener);
+			return this;
+		}
+
+		public CacheBuilder SetLockObjectGenerator(ILockObjectGenerator lockObjectGenerator)
+		{
+			_lockObjectGenerator = lockObjectGenerator;
 			return this;
 		}
 	}

@@ -2,6 +2,7 @@
 
 - Version 1.5 (v 1.5.0.0), 2012-07-02
 * IStatistics removed. StatisticsEventListner introduced instead.
+* ctor on CacheBuilder accepting an ILockObjectGenerator remoed. CacheBuilder.SetLockObjectGenerator added instead.
 
 - Version 1.4 (v 1.4.0.0), 2012-06-18
 * When creating unknown MbCache instance, ArgumentException is thrown instead of KeyValue not found.

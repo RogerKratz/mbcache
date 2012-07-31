@@ -17,10 +17,11 @@ namespace MbCacheTest.Logic
 		{
 			eventListener = new StatisticsEventListener();
 			CacheBuilder
+				.AddEventListener(eventListener)
 				.For<ObjectReturningNull>()
-				.CacheMethod(c => c.ReturnNullIfZero(0))
-				.As<IObjectReturningNull>();
-			factory = CacheBuilder.BuildFactory(eventListener);
+					.CacheMethod(c => c.ReturnNullIfZero(0))
+					.As<IObjectReturningNull>();
+			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]

@@ -17,6 +17,7 @@ namespace MbCache.Configuration
 		private readonly ICacheKey _keyBuilder;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly ProxyValidator _proxyValidator;
+		private readonly ICollection<IEventListener> _eventListeners;
 
 		public CacheBuilder(IProxyFactory proxyFactory,
 										ICache cache,
@@ -28,6 +29,7 @@ namespace MbCache.Configuration
 			_cache = cache;
 			_keyBuilder = keyBuilder;
 			_proxyValidator = new ProxyValidator(_proxyFactory);
+			_eventListeners = new List<IEventListener>();
 		}
 
 		public CacheBuilder(IProxyFactory proxyFactory,
@@ -41,19 +43,16 @@ namespace MbCache.Configuration
 			_cache = cache;
 			_keyBuilder = keyBuilder;
 			_lockObjectGenerator = lockObjectGenerator;
+			_eventListeners = new List<IEventListener>();
 		}
 
 		/// <summary>
 		/// Builds the <see cref="IMbCacheFactory"/>.
 		/// </summary>
-		/// <param name="eventListener">
-		/// The event listeners that will be called in runtime. 
-		/// They will be called in the same order as here.
-		/// </param>
-		public IMbCacheFactory BuildFactory(params IEventListener[] eventListener)
+		public IMbCacheFactory BuildFactory()
 		{
 			checkAllImplementationAndMethodsAreOk();
-			var cacheAdapter = new CacheAdapter(_cache, eventListener);
+			var cacheAdapter = new CacheAdapter(_cache, _eventListeners);
 			return new MbCacheFactory(_proxyFactory, cacheAdapter, _keyBuilder, _lockObjectGenerator, _cachedMethods);
 		}
 
@@ -79,6 +78,17 @@ namespace MbCache.Configuration
 				}
 				throw new InvalidOperationException(excText.ToString());
 			}
+		}
+
+		/// <summary>
+		/// Adds an event listeners that will be called in runtime. 
+		/// They will be called in the same order as added here.
+		/// </summary>
+		/// <param name="eventListener"></param>
+		public CacheBuilder AddEventListener(IEventListener eventListener)
+		{
+			_eventListeners.Add(eventListener);
+			return this;
 		}
 	}
 }

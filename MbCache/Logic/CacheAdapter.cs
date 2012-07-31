@@ -11,11 +11,10 @@ namespace MbCache.Logic
 	/// </summary>
 	public class CacheAdapter
 	{
-		private const string putMessage = "Adding cache entry for <{0}>";
-		private const string getMessage = "Trying to find cache entry <{0}>";
-		private const string deleteMessage = "Removing cache entries starting with {0}";
-		private const string cacheHitLogMessage = "Cache hit for <{0}>";
-		private const string cacheMissLogMessage = "Cache miss for <{0}>";
+		private const string putMessage = "Adding cache value {0} for {1} (key: {2})";
+		private const string deleteMessage = "Removing cache entries for {0} (key starts with: {1})";
+		private const string cacheHitLogMessage = "Cache hit for {0} (key: {1})";
+		private const string cacheMissLogMessage = "Cache miss for {0} (key: {1})";
 
 		private readonly ILog _log;
 		private readonly ICache _cache;
@@ -32,14 +31,10 @@ namespace MbCache.Logic
 
 		public object Get(EventInformation eventInformation)
 		{
-			if (_log.IsDebugEnabled)
-			{
-				_log.DebugFormat(getMessage, eventInformation.CacheKey);				
-			}
 			var cacheValue = _cache.Get(eventInformation.CacheKey);
 			if(cacheValue == null)
 			{
-				logCacheMiss(eventInformation.CacheKey);
+				logCacheMiss(eventInformation);
 			}
 			else
 			{
@@ -47,7 +42,7 @@ namespace MbCache.Logic
 				{
 					cacheValue = null;
 				}
-				logCacheHit(eventInformation.CacheKey);
+				logCacheHit(eventInformation);
 				callEventHandlersGet(eventInformation, cacheValue);
 			}
 			return cacheValue;
@@ -67,7 +62,7 @@ namespace MbCache.Logic
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(putMessage, eventInformation.CacheKey);				
+				_log.DebugFormat(putMessage, value, eventInformation.MethodName(), eventInformation.CacheKey);				
 			}
 			//creating new nullValue instance here - not really necessary with current aspnetcache impl
 			//but gives a possibility for ICache implementations to use call backs
@@ -91,7 +86,7 @@ namespace MbCache.Logic
 				return;
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(deleteMessage, eventInformation.CacheKey);					
+				_log.DebugFormat(deleteMessage, eventInformation.MethodName(), eventInformation.CacheKey);					
 			}
 			_cache.Delete(eventInformation.CacheKey);
 			callEventHandlersDelete(eventInformation);
@@ -107,19 +102,19 @@ namespace MbCache.Logic
 			}
 		}
 
-		private void logCacheHit(string key)
+		private void logCacheHit(EventInformation eventInfo)
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(cacheHitLogMessage, key);				
+				_log.DebugFormat(cacheHitLogMessage, eventInfo.MethodName(), eventInfo.CacheKey);				
 			}
 		}
 
-		private void logCacheMiss(string key)
+		private void logCacheMiss(EventInformation eventInfo)
 		{
 			if (_log.IsDebugEnabled)
 			{
-				_log.DebugFormat(cacheMissLogMessage, key);				
+				_log.DebugFormat(cacheMissLogMessage, eventInfo.MethodName(), eventInfo.CacheKey);				
 			}
 		}
 

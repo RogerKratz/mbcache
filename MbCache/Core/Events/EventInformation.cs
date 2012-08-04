@@ -5,9 +5,9 @@ namespace MbCache.Core.Events
 {
 	public class EventInformation
 	{
-		public EventInformation(string cacheKeyStartsWith, Type type, MethodInfo method, object[] arguments)
+		public EventInformation(string cacheKey, Type type, MethodInfo method, object[] arguments)
 		{
-			CacheKey = cacheKeyStartsWith;
+			CacheKey = cacheKey;
 			Type = type;
 			Method = method;
 			Arguments = arguments;

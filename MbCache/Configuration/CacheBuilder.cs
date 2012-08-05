@@ -42,6 +42,11 @@ namespace MbCache.Configuration
 			return new MbCacheFactory(_proxyFactory, cacheAdapter, _keyBuilder, _lockObjectGenerator, _cachedMethods);
 		}
 
+		/// <summary>
+		/// Creates a caching component for <see cref="T"/>.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		public IFluentBuilder<T> For<T>()
 		{
 			var concreteType = typeof(T);
@@ -67,7 +72,7 @@ namespace MbCache.Configuration
 		}
 
 		/// <summary>
-		/// Adds an event listeners that will be called in runtime. 
+		/// Adds an <see cref="IEventListener"/> that will be called in runtime. 
 		/// They will be called in the same order as added here.
 		/// </summary>
 		/// <param name="eventListener"></param>
@@ -77,6 +82,11 @@ namespace MbCache.Configuration
 			return this;
 		}
 
+		/// <summary>
+		/// Sets the <see cref="ILockObjectGenerator"/> to be used.
+		/// </summary>
+		/// <param name="lockObjectGenerator"></param>
+		/// <returns></returns>
 		public CacheBuilder SetLockObjectGenerator(ILockObjectGenerator lockObjectGenerator)
 		{
 			_lockObjectGenerator = lockObjectGenerator;

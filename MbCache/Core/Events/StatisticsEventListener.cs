@@ -28,10 +28,7 @@ namespace MbCache.Core.Events
 
 		public long CacheMisses
 		{
-			get
-			{
-				return _cacheMisses;
-			}
+			get { return _cacheMisses; }
 		}
 
 		public void Clear()

@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- Version 1.6 (v 1.6.0.0), ?????
+- Version 1.6 (v 1.6.0.0), 2012-08-05
 * IStatistics removed. StatisticsEventListner introduced instead.
 * ctor on CacheBuilder accepting an ILockObjectGenerator removed. CacheBuilder.SetLockObjectGenerator added instead.
 * Changed IProxyFactory.Initialize. CacheAdapter instead of ICache is passed in.

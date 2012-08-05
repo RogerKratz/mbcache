@@ -8,7 +8,7 @@ namespace MbCache.ProxyImpl.Castle
 {
 	public class ProxyFactory : IProxyFactory
 	{
-		private static readonly ProxyGenerator _generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
+		private static readonly ProxyGenerator generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
 		private CacheAdapter _cache;
 		private ICacheKey _cacheKey;
 		private ILockObjectGenerator _lockObjectGenerator;
@@ -31,10 +31,10 @@ namespace MbCache.ProxyImpl.Castle
 			{
 				if (type.IsClass)
 				{
-					return (T)_generator.CreateClassProxy(methodData.ConcreteType, options, parameters, cacheInterceptor);
+					return (T)generator.CreateClassProxy(methodData.ConcreteType, options, parameters, cacheInterceptor);
 				}
 				var target = Activator.CreateInstance(methodData.ConcreteType, parameters);
-				return _generator.CreateInterfaceProxyWithTarget((T)target, options, cacheInterceptor);
+				return generator.CreateInterfaceProxyWithTarget((T)target, options, cacheInterceptor);
 			}
 			catch (MissingMethodException createInstanceEx)
 			{

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MbCache.Configuration;
 
 namespace MbCacheTest.CacheForTest
 {
+	[Serializable]
 	public class TestCache : ICache
 	{
 		private readonly IDictionary<string, object> _values;

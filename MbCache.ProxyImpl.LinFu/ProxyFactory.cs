@@ -1,9 +1,11 @@
+using System;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.LinFu
 {
+	[Serializable]
 	public class ProxyFactory : IProxyFactory
 	{
 		private CacheAdapter _cache;

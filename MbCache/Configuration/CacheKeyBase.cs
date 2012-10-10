@@ -14,6 +14,7 @@ namespace MbCache.Configuration
 	/// Will build cache key in format
 	/// MbCache|Type|Component|Method|ParamValue1|ParamValue2
 	/// </summary>
+	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
 	{
 		private static readonly ILog logger = LogManager.GetLogger(typeof (CacheKeyBase));

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace MbCache.Configuration
 {
@@ -6,6 +7,7 @@ namespace MbCache.Configuration
 	/// Holds an array of lock objects.
 	/// Based on key, it will return one of these.
 	/// </summary>
+	[Serializable]
 	public class FixedNumberOfLockObjects : ILockObjectGenerator
 	{
 		private readonly object[] _lockobjects;

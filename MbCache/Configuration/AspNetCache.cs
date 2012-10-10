@@ -5,15 +5,15 @@ using System.Web.Caching;
 
 namespace MbCache.Configuration
 {
+	[Serializable]
 	public class AspNetCache : ICache
 	{
 		private readonly int _timeoutMinutes;
-		private readonly Cache _cache;
+		private static readonly Cache _cache = HttpRuntime.Cache;
 
 		public AspNetCache(int timeoutMinutes)
 		{
 			_timeoutMinutes = timeoutMinutes;
-			_cache = HttpRuntime.Cache;
 		}
 
 		public object Get(string key)

@@ -90,6 +90,7 @@
     <Compile Include="Logic\MatchingCorrectMethod\TwoEqualMethodNamesBothCachedTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\TwoEqualMethodNamesOneCachedTest.cs" />
     <Compile Include="Logic\ProxyExceptionTest.cs" />
+    <Compile Include="Logic\SerializeFactoryTest.cs" />
     <Compile Include="LogSpy.cs" />
     <Compile Include="Logic\CacheKeyTest.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />

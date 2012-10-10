@@ -7,6 +7,7 @@ using MbCache.Core.Events;
 
 namespace MbCache.Logic
 {
+	[Serializable]
 	public class MbCacheFactory : IMbCacheFactory
 	{
 		private readonly IProxyFactory _proxyFactory;
@@ -82,6 +83,7 @@ namespace MbCache.Logic
 			return lockObjectGenerator ?? new nullLockObjectGenerator();
 		}
 
+		[Serializable]
 		private class nullLockObjectGenerator : ILockObjectGenerator
 		{
 			public object GetFor(string key)

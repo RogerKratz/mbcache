@@ -24,6 +24,7 @@ echo Remember to...
 echo Commit changes
 echo Tag current changeset with version %version%
 echo Push changes to server repo
+echo Push nuget package to nuget server (and symbol server)
 
 echo.
 

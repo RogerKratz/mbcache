@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D9CD0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3376973C-B821-4AF6-B093-FCE8F670004F}"
 	ProjectSection(SolutionItems) = preProject
-		Build\buildNugetPackage.bat = Build\buildNugetPackage.bat
+		Build\createRelease.bat = Build\createRelease.bat
 		Build\default.msbuild = Build\default.msbuild
 		Build\MbCache.nuspec = Build\MbCache.nuspec
 	EndProjectSection

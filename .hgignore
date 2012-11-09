@@ -30,4 +30,4 @@ obj/
 *resharper*
 _ReSharper*/
 packages/
-Build/nuget
+Build/output

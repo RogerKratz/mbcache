@@ -3,11 +3,31 @@
 	<PropertyGroup>
 		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
-		<DeployFolderNuget>$(MSBuildProjectDirectory)\nuget</DeployFolderNuget>
+		<DeployFolderNuget>$(MSBuildProjectDirectory)\output</DeployFolderNuget>
+		<PackageFolder>$(SourceDir)\packages</PackageFolder>
+		<MSBuildCommunityTasksPath>$(PackageFolder)\MSBuildTasks.1.4.0.45\tools</MSBuildCommunityTasksPath>
 	</PropertyGroup>
+	<Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
+	
+	<ItemGroup>
+		<AssemblyVersionFiles Include="$(SourceDir)\MbCache.ProxyImpl.Castle\Properties\AssemblyInfo.cs"/>
+		<AssemblyVersionFiles Include="$(SourceDir)\MbCache.ProxyImpl.LinFu\Properties\AssemblyInfo.cs"/>
+		<AssemblyVersionFiles Include="$(SourceDir)\MbCache\Properties\AssemblyInfo.cs"/>
+		<AssemblyVersionFiles Include="$(SourceDir)\MbCacheNet4Test\Properties\AssemblyInfo.cs"/>
+		<AssemblyVersionFiles Include="$(SourceDir)\MbCacheTest\Properties\AssemblyInfo.cs"/>
+	</ItemGroup>
+	
+	<Target Name="MakeRelease" DependsOnTargets="UpdateAssemblyInfos;BuildNugetPackage">
+	</Target>
+	
+	<Target Name="UpdateAssemblyInfos">
+		<FileUpdate Files="%(AssemblyVersionFiles.FullPath)"
+			Regex="(\d+)\.(\d+)\.(\d+)\.(\d+)"
+			ReplacementText="$(Version)"/>
+	</Target>
 	
 	<Target Name="BuildNugetPackage" DependsOnTargets="RunBuild;MakeBuildDirectory;CopyNuget">
-		<Exec Command="$(NugetFolder)\NuGet pack MbCache.nuspec -o $(DeployFolderNuget) -symbols -Prop Configuration=Release"
+		<Exec Command="$(NugetFolder)\NuGet pack MbCache.nuspec -o $(DeployFolderNuget) -symbols -Prop Configuration=Release -Version $(Version)"
 			  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
 	

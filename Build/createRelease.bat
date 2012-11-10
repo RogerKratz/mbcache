@@ -15,16 +15,22 @@ echo.
 set /p Version=Please enter version number, eg 1.2.0.0: 
 
 %msbuild% default.msbuild /v:q /t:MakeRelease
+
+hg revert -C %ROOTDIR%\MbCache.ProxyImpl.Castle\Properties\AssemblyInfo.cs
+hg revert -C %ROOTDIR%\MbCache.ProxyImpl.LinFu\Properties\AssemblyInfo.cs
+hg revert -C %ROOTDIR%\MbCache\Properties\AssemblyInfo.cs
+hg revert -C %ROOTDIR%\MbCacheTest\Properties\AssemblyInfo.cs
+hg revert -C %ROOTDIR%\MbCacheNet4Test\Properties\AssemblyInfo.cs
+
 echo -------------------------------
 echo.
 echo Updated assemblyinfo files to %Version%.
 echo Created a new nuget package to output folder.
 echo.
 echo Remember to...
-echo Commit changes
-echo Tag current changeset with version %version%
-echo Push changes to server repo
-echo Push nuget package to nuget server (and symbol server)
+echo * Tag current changeset with version %version%
+echo * Push changes to server repo
+echo * Push nuget package to nuget server (and symbol server)
 
 echo.
 

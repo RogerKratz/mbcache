@@ -13,6 +13,7 @@ echo Installing msbuildtasks to %PackageFolder%. Please wait...
 
 echo.
 set /p Version=Please enter version number, eg 1.2.0.0: 
+set /p NugetVersion=Please enter nuget version number, eg 1.2: 
 
 %msbuild% default.msbuild /v:q /t:MakeRelease
 
@@ -29,6 +30,7 @@ echo Created a new nuget package to output folder.
 echo.
 echo Remember to...
 echo * Tag current changeset with version %version%
+echo * Update release notes
 echo * Push changes to server repo
 echo * Push nuget package to nuget server (and symbol server)
 

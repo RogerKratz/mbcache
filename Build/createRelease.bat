@@ -21,7 +21,6 @@ hg revert -C %ROOTDIR%\MbCache.ProxyImpl.Castle\Properties\AssemblyInfo.cs
 hg revert -C %ROOTDIR%\MbCache.ProxyImpl.LinFu\Properties\AssemblyInfo.cs
 hg revert -C %ROOTDIR%\MbCache\Properties\AssemblyInfo.cs
 hg revert -C %ROOTDIR%\MbCacheTest\Properties\AssemblyInfo.cs
-hg revert -C %ROOTDIR%\MbCacheNet4Test\Properties\AssemblyInfo.cs
 
 echo -------------------------------
 echo.

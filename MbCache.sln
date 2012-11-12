@@ -26,12 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D9CD0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3376973C-B821-4AF6-B093-FCE8F670004F}"
 	ProjectSection(SolutionItems) = preProject
-		Build\createRelease.bat = Build\createRelease.bat
 		Build\default.msbuild = Build\default.msbuild
 		Build\MbCache.nuspec = Build\MbCache.nuspec
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCacheNet4Test", "MbCacheNet4Test\MbCacheNet4Test.csproj", "{EB43F156-917C-4C2D-828D-9B8BC34A62D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +52,6 @@ Global
 		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFF76416-A68E-4A11-A46E-2C1B6C307F58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB43F156-917C-4C2D-828D-9B8BC34A62D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB43F156-917C-4C2D-828D-9B8BC34A62D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB43F156-917C-4C2D-828D-9B8BC34A62D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB43F156-917C-4C2D-828D-9B8BC34A62D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

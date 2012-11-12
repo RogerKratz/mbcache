@@ -13,7 +13,6 @@
 		<AssemblyVersionFiles Include="$(SourceDir)\MbCache.ProxyImpl.Castle\Properties\AssemblyInfo.cs"/>
 		<AssemblyVersionFiles Include="$(SourceDir)\MbCache.ProxyImpl.LinFu\Properties\AssemblyInfo.cs"/>
 		<AssemblyVersionFiles Include="$(SourceDir)\MbCache\Properties\AssemblyInfo.cs"/>
-		<AssemblyVersionFiles Include="$(SourceDir)\MbCacheNet4Test\Properties\AssemblyInfo.cs"/>
 		<AssemblyVersionFiles Include="$(SourceDir)\MbCacheTest\Properties\AssemblyInfo.cs"/>
 	</ItemGroup>
 	

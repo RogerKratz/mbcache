@@ -54,8 +54,17 @@ namespace MbCache.ProxyImpl.LinFu
 
 		public object Intercept(InvocationInfo info)
 		{
-			return methodMarkedForCaching(info.TargetMethod) ?
-					  interceptUsingCache(info) : callOriginalMethod(info);
+			var realTargetMethod = createGenericMethodInfoIfNeeded(info.TargetMethod, info.TypeArguments);
+			return methodMarkedForCaching(realTargetMethod) ?
+					  interceptUsingCache(realTargetMethod, info.Arguments) : 
+					  callOriginalMethod(realTargetMethod, info.Arguments);
+		}
+
+		private MethodInfo createGenericMethodInfoIfNeeded(MethodInfo orgMethodInfo, Type[] typeArguments)
+		{
+			return orgMethodInfo.ContainsGenericParameters ? 
+				orgMethodInfo.MakeGenericMethod(typeArguments) : 
+				orgMethodInfo;
 		}
 
 		private bool methodMarkedForCaching(MethodInfo method)
@@ -63,15 +72,13 @@ namespace MbCache.ProxyImpl.LinFu
 			return _methodData.Methods.Contains(method, new MethodInfoComparer());
 		}
 
-		private object interceptUsingCache(InvocationInfo info)
+		private object interceptUsingCache(MethodInfo method, object[] arguments)
 		{
-			var method = info.TargetMethod;
-			var arguments = info.Arguments;
 			var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
 			var eventInformation = new EventInformation(key, _type, method, arguments);
 			if (key == null)
 			{
-				return callOriginalMethod(info);
+				return callOriginalMethod(method, arguments);
 			}
 			var cachedValue = _cache.Get(eventInformation);
 			if (cachedValue != null)
@@ -81,32 +88,25 @@ namespace MbCache.ProxyImpl.LinFu
 			var lockObject = _lockObjectGenerator.GetFor(key);
 			if (lockObject == null)
 			{
-				return executeAndPutInCache(info, eventInformation);
+				return executeAndPutInCache(method, arguments, eventInformation);
 			}
 			lock (lockObject)
 			{
 				var cachedValue2 = _cache.Get(eventInformation);
-				return cachedValue2 ?? executeAndPutInCache(info, eventInformation);
+				return cachedValue2 ?? executeAndPutInCache(method, arguments, eventInformation);
 			}
 		}
 
-		private object executeAndPutInCache(InvocationInfo info, EventInformation eventInformation)
+		private object executeAndPutInCache(MethodInfo method, object[] arguments, EventInformation eventInformation)
 		{
-			var retVal = callOriginalMethod(info);
+			var retVal = callOriginalMethod(method, arguments);
 			_cache.Put(eventInformation, retVal);
 			return retVal;
 		}
 
-		private object callOriginalMethod(InvocationInfo info)
+		private object callOriginalMethod(MethodInfo method, object[] arguments)
 		{
-			var targetMethod = info.TargetMethod;
-			if (targetMethod.DeclaringType == typeof(ICachingComponent))
-			{
-				if (targetMethod.ContainsGenericParameters)
-					targetMethod = targetMethod.MakeGenericMethod(info.TypeArguments);
-				return invokeMethod(_cachingComponent, targetMethod, info.Arguments);
-			}
-			return invokeMethod(_target, targetMethod, info.Arguments);
+			return invokeMethod(method.DeclaringType == typeof(ICachingComponent) ? _cachingComponent : _target, method, arguments);
 		}
 
 		private static object invokeMethod(object target, MethodInfo method, object[] arguments)

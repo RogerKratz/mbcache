@@ -21,5 +21,6 @@
 		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.ProxyImpl.LinFu.dll" target="lib\Net35" />
 		<file src="..\MbCache\**\*.cs" target="src"/>
 		<file src="..\MbCache.ProxyImpl.LinFu\*.cs" target="src"/>
+		<file src="..\releasenotes.txt" target="readme.txt"/>
 	</files>
 </package>

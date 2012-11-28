@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.Caching;
 using MbCache.Configuration;
 using MbCacheTest.CacheForTest;
 using NUnit.Framework;
@@ -34,7 +36,16 @@ namespace MbCacheTest
 
 		protected virtual ICache CreateCache()
 		{
-			return new TestCache();
+			clearMemoryCache();
+			return new InMemoryCache(1);
+		}
+
+		private static void clearMemoryCache()
+		{
+			foreach (var cacheKey in MemoryCache.Default.Select(kvp => kvp.Key).ToList())
+			{
+				MemoryCache.Default.Remove(cacheKey);
+			}
 		}
 
 		protected virtual ICacheKey CreateCacheKey()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using MbCache.Core;
+using MbCache.Logic;
 using log4net;
 
 namespace MbCache.Configuration
@@ -31,17 +32,17 @@ namespace MbCache.Configuration
 
 		public string Key(Type type, ICachingComponent component)
 		{
-			return string.Concat(Key(type), Separator, component.UniqueId);
+			return string.Concat(Key(type), Constants.CacheKeySeparator, component.UniqueId);
 		}
 
 		public string Key(Type type, ICachingComponent component, MethodInfo method)
 		{
 			var ret = new StringBuilder(Key(type, component));
-			ret.Append(Separator);
+			ret.Append(Constants.CacheKeySeparator);
 			ret.Append(method.Name);
 			foreach (var parameter in method.GetParameters())
 			{
-				ret.Append(Separator);
+				ret.Append(Constants.CacheKeySeparator);
 				ret.Append(parameter.ParameterType);
 			}
 			return ret.ToString();
@@ -52,7 +53,7 @@ namespace MbCache.Configuration
 			var ret = new StringBuilder(Key(type, component, method));
 			foreach (var parameter in parameters)
 			{
-				ret.Append(Separator);
+				ret.Append(Constants.CacheKeySeparator);
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
@@ -74,14 +75,9 @@ namespace MbCache.Configuration
 			}
 		}
 
-		protected virtual char Separator
-		{
-			get { return '|'; }
-		}
-
 		protected virtual string KeyStart
 		{
-			get { return "MbCache" + Separator; }
+			get { return "MbCache" + Constants.CacheKeySeparator; }
 		}
 
 

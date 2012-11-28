@@ -5,6 +5,7 @@
 * AspNetCache removed
 * InMemoryCache added
 * Implementors of ICacheKey: Cache keys must not end with a separator
+* CacheKeyBase.Separator removed. Not possible to override separator any longer.
 
 
 - Version 1.7 (v 1.7.0.0), 2012-11-12

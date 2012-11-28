@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="CacheForTest\NoCache.cs" />
     <Compile Include="CacheForTest\TestCache.cs" />
-    <Compile Include="Caches\AspNetCacheTest.cs" />
+    <Compile Include="Caches\InMemoryCacheTest.cs" />
     <Compile Include="Caches\LockObjectGeneratorTest.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Configuration\NullProxyFactory.cs" />

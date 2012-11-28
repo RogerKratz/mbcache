@@ -13,7 +13,7 @@ namespace MbCacheTest.Caches
 
 		protected override ICache CreateCache()
 		{
-			return new AspNetCache(1);
+			return new InMemoryCache(1);
 		}
 
 		protected override void TestSetup()

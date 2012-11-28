@@ -103,7 +103,7 @@ namespace MbCache.Logic
 			}
 		}
 
-		private void logCacheHit(EventInformation eventInfo)
+		private static void logCacheHit(EventInformation eventInfo)
 		{
 			if (log.IsDebugEnabled)
 			{
@@ -111,7 +111,7 @@ namespace MbCache.Logic
 			}
 		}
 
-		private void logCacheMiss(EventInformation eventInfo)
+		private static void logCacheMiss(EventInformation eventInfo)
 		{
 			if (log.IsDebugEnabled)
 			{

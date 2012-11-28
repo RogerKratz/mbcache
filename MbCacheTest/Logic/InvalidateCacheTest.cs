@@ -10,7 +10,7 @@ namespace MbCacheTest.Logic
 	{
 		private IMbCacheFactory factory;
 
-		public InvalidateCacheTest(string proxyTypeString) : base(proxyTypeString) {}
+		public InvalidateCacheTest(string proxyTypeString) : base(proxyTypeString) { }
 
 		protected override void TestSetup()
 		{
@@ -132,6 +132,15 @@ namespace MbCacheTest.Logic
 
 			value1.Should().Not.Be.EqualTo(obj.CachedMethod("roger"));
 			value2.Should().Not.Be.EqualTo(obj.CachedMethod("moore"));
+		}
+
+		[Test]
+		public void InvalidateSpecificMethodWithParameterBeforeUse()
+		{
+			const string parameter = "roger";
+			var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
+			factory.Invalidate(obj, method => method.CachedMethod(parameter), true);
+			obj.CachedMethod(parameter).Should().Be.EqualTo(obj.CachedMethod(parameter));
 		}
 	}
 }

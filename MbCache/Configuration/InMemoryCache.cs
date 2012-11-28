@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
+using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
@@ -11,7 +12,7 @@ namespace MbCache.Configuration
 	{
 		private readonly int _timeoutMinutes;
 		private static readonly MemoryCache cache = MemoryCache.Default;
-		private static readonly Regex findSeperator = new Regex(@"\|", RegexOptions.Compiled);
+		private static readonly Regex findSeperator = new Regex(@"\" + Constants.CacheKeySeparator, RegexOptions.Compiled);
 		private static readonly object dependencyValue = new object();
 
 		public InMemoryCache(int timeoutMinutes)

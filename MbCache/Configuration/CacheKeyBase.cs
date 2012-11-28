@@ -12,7 +12,10 @@ namespace MbCache.Configuration
 	/// their own logic for building cache keys
 	/// 
 	/// Will build cache key in format
-	/// MbCache|Type|Component|Method|ParamValue1|ParamValue2
+	/// MbCache|Type
+	/// MbCache|Type|Component
+	/// MbCache|Type|Component|Method|ParamType1|ParamType2
+	/// MbCache|Type|Component|Method|ParamType1|ParamType2|ParamValue1|ParamValue2
 	/// </summary>
 	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
@@ -23,23 +26,23 @@ namespace MbCache.Configuration
 
 		public string Key(Type type)
 		{
-			return string.Concat(KeyStart, type, Separator);
+			return string.Concat(KeyStart, type);
 		}
 
 		public string Key(Type type, ICachingComponent component)
 		{
-			return string.Concat(Key(type), component.UniqueId, Separator);
+			return string.Concat(Key(type), Separator, component.UniqueId);
 		}
 
 		public string Key(Type type, ICachingComponent component, MethodInfo method)
 		{
 			var ret = new StringBuilder(Key(type, component));
-			ret.Append(method.Name);
 			ret.Append(Separator);
+			ret.Append(method.Name);
 			foreach (var parameter in method.GetParameters())
 			{
-				ret.Append(parameter.ParameterType);
 				ret.Append(Separator);
+				ret.Append(parameter.ParameterType);
 			}
 			return ret.ToString();
 		}
@@ -49,12 +52,12 @@ namespace MbCache.Configuration
 			var ret = new StringBuilder(Key(type, component, method));
 			foreach (var parameter in parameters)
 			{
+				ret.Append(Separator);
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
 				checkIfSuspiousParameter(parameter, parameterKey);
 				ret.Append(parameterKey);
-				ret.Append(Separator);
 			}
 			return ret.ToString();
 		}
@@ -71,9 +74,9 @@ namespace MbCache.Configuration
 			}
 		}
 
-		protected virtual string Separator
+		protected virtual char Separator
 		{
-			get { return "|"; }
+			get { return '|'; }
 		}
 
 		protected virtual string KeyStart

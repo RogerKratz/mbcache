@@ -55,16 +55,7 @@ namespace MbCache.Configuration
 
 		public void Delete(string keyStartingWith)
 		{
-			var value = _cache.Get(keyStartingWith);
-			if (value == null || value == dependencyValue)
-			{
-				var policy = new CacheItemPolicy { Priority = CacheItemPriority.NotRemovable };
-				_cache.Set(keyStartingWith, dependencyValue, policy);				
-			}
-			else
-			{
-				_cache.Remove(keyStartingWith);
-			}
+			_cache.Remove(keyStartingWith);
 		}
 	}
 }

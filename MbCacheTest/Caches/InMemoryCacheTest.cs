@@ -5,11 +5,11 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Caches
 {
-	public class AspNetCacheTest : FullTest
+	public class InMemoryCacheTest : FullTest
 	{
 		private IMbCacheFactory factory;
 
-		public AspNetCacheTest(string proxyTypeString) : base(proxyTypeString) { }
+		public InMemoryCacheTest(string proxyTypeString) : base(proxyTypeString) { }
 
 		protected override ICache CreateCache()
 		{

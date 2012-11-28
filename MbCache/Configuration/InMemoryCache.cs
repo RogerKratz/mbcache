@@ -10,7 +10,7 @@ namespace MbCache.Configuration
 	public class InMemoryCache : ICache
 	{
 		private readonly int _timeoutMinutes;
-		private static readonly MemoryCache _cache = MemoryCache.Default;
+		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly Regex findSeperator = new Regex(@"\|", RegexOptions.Compiled);
 		private static readonly object dependencyValue = new object();
 
@@ -21,7 +21,7 @@ namespace MbCache.Configuration
 
 		public object Get(string key)
 		{
-			return _cache.Get(key);
+			return cache.Get(key);
 		}
 
 		public void Put(string key, object value)
@@ -38,10 +38,10 @@ namespace MbCache.Configuration
 			             	};
 			if (keys.Count > 0)
 			{
-				policy.ChangeMonitors.Add(_cache.CreateCacheEntryChangeMonitor(keys));				
+				policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(keys));				
 			}
 
-			_cache.Set(key, value, policy);
+			cache.Set(key, value, policy);
 		}
 
 		private static void createDependencies(IEnumerable<string> keys)
@@ -49,13 +49,13 @@ namespace MbCache.Configuration
 			foreach (var key in keys)
 			{
 				var policy = new CacheItemPolicy { Priority = CacheItemPriority.NotRemovable };
-				_cache.Add(key, dependencyValue, policy);
+				cache.Add(key, dependencyValue, policy);
 			}
 		}
 
 		public void Delete(string keyStartingWith)
 		{
-			_cache.Remove(keyStartingWith);
+			cache.Remove(keyStartingWith);
 		}
 	}
 }

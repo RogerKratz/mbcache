@@ -1,5 +1,6 @@
 ﻿using System;
 using MbCache.Configuration;
+using MbCacheTest.Caches;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -21,6 +22,8 @@ namespace MbCacheTest.Configuration
 		[Test] 
 		public void ShouldCache()
 		{
+			Tools.ClearMemoryCache();
+
 			var factory = new CacheBuilder(proxyFactory)
 				.For<ObjectReturningNewGuids>()
 					.CacheMethod(c => c.CachedMethod())

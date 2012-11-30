@@ -28,7 +28,7 @@ echo Updated assemblyinfo files to %Version%.
 echo Created a new nuget package to output folder.
 echo.
 echo Remember to...
-echo * Tag current changeset with version %version%
+echo * Tag current changeset with version %nugetversion%
 echo * Update release notes
 echo * Push changes to server repo
 echo * Push nuget package to nuget server (and symbol server)

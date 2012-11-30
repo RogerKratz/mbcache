@@ -85,6 +85,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\CacheKeyReturnNullTest.cs" />
+    <Compile Include="Logic\CachePropertyTest.cs" />
     <Compile Include="Logic\Generics\GenericParametersTest.cs" />
     <Compile Include="Logic\Generics\GenericTypeTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\OverloadedMethodTest.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="TestData\ObjectWithGenericMethodParameters.cs" />
     <Compile Include="TestData\ObjectWithIdentifier.cs" />
     <Compile Include="TestData\ObjectWithOverloadedMethod.cs" />
+    <Compile Include="TestData\ObjectWithProperty.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />
     <Compile Include="TestData\ObjectReturningNewGuids.cs" />

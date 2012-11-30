@@ -8,6 +8,8 @@
 * CacheKeyBase.Separator removed. Not possible to override separator any longer.
 * ICache removed from CacheBuilder ctor. If you want to explicitly set - use CacheBuilder.SetCache (defaults to InMemoryCache).
 * ICacheKey removed from CacheBuilder ctor. If you want to explictly set - use CacheBuilder.SetCacheKey (defaults to ToStringCacheKey).
+* Renamed MbCache.ProxyImpl.Castle.ProxyFactory to MbCache.ProxyImpl.Castle.CastleProxyFactory
+* Renamed MbCache.ProxyImpl.Linfu.ProxyFactory to MbCache.ProxyImpl.Linfu.LinFuProxyFactory
 
 
 - Version 1.7 (v 1.7.0.0), 2012-11-12

@@ -1,6 +1,5 @@
 ﻿using System;
 using MbCache.Configuration;
-using MbCacheTest.CacheForTest;
 using NUnit.Framework;
 
 namespace MbCacheTest.Configuration
@@ -10,7 +9,7 @@ namespace MbCacheTest.Configuration
 		[Test]
 		public void ShouldThrowArgumentException()
 		{
-			var builder = new CacheBuilder(new NullProxyFactory(), new NoCache(), new ToStringCacheKey());
+			var builder = new CacheBuilder(new NullProxyFactory(), new ToStringCacheKey());
 			var factory = builder.BuildFactory();
 			Assert.Throws<ArgumentException>(() =>
 			                                 factory.Create<object>());

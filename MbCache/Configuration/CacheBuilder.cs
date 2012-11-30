@@ -14,18 +14,16 @@ namespace MbCache.Configuration
 		private readonly ICollection<ImplementationAndMethods> _details;
 		private readonly IProxyFactory _proxyFactory;
 		private ICache _cache;
-		private readonly ICacheKey _keyBuilder;
+		private ICacheKey _cacheKey;
 		private readonly ProxyValidator _proxyValidator;
 		private readonly ICollection<IEventListener> _eventListeners;
 		private ILockObjectGenerator _lockObjectGenerator;
 
-		public CacheBuilder(IProxyFactory proxyFactory,
-										ICacheKey keyBuilder)
+		public CacheBuilder(IProxyFactory proxyFactory)
 		{
 			_cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
 			_details = new List<ImplementationAndMethods>();
 			_proxyFactory = proxyFactory;
-			_keyBuilder = keyBuilder;
 			_proxyValidator = new ProxyValidator(_proxyFactory);
 			_eventListeners = new List<IEventListener>();
 		}
@@ -40,8 +38,12 @@ namespace MbCache.Configuration
 			{
 				_cache = new InMemoryCache(20);
 			}
+			if (_cacheKey == null)
+			{
+				_cacheKey = new ToStringCacheKey();
+			}
 			var cacheAdapter = new CacheAdapter(_cache, _eventListeners);
-			return new MbCacheFactory(_proxyFactory, cacheAdapter, _keyBuilder, _lockObjectGenerator, _cachedMethods);
+			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _lockObjectGenerator, _cachedMethods);
 		}
 
 		/// <summary>
@@ -103,6 +105,17 @@ namespace MbCache.Configuration
 		public CacheBuilder SetCache(ICache cache)
 		{
 			_cache = cache;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the <see cref="ICacheKey"/> to be used.
+		/// </summary>
+		/// <param name="cacheKey"></param>
+		/// <returns></returns>
+		public CacheBuilder SetCacheKey(ICacheKey cacheKey)
+		{
+			_cacheKey = cacheKey;
 			return this;
 		}
 	}

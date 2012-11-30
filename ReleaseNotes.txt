@@ -6,7 +6,8 @@
 * InMemoryCache added
 * Implementors of ICacheKey: Cache keys must not end with a separator
 * CacheKeyBase.Separator removed. Not possible to override separator any longer.
-* ICache removed from CacheBuilder ctor. Introducing CacheBuilder.SetCache instead.
+* ICache removed from CacheBuilder ctor. If you want to explicitly set - use CacheBuilder.SetCache (defaults to InMemoryCache).
+* ICacheKey removed from CacheBuilder ctor. If you want to explictly set - use CacheBuilder.SetCacheKey (defaults to ToStringCacheKey).
 
 
 - Version 1.7 (v 1.7.0.0), 2012-11-12

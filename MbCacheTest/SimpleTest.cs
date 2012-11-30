@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Runtime.Caching;
 using MbCache.Configuration;
-using MbCacheTest.CacheForTest;
 using NUnit.Framework;
 
 namespace MbCacheTest
@@ -23,7 +22,8 @@ namespace MbCacheTest
 		public void Setup()
 		{
 			var lockObjectGenerator = CreateLockObjectGenerator();
-			CacheBuilder = new CacheBuilder(ProxyFactory, CreateCache(), CreateCacheKey());
+			CacheBuilder = new CacheBuilder(ProxyFactory, CreateCacheKey())
+					.SetCache(CreateCache());
 			if (lockObjectGenerator != null)
 				CacheBuilder.SetLockObjectGenerator(lockObjectGenerator);
 			TestSetup();

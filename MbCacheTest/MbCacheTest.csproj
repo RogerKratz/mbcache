@@ -74,6 +74,7 @@
     <Compile Include="CacheForTest\NoCache.cs" />
     <Compile Include="Caches\LockObjectGeneratorTest.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
+    <Compile Include="Configuration\DefaultConfigurationTest.cs" />
     <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Events\Statistic\DeleteTest.cs" />

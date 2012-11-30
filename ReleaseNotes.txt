@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- Version 2.0 (??????), ??????
+- Version 2.0 Beta1 (v 2.0.1.0), 2012-11-30
 * MbCache now targets .net framework 4.0
 * AspNetCache removed
 * InMemoryCache added

@@ -7,7 +7,7 @@ using MbCache.Logic;
 namespace MbCache.ProxyImpl.Castle
 {
 	[Serializable]
-	public class ProxyFactory : IProxyFactory
+	public class CastleProxyFactory : IProxyFactory
 	{
 		private static readonly ProxyGenerator generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
 		private CacheAdapter _cache;

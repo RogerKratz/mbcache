@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="CacheInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProxyFactory.cs" />
+    <Compile Include="LinfuProxyFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MbCache\MbCache.csproj">

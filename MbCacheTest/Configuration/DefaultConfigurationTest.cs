@@ -7,16 +7,16 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Configuration
 {
-	[TestFixture("MbCache.ProxyImpl.Castle.ProxyFactory, MbCache.ProxyImpl.Castle")]
-	[TestFixture("MbCache.ProxyImpl.LinFu.ProxyFactory, MbCache.ProxyImpl.LinFu")]
+	[TestFixture("MbCache.ProxyImpl.Castle.CastleProxyFactory, MbCache.ProxyImpl.Castle")]
+	[TestFixture("MbCache.ProxyImpl.LinFu.LinFuProxyFactory, MbCache.ProxyImpl.LinFu")]
 	public class DefaultConfigurationTest
 	{
-		private readonly IProxyFactory proxyFactory;
+		private readonly IProxyFactory _proxyFactory;
 
 		public DefaultConfigurationTest(string proxyTypeString)
 		{
 			var proxyType = Type.GetType(proxyTypeString, true);
-			proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyType);
+			_proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyType);
 		}
 
 		[Test] 
@@ -24,7 +24,7 @@ namespace MbCacheTest.Configuration
 		{
 			Tools.ClearMemoryCache();
 
-			var factory = new CacheBuilder(proxyFactory)
+			var factory = new CacheBuilder(_proxyFactory)
 				.For<ObjectReturningNewGuids>()
 					.CacheMethod(c => c.CachedMethod())
 					.As<IObjectReturningNewGuids>()

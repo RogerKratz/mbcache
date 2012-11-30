@@ -6,7 +6,7 @@ using MbCache.Logic;
 namespace MbCache.ProxyImpl.LinFu
 {
 	[Serializable]
-	public class ProxyFactory : IProxyFactory
+	public class LinFuProxyFactory : IProxyFactory
 	{
 		private CacheAdapter _cache;
 		private ICacheKey _cacheKey;

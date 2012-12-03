@@ -65,8 +65,6 @@ namespace MbCache.Logic
 			{
 				log.DebugFormat(putMessage, value, eventInformation.MethodName(), eventInformation.CacheKey);				
 			}
-			//creating new nullValue instance here - not really necessary with current aspnetcache impl
-			//but gives a possibility for ICache implementations to use call backs
 			_cache.Put(eventInformation.CacheKey, value ?? new nullValue());
 			callEventHandlersPut(eventInformation, value);
 		}

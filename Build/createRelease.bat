@@ -1,8 +1,6 @@
 @echo off
 SET ROOTDIR=%~dp0
 set ROOTDIR=%ROOTDIR:~0,-7%
-SET sn="%programfiles%\Microsoft SDKs\Windows\V6.0A\Bin\sn.exe"
-set gacutil="%programfiles%\Microsoft SDKs\Windows\V6.0A\Bin\gacutil.exe"
 set msbuild="%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
 set configuration=Release
 set nugetFolder="%ROOTDIR%\.nuget"

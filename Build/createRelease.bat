@@ -6,6 +6,10 @@ set configuration=Release
 set nugetFolder="%ROOTDIR%\.nuget"
 set PackageFolder="%ROOTDIR%\packages"
 
+echo Before creating a release, remember to...
+echo * Update release notes
+echo.
+
 echo Installing msbuildtasks to %PackageFolder%. Please wait...
 %nugetFolder%\NuGet install MsBuildTasks -o %PackageFolder%
 
@@ -27,8 +31,7 @@ echo Created a new nuget package to output folder.
 echo.
 echo Remember to...
 echo * Tag current changeset with version %nugetversion%
-echo * Update release notes
-echo * Push changes to server repo
+echo * Push changes (tag) to server repo
 echo * Push nuget package to nuget server (and symbol server)
 
 echo.

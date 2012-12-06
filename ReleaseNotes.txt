@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- Version ???? (?????), ????
+- Version 2.0 (v 2.0.2.0), 2012-12-06
 * ICache.Initialize(ICacheKey) added
 * ICacheKey.UnwrapKey(string) added
 * EventInformation.Arguments changed from object[] to IEnumerable<object>

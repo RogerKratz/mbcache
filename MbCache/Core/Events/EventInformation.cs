@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MbCache.Core.Events
 {
 	public class EventInformation
 	{
-		public EventInformation(string cacheKey, Type type, MethodInfo method, object[] arguments)
+		public EventInformation(string cacheKey, Type type, MethodInfo method, IEnumerable<object> arguments)
 		{
 			CacheKey = cacheKey;
 			Type = type;
@@ -16,7 +17,7 @@ namespace MbCache.Core.Events
 		public string CacheKey { get; private set; }
 		public Type Type { get; private set; }
 		public MethodInfo Method { get; private set; }
-		public object[] Arguments { get; private set; }
+		public IEnumerable<object> Arguments { get; private set; }
 
 		private string _methodName;
 		public string MethodName()

@@ -3,6 +3,7 @@
 - Version ???? (?????), ????
 * ICache.Initialize(ICacheKey) added
 * ICacheKey.UnwrapKey(string) added
+* EventInformation.Arguments changed from object[] to IEnumerable<object>
 
 
 

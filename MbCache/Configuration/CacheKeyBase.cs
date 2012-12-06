@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using MbCache.Core;
-using MbCache.Logic;
 using log4net;
 
 namespace MbCache.Configuration
@@ -24,6 +25,8 @@ namespace MbCache.Configuration
 		private static readonly ILog logger = LogManager.GetLogger(typeof (CacheKeyBase));
 		private const string suspisiousParam =
 			"Cache key of type {0} equals its own type name. Possible bug in your ICacheKey implementation.";
+		private static readonly Regex findSeperator = new Regex(@"\" + separator, RegexOptions.Compiled);
+		private const string separator = "|";
 
 		public string Key(Type type)
 		{
@@ -32,17 +35,17 @@ namespace MbCache.Configuration
 
 		public string Key(Type type, ICachingComponent component)
 		{
-			return string.Concat(Key(type), Constants.CacheKeySeparator, component.UniqueId);
+			return string.Concat(Key(type), separator, component.UniqueId);
 		}
 
 		public string Key(Type type, ICachingComponent component, MethodInfo method)
 		{
 			var ret = new StringBuilder(Key(type, component));
-			ret.Append(Constants.CacheKeySeparator);
+			ret.Append(separator);
 			ret.Append(method.Name);
 			foreach (var parameter in method.GetParameters())
 			{
-				ret.Append(Constants.CacheKeySeparator);
+				ret.Append(separator);
 				ret.Append(parameter.ParameterType);
 			}
 			return ret.ToString();
@@ -53,7 +56,7 @@ namespace MbCache.Configuration
 			var ret = new StringBuilder(Key(type, component, method));
 			foreach (var parameter in parameters)
 			{
-				ret.Append(Constants.CacheKeySeparator);
+				ret.Append(separator);
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
@@ -61,6 +64,14 @@ namespace MbCache.Configuration
 				ret.Append(parameterKey);
 			}
 			return ret.ToString();
+		}
+
+		public IEnumerable<string> UnwrapKey(string key)
+		{
+			var keys = new List<string>();
+			var matches = findSeperator.Matches(key);
+			keys.AddRange(from Match match in matches select key.Substring(0, match.Index));
+			return keys;
 		}
 
 		private static void checkIfSuspiousParameter(object parameter, string parameterKey)
@@ -77,7 +88,7 @@ namespace MbCache.Configuration
 
 		protected virtual string KeyStart
 		{
-			get { return "MbCache" + Constants.CacheKeySeparator; }
+			get { return "MbCache" + separator; }
 		}
 
 

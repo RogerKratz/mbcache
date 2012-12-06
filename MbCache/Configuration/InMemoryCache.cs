@@ -11,13 +11,18 @@ namespace MbCache.Configuration
 	public class InMemoryCache : ICache
 	{
 		private readonly int _timeoutMinutes;
+		private ICacheKey _cacheKey;
 		private static readonly MemoryCache cache = MemoryCache.Default;
-		private static readonly Regex findSeperator = new Regex(@"\" + Constants.CacheKeySeparator, RegexOptions.Compiled);
 		private static readonly object dependencyValue = new object();
 
 		public InMemoryCache(int timeoutMinutes)
 		{
 			_timeoutMinutes = timeoutMinutes;
+		}
+
+		public void Initialize(ICacheKey cacheKey)
+		{
+			_cacheKey = cacheKey;
 		}
 
 		public object Get(string key)
@@ -27,27 +32,24 @@ namespace MbCache.Configuration
 
 		public void Put(string key, object value)
 		{
-			var keys = new List<string>();
-			var matches = findSeperator.Matches(key);
-			keys.AddRange(from Match match in matches select key.Substring(0, match.Index));
-
-			createDependencies(keys);
+			var unwrappedKeys = _cacheKey.UnwrapKey(key);
+			createDependencies(unwrappedKeys);
 
 			var policy = new CacheItemPolicy
 			             	{
 			             		AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes)
 			             	};
-			if (keys.Count > 0)
-			{
-				policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(keys));				
-			}
+			//if (unwrappedKeys.Count() > 0)
+			//{
+				policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
+			//}
 
 			cache.Set(key, value, policy);
 		}
 
-		private static void createDependencies(IEnumerable<string> keys)
+		private static void createDependencies(IEnumerable<string> unwrappedKeys)
 		{
-			foreach (var key in keys)
+			foreach (var key in unwrappedKeys)
 			{
 				var policy = new CacheItemPolicy { Priority = CacheItemPriority.NotRemovable };
 				cache.Add(key, dependencyValue, policy);

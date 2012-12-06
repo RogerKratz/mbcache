@@ -42,6 +42,7 @@ namespace MbCache.Configuration
 			{
 				_cacheKey = new ToStringCacheKey();
 			}
+			_cache.Initialize(_cacheKey);
 			var cacheAdapter = new CacheAdapter(_cache, _eventListeners);
 			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _lockObjectGenerator, _cachedMethods);
 		}

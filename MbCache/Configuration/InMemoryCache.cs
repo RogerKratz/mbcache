@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Text.RegularExpressions;
-using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
@@ -39,11 +36,7 @@ namespace MbCache.Configuration
 			             	{
 			             		AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes)
 			             	};
-			//if (unwrappedKeys.Count() > 0)
-			//{
-				policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
-			//}
-
+			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
 			cache.Set(key, value, policy);
 		}
 

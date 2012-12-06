@@ -6,6 +6,12 @@
 	public interface ICache
 	{
 		/// <summary>
+		/// Called before caching is used.
+		/// </summary>
+		/// <param name="cacheKey"></param>
+		void Initialize(ICacheKey cacheKey);
+
+		/// <summary>
 		/// Gets the cached object.
 		/// </summary>
 		/// <param name="key">The key of this cache entry.</param>

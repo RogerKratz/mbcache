@@ -103,6 +103,11 @@ namespace MbCacheTest.Logic
 			{
 				return TheKey;
 			}
+
+			public IEnumerable<string> UnwrapKey(string key)
+			{
+				return new[]{"a"}; //unwrap to something unuseful
+			}
 		}
 	}
 }

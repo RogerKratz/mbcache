@@ -4,6 +4,10 @@ namespace MbCacheTest.CacheForTest
 {
 	public class NoCache : ICache
 	{
+		public void Initialize(ICacheKey cacheKey)
+		{
+		}
+
 		public object Get(string key)
 		{
 			return null;

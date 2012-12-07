@@ -1,4 +1,4 @@
-﻿namespace MbCache.Configuration
+ namespace MbCache.Configuration
 {
 	/// <summary>
 	/// Object communicating with 3rd part cache framework
@@ -6,7 +6,7 @@
 	public interface ICache
 	{
 		/// <summary>
-		/// Called before caching is used.
+		/// Called once before caching is used.
 		/// </summary>
 		/// <param name="cacheKey"></param>
 		void Initialize(ICacheKey cacheKey);

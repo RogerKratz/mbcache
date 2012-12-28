@@ -1,4 +1,4 @@
- namespace MbCache.Configuration
+namespace MbCache.Configuration
 {
 	/// <summary>
 	/// Object communicating with 3rd part cache framework

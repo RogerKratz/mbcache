@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.Caching;
 using MbCache.Configuration;
 using MbCacheTest.Caches;
 using NUnit.Framework;

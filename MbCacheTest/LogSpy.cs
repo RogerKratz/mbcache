@@ -15,7 +15,7 @@ namespace MbCacheTest
 
 		public LogSpy(ILog log, Level level)
 		{
-			_logger = log.Logger as Logger;
+			_logger = (Logger)log.Logger;
 
 			// Change the log level to DEBUG and temporarily save the previous log level
 			_prevLogLevel = _logger.Level;

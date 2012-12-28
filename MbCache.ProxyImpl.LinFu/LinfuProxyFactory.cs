@@ -1,4 +1,5 @@
 using System;
+using LinFu.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Logic;
@@ -21,7 +22,7 @@ namespace MbCache.ProxyImpl.LinFu
 
 		public T CreateProxy<T>(ImplementationAndMethods methodData, params object[] parameters) where T : class
 		{
-			var proxyFactory = new global::LinFu.DynamicProxy.ProxyFactory();
+			var proxyFactory = new ProxyFactory();
 			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, typeof(T), methodData, parameters);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}

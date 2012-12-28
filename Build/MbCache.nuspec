@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>MbCache</id>
+		<version>0.0.0.0</version>
+		<authors>Roger Kratz</authors>
+		<summary>Cache method results.</summary>
+		<description>
+			MbCache, or Method based Cache, is used to define certain methods to be cached in a centralized way, independed on the underlying caching framework(s).
+		</description>
+		<language>en-US</language>
+		<tags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop, library, framework</tags>
+		<projectUrl>http://code.google.com/p/mbcache/</projectUrl>
+		<dependencies>
+			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />
+			<dependency id="log4net" version="2.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.dll" target="lib\net40" />
+		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.ProxyImpl.LinFu.dll" target="lib\net40" />
+		<file src="..\MbCache\**\*.cs" target="src"/>
+		<file src="..\MbCache.ProxyImpl.LinFu\*.cs" target="src"/>
+		<file src="..\releasenotes.txt" target="readme.txt"/>
+	</files>
+</package>

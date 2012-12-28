@@ -1,0 +1,95 @@
+--- RELEASE NOTES, Breaking changes ---
+
+- Version 2.0 (v 2.0.2.0), 2012-12-06
+* ICache.Initialize(ICacheKey) added
+* ICacheKey.UnwrapKey(string) added
+* EventInformation.Arguments changed from object[] to IEnumerable<object>
+
+
+
+- Version 2.0 Beta1 (v 2.0.1.0), 2012-11-30
+* MbCache now targets .net framework 4.0
+* AspNetCache removed
+* InMemoryCache added
+* Implementors of ICacheKey: Cache keys must not end with a separator
+* CacheKeyBase.Separator removed. Not possible to override separator any longer.
+* ICache removed from CacheBuilder ctor. If you want to explicitly set - use CacheBuilder.SetCache (defaults to InMemoryCache).
+* ICacheKey removed from CacheBuilder ctor. If you want to explictly set - use CacheBuilder.SetCacheKey (defaults to ToStringCacheKey).
+* Renamed MbCache.ProxyImpl.Castle.ProxyFactory to MbCache.ProxyImpl.Castle.CastleProxyFactory
+* Renamed MbCache.ProxyImpl.Linfu.ProxyFactory to MbCache.ProxyImpl.Linfu.LinFuProxyFactory
+
+
+- Version 1.7 (v 1.7.0.0), 2012-11-12
+
+
+- Version 1.6 (v 1.6.0.0), 2012-08-05
+* IStatistics removed. StatisticsEventListner introduced instead.
+* ctor on CacheBuilder accepting an ILockObjectGenerator removed. CacheBuilder.SetLockObjectGenerator added instead.
+* Changed IProxyFactory.Initialize. CacheAdapter instead of ICache is passed in.
+
+
+- Version 1.5 (v 1.5.0.0), 2012-07-02
+
+
+- Version 1.4 (v 1.4.0.0), 2012-06-18
+* When creating unknown MbCache instance, ArgumentException is thrown instead of KeyValue not found.
+* IMbCacheKey renamed to ICacheKey
+* MbCacheKeyBase renamed to CacheKeyBase
+
+
+- Version 1.3 (v 1.3.0.0), 2012-05-15
+
+
+- Version 1.2 (v 1.2.0.0), 2012-05-01
+* ICache.LockObjectGenerator removed
+* ILockObjectGenerator added as parameter to IProxyFactory.Initialize
+* AspNetCache ctor accepting ILockObjectGenerator removed
+* CacheBuilder now have an overloaded ctor accepting an ILockObjectGenerator
+
+
+- Version 1.1 (v 1.1.0.5)
+* Added IMbCacheFactory.ImplementationTypeFor(Type)
+* Support to cache null return values
+
+
+- VERSION 1.1.CR1 -
+* IProxyFactory.Create() now only accept reference types
+* IMbCacheFactory.Create() now only accept reference types
+* When As<IMyComponent>() is used in CacheBuilder, interface proxies now is created. To use old behaviour, class proxies, use AsImplemented() instead.
+
+
+- VERSION 1.0.0 -
+
+** Possible breaking change
+* ICache.LockObjectGenerator added.
+
+
+- VERSION 0.9.1 -
+
+* Removed ICachingComponent.Invalidate<T>(Expression<Func<T, object>>. Use Invalidate<T>(Expression<Func<T, object>>, bool) instead.
+* Removed IMbCacheFactory.Invalidate<T>(Expression<Func<T, object>>. Use Invalidate<T>(Expression<Func<T, object>>, bool) instead.
+
+
+- VERSION 0.9 -
+
+* string Key(Type type, ICachingComponent component, MethodInfo method, object[] parameters)
+  ...changed to...
+  string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+
+
+- VERSION 0.8 -
+
+* IProxyFactory.Name removed
+* IMbCacheKey completely changed. 
+* MbCacheKeyBase completely changed
+* Some API changes how to invalidate types, objects and methods. See Wiki for current syntax.
+* Removed ICacheFactory, instead an ICache is injected directly to CacheBuilder
+* CacheBuilder now accepts an ICacheFactory instance instead of a type string
+* Better structure of namespaces.
+
+
+- VERSION 0.6 -
+
+* A MbCache.Configuration.IProxyFactory needs to be provided when building the mbfactory. 
+This removes the strong dependency to Castle and other proxy framework can be used.
+* Move objects needed to create mbfactory to CacheBuilder ctor instead of its BuildFactory method. 

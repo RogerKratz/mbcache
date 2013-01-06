@@ -31,11 +31,11 @@ namespace MbCache.Configuration
 			var ret = (CachedItem) cache.Get(key.CacheKey);
 			if (ret == null)
 			{
-				_eventListenersCallback.callEventHandlersGet(new CachedItem(key, null), false);				
+				_eventListenersCallback.OnGet(new CachedItem(key, null), false);				
 			}
 			else
 			{
-				_eventListenersCallback.callEventHandlersGet(ret, true);
+				_eventListenersCallback.OnGet(ret, true);
 			}
 			return ret;
 		}
@@ -48,11 +48,11 @@ namespace MbCache.Configuration
 			var policy = new CacheItemPolicy
 								{
 									AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
-									RemovedCallback = arguments => _eventListenersCallback.callEventHandlersDelete(value)
+									RemovedCallback = arguments => _eventListenersCallback.OnDelete(value)
 								};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
 			cache.Set(key, value, policy);
-			_eventListenersCallback.callEventHandlersPut(value);
+			_eventListenersCallback.OnPut(value);
 		}
 
 		private static void createDependencies(IEnumerable<string> unwrappedKeys)

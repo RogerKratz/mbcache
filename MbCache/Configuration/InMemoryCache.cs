@@ -30,7 +30,14 @@ namespace MbCache.Configuration
 		public CachedItem Get(EventInformation key)
 		{
 			var ret = (CachedItem) cache.Get(key.CacheKey);
-			_eventListenersCallback.callEventHandlersGet(ret ?? new CachedItem(key, null));
+			if (ret == null)
+			{
+				_eventListenersCallback.callEventHandlersGet(new CachedItem(key, null), false);				
+			}
+			else
+			{
+				_eventListenersCallback.callEventHandlersGet(ret, true);
+			}
 			return ret;
 		}
 

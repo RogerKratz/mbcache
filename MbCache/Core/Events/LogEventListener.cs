@@ -18,9 +18,9 @@ namespace MbCache.Core.Events
 			return log.IsDebugEnabled;
 		}
 
-		public void OnGet(CachedItem cachedItem)
+		public void OnGet(CachedItem cachedItem, bool successful)
 		{
-			log.DebugFormat(cachedItem.CachedValue == null ? cacheMissLogMessage : cacheHitLogMessage, 
+			log.DebugFormat(successful ? cacheHitLogMessage : cacheMissLogMessage, 
 							cachedItem.EventInformation.MethodName(), 
 							cachedItem.EventInformation.CacheKey);
 		}

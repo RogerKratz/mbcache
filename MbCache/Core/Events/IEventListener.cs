@@ -1,6 +1,4 @@
-﻿using MbCache.Configuration;
-
-namespace MbCache.Core.Events
+﻿namespace MbCache.Core.Events
 {
 	/// <summary>
 	/// Can be implemented by users to get events from MbCache
@@ -8,14 +6,9 @@ namespace MbCache.Core.Events
 	public interface IEventListener
 	{
 		/// <summary>
-		/// Called after a successful <see cref="ICache.Get"/> has occured.
-		/// Will not fire after a cache miss (use <see cref="OnPut"/> instead)
+		/// Called after a Get in cache.
 		/// </summary>
-		/// <param name="cachedItem">
-		/// If cachedItem.CachedValue equals <code>null</code>, an unsuccessful Get has occurred.
-		/// If cachedItem.CachedValue is of type <see cref="NullValue"/>, <code>null</code> was cached.
-		/// </param>
-		void OnGet(CachedItem cachedItem);
+		void OnGet(CachedItem cachedItem, bool successful);
 
 		/// <summary>
 		/// Called after cache entries has been invalidated.

@@ -14,22 +14,24 @@ namespace MbCache.Configuration
 		private ICacheKey _cacheKey;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
-		private CacheAdapter _cacheAdapter;
+		private EventListenersCallback _eventListenersCallback;
 
 		public InMemoryCache(int timeoutMinutes)
 		{
 			_timeoutMinutes = timeoutMinutes;
 		}
 
-		public void Initialize(ICacheKey cacheKey, CacheAdapter cacheAdapter)
+		public void Initialize(ICacheKey cacheKey, EventListenersCallback eventListenersCallback)
 		{
 			_cacheKey = cacheKey;
-			_cacheAdapter = cacheAdapter;
+			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem Get(string key)
+		public CachedItem Get(EventInformation key)
 		{
-			return (CachedItem) cache.Get(key);
+			var ret = (CachedItem) cache.Get(key.CacheKey);
+			_eventListenersCallback.callEventHandlersGet(ret ?? new CachedItem(key, null));
+			return ret;
 		}
 
 		public void Put(string key, CachedItem value)
@@ -40,10 +42,11 @@ namespace MbCache.Configuration
 			var policy = new CacheItemPolicy
 								{
 									AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
-									RemovedCallback = arguments => _cacheAdapter.callEventHandlersDelete(value.EventInformation)
+									RemovedCallback = arguments => _eventListenersCallback.callEventHandlersDelete(value.EventInformation)
 								};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
 			cache.Set(key, value, policy);
+			_eventListenersCallback.callEventHandlersPut(value);
 		}
 
 		private static void createDependencies(IEnumerable<string> unwrappedKeys)

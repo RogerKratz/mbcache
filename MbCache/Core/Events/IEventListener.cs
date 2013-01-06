@@ -15,7 +15,7 @@ namespace MbCache.Core.Events
 		/// If <code>null</code>, an unsuccessful Get has occurred.
 		/// If value of type <see cref="NullValue"/>, <code>null</code> was cached.
 		/// </param>
-		void OnGet(EventInformation info, object cachedValue);
+		void OnGet(CachedItem cachedItem);
 
 		/// <summary>
 		/// Called after cache entries has been invalidated.
@@ -25,6 +25,6 @@ namespace MbCache.Core.Events
 		/// <summary>
 		/// Called after a cache miss and the target's returned value has been put into the cache.
 		/// </summary>
-		void OnPut(EventInformation info, object cachedValue);
+		void OnPut(CachedItem cachedItem);
 	}
 }

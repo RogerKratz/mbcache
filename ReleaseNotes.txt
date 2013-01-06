@@ -1,8 +1,11 @@
 --- RELEASE NOTES, Breaking changes ---
 
 - Version ??
-* IEventListener.OnGet now also called if unsuccesful Get occurs. Null means unsuccesful. Object of type NullValue means null was cached.
+* IEventListener methods now accepts CachedItem as input
+* IEventListener.OnGet now also called if unsuccesful Get occurs. CachedItem.CachedValue equals null means unsuccesful. CachedItem.CachedValue of type NullValue means null was cached.
 * ICache.Initialize changed
+* Implementor of ICache must call corresponding methods on EventListenersCallback after cache action has occured
+
 
 - Version 2.0 (v 2.0.2.0), 2012-12-06
 * ICache.Initialize(ICacheKey) added

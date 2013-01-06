@@ -1,4 +1,5 @@
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.Configuration
@@ -12,13 +13,13 @@ namespace MbCache.Configuration
 		/// Called once before caching is used.
 		/// </summary>
 		/// <param name="cacheKey"></param>
-		void Initialize(ICacheKey cacheKey, CacheAdapter cacheAdapter);
+		void Initialize(ICacheKey cacheKey, EventListenersCallback eventListenersCallback);
 
 		/// <summary>
 		/// Gets the cached object.
 		/// </summary>
 		/// <param name="key">The key of this cache entry.</param>
-		CachedItem Get(string key);
+		CachedItem Get(EventInformation key);
 
 		/// <summary>
 		/// Puts <paramref name="value"/> to the cache.

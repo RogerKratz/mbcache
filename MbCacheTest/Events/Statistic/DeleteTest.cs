@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -70,7 +71,7 @@ namespace MbCacheTest.Events.Statistic
 		{
 			public readonly IList<EventInformation> EventInformations = new List<EventInformation>();
 
-			public void OnGet(EventInformation info, object cachedValue)
+			public void OnGet(CachedItem cachedItem)
 			{
 			}
 
@@ -79,7 +80,7 @@ namespace MbCacheTest.Events.Statistic
 				EventInformations.Add(info);
 			}
 
-			public void OnPut(EventInformation info, object cachedValue)
+			public void OnPut(CachedItem cachedItem)
 			{
 			}
 		}

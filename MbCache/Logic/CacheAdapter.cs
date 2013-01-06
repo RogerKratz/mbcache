@@ -14,25 +14,21 @@ namespace MbCache.Logic
 	public class CacheAdapter
 	{
 		private readonly ICache _cache;
-		private readonly IEnumerable<IEventListener> _eventHandlers;
-		private readonly bool _hasEventHandlers; 
 
-		public CacheAdapter(ICache cache, IEnumerable<IEventListener> eventHandlers)
+		public CacheAdapter(ICache cache)
 		{
 			_cache = cache;
-			_eventHandlers = eventHandlers;
-			_hasEventHandlers = _eventHandlers.Any();
 		}
 
 		public object Get(EventInformation eventInformation)
 		{
-			var cacheItem = _cache.Get(eventInformation.CacheKey);
+			var cacheItem = _cache.Get(eventInformation);
 			object cacheValue = null;
 			if(cacheItem!=null)
 			{
 				cacheValue = cacheItem.CachedValue;
 			}
-			callEventHandlersGet(eventInformation, cacheValue);
+			//callEventHandlersGet(eventInformation, cacheValue);
 			if (cacheValue is NullValue)
 			{
 				cacheValue = null;
@@ -40,31 +36,11 @@ namespace MbCache.Logic
 			return cacheValue;
 		}
 
-		private void callEventHandlersGet(EventInformation eventInformation, object cachedValue)
-		{
-			if (!_hasEventHandlers)
-				return;
-			foreach (var eventHandler in _eventHandlers)
-			{
-				eventHandler.OnGet(eventInformation, cachedValue);
-			}
-		}
-
 		public void Put(EventInformation eventInformation, object value)
 		{
 			var cachedValue = value ?? new NullValue();
 			_cache.Put(eventInformation.CacheKey, new CachedItem(eventInformation, cachedValue));
-			callEventHandlersPut(eventInformation, value);
-		}
-
-		private void callEventHandlersPut(EventInformation eventInformation, object cachedValue)
-		{
-			if (!_hasEventHandlers)
-				return;
-			foreach (var eventHandler in _eventHandlers)
-			{
-				eventHandler.OnPut(eventInformation, cachedValue);
-			}
+			//callEventHandlersPut(eventInformation, value);
 		}
 
 		public void Delete(EventInformation eventInformation)
@@ -72,17 +48,8 @@ namespace MbCache.Logic
 			if (eventInformation.CacheKey == null) 
 				return;
 			_cache.Delete(eventInformation.CacheKey);
+			//todo: remove eventinfo from this method?
 			//callEventHandlersDelete(eventInformation);
-		}
-
-		public void callEventHandlersDelete(EventInformation eventInformation)
-		{
-			if (!_hasEventHandlers)
-				return;
-			foreach (var eventHandler in _eventHandlers)
-			{
-				eventHandler.OnDelete(eventInformation);
-			}
 		}
 	}
 }

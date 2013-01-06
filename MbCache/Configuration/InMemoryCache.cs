@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Caching;
+using MbCache.Core;
+using MbCache.Core.Events;
+using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
@@ -11,31 +14,34 @@ namespace MbCache.Configuration
 		private ICacheKey _cacheKey;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
+		private CacheAdapter _cacheAdapter;
 
 		public InMemoryCache(int timeoutMinutes)
 		{
 			_timeoutMinutes = timeoutMinutes;
 		}
 
-		public void Initialize(ICacheKey cacheKey)
+		public void Initialize(ICacheKey cacheKey, CacheAdapter cacheAdapter)
 		{
 			_cacheKey = cacheKey;
+			_cacheAdapter = cacheAdapter;
 		}
 
-		public object Get(string key)
+		public CachedItem Get(string key)
 		{
-			return cache.Get(key);
+			return (CachedItem) cache.Get(key);
 		}
 
-		public void Put(string key, object value)
+		public void Put(string key, CachedItem value)
 		{
 			var unwrappedKeys = _cacheKey.UnwrapKey(key);
 			createDependencies(unwrappedKeys);
 
 			var policy = new CacheItemPolicy
-			             	{
-			             		AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes)
-			             	};
+								{
+									AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
+									RemovedCallback = arguments => _cacheAdapter.callEventHandlersDelete(value.EventInformation)
+								};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
 			cache.Set(key, value, policy);
 		}

@@ -109,7 +109,7 @@ namespace MbCacheTest.Events.Statistic
 				}
 			}
 
-			void IEventListener.OnDelete(EventInformation info)
+			void IEventListener.OnDelete(CachedItem cachedItem)
 			{
 				DeleteWasCalled = true;
 				if (FirstCallOnDelete)

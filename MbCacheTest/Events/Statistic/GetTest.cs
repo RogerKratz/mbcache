@@ -92,7 +92,7 @@ namespace MbCacheTest.Events.Statistic
 				CachedItems.Add(cachedItem);
 			}
 
-			public void OnDelete(EventInformation info)
+			public void OnDelete(CachedItem cachedItem)
 			{
 			}
 

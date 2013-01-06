@@ -26,6 +26,10 @@ namespace MbCache.Configuration
 			_proxyFactory = proxyFactory;
 			_proxyValidator = new ProxyValidator(_proxyFactory);
 			_eventListeners = new List<IEventListener>();
+			if (LogEventListener.IsLoggingEnabled())
+			{
+				_eventListeners.Add(new LogEventListener());
+			}
 		}
 
 		/// <summary>

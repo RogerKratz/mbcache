@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -41,7 +42,7 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void ShouldHaveCorrectCachedValues()
 		{
-			eventListener.CachedValues[0].Should().Be.Null();
+			eventListener.CachedValues[0].Should().Be.InstanceOf<NullValue>();
 			eventListener.CachedValues[1].Should().Be.EqualTo(1);
 		}
 
@@ -80,8 +81,11 @@ namespace MbCacheTest.Events.Statistic
 
 			public void OnGet(EventInformation info, object cachedValue)
 			{
-				EventInformations.Add(info);
-				CachedValues.Add(cachedValue);
+				if (cachedValue != null)
+				{
+					EventInformations.Add(info);
+					CachedValues.Add(cachedValue);					
+				}
 			}
 
 			public void OnDelete(EventInformation info)

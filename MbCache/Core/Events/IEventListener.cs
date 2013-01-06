@@ -11,6 +11,10 @@ namespace MbCache.Core.Events
 		/// Called after a successful <see cref="ICache.Get"/> has occured.
 		/// Will not fire after a cache miss (use <see cref="OnPut"/> instead)
 		/// </summary>
+		/// <param name="cachedValue">
+		/// If <code>null</code>, an unsuccessful Get has occurred.
+		/// If value of type <see cref="NullValue"/>, <code>null</code> was cached.
+		/// </param>
 		void OnGet(EventInformation info, object cachedValue);
 
 		/// <summary>

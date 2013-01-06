@@ -9,7 +9,14 @@ namespace MbCache.Core.Events
 
 		void IEventListener.OnGet(EventInformation info, object cachedValue)
 		{
-			Interlocked.Increment(ref _cacheHits);
+			if (cachedValue == null)
+			{
+				Interlocked.Increment(ref _cacheMisses);
+			}
+			else
+			{
+				Interlocked.Increment(ref _cacheHits);				
+			}
 		}
 
 		void IEventListener.OnDelete(EventInformation info)
@@ -18,7 +25,6 @@ namespace MbCache.Core.Events
 
 		void IEventListener.OnPut(EventInformation info, object cachedValue)
 		{
-			Interlocked.Increment(ref _cacheMisses);
 		}
 
 		public long CacheHits

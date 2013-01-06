@@ -1,3 +1,6 @@
+using MbCache.Core;
+using MbCache.Logic;
+
 namespace MbCache.Configuration
 {
 	/// <summary>
@@ -9,20 +12,20 @@ namespace MbCache.Configuration
 		/// Called once before caching is used.
 		/// </summary>
 		/// <param name="cacheKey"></param>
-		void Initialize(ICacheKey cacheKey);
+		void Initialize(ICacheKey cacheKey, CacheAdapter cacheAdapter);
 
 		/// <summary>
 		/// Gets the cached object.
 		/// </summary>
 		/// <param name="key">The key of this cache entry.</param>
-		object Get(string key);
+		CachedItem Get(string key);
 
 		/// <summary>
 		/// Puts <paramref name="value"/> to the cache.
 		/// </summary>
 		/// <param name="key">The key of this cache entry.</param>
 		/// <param name="value">The object to cache.</param>
-		void Put(string key, object value);
+		void Put(string key, CachedItem value);
 
 		/// <summary>
 		/// Deletes all cache entries starting with <paramref name="keyStartingWith"/>.

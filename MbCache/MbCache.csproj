@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Configuration\InMemoryCache.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
+    <Compile Include="Core\CachedItem.cs" />
     <Compile Include="Core\Events\EventInformation.cs" />
     <Compile Include="Configuration\FixedNumberOfLockObjects.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />

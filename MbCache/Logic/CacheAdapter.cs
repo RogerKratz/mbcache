@@ -26,7 +26,12 @@ namespace MbCache.Logic
 
 		public object Get(EventInformation eventInformation)
 		{
-			var cacheValue = _cache.Get(eventInformation.CacheKey);
+			var cacheItem = _cache.Get(eventInformation.CacheKey);
+			object cacheValue = null;
+			if(cacheItem!=null)
+			{
+				cacheValue = cacheItem.CachedValue;
+			}
 			callEventHandlersGet(eventInformation, cacheValue);
 			if (cacheValue is NullValue)
 			{
@@ -47,7 +52,8 @@ namespace MbCache.Logic
 
 		public void Put(EventInformation eventInformation, object value)
 		{
-			_cache.Put(eventInformation.CacheKey, value ?? new NullValue());
+			var cachedValue = value ?? new NullValue();
+			_cache.Put(eventInformation.CacheKey, new CachedItem(eventInformation, cachedValue));
 			callEventHandlersPut(eventInformation, value);
 		}
 
@@ -66,10 +72,10 @@ namespace MbCache.Logic
 			if (eventInformation.CacheKey == null) 
 				return;
 			_cache.Delete(eventInformation.CacheKey);
-			callEventHandlersDelete(eventInformation);
+			//callEventHandlersDelete(eventInformation);
 		}
 
-		private void callEventHandlersDelete(EventInformation eventInformation)
+		public void callEventHandlersDelete(EventInformation eventInformation)
 		{
 			if (!_hasEventHandlers)
 				return;

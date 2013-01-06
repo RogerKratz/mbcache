@@ -80,6 +80,7 @@
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Events\Statistic\DeleteTest.cs" />
     <Compile Include="Events\Statistic\GetTest.cs" />
+    <Compile Include="Events\Statistic\ImplicitDeleteTest.cs" />
     <Compile Include="Events\Statistic\MultipleEventHandlers.cs" />
     <Compile Include="Events\Statistic\PutTest.cs" />
     <Compile Include="Extensions.cs" />

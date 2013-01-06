@@ -1,19 +1,21 @@
 using MbCache.Configuration;
+using MbCache.Core;
+using MbCache.Logic;
 
 namespace MbCacheTest.CacheForTest
 {
 	public class NoCache : ICache
 	{
-		public void Initialize(ICacheKey cacheKey)
+		public void Initialize(ICacheKey cacheKey, CacheAdapter cacheAdapter)
 		{
 		}
 
-		public object Get(string key)
+		public CachedItem Get(string key)
 		{
 			return null;
 		}
 
-		public void Put(string key, object value)
+		public void Put(string key, CachedItem value)
 		{
 		}
 

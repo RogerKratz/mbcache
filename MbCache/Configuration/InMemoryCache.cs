@@ -26,12 +26,12 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem Get(EventInformation key)
+		public CachedItem Get(EventInformation eventInformation)
 		{
-			var ret = (CachedItem) cache.Get(key.CacheKey);
+			var ret = (CachedItem)cache.Get(eventInformation.CacheKey);
 			if (ret == null)
 			{
-				_eventListenersCallback.OnGet(new CachedItem(key, null), false);				
+				_eventListenersCallback.OnGet(new CachedItem(eventInformation, null), false);				
 			}
 			else
 			{
@@ -40,20 +40,20 @@ namespace MbCache.Configuration
 			return ret;
 		}
 
-		public void Put(CachedItem value)
+		public void Put(CachedItem cachedItem)
 		{
-			var key = value.EventInformation.CacheKey;
+			var key = cachedItem.EventInformation.CacheKey;
 			var unwrappedKeys = _cacheKey.UnwrapKey(key);
 			createDependencies(unwrappedKeys);
 
 			var policy = new CacheItemPolicy
 								{
 									AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
-									RemovedCallback = arguments => _eventListenersCallback.OnDelete(value)
+									RemovedCallback = arguments => _eventListenersCallback.OnDelete(cachedItem)
 								};
-			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));				
-			cache.Set(key, value, policy);
-			_eventListenersCallback.OnPut(value);
+			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));
+			cache.Set(key, cachedItem, policy);
+			_eventListenersCallback.OnPut(cachedItem);
 		}
 
 		private static void createDependencies(IEnumerable<string> unwrappedKeys)

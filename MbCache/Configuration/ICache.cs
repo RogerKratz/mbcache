@@ -16,13 +16,13 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Gets the cached object.
 		/// </summary>
-		/// <param name="key">The key of this cache entry.</param>
-		CachedItem Get(EventInformation key);
+		/// <param name="eventInformation">The <see cref="EventInformation"/> of this cache entry</param>
+		CachedItem Get(EventInformation eventInformation);
 
 		/// <summary>
-		/// Puts <paramref name="value"/> to the cache.
+		/// Puts <paramref name="cachedItem"/> to the cache.
 		/// </summary>
-		void Put(CachedItem value);
+		void Put(CachedItem cachedItem);
 
 		/// <summary>
 		/// Deletes all cache entries starting with <paramref name="keyStartingWith"/>.

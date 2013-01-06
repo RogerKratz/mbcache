@@ -1,4 +1,5 @@
-﻿using MbCache.Configuration;
+﻿using System;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
@@ -13,11 +14,6 @@ namespace MbCacheTest.Caches
 		protected override ILockObjectGenerator CreateLockObjectGenerator()
 		{
 			return new FixedNumberOfLockObjects(40);
-		}
-
-		protected override ICache CreateCache()
-		{
-			return new InMemoryCache(1);
 		}
 
 		[Test]

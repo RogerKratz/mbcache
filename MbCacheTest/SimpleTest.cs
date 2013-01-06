@@ -37,7 +37,7 @@ namespace MbCacheTest
 		protected virtual ICache CreateCache()
 		{
 			Tools.ClearMemoryCache();
-			return new InMemoryCache(1);
+			return new InMemoryCache(20);
 		}
 
 		protected virtual ICacheKey CreateCacheKey()

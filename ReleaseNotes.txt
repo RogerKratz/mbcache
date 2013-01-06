@@ -3,7 +3,7 @@
 - Version ??
 * IEventListener methods now accepts CachedItem as input
 * IEventListener.OnGet now also called if unsuccesful Get occurs.
-* ICache.Initialize changed
+* ICache signatures changed
 * Implementor of ICache must call corresponding methods on EventListenersCallback after cache action has occured
 
 

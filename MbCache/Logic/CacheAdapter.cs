@@ -29,10 +29,9 @@ namespace MbCache.Logic
 			return cacheValue;
 		}
 
-		public void Put(EventInformation eventInformation, object value)
+		public void Put(CachedItem cachedItem)
 		{
-			var cachedValue = value;
-			_cache.Put(eventInformation.CacheKey, new CachedItem(eventInformation, cachedValue));
+			_cache.Put(cachedItem);
 		}
 
 		public void Delete(EventInformation eventInformation)

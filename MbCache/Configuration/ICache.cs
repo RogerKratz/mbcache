@@ -22,9 +22,7 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Puts <paramref name="value"/> to the cache.
 		/// </summary>
-		/// <param name="key">The key of this cache entry.</param>
-		/// <param name="value">The object to cache.</param>
-		void Put(string key, CachedItem value);
+		void Put(CachedItem value);
 
 		/// <summary>
 		/// Deletes all cache entries starting with <paramref name="keyStartingWith"/>.

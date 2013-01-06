@@ -13,7 +13,7 @@ namespace MbCache.Core.Events
 			_eventListeners = eventListeners;
 		}
 
-		public void callEventHandlersDelete(CachedItem cachedItem)
+		public void OnDelete(CachedItem cachedItem)
 		{
 			var cachedItemToUse = cachedItem;
 			if (cachedItem.CachedValue is NullValue)
@@ -26,7 +26,7 @@ namespace MbCache.Core.Events
 			}
 		}
 
-		public void callEventHandlersPut(CachedItem cachedItem)
+		public void OnPut(CachedItem cachedItem)
 		{
 			var cachedItemToUse = cachedItem;
 			if (cachedItem.CachedValue is NullValue)
@@ -39,7 +39,7 @@ namespace MbCache.Core.Events
 			}
 		}
 
-		public void callEventHandlersGet(CachedItem cachedItem, bool successful)
+		public void OnGet(CachedItem cachedItem, bool successful)
 		{
 			var cachedItemToUse = cachedItem;
 			if (cachedItem.CachedValue is NullValue)

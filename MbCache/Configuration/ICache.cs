@@ -1,6 +1,5 @@
 using MbCache.Core;
 using MbCache.Core.Events;
-using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
@@ -12,7 +11,6 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Called once before caching is used.
 		/// </summary>
-		/// <param name="cacheKey"></param>
 		void Initialize(ICacheKey cacheKey, EventListenersCallback eventListenersCallback);
 
 		/// <summary>

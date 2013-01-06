@@ -6,7 +6,7 @@ using MbCache.Configuration;
 namespace MbCache.Logic
 {
 	/// <summary>
-	/// Calls <see cref="ICache"/>, handles <code>null</code> in cache.
+	/// Calls <see cref="ICache"/>
 	/// </summary>
 	[Serializable]
 	public class CacheAdapter

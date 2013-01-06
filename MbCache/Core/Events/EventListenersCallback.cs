@@ -39,11 +39,16 @@ namespace MbCache.Core.Events
 			}
 		}
 
-		public void callEventHandlersGet(CachedItem cachedItem)
+		public void callEventHandlersGet(CachedItem cachedItem, bool successful)
 		{
+			var cachedItemToUse = cachedItem;
+			if (cachedItem.CachedValue is NullValue)
+			{
+				cachedItemToUse = new CachedItem(cachedItem.EventInformation, null);
+			}
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnGet(cachedItem);
+				eventHandler.OnGet(cachedItemToUse, successful);
 			}
 		}
 	}

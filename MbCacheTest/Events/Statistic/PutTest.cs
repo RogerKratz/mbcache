@@ -76,7 +76,7 @@ namespace MbCacheTest.Events.Statistic
 		{
 			public readonly IList<CachedItem> CachedItems = new List<CachedItem>();
 
-			public void OnGet(CachedItem cachedItem)
+			public void OnGet(CachedItem cachedItem, bool successful)
 			{
 			}
 

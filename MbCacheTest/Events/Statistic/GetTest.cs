@@ -43,8 +43,17 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].CachedValue.Should().Be.Null();
 			eventListener.CachedItems[1].CachedValue.Should().Be.Null();
-			eventListener.CachedItems[2].CachedValue.Should().Be.InstanceOf<NullValue>();
+			eventListener.CachedItems[2].CachedValue.Should().Be.Null();
 			eventListener.CachedItems[3].CachedValue.Should().Be.EqualTo(1);
+		}
+
+		[Test]
+		public void ShouldHaveCorrectSuccessCacheGets()
+		{
+			eventListener.Successful[0].Should().Be.False();
+			eventListener.Successful[1].Should().Be.False();
+			eventListener.Successful[2].Should().Be.True();
+			eventListener.Successful[3].Should().Be.True();
 		}
 
 		[Test]
@@ -86,10 +95,12 @@ namespace MbCacheTest.Events.Statistic
 		private class eventListenerForGet : IEventListener
 		{
 			public readonly IList<CachedItem> CachedItems = new List<CachedItem>();
+			public readonly IList<bool> Successful = new List<bool>();
 
-			public void OnGet(CachedItem cachedItem)
+			public void OnGet(CachedItem cachedItem, bool successful)
 			{
 				CachedItems.Add(cachedItem);
+				Successful.Add(successful);
 			}
 
 			public void OnDelete(CachedItem cachedItem)

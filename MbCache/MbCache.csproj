@@ -81,6 +81,7 @@
     <Compile Include="Configuration\ProxyValidator.cs" />
     <Compile Include="Configuration\ToStringCacheKey.cs" />
     <Compile Include="Core\Events\IEventListener.cs" />
+    <Compile Include="Core\Events\LogEventListener.cs" />
     <Compile Include="Core\Events\StatisticsEventListener.cs" />
     <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Logic\ImplementationAndMethods.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Logic\MethodInfoComparer.cs" />
+    <Compile Include="Core\NullValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

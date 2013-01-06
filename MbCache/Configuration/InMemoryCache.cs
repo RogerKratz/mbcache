@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.Caching;
 using MbCache.Core;
 using MbCache.Core.Events;
-using MbCache.Logic;
 
 namespace MbCache.Configuration
 {

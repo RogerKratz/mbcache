@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCache.Configuration;
-using System.Linq;
 
 namespace MbCache.Logic
 {
 	/// <summary>
-	/// Calls <see cref="ICache"/>, registered <see cref="IEventListener"/>s handles <code>null</code> in cache.
+	/// Calls <see cref="ICache"/>, handles <code>null</code> in cache.
 	/// </summary>
 	[Serializable]
 	public class CacheAdapter
@@ -27,10 +25,10 @@ namespace MbCache.Logic
 			if(cacheItem!=null)
 			{
 				cacheValue = cacheItem.CachedValue;
-			}
-			if (cacheValue is NullValue)
-			{
-				cacheValue = null;
+				if (cacheValue is NullValue)
+				{
+					cacheValue = null;
+				}
 			}
 			return cacheValue;
 		}

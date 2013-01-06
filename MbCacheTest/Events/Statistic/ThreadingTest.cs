@@ -2,7 +2,6 @@ using System.Threading;
 using System.Collections.Generic;
 using MbCache.Core;
 using MbCache.Core.Events;
-using MbCacheTest.CacheForTest;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
@@ -10,29 +9,25 @@ namespace MbCacheTest.Events.Statistic
 {
 	public class ThreadingTest : FullTest
 	{
-		private IObjectReturningNewGuids component;
+		private IObjectWithParametersOnCachedMethod component;
 		private const int noOfThreads = 100;
 		private IMbCacheFactory factory;
 		private StatisticsEventListener eventListener;
 
 		public ThreadingTest(string proxyTypeString) : base(proxyTypeString) { }
 
-		protected override MbCache.Configuration.ICache CreateCache()
-		{
-			return new NoCache();
-		}
 
 		protected override void TestSetup()
 		{
 			eventListener = new StatisticsEventListener();
 			CacheBuilder
 				.AddEventListener(eventListener)
-				.For<ObjectReturningNewGuids>()
-					.CacheMethod(c => c.CachedMethod())
-					.As<IObjectReturningNewGuids>();
+				.For<ObjectWithParametersOnCachedMethod>()
+					.CacheMethod(c => c.CachedMethod(null))
+					.As<IObjectWithParametersOnCachedMethod>();
 
 			factory = CacheBuilder.BuildFactory();
-			component = factory.Create<IObjectReturningNewGuids>();
+			component = factory.Create<IObjectWithParametersOnCachedMethod>();
 			log4net.LogManager.Shutdown();
 		}
 
@@ -45,11 +40,11 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void StatisticConcurrency()
 		{
-			var ts = new ThreadStart(createCacheHitOrMiss);
-
 			var tColl = new List<Thread>(noOfThreads);
 			for (var threadLoop = 0; threadLoop < noOfThreads; threadLoop++)
 			{
+				var param = threadLoop;
+				var ts = new ThreadStart(() => createCacheHitOrMiss(param));
 				tColl.Add(new Thread(ts));
 			}
 			foreach (var thread in tColl)
@@ -64,9 +59,9 @@ namespace MbCacheTest.Events.Statistic
 			Assert.AreEqual(noOfThreads, eventListener.CacheMisses);
 		}
 
-		private void createCacheHitOrMiss()
+		private void createCacheHitOrMiss(int param)
 		{
-			component.CachedMethod();
+			component.CachedMethod(param);
 		}
 	}
 }

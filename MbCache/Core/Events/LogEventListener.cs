@@ -18,9 +18,11 @@ namespace MbCache.Core.Events
 			return log.IsDebugEnabled;
 		}
 
-		public void OnGet(EventInformation info, object cachedValue)
+		public void OnGet(CachedItem cachedItem)
 		{
-			log.DebugFormat(cachedValue == null ? cacheMissLogMessage : cacheHitLogMessage, info.MethodName(), info.CacheKey);
+			log.DebugFormat(cachedItem.CachedValue == null ? cacheMissLogMessage : cacheHitLogMessage, 
+							cachedItem.EventInformation.MethodName(), 
+							cachedItem.EventInformation.CacheKey);
 		}
 
 		public void OnDelete(EventInformation info)
@@ -28,9 +30,9 @@ namespace MbCache.Core.Events
 			log.DebugFormat(deleteMessage, info.MethodName(), info.CacheKey);
 		}
 
-		public void OnPut(EventInformation info, object cachedValue)
+		public void OnPut(CachedItem cachedItem)
 		{
-			log.DebugFormat(putMessage, cachedValue, info.MethodName(), info.CacheKey);
+			log.DebugFormat(putMessage, cachedItem.CachedValue, cachedItem.EventInformation.MethodName(), cachedItem.EventInformation.CacheKey);
 		}
 	}
 }

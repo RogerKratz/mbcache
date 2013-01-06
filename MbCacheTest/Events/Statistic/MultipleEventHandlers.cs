@@ -99,7 +99,7 @@ namespace MbCacheTest.Events.Statistic
 			public bool PutWasCalled;
 			public bool DeleteWasCalled;
 
-			void IEventListener.OnGet(EventInformation info, object cachedValue)
+			void IEventListener.OnGet(CachedItem cachedItem)
 			{
 				GetWasCalled = true;
 				if (FirstCallOnGet)
@@ -119,7 +119,7 @@ namespace MbCacheTest.Events.Statistic
 				}
 			}
 
-			void IEventListener.OnPut(EventInformation info, object cachedValue)
+			void IEventListener.OnPut(CachedItem cachedItem)
 			{
 				PutWasCalled = true;
 				if (FirstCallOnPut)

@@ -80,7 +80,7 @@ namespace MbCacheTest.Events.Statistic
 			{
 			}
 
-			public void OnDelete(EventInformation info)
+			public void OnDelete(CachedItem cachedItem)
 			{
 			}
 

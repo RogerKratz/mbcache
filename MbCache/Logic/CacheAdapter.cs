@@ -28,7 +28,6 @@ namespace MbCache.Logic
 			{
 				cacheValue = cacheItem.CachedValue;
 			}
-			//callEventHandlersGet(eventInformation, cacheValue);
 			if (cacheValue is NullValue)
 			{
 				cacheValue = null;
@@ -40,7 +39,6 @@ namespace MbCache.Logic
 		{
 			var cachedValue = value ?? new NullValue();
 			_cache.Put(eventInformation.CacheKey, new CachedItem(eventInformation, cachedValue));
-			//callEventHandlersPut(eventInformation, value);
 		}
 
 		public void Delete(EventInformation eventInformation)
@@ -48,8 +46,6 @@ namespace MbCache.Logic
 			if (eventInformation.CacheKey == null) 
 				return;
 			_cache.Delete(eventInformation.CacheKey);
-			//todo: remove eventinfo from this method?
-			//callEventHandlersDelete(eventInformation);
 		}
 	}
 }

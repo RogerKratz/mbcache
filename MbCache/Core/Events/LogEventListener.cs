@@ -25,9 +25,9 @@ namespace MbCache.Core.Events
 							cachedItem.EventInformation.CacheKey);
 		}
 
-		public void OnDelete(EventInformation info)
+		public void OnDelete(CachedItem cachedItem)
 		{
-			log.DebugFormat(deleteMessage, info.MethodName(), info.CacheKey);
+			log.DebugFormat(deleteMessage, cachedItem.EventInformation.MethodName(), cachedItem.EventInformation.CacheKey);
 		}
 
 		public void OnPut(CachedItem cachedItem)

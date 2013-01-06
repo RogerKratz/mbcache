@@ -13,11 +13,16 @@ namespace MbCache.Core.Events
 			_eventListeners = eventListeners;
 		}
 
-		public void callEventHandlersDelete(EventInformation eventInformation)
+		public void callEventHandlersDelete(CachedItem cachedItem)
 		{
+			var cachedItemToUse = cachedItem;
+			if (cachedItem.CachedValue is NullValue)
+			{
+				cachedItemToUse = new CachedItem(cachedItem.EventInformation, null);
+			}
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnDelete(eventInformation);
+				eventHandler.OnDelete(cachedItemToUse);
 			}
 		}
 

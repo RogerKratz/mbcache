@@ -19,7 +19,7 @@ namespace MbCache.Core.Events
 			}
 		}
 
-		void IEventListener.OnDelete(EventInformation info)
+		void IEventListener.OnDelete(CachedItem cachedItem)
 		{
 		}
 

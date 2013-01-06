@@ -40,8 +40,9 @@ namespace MbCache.Configuration
 			return ret;
 		}
 
-		public void Put(string key, CachedItem value)
+		public void Put(CachedItem value)
 		{
+			var key = value.EventInformation.CacheKey;
 			var unwrappedKeys = _cacheKey.UnwrapKey(key);
 			createDependencies(unwrappedKeys);
 

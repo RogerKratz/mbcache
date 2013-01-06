@@ -100,7 +100,7 @@ namespace MbCache.ProxyImpl.LinFu
 		private object executeAndPutInCache(MethodInfo method, object[] arguments, EventInformation eventInformation)
 		{
 			var retVal = callOriginalMethod(method, arguments);
-			_cache.Put(eventInformation, retVal);
+			_cache.Put(new CachedItem(eventInformation, retVal));
 			return retVal;
 		}
 

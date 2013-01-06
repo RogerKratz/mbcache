@@ -15,40 +15,25 @@ namespace MbCache.Core.Events
 
 		public void OnDelete(CachedItem cachedItem)
 		{
-			var cachedItemToUse = cachedItem;
-			if (cachedItem.CachedValue is NullValue)
-			{
-				cachedItemToUse = new CachedItem(cachedItem.EventInformation, null);
-			}
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnDelete(cachedItemToUse);
+				eventHandler.OnDelete(cachedItem);
 			}
 		}
 
 		public void OnPut(CachedItem cachedItem)
 		{
-			var cachedItemToUse = cachedItem;
-			if (cachedItem.CachedValue is NullValue)
-			{
-				cachedItemToUse = new CachedItem(cachedItem.EventInformation, null);
-			}
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnPut(cachedItemToUse);
+				eventHandler.OnPut(cachedItem);
 			}
 		}
 
 		public void OnGet(CachedItem cachedItem, bool successful)
 		{
-			var cachedItemToUse = cachedItem;
-			if (cachedItem.CachedValue is NullValue)
-			{
-				cachedItemToUse = new CachedItem(cachedItem.EventInformation, null);
-			}
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnGet(cachedItemToUse, successful);
+				eventHandler.OnGet(cachedItem, successful);
 			}
 		}
 	}

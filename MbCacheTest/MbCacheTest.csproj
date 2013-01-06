@@ -77,7 +77,8 @@
     <Compile Include="Configuration\DefaultConfigurationTest.cs" />
     <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
-    <Compile Include="Events\Statistic\DeleteTest.cs" />
+    <Compile Include="Events\Statistic\ExplicitDeleteTest.cs" />
+    <Compile Include="Events\Statistic\DeleteTestBase.cs" />
     <Compile Include="Events\Statistic\GetTest.cs" />
     <Compile Include="Events\Statistic\ImplicitDeleteTest.cs" />
     <Compile Include="Events\Statistic\MultipleEventHandlers.cs" />

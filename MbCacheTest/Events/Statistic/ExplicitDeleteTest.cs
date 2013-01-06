@@ -2,9 +2,9 @@
 
 namespace MbCacheTest.Events.Statistic
 {
-	public class ImplicitDeleteTest : DeleteTestBase
+	public class ExplicitDeleteTest : DeleteTestBase
 	{
-		public ImplicitDeleteTest(string proxyTypeString)
+		public ExplicitDeleteTest(string proxyTypeString)
 			: base(proxyTypeString)
 		{
 		}
@@ -22,7 +22,8 @@ namespace MbCacheTest.Events.Statistic
 			var comp = factory.Create<IObjectReturningNull>();
 			comp.ReturnNullIfZero(0);
 			comp.ReturnNullIfZero(1);
-			factory.Invalidate<IObjectReturningNull>();
+			factory.Invalidate(comp, c => c.ReturnNullIfZero(0), true);
+			factory.Invalidate(comp, c => c.ReturnNullIfZero(1), true);
 		}
 	}
 }

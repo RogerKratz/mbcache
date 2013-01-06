@@ -22,20 +22,16 @@ namespace MbCache.Logic
 		{
 			var cacheItem = _cache.Get(eventInformation);
 			object cacheValue = null;
-			if(cacheItem!=null)
+			if(cacheItem != null)
 			{
 				cacheValue = cacheItem.CachedValue;
-				if (cacheValue is NullValue)
-				{
-					cacheValue = null;
-				}
 			}
 			return cacheValue;
 		}
 
 		public void Put(EventInformation eventInformation, object value)
 		{
-			var cachedValue = value ?? new NullValue();
+			var cachedValue = value;
 			_cache.Put(eventInformation.CacheKey, new CachedItem(eventInformation, cachedValue));
 		}
 

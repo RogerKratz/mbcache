@@ -31,11 +31,11 @@ namespace MbCache.Configuration
 			var ret = (CachedItem)cache.Get(eventInformation.CacheKey);
 			if (ret == null)
 			{
-				_eventListenersCallback.OnGet(new CachedItem(eventInformation, null), false);				
+				_eventListenersCallback.OnGetUnsuccessful(eventInformation);				
 			}
 			else
 			{
-				_eventListenersCallback.OnGet(ret, true);
+				_eventListenersCallback.OnGetSuccessful(ret);
 			}
 			return ret;
 		}

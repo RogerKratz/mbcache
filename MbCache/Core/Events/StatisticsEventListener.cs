@@ -6,17 +6,15 @@ namespace MbCache.Core.Events
 	{
 		private long _cacheHits;
 		private long _cacheMisses;
-
-		void IEventListener.OnGet(CachedItem cachedItem, bool successful)
+		
+		void IEventListener.OnGetUnsuccessful(EventInformation eventInformation)
 		{
-			if (successful)
-			{
-				Interlocked.Increment(ref _cacheHits);
-			}
-			else
-			{
-				Interlocked.Increment(ref _cacheMisses);
-			}
+			Interlocked.Increment(ref _cacheMisses);
+		}
+
+		void IEventListener.OnGetSuccessful(CachedItem cachedItem)
+		{
+			Interlocked.Increment(ref _cacheHits);
 		}
 
 		void IEventListener.OnDelete(CachedItem cachedItem)

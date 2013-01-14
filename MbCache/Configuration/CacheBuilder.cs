@@ -48,7 +48,7 @@ namespace MbCache.Configuration
 			}
 			var events = new EventListenersCallback(_eventListeners);
 			var cacheAdapter = new CacheAdapter(_cache);
-			_cache.Initialize(_cacheKey, events);
+			_cache.Initialize(events, _cacheKey);
 			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _lockObjectGenerator, _cachedMethods);
 		}
 

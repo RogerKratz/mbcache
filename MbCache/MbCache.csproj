@@ -67,6 +67,7 @@
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ICacheKeyUnwrapper.cs" />
     <Compile Include="Configuration\InMemoryCache.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Core\CachedItem.cs" />

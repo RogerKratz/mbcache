@@ -10,7 +10,7 @@ namespace MbCache.Configuration
 	public class InMemoryCache : ICache
 	{
 		private readonly int _timeoutMinutes;
-		private ICacheKey _cacheKey;
+		private ICacheKeyUnwrapper _cacheKeyUnwrapper;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
 		private EventListenersCallback _eventListenersCallback;
@@ -20,9 +20,9 @@ namespace MbCache.Configuration
 			_timeoutMinutes = timeoutMinutes;
 		}
 
-		public void Initialize(ICacheKey cacheKey, EventListenersCallback eventListenersCallback)
+		public void Initialize(EventListenersCallback eventListenersCallback, ICacheKeyUnwrapper cacheKeyUnwrapper)
 		{
-			_cacheKey = cacheKey;
+			_cacheKeyUnwrapper = cacheKeyUnwrapper;
 			_eventListenersCallback = eventListenersCallback;
 		}
 
@@ -43,7 +43,7 @@ namespace MbCache.Configuration
 		public void Put(CachedItem cachedItem)
 		{
 			var key = cachedItem.EventInformation.CacheKey;
-			var unwrappedKeys = _cacheKey.UnwrapKey(key);
+			var unwrappedKeys = _cacheKeyUnwrapper.UnwrapKey(key);
 			createDependencies(unwrappedKeys);
 
 			var policy = new CacheItemPolicy

@@ -19,7 +19,7 @@ namespace MbCache.Configuration
 	/// it's valid for Key(Type, MethodInfo) to return Roger2
 	/// but not Rog2.
 	/// </summary>
-	public interface ICacheKey
+	public interface ICacheKey : ICacheKeyUnwrapper
 	{
 		/// <summary>
 		/// Creates a cache key for a specific type.
@@ -95,18 +95,5 @@ namespace MbCache.Configuration
 		/// shouldn't be added (or invalidated) from the cache.
 		/// </returns>
 		string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
-
-		/// <summary>
-		/// "Unwraps" a cache key string.
-		/// Eg if the cache key looks like this (and separator is |)...
-		/// MbCache|Something|SomethingElse
-		/// ...this method should return...
-		/// MbCache
-		/// MbCache|Something
-		/// This is useful if implementation of <see cref="ICache"/> needs to create dependencies for invalidation.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		IEnumerable<string> UnwrapKey(string key);
 	}
 }

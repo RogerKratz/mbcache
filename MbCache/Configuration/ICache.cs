@@ -11,7 +11,7 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Called once before caching is used.
 		/// </summary>
-		void Initialize(ICacheKey cacheKey, EventListenersCallback eventListenersCallback);
+		void Initialize(EventListenersCallback eventListenersCallback, ICacheKeyUnwrapper cacheKeyUnwrapper);
 
 		/// <summary>
 		/// Gets the cached object.

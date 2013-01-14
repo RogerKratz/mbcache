@@ -35,16 +35,7 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void ShouldBeCalledCorrectNumberOfTimes()
 		{
-			eventListener.CachedItems.Count.Should().Be.EqualTo(4);
-		}
-
-		[Test]
-		public void ShouldHaveCorrectCachedValues()
-		{
-			eventListener.CachedItems[0].CachedValue.Should().Be.Null();
-			eventListener.CachedItems[1].CachedValue.Should().Be.Null();
-			eventListener.CachedItems[2].CachedValue.Should().Be.Null();
-			eventListener.CachedItems[3].CachedValue.Should().Be.EqualTo(1);
+			eventListener.Successful.Count.Should().Be.EqualTo(4);
 		}
 
 		[Test]
@@ -57,12 +48,19 @@ namespace MbCacheTest.Events.Statistic
 		}
 
 		[Test]
+		public void ShouldHaveCorrectCachedValues()
+		{
+			eventListener.CachedItems[0].CachedValue.Should().Be.Null();
+			eventListener.CachedItems[1].CachedValue.Should().Be.EqualTo(1);
+		}
+
+		[Test]
 		public void ShouldHaveCorrectCacheKeys()
 		{
 			eventListener.CachedItems[0].EventInformation.CacheKey.Should().EndWith("|0");
 			eventListener.CachedItems[1].EventInformation.CacheKey.Should().EndWith("|1");
-			eventListener.CachedItems[2].EventInformation.CacheKey.Should().EndWith("|0");
-			eventListener.CachedItems[3].EventInformation.CacheKey.Should().EndWith("|1");
+			eventListener.EventInformations[0].CacheKey.Should().EndWith("|0");
+			eventListener.EventInformations[1].CacheKey.Should().EndWith("|1");
 		}
 
 		[Test]
@@ -70,8 +68,8 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 			eventListener.CachedItems[1].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.CachedItems[2].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.CachedItems[3].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.EventInformations[0].Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.EventInformations[1].Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 		}
 
 		[Test]
@@ -79,8 +77,8 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
 			eventListener.CachedItems[1].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.CachedItems[2].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.CachedItems[3].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.EventInformations[0].Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.EventInformations[1].Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
 		}
 
 		[Test]
@@ -88,19 +86,26 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
 			eventListener.CachedItems[1].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
-			eventListener.CachedItems[2].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
-			eventListener.CachedItems[3].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
+			eventListener.EventInformations[0].Arguments.Should().Have.SameSequenceAs(0);
+			eventListener.EventInformations[1].Arguments.Should().Have.SameSequenceAs(1);
 		}
 
 		private class eventListenerForGet : IEventListener
 		{
 			public readonly IList<CachedItem> CachedItems = new List<CachedItem>();
+			public readonly IList<EventInformation> EventInformations = new List<EventInformation>();
 			public readonly IList<bool> Successful = new List<bool>();
 
-			public void OnGet(CachedItem cachedItem, bool successful)
+			public void OnGetUnsuccessful(EventInformation eventInformation)
 			{
+				Successful.Add(false);
+				EventInformations.Add(eventInformation);
+			}
+
+			public void OnGetSuccessful(CachedItem cachedItem)
+			{
+				Successful.Add(true);
 				CachedItems.Add(cachedItem);
-				Successful.Add(successful);
 			}
 
 			public void OnDelete(CachedItem cachedItem)

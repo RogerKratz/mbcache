@@ -29,11 +29,19 @@ namespace MbCache.Core.Events
 			}
 		}
 
-		public void OnGet(CachedItem cachedItem, bool successful)
+		public void OnGetSuccessful(CachedItem cachedItem)
 		{
-			foreach (var eventHandler in _eventListeners)
+			foreach (var eventListener in _eventListeners)
 			{
-				eventHandler.OnGet(cachedItem, successful);
+				eventListener.OnGetSuccessful(cachedItem);
+			}
+		}
+
+		public void OnGetUnsuccessful(EventInformation eventInformation)
+		{
+			foreach (var eventListener in _eventListeners)
+			{
+				eventListener.OnGetUnsuccessful(eventInformation);
 			}
 		}
 	}

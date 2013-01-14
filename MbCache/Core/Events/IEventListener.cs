@@ -6,9 +6,14 @@
 	public interface IEventListener
 	{
 		/// <summary>
-		/// Called after a Get in cache.
+		/// Called after an unsuccessful Get in cache.
 		/// </summary>
-		void OnGet(CachedItem cachedItem, bool successful);
+		void OnGetUnsuccessful(EventInformation eventInformation);
+
+		/// <summary>
+		/// Called after a successful Get in cache.
+		/// </summary>
+		void OnGetSuccessful(CachedItem cachedItem);
 
 		/// <summary>
 		/// Called after cache entries has been invalidated.

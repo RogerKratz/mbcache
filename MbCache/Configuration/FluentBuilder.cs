@@ -12,6 +12,9 @@ namespace MbCache.Configuration
 		private readonly ImplementationAndMethods _details;
 		private readonly ProxyValidator _proxyValidator;
 
+		private const string componentRegisteredMultipleEx =
+			@"Type {0} is already in CacheBuilder. If you want to cache multiple methods on one type, simply call CacheMethod multiple times instead.";
+
 		public FluentBuilder(CacheBuilder cacheBuilder,
 									IDictionary<Type, ImplementationAndMethods> cachedMethods, 
 									ImplementationAndMethods details, 
@@ -52,7 +55,7 @@ namespace MbCache.Configuration
 		private void addToCachedMethods(Type type)
 		{
 			if (_cachedMethods.ContainsKey(type))
-				throw new ArgumentException("Type " + type + " is already in CacheBuilder. If you want to cache multiple method on one type, simply call CacheMethod multiple times instead.");
+				throw new ArgumentException(string.Format(componentRegisteredMultipleEx, type));
 			_cachedMethods[type] = _details;
 		}
 	}

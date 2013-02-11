@@ -52,7 +52,7 @@ namespace MbCache.Configuration
 		private void addToCachedMethods(Type type)
 		{
 			if (_cachedMethods.ContainsKey(type))
-				throw new ArgumentException("Type " + type + " is already in CacheBuilder");
+				throw new ArgumentException("Type " + type + " is already in CacheBuilder. If you want to cache multiple method on one type, simply call CacheMethod multiple times instead.");
 			_cachedMethods[type] = _details;
 		}
 	}

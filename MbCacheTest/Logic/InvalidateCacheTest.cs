@@ -96,6 +96,20 @@ namespace MbCacheTest.Logic
 		}
 
 		[Test]
+		public void InvalidateSpecificMethodWithSpecificArgumentsUsingNoArguments()
+		{
+			var obj = factory.Create<IObjectReturningNewGuids>();
+			var value1 = obj.CachedMethod();
+			var value2 = obj.CachedMethod2();
+			Assert.AreEqual(value1, obj.CachedMethod());
+			Assert.AreEqual(value2, obj.CachedMethod2());
+			Assert.AreNotEqual(value1, value2);
+			factory.Invalidate(obj, method => obj.CachedMethod(), true);
+			Assert.AreNotEqual(value1, obj.CachedMethod());
+			Assert.AreEqual(value2, obj.CachedMethod2());
+		}
+
+		[Test]
 		public void InvalidateSpecificMethodWithSpecificParameter()
 		{
 			var obj = factory.Create<IObjectWithParametersOnCachedMethod>();

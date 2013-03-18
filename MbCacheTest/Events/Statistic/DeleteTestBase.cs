@@ -31,8 +31,8 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void ShouldHaveCorrectCacheKeys()
 		{
-			EventListener.CachedItems[0].EventInformation.CacheKey.Should().EndWith("|0");
-			EventListener.CachedItems[1].EventInformation.CacheKey.Should().EndWith("|1");
+			EventListener.CachedItems[0].EventInformation.CacheKey.Should().EndWith("|$0");
+			EventListener.CachedItems[1].EventInformation.CacheKey.Should().EndWith("|$1");
 		}
 
 		[Test]

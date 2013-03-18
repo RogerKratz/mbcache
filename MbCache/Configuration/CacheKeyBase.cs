@@ -27,6 +27,7 @@ namespace MbCache.Configuration
 			"Cache key of type {0} equals its own type name. Possible bug in your ICacheKey implementation.";
 		private static readonly Regex findSeperator = new Regex(@"\" + separator, RegexOptions.Compiled);
 		private const string separator = "|";
+		private const string separatorParameterValue = "$";
 
 		public string Key(Type type)
 		{
@@ -54,9 +55,10 @@ namespace MbCache.Configuration
 		public string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
 			var ret = new StringBuilder(Key(type, component, method));
+			ret.Append(separator);
 			foreach (var parameter in parameters)
 			{
-				ret.Append(separator);
+				ret.Append(separatorParameterValue);
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;

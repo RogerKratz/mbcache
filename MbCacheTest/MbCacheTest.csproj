@@ -92,6 +92,7 @@
     <Compile Include="Logic\MatchingCorrectMethod\OverloadedMethodTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\TwoEqualMethodNamesBothCachedTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\TwoEqualMethodNamesOneCachedTest.cs" />
+    <Compile Include="Logic\Performance\NumberOfCacheEntriesTest.cs" />
     <Compile Include="Logic\ProxyExceptionTest.cs" />
     <Compile Include="Logic\SerializeFactoryTest.cs" />
     <Compile Include="LogSpy.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="TestData\ObjectThrowingError.cs" />
     <Compile Include="TestData\ObjectWithGenericMethodParameters.cs" />
     <Compile Include="TestData\ObjectWithIdentifier.cs" />
+    <Compile Include="TestData\ObjectWithMultipleParameters.cs" />
     <Compile Include="TestData\ObjectWithOverloadedMethod.cs" />
     <Compile Include="TestData\ObjectWithProperty.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
@@ -167,6 +169,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

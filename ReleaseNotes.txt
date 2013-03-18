@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- Version 2.2 (v 2.2.0.0), 2013-03-18
+* No known breaking changes
+
+
 - Version 2.1 (v 2.1.0.0), 2013-01-15
 * IEventListener methods now accepts CachedItem as input
 * IEventListener.OnGet now split into two methods - one for successful Get another for unsuccessful.

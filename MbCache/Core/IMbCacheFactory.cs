@@ -62,7 +62,19 @@ namespace MbCache.Core
 		/// <returns></returns>
 		Type ImplementationTypeFor(Type componentType);
 
+		/// <summary>
+		/// Disables caching for all methods on component T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="evictCacheEntries">
+		/// If <code>true</code>, evicts present cache entries for this type.
+		/// </param>
 		void DisableCache<T>(bool evictCacheEntries = true);
+
+		/// <summary>
+		/// Enables caching for all methods on component T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		void EnableCache<T>();
 	}
 }

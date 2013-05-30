@@ -70,6 +70,20 @@ namespace MbCache.Logic
 			return methods.ConcreteType;
 		}
 
+		public void DisableCache<T>(bool evictCacheEntries = true)
+		{
+			_methods[typeof (T)].EnabledCache = false;
+			if (evictCacheEntries)
+			{
+				Invalidate<T>();				
+			}
+		}
+
+		public void EnableCache<T>()
+		{
+			_methods[typeof(T)].EnabledCache = true;
+		}
+
 		private static ICachingComponent castToCachingComponentOrThrow(object component)
 		{
 			var comp = component as ICachingComponent;

@@ -60,7 +60,7 @@ namespace MbCache.ProxyImpl.LinFu
 					  callOriginalMethod(realTargetMethod, info.Arguments);
 		}
 
-		private MethodInfo createGenericMethodInfoIfNeeded(MethodInfo orgMethodInfo, Type[] typeArguments)
+		private static MethodInfo createGenericMethodInfoIfNeeded(MethodInfo orgMethodInfo, Type[] typeArguments)
 		{
 			return orgMethodInfo.ContainsGenericParameters ? 
 				orgMethodInfo.MakeGenericMethod(typeArguments) : 
@@ -69,7 +69,8 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private bool methodMarkedForCaching(MethodInfo method)
 		{
-			return _methodData.Methods.Contains(method, new MethodInfoComparer());
+			return _methodData.Methods.Contains(method, new MethodInfoComparer()) &&
+								_methodData.EnabledCache;
 		}
 
 		private object interceptUsingCache(MethodInfo method, object[] arguments)

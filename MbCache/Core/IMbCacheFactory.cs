@@ -61,5 +61,8 @@ namespace MbCache.Core
 		/// </summary>
 		/// <returns></returns>
 		Type ImplementationTypeFor(Type componentType);
+
+		void DisableCache<T>(bool evictCacheEntries = true);
+		void EnableCache<T>();
 	}
 }

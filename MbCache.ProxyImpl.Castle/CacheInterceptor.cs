@@ -16,13 +16,13 @@ namespace MbCache.ProxyImpl.Castle
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
-		private readonly IEnumerable<MethodInfo> _methods; //only needed cause IProxyGenerationHook doesn't seem to offer closed generic types
+		private readonly ImplementationAndMethods _methods;
 
 		public CacheInterceptor(CacheAdapter cache, 
 										ICacheKey cacheKey, 
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type,
-										IEnumerable<MethodInfo> methods)
+										ImplementationAndMethods methods)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
@@ -33,9 +33,15 @@ namespace MbCache.ProxyImpl.Castle
 
 		public void Intercept(IInvocation invocation)
 		{
+			if (!_methods.EnabledCache)
+			{
+				invocation.Proceed();
+				return;
+			}
+
 			var method = invocation.Method;
 			//ugly hack
-			if (method.IsGenericMethod && !_methods.Contains(method, new MethodInfoComparer()))
+			if (method.IsGenericMethod && !_methods.Methods.Contains(method, new MethodInfoComparer()))
 			{
 				invocation.Proceed();
 				return;

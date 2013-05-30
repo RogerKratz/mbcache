@@ -14,6 +14,7 @@ namespace MbCache.Logic
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
+		private const string isNotARegisteredComponentMessage = "{0} is not a registered MbCache component!";
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
 									CacheAdapter cache,
@@ -36,7 +37,7 @@ namespace MbCache.Logic
 			{
 				return _proxyFactory.CreateProxy<T>(_methods[type], parameters);	
 			}
-			throw new ArgumentException(type + " is not registered as a MbCache component!");
+			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}
 
 		public void Invalidate<T>()
@@ -66,7 +67,7 @@ namespace MbCache.Logic
 		{
 			ImplementationAndMethods methods;
 			if(!_methods.TryGetValue(componentType, out methods))
-				throw new ArgumentException(componentType.FullName + " is not a registered component.");
+				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, componentType.FullName));
 			return methods.ConcreteType;
 		}
 
@@ -88,7 +89,7 @@ namespace MbCache.Logic
 		{
 			var comp = component as ICachingComponent;
 			if (comp == null)
-				throw new ArgumentException(component + " is not an ICachingComponent. Unknown object for MbCache.");
+				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, component));
 			return comp;
 		}
 

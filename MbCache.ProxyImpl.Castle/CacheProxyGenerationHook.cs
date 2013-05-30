@@ -9,11 +9,11 @@ namespace MbCache.ProxyImpl.Castle
 {
 	public class CacheProxyGenerationHook : IProxyGenerationHook
 	{
-		private readonly IEnumerable<MethodInfo> _methods;
+		private readonly ImplementationAndMethods _methodData;
 
-		public CacheProxyGenerationHook(IEnumerable<MethodInfo> methods)
+		public CacheProxyGenerationHook(ImplementationAndMethods methodData)
 		{
-			_methods = methods;
+			_methodData = methodData;
 		}
 
 		public bool ShouldInterceptMethod(Type type, MethodInfo methodInfo)
@@ -35,18 +35,18 @@ namespace MbCache.ProxyImpl.Castle
 			//ugly hack for now
 			if (key.IsGenericMethod)
 				return true;
-			return _methods.Contains(key, new MethodInfoComparer());
+			return _methodData.Methods.Contains(key, new MethodInfoComparer());
 		}
 
 		public override bool Equals(object obj)
 		{
 			var casted = obj as CacheProxyGenerationHook;
-			return casted != null && casted._methods.SequenceEqual(_methods, new MethodInfoComparer());
+			return casted != null && casted._methodData.Methods.SequenceEqual(_methodData.Methods, new MethodInfoComparer());
 		}
 
 		public override int GetHashCode()
 		{
-			return _methods.GetHashCode();
+			return _methodData.Methods.GetHashCode();
 		}
 	}
 }

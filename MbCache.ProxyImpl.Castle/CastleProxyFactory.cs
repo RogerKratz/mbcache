@@ -25,8 +25,8 @@ namespace MbCache.ProxyImpl.Castle
 										params object[] parameters) where T : class
 		{
 			var type = typeof(T);
-			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, type, methodData.Methods);
-			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(methodData.Methods));
+			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, type, methodData);
+			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(methodData));
 			options.AddMixinInstance(createCachingComponent(type, methodData));
 			try
 			{

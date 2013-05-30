@@ -41,7 +41,7 @@ namespace MbCache.ProxyImpl.Castle
 
 			var method = invocation.Method;
 			//ugly hack
-			if (method.IsGenericMethod && !_methods.Methods.Contains(method, new MethodInfoComparer()))
+			if (method.IsGenericMethod && !_methods.Methods.Contains(method, MethodInfoComparer.Instance))
 			{
 				invocation.Proceed();
 				return;

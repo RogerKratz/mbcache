@@ -73,7 +73,13 @@ namespace MbCache.Logic
 
 		public void DisableCache<T>(bool evictCacheEntries = true)
 		{
-			_methods[typeof (T)].EnabledCache = false;
+			var type = typeof(T);
+			ImplementationAndMethods methods;
+			if (!_methods.TryGetValue(type, out methods))
+			{
+				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));				
+			}
+			methods.EnabledCache = false;
 			if (evictCacheEntries)
 			{
 				Invalidate<T>();				
@@ -82,7 +88,11 @@ namespace MbCache.Logic
 
 		public void EnableCache<T>()
 		{
-			_methods[typeof(T)].EnabledCache = true;
+			var type = typeof (T);
+			ImplementationAndMethods methods;
+			if (!_methods.TryGetValue(type, out methods))
+				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
+			methods.EnabledCache = true;
 		}
 
 		private static ICachingComponent castToCachingComponentOrThrow(object component)

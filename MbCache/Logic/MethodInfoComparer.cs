@@ -7,6 +7,10 @@ namespace MbCache.Logic
 {
 	public class MethodInfoComparer : IEqualityComparer<MethodInfo>
 	{
+		public static IEqualityComparer<MethodInfo> Instance = new MethodInfoComparer();
+
+		private MethodInfoComparer(){}
+
 		public bool Equals(MethodInfo x, MethodInfo y)
 		{
 			//no need to check what type methodinfo is on - already checked before entering this method

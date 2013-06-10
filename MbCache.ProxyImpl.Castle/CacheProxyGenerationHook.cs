@@ -34,18 +34,18 @@ namespace MbCache.ProxyImpl.Castle
 			//ugly hack for now
 			if (key.IsGenericMethod)
 				return true;
-			return _methodData.Methods.Contains(key, MethodInfoComparer.Instance);
+			return _methodData.CachedMethods.Contains(key, MethodInfoComparer.Instance);
 		}
 
 		public override bool Equals(object obj)
 		{
 			var casted = obj as CacheProxyGenerationHook;
-			return casted != null && casted._methodData.Methods.SequenceEqual(_methodData.Methods, MethodInfoComparer.Instance);
+			return casted != null && casted._methodData.CachedMethods.SequenceEqual(_methodData.CachedMethods, MethodInfoComparer.Instance);
 		}
 
 		public override int GetHashCode()
 		{
-			return _methodData.Methods.GetHashCode();
+			return _methodData.CachedMethods.GetHashCode();
 		}
 	}
 }

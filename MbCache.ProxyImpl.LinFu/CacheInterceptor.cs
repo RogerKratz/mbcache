@@ -69,7 +69,7 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private bool methodMarkedForCaching(MethodInfo method)
 		{
-			return _methodData.Methods.Contains(method, MethodInfoComparer.Instance) &&
+			return _methodData.CachedMethods.Contains(method, MethodInfoComparer.Instance) &&
 								_methodData.EnabledCache;
 		}
 

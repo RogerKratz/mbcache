@@ -10,13 +10,13 @@ namespace MbCache.Logic
 		public ConfigurationForType(Type concreteType)
 		{
 			ConcreteType = concreteType;
-			Methods = new HashSet<MethodInfo>();
+			CachedMethods = new HashSet<MethodInfo>();
 			EnabledCache = true;
 		}
 
 		public bool EnabledCache { get; set; }
 		public Type ConcreteType { get; private set; }
-		public ICollection<MethodInfo> Methods { get; private set; }
+		public ICollection<MethodInfo> CachedMethods { get; private set; }
 		public bool CachePerInstance { get; set; }
 	}
 }

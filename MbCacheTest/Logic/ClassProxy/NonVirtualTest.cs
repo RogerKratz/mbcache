@@ -4,8 +4,12 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic.ClassProxy
 {
-	public class NonVirtualTest : SimpleTest
+	public class NonVirtualTest : FullTest
 	{
+		public NonVirtualTest(string proxyTypeString) : base(proxyTypeString)
+		{
+		}
+
 		[Test]
 		public void CachedMethodNeedToBeVirtual()
 		{

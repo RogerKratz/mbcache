@@ -10,8 +10,8 @@ namespace MbCache.Configuration
 {
 	public class CacheBuilder
 	{
-		private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
-		private readonly ICollection<ImplementationAndMethods> _details;
+		private readonly IDictionary<Type, ConfigurationForType> _cachedMethods;
+		private readonly ICollection<ConfigurationForType> _details;
 		private readonly IProxyFactory _proxyFactory;
 		private ICache _cache;
 		private ICacheKey _cacheKey;
@@ -21,8 +21,8 @@ namespace MbCache.Configuration
 
 		public CacheBuilder(IProxyFactory proxyFactory)
 		{
-			_cachedMethods = new Dictionary<Type, ImplementationAndMethods>();
-			_details = new List<ImplementationAndMethods>();
+			_cachedMethods = new Dictionary<Type, ConfigurationForType>();
+			_details = new List<ConfigurationForType>();
 			_proxyFactory = proxyFactory;
 			_proxyValidator = new ProxyValidator(_proxyFactory);
 			_eventListeners = new List<IEventListener>();
@@ -60,7 +60,7 @@ namespace MbCache.Configuration
 		public IFluentBuilder<T> For<T>()
 		{
 			var concreteType = typeof(T);
-			var details = new ImplementationAndMethods(concreteType);
+			var details = new ConfigurationForType(concreteType);
 			_details.Add(details);
 			var fluentBuilder = new FluentBuilder<T>(this, _cachedMethods, details, _proxyValidator);
 			return fluentBuilder;

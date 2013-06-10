@@ -16,7 +16,7 @@ namespace MbCache.Logic
 		public CachingComponent(CacheAdapter cache,
 										ICacheKey cacheKey,
 										Type definedType,
-										ImplementationAndMethods details)
+										ConfigurationForType details)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;

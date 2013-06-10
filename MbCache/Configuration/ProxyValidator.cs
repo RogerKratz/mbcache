@@ -13,18 +13,18 @@ namespace MbCache.Configuration
 			_proxyFactory = proxyFactory;
 		}
 
-		public void Validate(ImplementationAndMethods implementationAndMethods)
+		public void Validate(ConfigurationForType configurationForType)
 		{
-			checkCachedMethodsAreVirtual(implementationAndMethods);
+			checkCachedMethodsAreVirtual(configurationForType);
 			if (!_proxyFactory.AllowNonVirtualMember)
-				checkAccessibleMembersAreVirtual(implementationAndMethods.ConcreteType);
+				checkAccessibleMembersAreVirtual(configurationForType.ConcreteType);
 		}
 
-		private void checkCachedMethodsAreVirtual(ImplementationAndMethods implementationAndMethods)
+		private void checkCachedMethodsAreVirtual(ConfigurationForType configurationForType)
 		{
-			foreach (var methodInfo in implementationAndMethods.Methods)
+			foreach (var methodInfo in configurationForType.Methods)
 			{
-				checkMethod(implementationAndMethods.ConcreteType, methodInfo);
+				checkMethod(configurationForType.ConcreteType, methodInfo);
 			}
 		}
 

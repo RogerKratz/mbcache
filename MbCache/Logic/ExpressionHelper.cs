@@ -100,9 +100,10 @@ namespace MbCache.Logic
 
 		private static IEnumerable<object> extractConstants(ConstantExpression constantExpression)
 		{
-			if (constantExpression.Value is Expression)
+			var valueAsExpression = constantExpression.Value as Expression;
+			if (valueAsExpression != null)
 			{
-				foreach (var constant in extractConstants((Expression)constantExpression.Value))
+				foreach (var constant in extractConstants(valueAsExpression))
 				{
 					yield return constant;
 				}

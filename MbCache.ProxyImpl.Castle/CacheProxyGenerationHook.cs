@@ -8,9 +8,9 @@ namespace MbCache.ProxyImpl.Castle
 {
 	public class CacheProxyGenerationHook : IProxyGenerationHook
 	{
-		private readonly ImplementationAndMethods _methodData;
+		private readonly ConfigurationForType _methodData;
 
-		public CacheProxyGenerationHook(ImplementationAndMethods methodData)
+		public CacheProxyGenerationHook(ConfigurationForType methodData)
 		{
 			_methodData = methodData;
 		}

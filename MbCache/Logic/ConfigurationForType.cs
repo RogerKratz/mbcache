@@ -5,9 +5,9 @@ using System.Reflection;
 namespace MbCache.Logic
 {
 	[Serializable]
-	public class ImplementationAndMethods
+	public class ConfigurationForType
 	{
-		public ImplementationAndMethods(Type concreteType)
+		public ConfigurationForType(Type concreteType)
 		{
 			ConcreteType = concreteType;
 			Methods = new HashSet<MethodInfo>();

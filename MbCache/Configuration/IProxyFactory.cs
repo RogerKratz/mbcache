@@ -20,7 +20,7 @@ namespace MbCache.Configuration
 		  /// <param name="methodData">The method data.</param>
 		  /// <param name="parameters">The parameters.</param>
 		  /// <returns></returns>
-		  T CreateProxy<T>(ImplementationAndMethods methodData, params object[] parameters)
+		  T CreateProxy<T>(ConfigurationForType methodData, params object[] parameters)
 			  where T : class;
 
 		  /// <summary>

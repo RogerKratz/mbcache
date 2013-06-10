@@ -8,16 +8,16 @@ namespace MbCache.Configuration
 	public class FluentBuilder<T> : IFluentBuilder<T>
 	{
 		private readonly CacheBuilder _cacheBuilder;
-		private readonly IDictionary<Type, ImplementationAndMethods> _cachedMethods;
-		private readonly ImplementationAndMethods _details;
+		private readonly IDictionary<Type, ConfigurationForType> _cachedMethods;
+		private readonly ConfigurationForType _details;
 		private readonly ProxyValidator _proxyValidator;
 
 		private const string componentRegisteredMultipleEx =
 			@"Type {0} is already in CacheBuilder. If you want to cache multiple methods on one type, simply call CacheMethod multiple times instead.";
 
 		public FluentBuilder(CacheBuilder cacheBuilder,
-									IDictionary<Type, ImplementationAndMethods> cachedMethods, 
-									ImplementationAndMethods details, 
+									IDictionary<Type, ConfigurationForType> cachedMethods, 
+									ConfigurationForType details, 
 									ProxyValidator proxyValidator)
 		{
 			_cacheBuilder = cacheBuilder;

@@ -14,13 +14,13 @@ namespace MbCache.ProxyImpl.Castle
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
-		private readonly ImplementationAndMethods _methods;
+		private readonly ConfigurationForType _methods;
 
 		public CacheInterceptor(CacheAdapter cache, 
 										ICacheKey cacheKey, 
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type,
-										ImplementationAndMethods methods)
+										ConfigurationForType methods)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;

@@ -13,14 +13,14 @@ namespace MbCache.Logic
 		private readonly IProxyFactory _proxyFactory;
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
-		private readonly IDictionary<Type, ImplementationAndMethods> _methods;
+		private readonly IDictionary<Type, ConfigurationForType> _methods;
 		private const string isNotARegisteredComponentMessage = "{0} is not a registered MbCache component!";
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
 									CacheAdapter cache,
 									ICacheKey cacheKey,
 									ILockObjectGenerator lockObjectGenerator,
-									IDictionary<Type, ImplementationAndMethods> methods)
+									IDictionary<Type, ConfigurationForType> methods)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
@@ -32,7 +32,7 @@ namespace MbCache.Logic
 		public T Create<T>(params object[] parameters) where T : class
 		{
 			var type = typeof (T);
-			ImplementationAndMethods methods;
+			ConfigurationForType methods;
 			if (_methods.TryGetValue(type, out methods))
 			{
 				return _proxyFactory.CreateProxy<T>(_methods[type], parameters);	
@@ -65,7 +65,7 @@ namespace MbCache.Logic
 
 		public Type ImplementationTypeFor(Type componentType)
 		{
-			ImplementationAndMethods methods;
+			ConfigurationForType methods;
 			if(!_methods.TryGetValue(componentType, out methods))
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, componentType.FullName));
 			return methods.ConcreteType;
@@ -74,7 +74,7 @@ namespace MbCache.Logic
 		public void DisableCache<T>(bool evictCacheEntries = true)
 		{
 			var type = typeof(T);
-			ImplementationAndMethods methods;
+			ConfigurationForType methods;
 			if (!_methods.TryGetValue(type, out methods))
 			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));				
@@ -89,7 +89,7 @@ namespace MbCache.Logic
 		public void EnableCache<T>()
 		{
 			var type = typeof (T);
-			ImplementationAndMethods methods;
+			ConfigurationForType methods;
 			if (!_methods.TryGetValue(type, out methods))
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 			methods.EnabledCache = true;

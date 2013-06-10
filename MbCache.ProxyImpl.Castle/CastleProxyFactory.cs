@@ -21,7 +21,7 @@ namespace MbCache.ProxyImpl.Castle
 			_lockObjectGenerator = lockObjectGenerator;
 		}
 
-		public T CreateProxy<T>(ImplementationAndMethods methodData,
+		public T CreateProxy<T>(ConfigurationForType methodData,
 										params object[] parameters) where T : class
 		{
 			var type = typeof(T);
@@ -48,7 +48,7 @@ namespace MbCache.ProxyImpl.Castle
 			get { return true; }
 		}
 
-		private ICachingComponent createCachingComponent(Type type, ImplementationAndMethods details)
+		private ICachingComponent createCachingComponent(Type type, ConfigurationForType details)
 		{
 			return new CachingComponent(_cache, _cacheKey, type, details);
 		}

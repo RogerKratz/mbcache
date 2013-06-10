@@ -19,7 +19,7 @@ namespace MbCache.ProxyImpl.LinFu
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly Type _type;
-		private readonly ImplementationAndMethods _methodData;
+		private readonly ConfigurationForType _methodData;
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
 
@@ -27,7 +27,7 @@ namespace MbCache.ProxyImpl.LinFu
 										ICacheKey cacheKey,
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type,
-										ImplementationAndMethods methodData,
+										ConfigurationForType methodData,
 										params object[] ctorParameters)
 		{
 			_cache = cache;

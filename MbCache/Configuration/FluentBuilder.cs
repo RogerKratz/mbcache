@@ -29,7 +29,7 @@ namespace MbCache.Configuration
 		public IFluentBuilder<T> CacheMethod(Expression<Func<T, object>> expression)
 		{
 			var method = ExpressionHelper.MemberName(expression.Body);
-			_details.Methods.Add(method);
+			_details.CachedMethods.Add(method);
 			return this;
 		}
 

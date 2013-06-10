@@ -22,7 +22,7 @@ namespace MbCache.Configuration
 
 		private void checkCachedMethodsAreVirtual(ConfigurationForType configurationForType)
 		{
-			foreach (var methodInfo in configurationForType.Methods)
+			foreach (var methodInfo in configurationForType.CachedMethods)
 			{
 				checkMethod(configurationForType.ConcreteType, methodInfo);
 			}

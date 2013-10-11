@@ -7,7 +7,7 @@ namespace MbCache.Logic
 {
 	public class MethodInfoComparer : IEqualityComparer<MethodInfo>
 	{
-		public static IEqualityComparer<MethodInfo> Instance = new MethodInfoComparer();
+		public static readonly IEqualityComparer<MethodInfo> Instance = new MethodInfoComparer();
 
 		private MethodInfoComparer(){}
 

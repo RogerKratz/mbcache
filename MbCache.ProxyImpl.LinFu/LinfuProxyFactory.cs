@@ -12,6 +12,7 @@ namespace MbCache.ProxyImpl.LinFu
 		private CacheAdapter _cache;
 		private ICacheKey _cacheKey;
 		private ILockObjectGenerator _lockObjectGenerator;
+		private static readonly ProxyFactory _proxyFactory = new ProxyFactory();
 
 		public void Initialize(CacheAdapter cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
 		{
@@ -22,10 +23,9 @@ namespace MbCache.ProxyImpl.LinFu
 
 		public T CreateProxy<T>(ConfigurationForType methodData, params object[] parameters) where T : class
 		{
-			var proxyFactory = new ProxyFactory();
 			var target = createTarget<T>(methodData.ConcreteType, parameters);
 			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, typeof(T), methodData, target);
-			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
+			return _proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 
 		private static object createTarget<T>(Type type, object[] ctorParameters)

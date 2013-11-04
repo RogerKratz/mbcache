@@ -23,8 +23,22 @@ namespace MbCache.ProxyImpl.LinFu
 		public T CreateProxy<T>(ConfigurationForType methodData, params object[] parameters) where T : class
 		{
 			var proxyFactory = new ProxyFactory();
-			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, typeof(T), methodData, parameters);
+			var target = createTarget<T>(methodData.ConcreteType, parameters);
+			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, typeof(T), methodData, target);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
+		}
+
+		private static object createTarget<T>(Type type, object[] ctorParameters)
+		{
+			try
+			{
+				return Activator.CreateInstance(type, ctorParameters);
+			}
+			catch (MissingMethodException ex)
+			{
+				var ctorParamMessage = "Incorrect number of parameters to ctor for type " + type;
+				throw new ArgumentException(ctorParamMessage, ex);
+			}
 		}
 
 		public bool AllowNonVirtualMember

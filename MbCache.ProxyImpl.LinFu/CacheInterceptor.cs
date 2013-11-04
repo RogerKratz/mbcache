@@ -28,28 +28,15 @@ namespace MbCache.ProxyImpl.LinFu
 										ILockObjectGenerator lockObjectGenerator, 
 										Type type,
 										ConfigurationForType methodData,
-										params object[] ctorParameters)
+										object target)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
 			_type = type;
 			_methodData = methodData;
-			_target = createTarget(ctorParameters);
+			_target = target;
 			_cachingComponent = new CachingComponent(cache, cacheKey, type, methodData);
-		}
-
-		private object createTarget(object[] ctorParameters)
-		{
-			try
-			{
-				return Activator.CreateInstance(_methodData.ConcreteType, ctorParameters);
-			}
-			catch (MissingMethodException ex)
-			{
-				var ctorParamMessage = "Incorrect number of parameters to ctor for type " + _methodData.ConcreteType;
-				throw new ArgumentException(ctorParamMessage, ex);
-			}
 		}
 
 		public object Intercept(InvocationInfo info)

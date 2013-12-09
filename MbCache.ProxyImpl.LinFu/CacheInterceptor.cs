@@ -18,25 +18,22 @@ namespace MbCache.ProxyImpl.LinFu
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
-		private readonly ComponentType _componentType;
-		private readonly ConfigurationForType _methodData;
+		private readonly ConfigurationForType _configurationForType;
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
 
 		public CacheInterceptor(CacheAdapter cache,
 										ICacheKey cacheKey,
 										ILockObjectGenerator lockObjectGenerator, 
-										ComponentType componentType,
-										ConfigurationForType methodData,
+										ConfigurationForType configurationForType,
 										object target)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
-			_componentType = componentType;
-			_methodData = methodData;
+			_configurationForType = configurationForType;
 			_target = target;
-			_cachingComponent = new CachingComponent(cache, cacheKey, componentType, methodData);
+			_cachingComponent = new CachingComponent(cache, cacheKey, configurationForType);
 		}
 
 		public object Intercept(InvocationInfo info)
@@ -56,14 +53,14 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private bool methodMarkedForCaching(MethodInfo method)
 		{
-			return _methodData.CachedMethods.Contains(method, MethodInfoComparer.Instance) &&
-								_methodData.EnabledCache;
+			return _configurationForType.CachedMethods.Contains(method, MethodInfoComparer.Instance) &&
+								_configurationForType.EnabledCache;
 		}
 
 		private object interceptUsingCache(MethodInfo method, object[] arguments)
 		{
-			var key = _cacheKey.Key(_componentType, _cachingComponent, method, arguments);
-			var eventInformation = new EventInformation(key, _componentType.ConfiguredType, method, arguments);
+			var key = _cacheKey.Key(_configurationForType.ComponentType, _cachingComponent, method, arguments);
+			var eventInformation = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
 			if (key == null)
 			{
 				return callOriginalMethod(method, arguments);

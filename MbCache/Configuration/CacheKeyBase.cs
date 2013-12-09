@@ -91,9 +91,8 @@ namespace MbCache.Configuration
 
 		protected virtual string KeyStart
 		{
-			get { return "MbCache" + separator; }
+			get { return string.Empty;}
 		}
-
 
 		/// <summary>
 		/// Adds string to cache key for parameter values  

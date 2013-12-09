@@ -34,7 +34,7 @@ namespace MbCacheTest.Logic.Performance
 				}				
 			}
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
-			//should be no more than 22mb
+			//should be no more than 19mb
 			Console.WriteLine(memUsage / 1000 / 1000 + "mb");
 		}
 	}

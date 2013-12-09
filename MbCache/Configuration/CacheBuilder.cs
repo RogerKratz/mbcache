@@ -10,7 +10,7 @@ namespace MbCache.Configuration
 {
 	public class CacheBuilder
 	{
-		private readonly IDictionary<Type, ConfigurationForType> _cachedMethods;
+		private readonly IDictionary<Type, ConfigurationForType> _configuredTypes;
 		private readonly ICollection<ConfigurationForType> _details;
 		private readonly IProxyFactory _proxyFactory;
 		private ICache _cache;
@@ -21,7 +21,7 @@ namespace MbCache.Configuration
 
 		public CacheBuilder(IProxyFactory proxyFactory)
 		{
-			_cachedMethods = new Dictionary<Type, ConfigurationForType>();
+			_configuredTypes = new Dictionary<Type, ConfigurationForType>();
 			_details = new List<ConfigurationForType>();
 			_proxyFactory = proxyFactory;
 			_proxyValidator = new ProxyValidator(_proxyFactory);
@@ -49,7 +49,7 @@ namespace MbCache.Configuration
 			var events = new EventListenersCallback(_eventListeners);
 			var cacheAdapter = new CacheAdapter(_cache);
 			_cache.Initialize(events, _cacheKey);
-			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _lockObjectGenerator, _cachedMethods);
+			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _lockObjectGenerator, _configuredTypes);
 		}
 
 		/// <summary>
@@ -62,20 +62,20 @@ namespace MbCache.Configuration
 			var concreteType = typeof(T);
 			var details = new ConfigurationForType(concreteType, null);
 			_details.Add(details);
-			var fluentBuilder = new FluentBuilder<T>(this, _cachedMethods, details, _proxyValidator);
+			var fluentBuilder = new FluentBuilder<T>(this, _configuredTypes, details, _proxyValidator);
 			return fluentBuilder;
 		}
 
 		private void checkAllImplementationAndMethodsAreOk()
 		{
-			if (_details.Count > _cachedMethods.Count)
+			if (_details.Count > _configuredTypes.Count)
 			{
 				var excText = new StringBuilder();
 				excText.AppendLine("Missing return type (.As<T>() or .AsImplemented()) for");
-				var fullyDefined = _cachedMethods.Values;
-				foreach (var undefined in _details.Except(fullyDefined))
+				var fullyDefined = _configuredTypes.Values;
+				foreach (var detail in _details.Except(fullyDefined))
 				{
-					excText.AppendLine(undefined.ComponentType.ConcreteType.ToString());
+					excText.AppendLine(detail.ComponentType.ConcreteType.ToString());
 				}
 				throw new InvalidOperationException(excText.ToString());
 			}

@@ -10,7 +10,7 @@ namespace MbCacheTest
 		{
 		}
 
-		public T CreateProxy<T>(ConfigurationForType methodData, params object[] parameters) where T : class
+		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
 			throw new NotSupportedException("This test creates proxies. Please derive from " + typeof(FullTest).Name + " instead.");
 		}

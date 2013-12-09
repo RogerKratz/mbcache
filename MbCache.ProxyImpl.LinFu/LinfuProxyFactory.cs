@@ -21,10 +21,10 @@ namespace MbCache.ProxyImpl.LinFu
 			_lockObjectGenerator = lockObjectGenerator;
 		}
 
-		public T CreateProxy<T>(ConfigurationForType methodData, params object[] parameters) where T : class
+		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
-			var target = createTarget(methodData.ComponentType.ConcreteType, parameters);
-			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, methodData.ComponentType, methodData, target);
+			var target = createTarget(configurationForType.ComponentType.ConcreteType, parameters);
+			var interceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, configurationForType, target);
 			return _proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 

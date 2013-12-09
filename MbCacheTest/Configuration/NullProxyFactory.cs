@@ -9,7 +9,7 @@ namespace MbCacheTest.Configuration
 		{
 		}
 
-		public T CreateProxy<T>(ConfigurationForType methodData, params object[] parameters) where T : class
+		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
 			throw new System.NotImplementedException();
 		}

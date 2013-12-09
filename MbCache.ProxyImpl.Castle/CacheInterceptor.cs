@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Castle.DynamicProxy;
 using MbCache.Configuration;
 using MbCache.Core;
@@ -13,25 +12,22 @@ namespace MbCache.ProxyImpl.Castle
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
-		private readonly ComponentType _componentType;
-		private readonly ConfigurationForType _methods;
+		private readonly ConfigurationForType _configurationForType;
 
 		public CacheInterceptor(CacheAdapter cache, 
 										ICacheKey cacheKey, 
 										ILockObjectGenerator lockObjectGenerator,
-										ComponentType componentType,
-										ConfigurationForType methods)
+										ConfigurationForType configurationForType)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
-			_componentType = componentType;
-			_methods = methods;
+			_configurationForType = configurationForType;
 		}
 
 		public void Intercept(IInvocation invocation)
 		{
-			if (!_methods.EnabledCache)
+			if (!_configurationForType.EnabledCache)
 			{
 				invocation.Proceed();
 				return;
@@ -39,7 +35,7 @@ namespace MbCache.ProxyImpl.Castle
 
 			var method = invocation.Method;
 			//ugly hack
-			if (method.IsGenericMethod && !_methods.CachedMethods.Contains(method, MethodInfoComparer.Instance))
+			if (method.IsGenericMethod && !_configurationForType.CachedMethods.Contains(method, MethodInfoComparer.Instance))
 			{
 				invocation.Proceed();
 				return;
@@ -47,14 +43,14 @@ namespace MbCache.ProxyImpl.Castle
 			var proxy = (ICachingComponent)invocation.Proxy;
 			var arguments = invocation.Arguments;
 
-			var key = _cacheKey.Key(_componentType, proxy, method, arguments);
+			var key = _cacheKey.Key(_configurationForType.ComponentType, proxy, method, arguments);
 			if (key == null)
 			{
 				invocation.Proceed();
 			}
 			else
 			{
-				var eventInfo = new EventInformation(key, _componentType.ConfiguredType, invocation.Method, invocation.Arguments);
+				var eventInfo = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, invocation.Method, invocation.Arguments);
 				if (tryGetValueFromCache(invocation, eventInfo))
 					return;
 

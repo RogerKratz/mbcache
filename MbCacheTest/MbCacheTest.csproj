@@ -89,6 +89,8 @@
     <Compile Include="Logic\CacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\CachePropertyTest.cs" />
     <Compile Include="Logic\EnableDisable\DisableTest.cs" />
+    <Compile Include="Logic\ExplicitCacheKeyForType\DontAllowDuplicateTest.cs" />
+    <Compile Include="Logic\ExplicitCacheKeyForType\SimpleCacheTest.cs" />
     <Compile Include="Logic\Generics\GenericParametersTest.cs" />
     <Compile Include="Logic\Generics\GenericTypeTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\OverloadedMethodTest.cs" />

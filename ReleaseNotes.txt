@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- Version 2.4 (v 2.4.0.0), ?????
+* ICacheKey now accepts ComponentType as inparameters instead of System.Type
+
+
 - Version 2.3 (v 2.3.0.0), 2013-05-30
 * No known breaking changes
 

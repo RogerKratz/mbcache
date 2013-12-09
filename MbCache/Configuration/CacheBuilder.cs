@@ -59,12 +59,26 @@ namespace MbCache.Configuration
 		/// <returns></returns>
 		public IFluentBuilder<T> For<T>()
 		{
+			return For<T>(null);
+		}
+
+		/// <summary>
+		/// Creates a caching component for <see cref="T"/>.
+		/// </summary>
+		/// <param name="typeAsCacheKey">
+		/// Gives a name to this type to be used as cache key.
+		/// </param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public IFluentBuilder<T> For<T>(string typeAsCacheKey)
+		{
 			var concreteType = typeof(T);
-			var details = new ConfigurationForType(concreteType, null);
+			var details = new ConfigurationForType(concreteType, typeAsCacheKey);
 			_details.Add(details);
 			var fluentBuilder = new FluentBuilder<T>(this, _configuredTypes, details, _proxyValidator);
 			return fluentBuilder;
 		}
+
 
 		private void checkAllImplementationAndMethodsAreOk()
 		{
@@ -78,6 +92,15 @@ namespace MbCache.Configuration
 					excText.AppendLine(detail.ComponentType.ConcreteType.ToString());
 				}
 				throw new InvalidOperationException(excText.ToString());
+			}
+			var tempHash = new HashSet<string>();
+			foreach (var detail in _details)
+			{
+				var typeAsCacheKey = detail.ComponentType.TypeAsCacheKeyString;
+				if (!tempHash.Add(detail.ComponentType.TypeAsCacheKeyString))
+				{
+					throw new InvalidOperationException("Component [" + typeAsCacheKey + "] registered multiple times!");
+				}
 			}
 		}
 

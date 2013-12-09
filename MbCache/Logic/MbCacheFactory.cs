@@ -43,8 +43,10 @@ namespace MbCache.Logic
 		public void Invalidate<T>()
 		{
 			var type = typeof (T);
-			var cacheKey = _cacheKey.Key(type);
-			var deleteInfo = new EventInformation(cacheKey, type, null, null);
+			//todo - kolla först!
+			var componentType = _configuredTypes[type].ComponentType;
+			var cacheKey = _cacheKey.Key(componentType);
+			var deleteInfo = new EventInformation(cacheKey, componentType.ConfiguredType, null, null);
 			_cache.Delete(deleteInfo);
 		}
 
@@ -65,10 +67,10 @@ namespace MbCache.Logic
 
 		public Type ImplementationTypeFor(Type componentType)
 		{
-			ConfigurationForType methods;
-			if(!_configuredTypes.TryGetValue(componentType, out methods))
+			ConfigurationForType configuredType;
+			if (!_configuredTypes.TryGetValue(componentType, out configuredType))
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, componentType.FullName));
-			return methods.ConcreteType;
+			return configuredType.ComponentType.ConcreteType;
 		}
 
 		public void DisableCache<T>(bool evictCacheEntries = true)

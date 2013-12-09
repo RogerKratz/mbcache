@@ -25,16 +25,16 @@ namespace MbCache.ProxyImpl.Castle
 										params object[] parameters) where T : class
 		{
 			var type = typeof(T);
-			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, type, methodData);
+			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, methodData.ComponentType, methodData);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(methodData));
 			options.AddMixinInstance(createCachingComponent(type, methodData));
 			try
 			{
 				if (type.IsClass)
 				{
-					return (T)generator.CreateClassProxy(methodData.ConcreteType, options, parameters, cacheInterceptor);
+					return (T)generator.CreateClassProxy(methodData.ComponentType.ConcreteType, options, parameters, cacheInterceptor);
 				}
-				var target = Activator.CreateInstance(methodData.ConcreteType, parameters);
+				var target = Activator.CreateInstance(methodData.ComponentType.ConcreteType, parameters);
 				return generator.CreateInterfaceProxyWithTarget((T)target, options, cacheInterceptor);
 			}
 			catch (MissingMethodException createInstanceEx)
@@ -50,7 +50,7 @@ namespace MbCache.ProxyImpl.Castle
 
 		private ICachingComponent createCachingComponent(Type type, ConfigurationForType details)
 		{
-			return new CachingComponent(_cache, _cacheKey, type, details);
+			return new CachingComponent(_cache, _cacheKey, details.ComponentType, details);
 		}
 	}
 }

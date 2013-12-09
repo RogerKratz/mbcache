@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Logic;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -84,22 +85,22 @@ namespace MbCacheTest.Logic
 		{
 			public string TheKey { get; set; }
 
-			public string Key(Type type)
+			public string Key(ComponentType type)
 			{
 				return TheKey;
 			}
 
-			public string Key(Type type, ICachingComponent component)
+			public string Key(ComponentType type, ICachingComponent component)
 			{
 				return TheKey;
 			}
 
-			public string Key(Type type, ICachingComponent component, MethodInfo method)
+			public string Key(ComponentType type, ICachingComponent component, MethodInfo method)
 			{
 				return TheKey;
 			}
 
-			public string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+			public string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 			{
 				return TheKey;
 			}

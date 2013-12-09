@@ -48,7 +48,7 @@ namespace MbCache.Configuration
 		public CacheBuilder AsImplemented()
 		{
 			_proxyValidator.Validate(_details);
-			addToCachedMethods(_details.ConcreteType);
+			addToCachedMethods(_details.ComponentType.ConcreteType);
 			return _cacheBuilder;
 		}
 
@@ -56,6 +56,7 @@ namespace MbCache.Configuration
 		{
 			if (_cachedMethods.ContainsKey(type))
 				throw new ArgumentException(string.Format(componentRegisteredMultipleEx, type));
+			_details.ComponentType.ConfiguredType = type;
 			_cachedMethods[type] = _details;
 		}
 	}

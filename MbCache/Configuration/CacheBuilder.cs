@@ -60,7 +60,7 @@ namespace MbCache.Configuration
 		public IFluentBuilder<T> For<T>()
 		{
 			var concreteType = typeof(T);
-			var details = new ConfigurationForType(concreteType);
+			var details = new ConfigurationForType(concreteType, null);
 			_details.Add(details);
 			var fluentBuilder = new FluentBuilder<T>(this, _cachedMethods, details, _proxyValidator);
 			return fluentBuilder;
@@ -75,7 +75,7 @@ namespace MbCache.Configuration
 				var fullyDefined = _cachedMethods.Values;
 				foreach (var undefined in _details.Except(fullyDefined))
 				{
-					excText.AppendLine(undefined.ConcreteType.ToString());
+					excText.AppendLine(undefined.ComponentType.ConcreteType.ToString());
 				}
 				throw new InvalidOperationException(excText.ToString());
 			}

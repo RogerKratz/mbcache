@@ -91,6 +91,7 @@
     <Compile Include="Core\IMbCacheFactory.cs" />
     <Compile Include="Logic\CacheAdapter.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
+    <Compile Include="Logic\ComponentType.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />
     <Compile Include="Logic\ConfigurationForType.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />

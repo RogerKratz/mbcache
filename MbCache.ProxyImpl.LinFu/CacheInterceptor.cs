@@ -18,7 +18,7 @@ namespace MbCache.ProxyImpl.LinFu
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
-		private readonly Type _type;
+		private readonly ComponentType _componentType;
 		private readonly ConfigurationForType _methodData;
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
@@ -26,17 +26,17 @@ namespace MbCache.ProxyImpl.LinFu
 		public CacheInterceptor(CacheAdapter cache,
 										ICacheKey cacheKey,
 										ILockObjectGenerator lockObjectGenerator, 
-										Type type,
+										ComponentType componentType,
 										ConfigurationForType methodData,
 										object target)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
-			_type = type;
+			_componentType = componentType;
 			_methodData = methodData;
 			_target = target;
-			_cachingComponent = new CachingComponent(cache, cacheKey, type, methodData);
+			_cachingComponent = new CachingComponent(cache, cacheKey, componentType, methodData);
 		}
 
 		public object Intercept(InvocationInfo info)
@@ -62,8 +62,8 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private object interceptUsingCache(MethodInfo method, object[] arguments)
 		{
-			var key = _cacheKey.Key(_type, _cachingComponent, method, arguments);
-			var eventInformation = new EventInformation(key, _type, method, arguments);
+			var key = _cacheKey.Key(_componentType, _cachingComponent, method, arguments);
+			var eventInformation = new EventInformation(key, _componentType.ConfiguredType, method, arguments);
 			if (key == null)
 			{
 				return callOriginalMethod(method, arguments);

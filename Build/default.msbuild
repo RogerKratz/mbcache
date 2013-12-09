@@ -5,7 +5,7 @@
 		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
 		<DeployFolderNuget>$(MSBuildProjectDirectory)\output</DeployFolderNuget>
 		<PackageFolder>$(SourceDir)\packages</PackageFolder>
-		<MSBuildCommunityTasksPath>$(PackageFolder)\MSBuildTasks.1.4.0.45\tools</MSBuildCommunityTasksPath>
+		<MSBuildCommunityTasksPath>$(PackageFolder)\MSBuildTasks.$(msbuildtasksVersion)\tools</MSBuildCommunityTasksPath>
 	</PropertyGroup>
 	<Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
 	

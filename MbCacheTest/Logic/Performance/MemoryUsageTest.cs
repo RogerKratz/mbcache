@@ -15,7 +15,7 @@ namespace MbCacheTest.Logic.Performance
 
 		protected override void TestSetup()
 		{
-			CacheBuilder.For<ObjectWithParameterReturningFixedValue>()
+			CacheBuilder.For<ObjectWithParameterReturningFixedValue>("Foo")
 				.CacheMethod(x => x.DoIt(0))
 				.AsImplemented();
 			component = CacheBuilder.BuildFactory().Create<ObjectWithParameterReturningFixedValue>();
@@ -34,6 +34,7 @@ namespace MbCacheTest.Logic.Performance
 				}				
 			}
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
+			//should be no more than 22mb
 			Console.WriteLine(memUsage / 1000 / 1000 + "mb");
 		}
 	}

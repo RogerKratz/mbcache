@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Core;
+using MbCache.Logic;
 
 namespace MbCache.Configuration
 {
@@ -33,7 +34,7 @@ namespace MbCache.Configuration
 		/// Null is returned if this type is configured but shouldn't be
 		/// invalidated at this time.
 		/// </returns>
-		string Key(Type type);
+		string Key(ComponentType type);
 
 		/// <summary>
 		/// Creates a cache key for a specific component.
@@ -50,7 +51,7 @@ namespace MbCache.Configuration
 		/// Null is returned if the component is configured but shouldn't be
 		/// invalidated at this time.
 		/// </returns>
-		string Key(Type type, ICachingComponent component);
+		string Key(ComponentType type, ICachingComponent component);
 
 		/// <summary>
 		/// Creates a cache key for a specific method.
@@ -70,7 +71,7 @@ namespace MbCache.Configuration
 		/// Null is returned if the method is configured but shouldn't be 
 		/// invalidated at this time.
 		/// </returns>
-		string Key(Type type, ICachingComponent component, MethodInfo method);
+		string Key(ComponentType type, ICachingComponent component, MethodInfo method);
 
 		/// <summary>
 		/// Creates a cache key for a specific component with specific parameters.
@@ -94,6 +95,6 @@ namespace MbCache.Configuration
 		/// Null is returned if the method is configured but with these specific parameters
 		/// shouldn't be added (or invalidated) from the cache.
 		/// </returns>
-		string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+		string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
 	}
 }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using MbCache.Core;
+using MbCache.Logic;
 using log4net;
 
 namespace MbCache.Configuration
@@ -29,17 +30,17 @@ namespace MbCache.Configuration
 		private const string separator = "|";
 		private const string separatorParameterValue = "$";
 
-		public string Key(Type type)
+		public string Key(ComponentType type)
 		{
 			return string.Concat(KeyStart, type);
 		}
 
-		public string Key(Type type, ICachingComponent component)
+		public string Key(ComponentType type, ICachingComponent component)
 		{
 			return string.Concat(Key(type), separator, component.UniqueId);
 		}
 
-		public string Key(Type type, ICachingComponent component, MethodInfo method)
+		public string Key(ComponentType type, ICachingComponent component, MethodInfo method)
 		{
 			var ret = new StringBuilder(Key(type, component));
 			ret.Append(separator);
@@ -52,7 +53,7 @@ namespace MbCache.Configuration
 			return ret.ToString();
 		}
 
-		public string Key(Type type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+		public string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
 			var ret = new StringBuilder(Key(type, component, method));
 			ret.Append(separator);

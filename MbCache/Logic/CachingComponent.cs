@@ -11,16 +11,16 @@ namespace MbCache.Logic
 	{
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
-		private readonly Type _definedType;
+		private readonly ComponentType _componentType;
 
 		public CachingComponent(CacheAdapter cache,
 										ICacheKey cacheKey,
-										Type definedType,
+										ComponentType componentType,
 										ConfigurationForType details)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
-			_definedType = definedType;
+			_componentType = componentType;
 			UniqueId = details.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
 		}
 
@@ -28,8 +28,8 @@ namespace MbCache.Logic
 
 		public void Invalidate()
 		{
-			var cacheKey = _cacheKey.Key(_definedType, this);
-			var deleteArgs = new EventInformation(cacheKey, _definedType, null, null);
+			var cacheKey = _cacheKey.Key(_componentType, this);
+			var deleteArgs = new EventInformation(cacheKey, _componentType.ConfiguredType, null, null);
 			_cache.Delete(deleteArgs);
 		}
 
@@ -41,14 +41,14 @@ namespace MbCache.Logic
 			if (matchParameterValues && methodInfo.GetParameters().Any())
 			{
 				arguments = ExpressionHelper.ExtractArguments(method.Body).ToArray();
-				key = _cacheKey.Key(_definedType, this, methodInfo, arguments);
+				key = _cacheKey.Key(_componentType, this, methodInfo, arguments);
 			}
 			else
 			{
 				arguments = new object[0];
-				key = _cacheKey.Key(_definedType, this, methodInfo);
+				key = _cacheKey.Key(_componentType, this, methodInfo);
 			}
-			var deleteInfo = new EventInformation(key, _definedType, methodInfo, arguments);
+			var deleteInfo = new EventInformation(key, _componentType.ConfiguredType, methodInfo, arguments);
 			_cache.Delete(deleteInfo);
 		}
 	}

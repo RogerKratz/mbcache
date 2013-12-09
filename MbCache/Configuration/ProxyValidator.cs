@@ -17,14 +17,14 @@ namespace MbCache.Configuration
 		{
 			checkCachedMethodsAreVirtual(configurationForType);
 			if (!_proxyFactory.AllowNonVirtualMember)
-				checkAccessibleMembersAreVirtual(configurationForType.ConcreteType);
+				checkAccessibleMembersAreVirtual(configurationForType.ComponentType.ConcreteType);
 		}
 
 		private void checkCachedMethodsAreVirtual(ConfigurationForType configurationForType)
 		{
 			foreach (var methodInfo in configurationForType.CachedMethods)
 			{
-				checkMethod(configurationForType.ConcreteType, methodInfo);
+				checkMethod(configurationForType.ComponentType.ConcreteType, methodInfo);
 			}
 		}
 

@@ -13,19 +13,19 @@ namespace MbCache.ProxyImpl.Castle
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ILockObjectGenerator _lockObjectGenerator;
-		private readonly Type _type;
+		private readonly ComponentType _componentType;
 		private readonly ConfigurationForType _methods;
 
 		public CacheInterceptor(CacheAdapter cache, 
 										ICacheKey cacheKey, 
-										ILockObjectGenerator lockObjectGenerator, 
-										Type type,
+										ILockObjectGenerator lockObjectGenerator,
+										ComponentType componentType,
 										ConfigurationForType methods)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_lockObjectGenerator = lockObjectGenerator;
-			_type = type;
+			_componentType = componentType;
 			_methods = methods;
 		}
 
@@ -47,14 +47,14 @@ namespace MbCache.ProxyImpl.Castle
 			var proxy = (ICachingComponent)invocation.Proxy;
 			var arguments = invocation.Arguments;
 
-			var key = _cacheKey.Key(_type, proxy, method, arguments);
+			var key = _cacheKey.Key(_componentType, proxy, method, arguments);
 			if (key == null)
 			{
 				invocation.Proceed();
 			}
 			else
 			{
-				var eventInfo = new EventInformation(key, _type, invocation.Method, invocation.Arguments);
+				var eventInfo = new EventInformation(key, _componentType.ConfiguredType, invocation.Method, invocation.Arguments);
 				if (tryGetValueFromCache(invocation, eventInfo))
 					return;
 

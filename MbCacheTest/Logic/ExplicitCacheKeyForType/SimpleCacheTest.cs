@@ -13,7 +13,7 @@ namespace MbCacheTest.Logic.ExplicitCacheKeyForType
 
 		protected override void TestSetup()
 		{
-			CacheBuilder.For<ReturningRandomNumbers>()
+			CacheBuilder.For<ReturningRandomNumbers>("someKey")
 				 .CacheMethod(c => c.CachedNumber())
 				 .CacheMethod(c => c.CachedNumber2())
 				 .As<IReturningRandomNumbers>();

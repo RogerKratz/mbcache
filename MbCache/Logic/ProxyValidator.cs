@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using MbCache.Logic;
+using MbCache.Configuration;
 
-namespace MbCache.Configuration
+namespace MbCache.Logic
 {
 	public class ProxyValidator
 	{

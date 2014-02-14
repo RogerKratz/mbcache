@@ -18,8 +18,7 @@ namespace MbCache.Core
 		/// <typeparam name="T"></typeparam>
 		/// <param name="parameters">The parameters.</param>
 		/// <returns></returns>
-		T Create<T>(params object[] parameters)
-			where T : class;
+		T Create<T>(params object[] parameters) where T : class;
 
 		/// <summary>
 		/// Invalidates all cached methods for type T.

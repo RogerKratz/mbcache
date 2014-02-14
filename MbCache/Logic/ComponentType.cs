@@ -8,7 +8,6 @@ namespace MbCache.Logic
 		public ComponentType(Type concreteType, string typeAsCacheKeyString)
 		{
 			ConcreteType = concreteType;
-			//todo: lägg till mbcache| för att ha samma som förrut
 			TypeAsCacheKeyString = typeAsCacheKeyString ?? concreteType.ToString();
 		}
 

@@ -22,8 +22,10 @@ namespace MbCache.Core.Events
 		private string _methodName;
 		public string MethodName()
 		{
+			if (_methodName != null)
+				return _methodName;
 			var method = Method == null ? "[all methods]" : Method.ToString();
-			return _methodName ?? (_methodName = string.Format("{0} on {1}", method, Type.Name));
+			return _methodName = string.Format("{0} on {1}", method, Type.Name);
 		}
 	}
 }

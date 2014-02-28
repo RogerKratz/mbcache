@@ -13,12 +13,20 @@ namespace MbCache.Core
 	public interface IMbCacheFactory
 	{
 		/// <summary>
-		/// Creates the proxy with ctor parameters.
+		/// Creates the cached compoenent with ctor parameters.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="parameters">The parameters.</param>
 		/// <returns></returns>
 		T Create<T>(params object[] parameters) where T : class;
+
+		/// <summary>
+		/// Creates the cached component from a uncached component
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="uncachedComponent"></param>
+		/// <returns></returns>
+		T ToCachedComponent<T>(T uncachedComponent) where T : class;
 
 		/// <summary>
 		/// Invalidates all cached methods for type T.

@@ -32,10 +32,21 @@ namespace MbCache.Logic
 		public T Create<T>(params object[] parameters) where T : class
 		{
 			var type = typeof (T);
-			ConfigurationForType methods;
-			if (_configuredTypes.TryGetValue(type, out methods))
+			ConfigurationForType configurationForType;
+			if (_configuredTypes.TryGetValue(type, out configurationForType))
 			{
-				return _proxyFactory.CreateProxy<T>(_configuredTypes[type], parameters);	
+				return _proxyFactory.CreateProxy<T>(configurationForType, parameters);
+			}
+			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
+		}
+
+		public T ToCachedComponent<T>(T uncachedComponent) where T : class
+		{
+			var type = typeof(T);
+			ConfigurationForType configurationForType;
+			if (_configuredTypes.TryGetValue(type, out configurationForType))
+			{
+				return _proxyFactory.CreateProxyWithTarget(uncachedComponent, configurationForType);
 			}
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}

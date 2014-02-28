@@ -18,5 +18,10 @@ namespace MbCacheTest.Configuration
 		{
 			get { throw new System.NotImplementedException(); }
 		}
+
+		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }

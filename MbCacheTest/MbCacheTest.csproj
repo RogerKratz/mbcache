@@ -100,6 +100,9 @@
     <Compile Include="Logic\Performance\NumberOfCacheEntriesTest.cs" />
     <Compile Include="Logic\ProxyExceptionTest.cs" />
     <Compile Include="Logic\SerializeFactoryTest.cs" />
+    <Compile Include="Logic\Wrap\ClassComponentTest.cs" />
+    <Compile Include="Logic\Wrap\GeneralTests.cs" />
+    <Compile Include="Logic\Wrap\InterfaceComponentTest.cs" />
     <Compile Include="LogSpy.cs" />
     <Compile Include="Logic\CacheKeyTest.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />

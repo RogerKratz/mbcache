@@ -1,5 +1,10 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- vNext
+* T IProxyFactory.CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) added
+* T IMbCacheFactory.ToCachedComponent<T>(T uncachedComponent) added
+
+
 - Version 2.4 (v 2.4.0.0), 2013-12-09
 * ICacheKey now accepts ComponentType as inparameters instead of System.Type
 

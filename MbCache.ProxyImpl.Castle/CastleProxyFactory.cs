@@ -47,6 +47,16 @@ namespace MbCache.ProxyImpl.Castle
 			get { return true; }
 		}
 
+		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
+		{
+			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, configurationForType);
+			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
+			options.AddMixinInstance(createCachingComponent(configurationForType));
+			return typeof (T).IsClass ? 
+					generator.CreateClassProxyWithTarget(uncachedComponent, options, cacheInterceptor) : 
+					generator.CreateInterfaceProxyWithTarget(uncachedComponent, options, cacheInterceptor);
+		}
+
 		private ICachingComponent createCachingComponent(ConfigurationForType configurationForType)
 		{
 			return new CachingComponent(_cache, _cacheKey, configurationForType);

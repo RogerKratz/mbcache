@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- vNext
+- Version 2.5 (v 2.5.0.0), 2014-02-28
 * T IProxyFactory.CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) added
 * T IMbCacheFactory.ToCachedComponent<T>(T uncachedComponent) added
 

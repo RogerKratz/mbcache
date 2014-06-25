@@ -18,6 +18,7 @@
 	</metadata>
 	<files>
 		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.dll" target="lib\net40" />
+		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.xml" target="lib\net40" />
 		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.ProxyImpl.LinFu.dll" target="lib\net40" />
 		<file src="..\MbCache\**\*.cs" target="src"/>
 		<file src="..\MbCache.ProxyImpl.LinFu\*.cs" target="src"/>

@@ -15,7 +15,7 @@ namespace MbCacheTest.Logic
 
 		protected override void TestSetup()
 		{
-			CacheBuilder.For<someEntity>()
+			CacheBuilder.For<SomeEntity>()
 				.CacheMethod(c => c.Run(0, 0))
 				.CacheMethod(c => c.Run(null, null))
 				.AsImplemented();
@@ -25,12 +25,12 @@ namespace MbCacheTest.Logic
 		[Test]
 		public void ShouldNotShareCacheBasedOnParameterNames()
 		{
-			var obj = factory.Create<someEntity>();
+			var obj = factory.Create<SomeEntity>();
 			obj.Run(1, 2)
 				.Should().Not.Be.EqualTo(obj.Run("1", "2"));
 		}
 
-		public class someEntity
+		public class SomeEntity
 		{
 			public virtual Guid Run(int a, int b)
 			{

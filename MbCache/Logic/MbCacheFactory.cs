@@ -90,12 +90,12 @@ namespace MbCache.Logic
 			ConfigurationForType methods;
 			if (!_configuredTypes.TryGetValue(type, out methods))
 			{
-				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));				
+				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 			}
 			methods.EnabledCache = false;
 			if (evictCacheEntries)
 			{
-				Invalidate<T>();				
+				Invalidate<T>();
 			}
 		}
 

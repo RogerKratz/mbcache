@@ -10,7 +10,7 @@
 		</description>
 		<language>en-US</language>
 		<tags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop, library, framework</tags>
-		<projectUrl>http://code.google.com/p/mbcache/</projectUrl>
+		<projectUrl>https://github.com/RogerKratz/mbcache</projectUrl>
 		<dependencies>
 			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />
 			<dependency id="log4net" version="2.0" />

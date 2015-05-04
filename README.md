@@ -34,7 +34,7 @@ public SomeType Calculate()
   return someExpansiveOperation();  
 }
 ```
-  1. Tell MbCache at start up what methods to cache (preferably together with your favorite ioc container).
+  2. Tell MbCache at start up what methods to cache (preferably together with your favorite ioc container).
 ```
 var builder = new CacheBuilder(new LinFuProxyFactory());
 builder.For<Calculator>()
@@ -42,7 +42,7 @@ builder.For<Calculator>()
     .As<ICalculator>();
 _factory = builder.BuildFactory();
 ```
-  1. Use your objects. ICalculate.Calculate() will now use caching.
+  3. Use your objects. ICalculate.Calculate() will now use caching.
 ```
 var yourService =_factory.Create<ICalculator>()
 var value = yourService.Calculate();

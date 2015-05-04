@@ -27,23 +27,26 @@ It sure works. There are some drawback though:
 There's an alternative that solves this for you - MbCache!
 
 
-  1. Write your business logic. No need to mess this up with cache logic.
-```
-public SomeType Calculate()
-{
-  return someExpansiveOperation();  
-}
-```
-  2. Tell MbCache at start up what methods to cache (preferably together with your favorite ioc container).
-```
-var builder = new CacheBuilder(new LinFuProxyFactory());
-builder.For<Calculator>()
-    .CacheMethod(c => c.Calculate())
-    .As<ICalculator>();
-_factory = builder.BuildFactory();
-```
-  3. Use your objects. ICalculate.Calculate() will now use caching.
-```
-var yourService =_factory.Create<ICalculator>()
-var value = yourService.Calculate();
-```
+1. Write your business logic. No need to mess this up with cache logic.
+
+    ```
+    public SomeType Calculate()
+    {
+      return someExpansiveOperation();  
+    }
+    ```
+2. Tell MbCache at start up what methods to cache (preferably together with your favorite ioc container).
+
+    ```
+    var builder = new CacheBuilder(new LinFuProxyFactory());
+    builder.For<Calculator>()
+      .CacheMethod(c => c.Calculate())
+      .As<ICalculator>();
+    _factory = builder.BuildFactory();
+    ```
+3. Use your objects. ICalculate.Calculate() will now use caching.
+
+    ```
+    var yourService =_factory.Create<ICalculator>()
+    var value = yourService.Calculate();
+    ```

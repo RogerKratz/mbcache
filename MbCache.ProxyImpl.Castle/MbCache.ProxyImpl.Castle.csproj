@@ -109,7 +109,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>xcopy $(TargetPath) $(ProjectDir)\..\mbcachetest\$(OutDir) /y
-xcopy $(ProjectDir)\..\packages\Castle.Core.3.3.3\lib\net35\castle.*  $(ProjectDir)\..\mbcachetest\$(OutDir) /y</PostBuildEvent>
+xcopy $(ProjectDir)\..\packages\Castle.Core.3.3.3\lib\net40-client\castle.*  $(ProjectDir)\..\mbcachetest\$(OutDir) /y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

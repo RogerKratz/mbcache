@@ -66,6 +66,7 @@
     <Reference Include="SharpTestsEx, Version=1.1.1.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpTestsEx.1.1.1\lib\SharpTestsEx.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -88,6 +89,7 @@
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\CacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\CachePropertyTest.cs" />
+    <Compile Include="Logic\Concurrency\CacheInvalidationOfMutatedListTest.cs" />
     <Compile Include="Logic\EnableDisable\DisableTest.cs" />
     <Compile Include="Logic\ExplicitCacheKeyForType\DontAllowDuplicateTest.cs" />
     <Compile Include="Logic\ExplicitCacheKeyForType\SimpleCacheTest.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Events\Statistic\ThreadingTest.cs" />
     <Compile Include="SimpleTest.cs" />
     <Compile Include="FullTest.cs" />
+    <Compile Include="TestData\ObjectWithMutableList.cs" />
     <Compile Include="TestData\HasNonVirtualMethod.cs" />
     <Compile Include="TestData\ObjectOfGenericType.cs" />
     <Compile Include="TestData\ObjectReturningNewGuidsNoInterface.cs" />

@@ -40,16 +40,15 @@ namespace MbCache.Configuration
 			checkAllImplementationAndMethodsAreOk();
 			if (_cache == null)
 			{
-				_cache = new InMemoryCache(20);
+				_cache = new InMemoryCache(lockObjectGeneratorOrNullObject(), 20);
 			}
 			if (_cacheKey == null)
 			{
 				_cacheKey = new ToStringCacheKey();
 			}
 			var events = new EventListenersCallback(_eventListeners);
-			var cacheAdapter = new CacheAdapter(_cache, lockObjectGeneratorOrNullObject());
 			_cache.Initialize(events, _cacheKey);
-			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _configuredTypes);
+			return new MbCacheFactory(_proxyFactory, new CacheAdapter(_cache), _cacheKey, _configuredTypes);
 		}
 
 		/// <summary>

@@ -1,3 +1,4 @@
+using System;
 using MbCache.Core;
 using MbCache.Core.Events;
 
@@ -14,20 +15,17 @@ namespace MbCache.Configuration
 		void Initialize(EventListenersCallback eventListenersCallback, ICacheKeyUnwrapper cacheKeyUnwrapper);
 
 		/// <summary>
-		/// Gets the cached object.
+		/// Gets cache entry from cache. If not exists, runs <paramref name="originalMethod" /> and puts in cache.
 		/// </summary>
-		/// <param name="eventInformation">The <see cref="EventInformation"/> of this cache entry</param>
-		CachedItem Get(EventInformation eventInformation);
+		/// <param name="eventInformation"></param>
+		/// <param name="originalMethod"></param>
+		/// <returns></returns>
+		CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<object> originalMethod);
 
 		/// <summary>
-		/// Puts <paramref name="cachedItem"/> to the cache.
+		/// Deletes cache entries from cache.
 		/// </summary>
-		void Put(CachedItem cachedItem);
-
-		/// <summary>
-		/// Deletes all cache entries starting with <paramref name="keyStartingWith"/>.
-		/// </summary>
-		/// <param name="keyStartingWith">The key to search for.</param>
-		void Delete(string keyStartingWith);
+		/// <param name="eventInformation"></param>
+		void Delete(EventInformation eventInformation);
 	}
 }

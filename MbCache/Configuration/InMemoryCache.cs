@@ -9,14 +9,16 @@ namespace MbCache.Configuration
 	[Serializable]
 	public class InMemoryCache : ICache
 	{
+		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly int _timeoutMinutes;
 		private ICacheKeyUnwrapper _cacheKeyUnwrapper;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
 		private EventListenersCallback _eventListenersCallback;
 
-		public InMemoryCache(int timeoutMinutes)
+		public InMemoryCache(ILockObjectGenerator lockObjectGenerator, int timeoutMinutes)
 		{
+			_lockObjectGenerator = lockObjectGenerator;
 			_timeoutMinutes = timeoutMinutes;
 		}
 
@@ -26,34 +28,67 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem Get(EventInformation eventInformation)
+		public CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<object> originalMethod)
 		{
-			var ret = (CachedItem)cache.Get(eventInformation.CacheKey);
-			if (ret == null)
+			var cachedItem = (CachedItem)cache.Get(eventInformation.CacheKey);
+			if (cachedItem != null)
 			{
-				_eventListenersCallback.OnGetUnsuccessful(eventInformation);				
+				_eventListenersCallback.OnGetSuccessful(cachedItem);
+				return cachedItem;
+			}
+
+			var locker = lockObject(eventInformation);
+			if (locker == null)
+			{
+				_eventListenersCallback.OnGetUnsuccessful(eventInformation);
+				return executeAndPutInCache(eventInformation, originalMethod);
+			}
+			lock (locker)
+			{
+				_eventListenersCallback.OnGetUnsuccessful(eventInformation);
+				var cachedValue2 = (CachedItem)cache.Get(eventInformation.CacheKey);
+				return cachedValue2 ?? executeAndPutInCache(eventInformation, originalMethod);
+			}
+		}
+
+		public void Delete(EventInformation eventInformation)
+		{
+			var locker = lockObject(eventInformation);
+			if (locker == null)
+			{
+				cache.Remove(eventInformation.CacheKey);
 			}
 			else
 			{
-				_eventListenersCallback.OnGetSuccessful(ret);
+				lock (locker)
+				{
+					cache.Remove(eventInformation.CacheKey);
+				}
 			}
-			return ret;
 		}
 
-		public void Put(CachedItem cachedItem)
+		private object lockObject(EventInformation eventInformation)
 		{
+			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
+		}
+
+		private CachedItem executeAndPutInCache(EventInformation eventInformation, Func<object> originalMethod)
+		{
+			var methodResult = originalMethod();
+			var cachedItem = new CachedItem(eventInformation, methodResult);
 			var key = cachedItem.EventInformation.CacheKey;
 			var unwrappedKeys = _cacheKeyUnwrapper.UnwrapKey(key);
 			createDependencies(unwrappedKeys);
 
 			var policy = new CacheItemPolicy
-								{
-									AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
-									RemovedCallback = arguments => _eventListenersCallback.OnDelete(cachedItem)
-								};
+			{
+				AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
+				RemovedCallback = arguments => _eventListenersCallback.OnDelete(cachedItem)
+			};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));
 			cache.Set(key, cachedItem, policy);
 			_eventListenersCallback.OnPut(cachedItem);
+			return cachedItem;
 		}
 
 		private static void createDependencies(IEnumerable<string> unwrappedKeys)
@@ -63,11 +98,6 @@ namespace MbCache.Configuration
 				var policy = new CacheItemPolicy { Priority = CacheItemPriority.NotRemovable };
 				cache.Add(key, dependencyValue, policy);
 			}
-		}
-
-		public void Delete(string keyStartingWith)
-		{
-			cache.Remove(keyStartingWith);
 		}
 	}
 }

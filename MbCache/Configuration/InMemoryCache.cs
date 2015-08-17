@@ -37,13 +37,7 @@ namespace MbCache.Configuration
 				return cachedItem;
 			}
 
-			var locker = lockObject(eventInformation);
-			if (locker == null)
-			{
-				_eventListenersCallback.OnGetUnsuccessful(eventInformation);
-				return executeAndPutInCache(eventInformation, originalMethod);
-			}
-			lock (locker)
+			lock (lockObject(eventInformation))
 			{
 				_eventListenersCallback.OnGetUnsuccessful(eventInformation);
 				var cachedValue2 = (CachedItem)cache.Get(eventInformation.CacheKey);
@@ -53,17 +47,9 @@ namespace MbCache.Configuration
 
 		public void Delete(EventInformation eventInformation)
 		{
-			var locker = lockObject(eventInformation);
-			if (locker == null)
+			lock (lockObject(eventInformation))
 			{
-				cache.Remove(eventInformation.CacheKey);
-			}
-			else
-			{
-				lock (locker)
-				{
 					cache.Remove(eventInformation.CacheKey);
-				}
 			}
 		}
 

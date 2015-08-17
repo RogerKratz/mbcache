@@ -40,7 +40,7 @@ namespace MbCache.Configuration
 			checkAllImplementationAndMethodsAreOk();
 			if (_cache == null)
 			{
-				_cache = new InMemoryCache(lockObjectGeneratorOrNullObject(), 20);
+				_cache = new InMemoryCache(new FixedNumberOfLockObjects(50), 20);
 			}
 			if (_cacheKey == null)
 			{
@@ -145,11 +145,6 @@ namespace MbCache.Configuration
 		{
 			_cacheKey = cacheKey;
 			return this;
-		}
-
-		private ILockObjectGenerator lockObjectGeneratorOrNullObject()
-		{
-			return _lockObjectGenerator ?? new nullLockObjectGenerator();
 		}
 
 		[Serializable]

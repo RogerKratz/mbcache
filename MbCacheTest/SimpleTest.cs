@@ -20,12 +20,9 @@ namespace MbCacheTest
 		[SetUp]
 		public void Setup()
 		{
-			var lockObjectGenerator = CreateLockObjectGenerator();
 			CacheBuilder = new CacheBuilder(ProxyFactory)
 					.SetCache(CreateCache())
 					.SetCacheKey(CreateCacheKey());
-			if (lockObjectGenerator != null)
-				CacheBuilder.SetLockObjectGenerator(lockObjectGenerator);
 			TestSetup();
 		}
 
@@ -43,11 +40,6 @@ namespace MbCacheTest
 		protected virtual ICacheKey CreateCacheKey()
 		{
 			return new ToStringCacheKey();
-		}
-
-		protected virtual ILockObjectGenerator CreateLockObjectGenerator()
-		{
-			return null;
 		}
 	}
 }

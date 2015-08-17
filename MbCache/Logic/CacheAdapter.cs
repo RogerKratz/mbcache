@@ -1,5 +1,4 @@
 using System;
-using MbCache.Core;
 using MbCache.Core.Events;
 using MbCache.Configuration;
 

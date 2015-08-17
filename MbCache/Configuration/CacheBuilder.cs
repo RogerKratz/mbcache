@@ -17,7 +17,6 @@ namespace MbCache.Configuration
 		private ICacheKey _cacheKey;
 		private readonly ProxyValidator _proxyValidator;
 		private readonly ICollection<IEventListener> _eventListeners;
-		private ILockObjectGenerator _lockObjectGenerator;
 
 		public CacheBuilder(IProxyFactory proxyFactory)
 		{
@@ -115,17 +114,6 @@ namespace MbCache.Configuration
 		}
 
 		/// <summary>
-		/// Sets the <see cref="ILockObjectGenerator"/> to be used.
-		/// </summary>
-		/// <param name="lockObjectGenerator"></param>
-		/// <returns></returns>
-		public CacheBuilder SetLockObjectGenerator(ILockObjectGenerator lockObjectGenerator)
-		{
-			_lockObjectGenerator = lockObjectGenerator;
-			return this;
-		}
-
-		/// <summary>
 		/// Sets the <see cref="ICache"/> to be used.
 		/// </summary>
 		/// <param name="cache"></param>
@@ -145,15 +133,6 @@ namespace MbCache.Configuration
 		{
 			_cacheKey = cacheKey;
 			return this;
-		}
-
-		[Serializable]
-		private class nullLockObjectGenerator : ILockObjectGenerator
-		{
-			public object GetFor(string key)
-			{
-				return null;
-			}
 		}
 	}
 }

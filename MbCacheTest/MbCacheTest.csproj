@@ -73,7 +73,6 @@
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caches\LockObjectGeneratorTest.cs" />
     <Compile Include="Caches\Tools.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Configuration\DefaultConfigurationTest.cs" />

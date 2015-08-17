@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using log4net;
-using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
@@ -13,11 +12,6 @@ namespace MbCacheTest.Logic.Concurrency
 	{
 		public CacheInvalidationOfMutatedListTest(string proxyTypeString) : base(proxyTypeString)
 		{
-		}
-
-		protected override ILockObjectGenerator CreateLockObjectGenerator()
-		{
-			return new FixedNumberOfLockObjects(40);
 		}
 
 		protected override void TestSetup()

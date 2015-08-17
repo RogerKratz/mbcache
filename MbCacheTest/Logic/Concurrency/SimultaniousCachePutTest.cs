@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -9,11 +8,6 @@ namespace MbCacheTest.Logic.Concurrency
 	public class SimultaniousCachePutTest : FullTest
 	{
 		public SimultaniousCachePutTest(string proxyTypeString) : base(proxyTypeString) { }
-
-		protected override ILockObjectGenerator CreateLockObjectGenerator()
-		{
-			return new FixedNumberOfLockObjects(40);
-		}
 
 		[Test]
 		public void ShouldNotMakeTheSameCallMoreThanOnce()

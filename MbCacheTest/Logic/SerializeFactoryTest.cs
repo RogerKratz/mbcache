@@ -20,8 +20,7 @@ namespace MbCacheTest.Logic
 			CacheBuilder.For<ReturningRandomNumbers>()
 				.CacheMethod(c => c.CachedNumber())
 				.CacheMethod(c => c.CachedNumber2())
-				.As<IReturningRandomNumbers>()
-				.SetLockObjectGenerator(new FixedNumberOfLockObjects(10));
+				.As<IReturningRandomNumbers>();
 
 			var factoryTemp = CacheBuilder.BuildFactory();
 			factory = serializeAndDeserialize(factoryTemp);

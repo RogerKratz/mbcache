@@ -24,7 +24,6 @@ namespace MbCache.ProxyImpl.Castle
 		{
 		}
 
-
 		public void MethodsInspected()
 		{
 		}

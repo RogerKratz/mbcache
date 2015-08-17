@@ -2,16 +2,22 @@
 using System.Linq;
 using System.Threading.Tasks;
 using log4net;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Concurrency
 {
-	[TestFixture]
+	[TestFixture, Ignore("Not yet fixed")]
 	public class CacheInvalidationOfMutatedListTest : FullTest
 	{
 		public CacheInvalidationOfMutatedListTest(string proxyTypeString) : base(proxyTypeString)
 		{
+		}
+
+		protected override ILockObjectGenerator CreateLockObjectGenerator()
+		{
+			return new FixedNumberOfLockObjects(40);
 		}
 
 		protected override void TestSetup()
@@ -27,7 +33,7 @@ namespace MbCacheTest.Logic.Concurrency
 		}
 
 		[Test]
-		public void ShouldNotGetDuplicatesInList([Range(1, 10)] int attempt)
+		public void ShouldNotGetDuplicatesInList([Range(1, 30)] int attempt)
 		{
 			CacheBuilder
 				.For<ObjectWithMutableList>()

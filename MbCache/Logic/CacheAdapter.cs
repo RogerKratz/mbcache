@@ -48,12 +48,6 @@ namespace MbCache.Logic
 			return methodResult;
 		}
 
-		private object lockObject(EventInformation eventInformation)
-		{
-			//TODO: lock object could be optimized
-			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
-		}
-
 		public void Delete(EventInformation eventInformation)
 		{
 			if (eventInformation.CacheKey == null) 
@@ -66,11 +60,17 @@ namespace MbCache.Logic
 			}
 			else
 			{
-				lock (_lockObjectGenerator.GetFor(eventInformation.Type.FullName))
+				lock (locker)
 				{
 					_cache.Delete(eventInformation.CacheKey);
 				}
 			}
+		}
+
+		private object lockObject(EventInformation eventInformation)
+		{
+			//TODO: lock object could be optimized
+			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
 		}
 
 		private object getFromCache(EventInformation eventInformation)

@@ -23,17 +23,17 @@ namespace MbCache.Core.Events
 			log.DebugFormat(cacheMissLogMessage, eventInformation.MethodName(), eventInformation.CacheKey);
 		}
 
-		public void OnGetSuccessful(CachedItem cachedItem)
+		public void OnCacheHit(CachedItem cachedItem)
 		{
 			log.DebugFormat(cacheHitLogMessage, cachedItem.EventInformation.MethodName(), cachedItem.EventInformation.CacheKey);
 		}
 
-		public void OnDelete(CachedItem cachedItem)
+		public void OnCacheRemoval(CachedItem cachedItem)
 		{
 			log.DebugFormat(deleteMessage, cachedItem.EventInformation.MethodName(), cachedItem.EventInformation.CacheKey);
 		}
 
-		public void OnPut(CachedItem cachedItem)
+		public void OnCacheMiss(CachedItem cachedItem)
 		{
 			log.DebugFormat(putMessage, cachedItem.CachedValue, cachedItem.EventInformation.MethodName(), cachedItem.EventInformation.CacheKey);
 		}

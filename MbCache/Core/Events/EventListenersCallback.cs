@@ -13,35 +13,27 @@ namespace MbCache.Core.Events
 			_eventListeners = eventListeners;
 		}
 
-		public void OnDelete(CachedItem cachedItem)
+		public void OnCacheRemoval(CachedItem cachedItem)
 		{
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnDelete(cachedItem);
+				eventHandler.OnCacheRemoval(cachedItem);
 			}
 		}
 
-		public void OnPut(CachedItem cachedItem)
+		public void OnCacheMiss(CachedItem cachedItem)
 		{
 			foreach (var eventHandler in _eventListeners)
 			{
-				eventHandler.OnPut(cachedItem);
+				eventHandler.OnCacheMiss(cachedItem);
 			}
 		}
 
-		public void OnGetSuccessful(CachedItem cachedItem)
+		public void OnCacheHit(CachedItem cachedItem)
 		{
 			foreach (var eventListener in _eventListeners)
 			{
-				eventListener.OnGetSuccessful(cachedItem);
-			}
-		}
-
-		public void OnGetUnsuccessful(EventInformation eventInformation)
-		{
-			foreach (var eventListener in _eventListeners)
-			{
-				eventListener.OnGetUnsuccessful(eventInformation);
+				eventListener.OnCacheHit(cachedItem);
 			}
 		}
 	}

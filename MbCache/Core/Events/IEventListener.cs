@@ -6,23 +6,18 @@
 	public interface IEventListener
 	{
 		/// <summary>
-		/// Called after an unsuccessful Get in cache.
-		/// </summary>
-		void OnGetUnsuccessful(EventInformation eventInformation);
-
-		/// <summary>
 		/// Called after a successful Get in cache.
 		/// </summary>
-		void OnGetSuccessful(CachedItem cachedItem);
+		void OnCacheHit(CachedItem cachedItem);
 
 		/// <summary>
 		/// Called after cache entries has been invalidated.
 		/// </summary>
-		void OnDelete(CachedItem cachedItem);
+		void OnCacheRemoval(CachedItem cachedItem);
 
 		/// <summary>
 		/// Called after a cache miss and the target's returned value has been put into the cache.
 		/// </summary>
-		void OnPut(CachedItem cachedItem);
+		void OnCacheMiss(CachedItem cachedItem);
 	}
 }

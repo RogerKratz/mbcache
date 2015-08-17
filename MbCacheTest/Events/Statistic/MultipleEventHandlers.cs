@@ -25,7 +25,6 @@ namespace MbCacheTest.Events.Statistic
 			eventListenerForMultiple.FirstCallOnDelete = true;
 			eventListenerForMultiple.FirstCallOnGetSuccessful = true;
 			eventListenerForMultiple.FirstCallOnPut = true;
-			eventListenerForMultiple.FirstCallOnGetUnsuccessful = true;
 
 			CacheBuilder
 				.For<ReturningRandomNumbers>()
@@ -50,15 +49,6 @@ namespace MbCacheTest.Events.Statistic
 			thirdEventListener.SuccessfulGetWasCalled.Should().Be.True();
 		}
 
-
-		[Test]
-		public void ShouldHaveCalledGetUnsuccessful()
-		{
-			firstEventListener.UnsuccessfulGetWasCalled.Should().Be.True();
-			secondEventListener.UnsuccessfulGetWasCalled.Should().Be.True();
-			thirdEventListener.UnsuccessfulGetWasCalled.Should().Be.True();
-		}
-
 		[Test]
 		public void ShouldHaveCalledPut()
 		{
@@ -81,7 +71,6 @@ namespace MbCacheTest.Events.Statistic
 			firstEventListener.FirstDelete.Should().Be.True();
 			firstEventListener.FirstGetSuccessful.Should().Be.True();
 			firstEventListener.FirstPut.Should().Be.True();
-			firstEventListener.FirstGetUnsuccessful.Should().Be.True();
 		}
 
 		[Test]
@@ -89,12 +78,10 @@ namespace MbCacheTest.Events.Statistic
 		{
 			secondEventListener.FirstDelete.Should().Be.False();
 			secondEventListener.FirstGetSuccessful.Should().Be.False();
-			secondEventListener.FirstGetUnsuccessful.Should().Be.False();
 			secondEventListener.FirstPut.Should().Be.False();
 
 			thirdEventListener.FirstDelete.Should().Be.False();
 			thirdEventListener.FirstGetSuccessful.Should().Be.False();
-			thirdEventListener.FirstGetUnsuccessful.Should().Be.False();
 			thirdEventListener.FirstPut.Should().Be.False();
 		}
 
@@ -103,29 +90,16 @@ namespace MbCacheTest.Events.Statistic
 			public static bool FirstCallOnGetSuccessful;
 			public static bool FirstCallOnPut;
 			public static bool FirstCallOnDelete;
-			public static bool FirstCallOnGetUnsuccessful;
 
 			public bool FirstGetSuccessful;
-			public bool FirstGetUnsuccessful;
 			public bool FirstPut;
 			public bool FirstDelete;
 
 			public bool SuccessfulGetWasCalled;
-			public bool UnsuccessfulGetWasCalled;
 			public bool PutWasCalled;
 			public bool DeleteWasCalled;
 
-			public void OnGetUnsuccessful(EventInformation eventInformation)
-			{
-				UnsuccessfulGetWasCalled = true;
-				if (FirstCallOnGetUnsuccessful)
-				{
-					FirstCallOnGetUnsuccessful = false;
-					FirstGetUnsuccessful = true;
-				}
-			}
-
-			public void OnGetSuccessful(CachedItem cachedItem)
+			public void OnCacheHit(CachedItem cachedItem)
 			{
 				SuccessfulGetWasCalled = true;
 				if (FirstCallOnGetSuccessful)
@@ -135,7 +109,7 @@ namespace MbCacheTest.Events.Statistic
 				}
 			}
 
-			public void OnDelete(CachedItem cachedItem)
+			public void OnCacheRemoval(CachedItem cachedItem)
 			{
 				DeleteWasCalled = true;
 				if (FirstCallOnDelete)
@@ -145,7 +119,7 @@ namespace MbCacheTest.Events.Statistic
 				}
 			}
 
-			public void OnPut(CachedItem cachedItem)
+			public void OnCacheMiss(CachedItem cachedItem)
 			{
 				PutWasCalled = true;
 				if (FirstCallOnPut)

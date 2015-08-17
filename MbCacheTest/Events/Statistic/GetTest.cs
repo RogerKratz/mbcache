@@ -59,8 +59,8 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.CacheKey.Should().EndWith("|$0");
 			eventListener.CachedItems[1].EventInformation.CacheKey.Should().EndWith("|$1");
-			eventListener.EventInformations[0].CacheKey.Should().EndWith("|$0");
-			eventListener.EventInformations[1].CacheKey.Should().EndWith("|$1");
+			eventListener.CachedItems[2].EventInformation.CacheKey.Should().EndWith("|$0");
+			eventListener.CachedItems[3].EventInformation.CacheKey.Should().EndWith("|$1");
 		}
 
 		[Test]
@@ -68,8 +68,8 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 			eventListener.CachedItems[1].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.EventInformations[0].Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.EventInformations[1].Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CachedItems[2].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CachedItems[3].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 		}
 
 		[Test]
@@ -77,8 +77,8 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
 			eventListener.CachedItems[1].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.EventInformations[0].Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.EventInformations[1].Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CachedItems[2].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CachedItems[3].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
 		}
 
 		[Test]
@@ -86,34 +86,30 @@ namespace MbCacheTest.Events.Statistic
 		{
 			eventListener.CachedItems[0].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
 			eventListener.CachedItems[1].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
-			eventListener.EventInformations[0].Arguments.Should().Have.SameSequenceAs(0);
-			eventListener.EventInformations[1].Arguments.Should().Have.SameSequenceAs(1);
+			eventListener.CachedItems[2].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
+			eventListener.CachedItems[3].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
 		}
 
 		private class eventListenerForGet : IEventListener
 		{
 			public readonly IList<CachedItem> CachedItems = new List<CachedItem>();
-			public readonly IList<EventInformation> EventInformations = new List<EventInformation>();
 			public readonly IList<bool> Successful = new List<bool>();
 
-			public void OnGetUnsuccessful(EventInformation eventInformation)
-			{
-				Successful.Add(false);
-				EventInformations.Add(eventInformation);
-			}
 
-			public void OnGetSuccessful(CachedItem cachedItem)
+			public void OnCacheHit(CachedItem cachedItem)
 			{
 				Successful.Add(true);
 				CachedItems.Add(cachedItem);
 			}
 
-			public void OnDelete(CachedItem cachedItem)
+			public void OnCacheRemoval(CachedItem cachedItem)
 			{
 			}
 
-			public void OnPut(CachedItem cachedItem)
+			public void OnCacheMiss(CachedItem cachedItem)
 			{
+				Successful.Add(false);
+				CachedItems.Add(cachedItem);
 			}
 		}
 	}

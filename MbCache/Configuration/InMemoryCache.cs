@@ -33,15 +33,21 @@ namespace MbCache.Configuration
 			var cachedItem = (CachedItem)cache.Get(eventInformation.CacheKey);
 			if (cachedItem != null)
 			{
-				_eventListenersCallback.OnGetSuccessful(cachedItem);
+				_eventListenersCallback.OnCacheHit(cachedItem);
 				return cachedItem;
 			}
 
 			lock (lockObject(eventInformation))
 			{
-				_eventListenersCallback.OnGetUnsuccessful(eventInformation);
-				var cachedValue2 = (CachedItem)cache.Get(eventInformation.CacheKey);
-				return cachedValue2 ?? executeAndPutInCache(eventInformation, originalMethod);
+				var cachedItem2 = (CachedItem)cache.Get(eventInformation.CacheKey);
+				if (cachedItem2 != null)
+				{
+					_eventListenersCallback.OnCacheHit(cachedItem2);
+					return cachedItem2;
+				}
+				var addedValue = executeAndPutInCache(eventInformation, originalMethod);
+				_eventListenersCallback.OnCacheMiss(addedValue);
+				return addedValue;
 			}
 		}
 
@@ -69,11 +75,10 @@ namespace MbCache.Configuration
 			var policy = new CacheItemPolicy
 			{
 				AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
-				RemovedCallback = arguments => _eventListenersCallback.OnDelete(cachedItem)
+				RemovedCallback = arguments => _eventListenersCallback.OnCacheRemoval(cachedItem)
 			};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));
 			cache.Set(key, cachedItem, policy);
-			_eventListenersCallback.OnPut(cachedItem);
 			return cachedItem;
 		}
 

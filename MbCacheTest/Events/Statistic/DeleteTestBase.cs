@@ -60,20 +60,16 @@ namespace MbCacheTest.Events.Statistic
 		{
 			public readonly IList<CachedItem> CachedItems = new List<CachedItem>();
 
-			public void OnGetUnsuccessful(EventInformation eventInformation)
+			public void OnCacheHit(CachedItem cachedItem)
 			{
 			}
 
-			public void OnGetSuccessful(CachedItem cachedItem)
-			{
-			}
-
-			public void OnDelete(CachedItem cachedItem)
+			public void OnCacheRemoval(CachedItem cachedItem)
 			{
 				CachedItems.Add(cachedItem);
 			}
 
-			public void OnPut(CachedItem cachedItem)
+			public void OnCacheMiss(CachedItem cachedItem)
 			{
 			}
 		}

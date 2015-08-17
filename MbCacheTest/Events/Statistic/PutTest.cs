@@ -80,15 +80,15 @@ namespace MbCacheTest.Events.Statistic
 			{
 			}
 
-			public void OnGetSuccessful(CachedItem cachedItem)
+			public void OnCacheHit(CachedItem cachedItem)
 			{
 			}
 
-			public void OnDelete(CachedItem cachedItem)
+			public void OnCacheRemoval(CachedItem cachedItem)
 			{
 			}
 
-			public void OnPut(CachedItem cachedItem)
+			public void OnCacheMiss(CachedItem cachedItem)
 			{
 				CachedItems.Add(cachedItem);
 			}

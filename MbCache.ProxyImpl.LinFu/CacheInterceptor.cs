@@ -17,20 +17,17 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
-		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly ConfigurationForType _configurationForType;
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
 
 		public CacheInterceptor(CacheAdapter cache,
 										ICacheKey cacheKey,
-										ILockObjectGenerator lockObjectGenerator, 
 										ConfigurationForType configurationForType,
 										object target)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
-			_lockObjectGenerator = lockObjectGenerator;
 			_configurationForType = configurationForType;
 			_target = target;
 			_cachingComponent = new CachingComponent(cache, cacheKey, configurationForType);
@@ -61,32 +58,9 @@ namespace MbCache.ProxyImpl.LinFu
 		{
 			var key = _cacheKey.Key(_configurationForType.ComponentType, _cachingComponent, method, arguments);
 			var eventInformation = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
-			if (key == null)
-			{
-				return callOriginalMethod(method, arguments);
-			}
-			var cachedValue = _cache.Get(eventInformation);
-			if (cachedValue != null)
-			{
-				return cachedValue;
-			}
-			var lockObject = _lockObjectGenerator.GetFor(key);
-			if (lockObject == null)
-			{
-				return executeAndPutInCache(method, arguments, eventInformation);
-			}
-			lock (lockObject)
-			{
-				var cachedValue2 = _cache.Get(eventInformation);
-				return cachedValue2 ?? executeAndPutInCache(method, arguments, eventInformation);
-			}
-		}
-
-		private object executeAndPutInCache(MethodInfo method, object[] arguments, EventInformation eventInformation)
-		{
-			var retVal = callOriginalMethod(method, arguments);
-			_cache.Put(new CachedItem(eventInformation, retVal));
-			return retVal;
+			return key == null ? 
+				callOriginalMethod(method, arguments) : 
+				_cache.GetAndPutIfNonExisting(eventInformation, () => callOriginalMethod(method, arguments));
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

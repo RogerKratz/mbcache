@@ -47,9 +47,9 @@ namespace MbCache.Configuration
 				_cacheKey = new ToStringCacheKey();
 			}
 			var events = new EventListenersCallback(_eventListeners);
-			var cacheAdapter = new CacheAdapter(_cache);
+			var cacheAdapter = new CacheAdapter(_cache, lockObjectGeneratorOrNullObject());
 			_cache.Initialize(events, _cacheKey);
-			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _lockObjectGenerator, _configuredTypes);
+			return new MbCacheFactory(_proxyFactory, cacheAdapter, _cacheKey, _configuredTypes);
 		}
 
 		/// <summary>
@@ -146,6 +146,20 @@ namespace MbCache.Configuration
 		{
 			_cacheKey = cacheKey;
 			return this;
+		}
+
+		private ILockObjectGenerator lockObjectGeneratorOrNullObject()
+		{
+			return _lockObjectGenerator ?? new nullLockObjectGenerator();
+		}
+
+		[Serializable]
+		private class nullLockObjectGenerator : ILockObjectGenerator
+		{
+			public object GetFor(string key)
+			{
+				return null;
+			}
 		}
 	}
 }

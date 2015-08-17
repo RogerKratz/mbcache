@@ -11,17 +11,14 @@ namespace MbCache.ProxyImpl.Castle
 	{
 		private readonly CacheAdapter _cache;
 		private readonly ICacheKey _cacheKey;
-		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly ConfigurationForType _configurationForType;
 
 		public CacheInterceptor(CacheAdapter cache, 
 										ICacheKey cacheKey, 
-										ILockObjectGenerator lockObjectGenerator,
 										ConfigurationForType configurationForType)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
-			_lockObjectGenerator = lockObjectGenerator;
 			_configurationForType = configurationForType;
 		}
 
@@ -51,41 +48,18 @@ namespace MbCache.ProxyImpl.Castle
 			else
 			{
 				var eventInfo = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, invocation.Method, invocation.Arguments);
-				if (tryGetValueFromCache(invocation, eventInfo))
-					return;
-
-				var lockObject = _lockObjectGenerator.GetFor(key);
-				if (lockObject == null)
+				var hasCalledOriginalMethod = false;
+				var result = _cache.GetAndPutIfNonExisting(eventInfo, () =>
 				{
-					executeAndPutInCache(invocation, eventInfo);
-				}
-				else
+					invocation.Proceed();
+					hasCalledOriginalMethod = true;
+					return invocation.ReturnValue;
+				});
+				if (!hasCalledOriginalMethod)
 				{
-					lock (lockObject)
-					{
-						if (tryGetValueFromCache(invocation, eventInfo))
-							return;
-						executeAndPutInCache(invocation, eventInfo);
-					}				
+					invocation.ReturnValue = result;
 				}
 			}
-		}
-
-		private void executeAndPutInCache(IInvocation invocation, EventInformation eventInfo)
-		{
-			invocation.Proceed();
-			_cache.Put(new CachedItem(eventInfo, invocation.ReturnValue));
-		}
-
-		private bool tryGetValueFromCache(IInvocation invocation, EventInformation eventInfo)
-		{
-			var cachedValue = _cache.Get(eventInfo);
-			if (cachedValue != null)
-			{
-				invocation.ReturnValue = cachedValue;
-				return true;
-			}
-			return false;
 		}
 	}
 }

@@ -12,19 +12,17 @@ namespace MbCache.ProxyImpl.Castle
 		private static readonly ProxyGenerator generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
 		private CacheAdapter _cache;
 		private ICacheKey _cacheKey;
-		private ILockObjectGenerator _lockObjectGenerator;
 
-		public void Initialize(CacheAdapter cache, ICacheKey cacheKey, ILockObjectGenerator lockObjectGenerator)
+		public void Initialize(CacheAdapter cache, ICacheKey cacheKey)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
-			_lockObjectGenerator = lockObjectGenerator;
 		}
 
 		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
 			var type = typeof(T);
-			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, configurationForType);
+			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
 			options.AddMixinInstance(createCachingComponent(configurationForType));
 			try
@@ -49,7 +47,7 @@ namespace MbCache.ProxyImpl.Castle
 
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
-			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, _lockObjectGenerator, configurationForType);
+			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
 			options.AddMixinInstance(createCachingComponent(configurationForType));
 			return typeof (T).IsClass ? 

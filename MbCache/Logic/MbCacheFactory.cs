@@ -19,13 +19,12 @@ namespace MbCache.Logic
 		public MbCacheFactory(IProxyFactory proxyFactory,
 									CacheAdapter cache,
 									ICacheKey cacheKey,
-									ILockObjectGenerator lockObjectGenerator,
 									IDictionary<Type, ConfigurationForType> configuredTypes)
 		{
 			_cache = cache;
 			_cacheKey = cacheKey;
 			_configuredTypes = configuredTypes;
-			proxyFactory.Initialize(_cache, cacheKey, lockObjectGeneratorOrNullObject(lockObjectGenerator));
+			proxyFactory.Initialize(_cache, cacheKey);
 			_proxyFactory = proxyFactory;
 		}
 
@@ -114,20 +113,6 @@ namespace MbCache.Logic
 			if (comp == null)
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, component));
 			return comp;
-		}
-
-		private static ILockObjectGenerator lockObjectGeneratorOrNullObject(ILockObjectGenerator lockObjectGenerator)
-		{
-			return lockObjectGenerator ?? new nullLockObjectGenerator();
-		}
-
-		[Serializable]
-		private class nullLockObjectGenerator : ILockObjectGenerator
-		{
-			public object GetFor(string key)
-			{
-				return null;
-			}
 		}
 	}
 }

@@ -12,33 +12,76 @@ namespace MbCache.Logic
 	public class CacheAdapter
 	{
 		private readonly ICache _cache;
+		private readonly ILockObjectGenerator _lockObjectGenerator;
 
-		public CacheAdapter(ICache cache)
+		public CacheAdapter(ICache cache, ILockObjectGenerator lockObjectGenerator)
 		{
 			_cache = cache;
+			_lockObjectGenerator = lockObjectGenerator;
 		}
 
-		public object Get(EventInformation eventInformation)
+		public object GetAndPutIfNonExisting(EventInformation eventInformation, Func<object> originalMethod)
 		{
-			var cacheItem = _cache.Get(eventInformation);
-			object cacheValue = null;
-			if(cacheItem != null)
+			var cachedValue = getFromCache(eventInformation);
+			if (cachedValue != null)
 			{
-				cacheValue = cacheItem.CachedValue;
+				return cachedValue;
 			}
-			return cacheValue;
+
+			var locker = lockObject(eventInformation);
+			if (locker == null)
+			{
+				return executeAndPutInCache(eventInformation, originalMethod);
+			}
+			lock (locker)
+			{
+				var cachedValue2 = getFromCache(eventInformation);
+				return cachedValue2 ?? 
+					executeAndPutInCache(eventInformation, originalMethod);
+			}
 		}
 
-		public void Put(CachedItem cachedItem)
+		private object executeAndPutInCache(EventInformation eventInformation, Func<object> originalMethod)
 		{
-			_cache.Put(cachedItem);
+			var methodResult = originalMethod();
+			_cache.Put(new CachedItem(eventInformation, methodResult));
+			return methodResult;
+		}
+
+		private object lockObject(EventInformation eventInformation)
+		{
+			//TODO: lock object could be optimized
+			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
 		}
 
 		public void Delete(EventInformation eventInformation)
 		{
 			if (eventInformation.CacheKey == null) 
 				return;
-			_cache.Delete(eventInformation.CacheKey);
+
+			var locker = lockObject(eventInformation);
+			if (locker == null)
+			{
+				_cache.Delete(eventInformation.CacheKey);
+			}
+			else
+			{
+				lock (_lockObjectGenerator.GetFor(eventInformation.Type.FullName))
+				{
+					_cache.Delete(eventInformation.CacheKey);
+				}
+			}
+		}
+
+		private object getFromCache(EventInformation eventInformation)
+		{
+			var cacheItem = _cache.Get(eventInformation);
+			object cacheValue = null;
+			if (cacheItem != null)
+			{
+				cacheValue = cacheItem.CachedValue;
+			}
+			return cacheValue;
 		}
 	}
 }

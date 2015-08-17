@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using log4net;
@@ -8,7 +9,6 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Concurrency
 {
-	[TestFixture, Ignore("Not yet fixed")]
 	public class CacheInvalidationOfMutatedListTest : FullTest
 	{
 		public CacheInvalidationOfMutatedListTest(string proxyTypeString) : base(proxyTypeString)
@@ -33,7 +33,7 @@ namespace MbCacheTest.Logic.Concurrency
 		}
 
 		[Test]
-		public void ShouldNotGetDuplicatesInList([Range(1, 30)] int attempt)
+		public void ShouldNotGetDuplicatesInList([Range(1, 10)] int attempt)
 		{
 			CacheBuilder
 				.For<ObjectWithMutableList>()

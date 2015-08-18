@@ -20,10 +20,10 @@ set /p NugetVersion=Please enter nuget version number, eg 1.2:
 
 %msbuild% default.msbuild /v:q /t:MakeRelease
 
-hg revert -C %ROOTDIR%\MbCache.ProxyImpl.Castle\Properties\AssemblyInfo.cs
-hg revert -C %ROOTDIR%\MbCache.ProxyImpl.LinFu\Properties\AssemblyInfo.cs
-hg revert -C %ROOTDIR%\MbCache\Properties\AssemblyInfo.cs
-hg revert -C %ROOTDIR%\MbCacheTest\Properties\AssemblyInfo.cs
+git checkout -- %ROOTDIR%\MbCache.ProxyImpl.Castle\Properties\AssemblyInfo.cs
+git checkout -- %ROOTDIR%\MbCache.ProxyImpl.LinFu\Properties\AssemblyInfo.cs
+git checkout -- %ROOTDIR%\MbCache\Properties\AssemblyInfo.cs
+git checkout -- %ROOTDIR%\MbCacheTest\Properties\AssemblyInfo.cs
 
 echo -------------------------------
 echo.

@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- vNext
+- Version 2.7 (v 2.7.0.0), 2015-08-18
 * IProxyFactory.Initialize no longer accepts an ILockObjectGenerator. No need for implementations to set locks. Locks are handled internally by CacheAdapter instead.
 * ICache.Get/Put replaced with GetAndPutIfNonExisting
 * IEventListener rewritten

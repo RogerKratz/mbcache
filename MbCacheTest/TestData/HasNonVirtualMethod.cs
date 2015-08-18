@@ -1,15 +1,17 @@
-﻿namespace MbCacheTest.TestData
+﻿using System;
+
+namespace MbCacheTest.TestData
 {
 	public class HasNonVirtualMethod
 	{
-		public int NonVirtual()
+		public Guid NonVirtual()
 		{
-			return 0;
+			return Guid.NewGuid();
 		}
 
-		public virtual int Virtual()
+		public virtual Guid Virtual()
 		{
-			return 0;
+			return Guid.NewGuid();
 		}
 	}
 }

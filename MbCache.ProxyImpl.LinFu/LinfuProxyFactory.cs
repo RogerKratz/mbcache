@@ -44,10 +44,5 @@ namespace MbCache.ProxyImpl.LinFu
 				throw new ArgumentException(ctorParamMessage, ex);
 			}
 		}
-
-		public bool AllowNonVirtualMember
-		{
-			get { return false; }
-		}
 	}
 }

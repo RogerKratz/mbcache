@@ -19,10 +19,5 @@ namespace MbCacheTest
 		{
 			throw new NotSupportedException("This test creates proxies. Please derive from " + typeof(FullTest).Name + " instead.");
 		}
-
-		public bool AllowNonVirtualMember
-		{
-			get { return false; }
-		}
 	}
 }

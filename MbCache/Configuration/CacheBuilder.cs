@@ -15,7 +15,6 @@ namespace MbCache.Configuration
 		private readonly IProxyFactory _proxyFactory;
 		private ICache _cache;
 		private ICacheKey _cacheKey;
-		private readonly ProxyValidator _proxyValidator;
 		private readonly ICollection<IEventListener> _eventListeners;
 
 		public CacheBuilder(IProxyFactory proxyFactory)
@@ -23,7 +22,6 @@ namespace MbCache.Configuration
 			_configuredTypes = new Dictionary<Type, ConfigurationForType>();
 			_details = new List<ConfigurationForType>();
 			_proxyFactory = proxyFactory;
-			_proxyValidator = new ProxyValidator(_proxyFactory);
 			_eventListeners = new List<IEventListener>();
 			if (LogEventListener.IsLoggingEnabled())
 			{
@@ -73,7 +71,7 @@ namespace MbCache.Configuration
 			var concreteType = typeof(T);
 			var details = new ConfigurationForType(concreteType, typeAsCacheKey);
 			_details.Add(details);
-			var fluentBuilder = new FluentBuilder<T>(this, _configuredTypes, details, _proxyValidator);
+			var fluentBuilder = new FluentBuilder<T>(this, _configuredTypes, details);
 			return fluentBuilder;
 		}
 

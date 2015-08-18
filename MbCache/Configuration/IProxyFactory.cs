@@ -30,14 +30,5 @@ namespace MbCache.Configuration
 		/// <param name="configurationForType"></param>
 		/// <returns></returns>
 		T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class;
-
-		/// <summary>
-		/// Gets a value indicating whether [allow non virtual member]
-		/// for methods not marked for caching.
-		/// </summary>
-		/// <value>
-		/// 	<c>true</c> if [allow non virtual member]; otherwise, <c>false</c>.
-		/// </value>
-		bool AllowNonVirtualMember { get; }
 	}
 }

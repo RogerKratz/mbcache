@@ -11,8 +11,7 @@ namespace MbCacheTest.Configuration
 		{
 			var builder = new CacheBuilder(new NullProxyFactory());
 			var factory = builder.BuildFactory();
-			Assert.Throws<ArgumentException>(() =>
-			                                 factory.Create<object>());
+			Assert.Throws<ArgumentException>(() => factory.Create<object>());
 		}
 	}
 }

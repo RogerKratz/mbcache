@@ -40,11 +40,6 @@ namespace MbCache.ProxyImpl.Castle
 			}
 		}
 
-		public bool AllowNonVirtualMember
-		{
-			get { return true; }
-		}
-
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
 			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, configurationForType);

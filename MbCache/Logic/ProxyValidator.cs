@@ -1,26 +1,16 @@
 ﻿using System;
 using System.Reflection;
-using MbCache.Configuration;
 
 namespace MbCache.Logic
 {
-	public class ProxyValidator
+	public static class ProxyValidator
 	{
-		private readonly IProxyFactory _proxyFactory;
-
-		public ProxyValidator(IProxyFactory proxyFactory)
-		{
-			_proxyFactory = proxyFactory;
-		}
-
-		public void Validate(ConfigurationForType configurationForType)
+		public static void Validate(ConfigurationForType configurationForType)
 		{
 			checkCachedMethodsAreVirtual(configurationForType);
-			if (!_proxyFactory.AllowNonVirtualMember)
-				checkAccessibleMembersAreVirtual(configurationForType.ComponentType.ConcreteType);
 		}
 
-		private void checkCachedMethodsAreVirtual(ConfigurationForType configurationForType)
+		private static void checkCachedMethodsAreVirtual(ConfigurationForType configurationForType)
 		{
 			foreach (var methodInfo in configurationForType.CachedMethods)
 			{
@@ -28,72 +18,20 @@ namespace MbCache.Logic
 			}
 		}
 
-		private void checkAccessibleMembersAreVirtual(Type type)
-		{
-			var members = type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-			foreach (var member in members)
-			{
-				if (!checkProperty(type, member))
-				{
-					if (!checkMethod(type, member))
-					{
-						checkField(type, member);
-					}
-				}
-			}
-		}
-
-		private void checkField(Type type, MemberInfo member)
-		{
-			var field = member as FieldInfo;
-			if (field != null)
-			{
-				if (field.IsPublic || field.IsAssembly || field.IsFamilyOrAssembly)
-				{
-					throw new InvalidOperationException("Type " + type + "'s field " + member.Name +
-																	" is public. Proxy factory " +
-																	_proxyFactory.GetType().FullName + " does not allow this.");
-				}
-			}
-		}
-
-		private bool checkMethod(Type type, MemberInfo member)
+		private static void checkMethod(Type type, MemberInfo member)
 		{
 			var method = member as MethodInfo;
-			if (method != null)
+			if (method != null && (method.Name != "GetType" || method.DeclaringType != typeof(object)))
 			{
-				if (method.Name != "GetType" || method.DeclaringType != typeof(object))
-				{
-					checkMethodIsVirtual(type, method);
-				}
-				return true;
+				checkMethodIsVirtual(type, method);
 			}
-			return false;
 		}
 
-		private bool checkProperty(Type type, MemberInfo member)
-		{
-			var prop = member as PropertyInfo;
-			if (prop != null)
-			{
-				var accessors = prop.GetAccessors(false);
-
-				foreach (var accessor in accessors)
-				{
-					checkMethodIsVirtual(type, accessor);
-				}
-				return true;
-			}
-			return false;
-		}
-
-		private void checkMethodIsVirtual(Type type, MethodInfo method)
+		private static void checkMethodIsVirtual(Type type, MethodInfo method)
 		{
 			if (!isProxeable(method))
 			{
-				throw new InvalidOperationException("Type " + type + "'s member " + method.Name + " is non virtual. Proxy factory " +
-								_proxyFactory.GetType().FullName + " does not allow this.");
+				throw new InvalidOperationException(string.Format("Cached member {0} on type {1} is not virtual. Either make this method virtual or make component from its interface instead (.As<ComponentInterface>()).", method.Name, type));
 			}
 		}
 

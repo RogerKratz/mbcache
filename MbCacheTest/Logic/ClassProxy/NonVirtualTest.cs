@@ -1,6 +1,7 @@
 ﻿using System;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic.ClassProxy
 {
@@ -20,20 +21,17 @@ namespace MbCacheTest.Logic.ClassProxy
 		}
 
 		[Test]
-		public void NonVirtualNonCachedMethod()
+		public void TypeWithNonVirtualMethodShouldWork()
 		{
 			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
-				.CacheMethod(m => m.Virtual());
+				.CacheMethod(m => m.Virtual())
+				.AsImplemented();
 
-			if (ProxyFactory.AllowNonVirtualMember)
-			{
-				Assert.DoesNotThrow(() => fluentBuilder.AsImplemented());
-			}
-			else
-			{
-				Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());
-			}
+			var instance = fluentBuilder.BuildFactory().Create<HasNonVirtualMethod>();
+
+			instance.Virtual().Should().Be.EqualTo(instance.Virtual());
+			instance.NonVirtual().Should().Not.Be.EqualTo(instance.NonVirtual());
 		}
 	}
 }

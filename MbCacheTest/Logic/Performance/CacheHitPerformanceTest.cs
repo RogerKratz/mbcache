@@ -16,7 +16,6 @@ namespace MbCacheTest.Logic.Performance
 
 		protected override void TestSetup()
 		{
-			LogManager.Shutdown(); 
 			CacheBuilder.For<ReturningRandomNumbers>()
 				 .CacheMethod(c => c.CachedNumber())
 				 .As<IReturningRandomNumbers>();
@@ -25,24 +24,21 @@ namespace MbCacheTest.Logic.Performance
 			instance = factory.Create<IReturningRandomNumbers>();
 		}
 
-		[TearDown]
-		public void AfterTest()
-		{
-			SetupFixtureForAssembly.StartLog4Net();
-		}
-
 		[Test]
 		public void MeasureCacheHitPerf()
 		{
 			const int loops = 300000;
-			instance.CachedNumber();
 			var stopwatch = new Stopwatch();
-			stopwatch.Start();
-			for (var i = 0; i < loops; i++)
+			using (new NoLogger())
 			{
 				instance.CachedNumber();
+				stopwatch.Start();
+				for (var i = 0; i < loops; i++)
+				{
+					instance.CachedNumber();
+				}
+				stopwatch.Stop();
 			}
-			stopwatch.Stop();
 			Console.WriteLine(stopwatch.Elapsed);
 			//On my computer 
 			//~0.7s, castle

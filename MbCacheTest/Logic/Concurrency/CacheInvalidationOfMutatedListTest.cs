@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using log4net;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;

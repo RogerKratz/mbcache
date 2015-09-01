@@ -32,7 +32,7 @@ namespace MbCache.Configuration
 
 		public string Key(ComponentType type)
 		{
-			return string.Concat(KeyStart, type);
+			return string.Concat(KeyStart(), type);
 		}
 
 		public string Key(ComponentType type, ICachingComponent component)
@@ -94,9 +94,9 @@ namespace MbCache.Configuration
 		/// Can be used to have different cache entries based on some logic,
 		/// eg in tenant scenarios.
 		/// </summary>
-		protected virtual string KeyStart
+		protected virtual string KeyStart()
 		{
-			get { return string.Empty;}
+			return string.Empty;
 		}
 
 		/// <summary>

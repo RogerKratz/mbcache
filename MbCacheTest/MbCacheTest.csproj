@@ -97,6 +97,7 @@
     <Compile Include="Logic\MatchingCorrectMethod\OverloadedMethodTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\TwoEqualMethodNamesBothCachedTest.cs" />
     <Compile Include="Logic\MatchingCorrectMethod\TwoEqualMethodNamesOneCachedTest.cs" />
+    <Compile Include="Logic\Performance\CacheHitPerformanceTest.cs" />
     <Compile Include="Logic\Performance\MemoryUsageTest.cs" />
     <Compile Include="Logic\Performance\NumberOfCacheEntriesTest.cs" />
     <Compile Include="Logic\ProxyExceptionTest.cs" />

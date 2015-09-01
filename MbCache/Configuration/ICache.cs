@@ -27,5 +27,10 @@ namespace MbCache.Configuration
 		/// </summary>
 		/// <param name="eventInformation"></param>
 		void Delete(EventInformation eventInformation);
+
+		/// <summary>
+		/// Deletes all cache entries created by this <see cref="ICache"/> instance.
+		/// </summary>
+		void Clear();
 	}
 }

@@ -22,17 +22,16 @@ namespace MbCacheTest.Configuration
 		[Test] 
 		public void ShouldCache()
 		{
-			Tools.ClearMemoryCache();
-
-			var factory = new CacheBuilder(_proxyFactory)
+			using (var factory = new CacheBuilder(_proxyFactory)
 				.For<ObjectReturningNewGuids>()
-					.CacheMethod(c => c.CachedMethod())
-					.As<IObjectReturningNewGuids>()
-				.BuildFactory();
+				.CacheMethod(c => c.CachedMethod())
+				.As<IObjectReturningNewGuids>()
+				.BuildFactory())
+			{
+				var component = factory.Create<IObjectReturningNewGuids>();
 
-			var component = factory.Create<IObjectReturningNewGuids>();
-
-			component.CachedMethod().Should().Be.EqualTo(component.CachedMethod());
+				component.CachedMethod().Should().Be.EqualTo(component.CachedMethod());
+			}
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace MbCache.Core
 	/// 
 	/// Also have methods to invalidate types or its specific methods
 	/// </summary>
-	public interface IMbCacheFactory
+	public interface IMbCacheFactory : IDisposable
 	{
 		/// <summary>
 		/// Creates the cached compoenent with ctor parameters.
@@ -27,6 +27,11 @@ namespace MbCache.Core
 		/// <param name="uncachedComponent"></param>
 		/// <returns></returns>
 		T ToCachedComponent<T>(T uncachedComponent) where T : class;
+
+		/// <summary>
+		/// Invalidates all cached methods.
+		/// </summary>
+		void Invalidate();
 
 		/// <summary>
 		/// Invalidates all cached methods for type T.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
 using MbCache.Core;
 using MbCache.Core.Events;
@@ -15,6 +16,7 @@ namespace MbCache.Configuration
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
 		private EventListenersCallback _eventListenersCallback;
+		private const string mainCacheKey = "MainMbCacheKey";
 
 		public InMemoryCache(ILockObjectGenerator lockObjectGenerator, int timeoutMinutes)
 		{
@@ -59,6 +61,12 @@ namespace MbCache.Configuration
 			}
 		}
 
+		public void Clear()
+		{
+			//todo: should (maybe?) be a proper lock here
+			cache.Remove(mainCacheKey);
+		}
+
 		private object lockObject(EventInformation eventInformation)
 		{
 			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
@@ -69,15 +77,16 @@ namespace MbCache.Configuration
 			var methodResult = originalMethod();
 			var cachedItem = new CachedItem(eventInformation, methodResult);
 			var key = cachedItem.EventInformation.CacheKey;
-			var unwrappedKeys = _cacheKeyUnwrapper.UnwrapKey(key);
-			createDependencies(unwrappedKeys);
+			var dependedKeys = _cacheKeyUnwrapper.UnwrapKey(key).ToList();
+			dependedKeys.Add(mainCacheKey);
+			createDependencies(dependedKeys);
 
 			var policy = new CacheItemPolicy
 			{
 				AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
 				RemovedCallback = arguments => _eventListenersCallback.OnCacheRemoval(cachedItem)
 			};
-			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(unwrappedKeys));
+			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(dependedKeys));
 			cache.Set(key, cachedItem, policy);
 			return cachedItem;
 		}

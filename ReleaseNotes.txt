@@ -3,6 +3,7 @@
 - vNext
 *	IProxyFactory.AllowNonVirtualMember removed
 * CacheKeyBase.KeyStart is now a method and not a property
+* ICache.Clear() added
 
 
 - Version 2.7 (v 2.7.0.0), 2015-08-18

@@ -50,6 +50,11 @@ namespace MbCache.Logic
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}
 
+		public void Invalidate()
+		{
+			_cache.Clear();
+		}
+
 		public void Invalidate<T>()
 		{
 			var type = typeof (T);
@@ -113,6 +118,11 @@ namespace MbCache.Logic
 			if (comp == null)
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, component));
 			return comp;
+		}
+
+		public void Dispose()
+		{
+			Invalidate();
 		}
 	}
 }

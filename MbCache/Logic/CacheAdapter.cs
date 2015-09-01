@@ -29,5 +29,10 @@ namespace MbCache.Logic
 				return;
 			_cache.Delete(eventInformation);
 		}
+
+		public void Clear()
+		{
+			_cache.Clear();
+		}
 	}
 }

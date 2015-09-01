@@ -69,5 +69,25 @@ namespace MbCacheTest.Logic
 			value1.Should().Not.Be.EqualTo(objWithParam.CachedMethod("roger"));
 			value2.Should().Be.EqualTo(objWithParam2.CachedMethod("roger"));
 		}
+
+		[Test]
+		public void InvalideAllByExplicitCall()
+		{
+			var obj = factory.Create<IObjectReturningNewGuids>();
+			var value = obj.CachedMethod();
+			factory.Invalidate();
+			obj.CachedMethod().Should().Not.Be.EqualTo(value);
+		}
+
+		[Test]
+		public void InvalidateAllByDispose()
+		{
+			var obj = factory.Create<IObjectReturningNewGuids>();
+			var value = obj.CachedMethod();
+			factory.Dispose();
+			var newFactory = CacheBuilder.BuildFactory();
+			newFactory.Create<IObjectReturningNewGuids>().CachedMethod()
+				.Should().Not.Be.EqualTo(value);
+		}
 	}
 }

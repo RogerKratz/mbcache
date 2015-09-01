@@ -15,10 +15,10 @@ namespace MbCache.Configuration
 	/// their own logic for building cache keys
 	/// 
 	/// Will build cache key in format
-	/// MbCache|Type
-	/// MbCache|Type|Component
-	/// MbCache|Type|Component|Method|ParamType1|ParamType2
-	/// MbCache|Type|Component|Method|ParamType1|ParamType2|ParamValue1|ParamValue2
+	/// Type
+	/// Type|Component
+	/// Type|Component|Method|ParamType1|ParamType2
+	/// Type|Component|Method|ParamType1|ParamType2|$ParamValue1$ParamValue2
 	/// </summary>
 	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
@@ -89,6 +89,11 @@ namespace MbCache.Configuration
 			}
 		}
 
+		/// <summary>
+		/// Adds a string at the beginning of the cache key.
+		/// Can be used to have different cache entries based on some logic,
+		/// eg in tenant scenarios.
+		/// </summary>
 		protected virtual string KeyStart
 		{
 			get { return string.Empty;}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using log4net;
+using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
@@ -14,58 +15,73 @@ namespace MbCacheTest.Logic.Concurrency
 		{
 		}
 
+		private IMbCacheFactory factory;
+		private ObjectWithMutableList instance;
+
 		protected override void TestSetup()
-		{
-			base.TestSetup();
-			LogManager.Shutdown();
-		}
-
-		[TearDown]
-		public void AfterTest()
-		{
-			SetupFixtureForAssembly.StartLog4Net();
-		}
-
-		[Test]
-		public void ShouldNotGetDuplicatesInList([Range(1, 10)] int attempt)
 		{
 			CacheBuilder
 				.For<ObjectWithMutableList>()
 				.CacheMethod(c => c.GetListContents())
 				.AsImplemented();
 
-			var factory = CacheBuilder.BuildFactory();
+			factory = CacheBuilder.BuildFactory();
+			instance = factory.Create<ObjectWithMutableList>();
+		}
 
-			var instance = factory.Create<ObjectWithMutableList>();
+		[Test]
+		public void ShouldNotGetDuplicatesInList_InvalidateOnType([Range(1, 10)] int attempt)
+		{
+			runInParallell(() => factory.Invalidate<ObjectWithMutableList>());
+		}
+
+		[Test]
+		public void ShouldNotGetDuplicatesInList_InvalidateOnInstance([Range(1, 10)] int attempt)
+		{
+			runInParallell(() => factory.Invalidate(instance));
+		}
+
+		[Test]
+		public void ShouldNotGetDuplicatesInList_InvalidateOnMethod([Range(1, 10)] int attempt)
+		{
+			//add one for "true" if needed
+			runInParallell(() => factory.Invalidate(instance, x => x.GetListContents(), false));
+		}
+
+		private void runInParallell(Action invalidate)
+		{
 			var lockK = new object();
 			var tasks = new List<Task>();
 
-			200.Times(d =>
+			using (new NoLogger())
 			{
-				var getOrAddIfMissing = d.ToString();
-
-				100.Times(() =>
+				200.Times(d =>
 				{
-					tasks.Add(Task.Factory.StartNew(() =>
-					{
-						var match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
-						if (match != null)
-							return;
+					var getOrAddIfMissing = d.ToString();
 
-						lock (lockK)
+					100.Times(() =>
+					{
+						tasks.Add(Task.Factory.StartNew(() =>
 						{
-							match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
+							var match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
 							if (match != null)
 								return;
-							instance.AddToList(getOrAddIfMissing);
-							factory.Invalidate(instance);
-						}
 
-					}));
+							lock (lockK)
+							{
+								match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
+								if (match != null)
+									return;
+								instance.AddToList(getOrAddIfMissing);
+								invalidate();
+								Console.WriteLine("This line makes test fail more often.");
+							}
+						}));
+					});
 				});
-			});
 
-			Task.WaitAll(tasks.ToArray());
+				Task.WaitAll(tasks.ToArray());
+			}
 		}
 	}
 }

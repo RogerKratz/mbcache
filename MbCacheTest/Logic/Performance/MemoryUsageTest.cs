@@ -1,13 +1,14 @@
 ﻿using System;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Performance
 {
 	[TestFixture]
 	public class MemoryUsageTest : FullTest
 	{
-		private ObjectWithParameterReturningFixedValue component;
+		private ObjectWithMultipleParameters component;
 
 		public MemoryUsageTest(string proxyTypeString) : base(proxyTypeString)
 		{
@@ -15,10 +16,10 @@ namespace MbCacheTest.Logic.Performance
 
 		protected override void TestSetup()
 		{
-			CacheBuilder.For<ObjectWithParameterReturningFixedValue>("Foo")
-				.CacheMethod(x => x.DoIt(0))
+			CacheBuilder.For<ObjectWithMultipleParameters>()
+				.CacheMethod(x => x.Calculate(0,"",0))
 				.AsImplemented();
-			component = CacheBuilder.BuildFactory().Create<ObjectWithParameterReturningFixedValue>();
+			component = CacheBuilder.BuildFactory().Create<ObjectWithMultipleParameters>();
 		}
 
 		[Test, Explicit]
@@ -30,12 +31,13 @@ namespace MbCacheTest.Logic.Performance
 			{
 				for (var i = 0; i < uniqueCacheEntries; i++)
 				{
-					component.DoIt(i);
+					component.Calculate(i, "", i);
 				}				
 			}
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
-			//should be no more than 19mb
-			Console.WriteLine(memUsage / 1000 / 1000 + "mb");
+			var mbUsage = memUsage/1000/1000;
+			Console.WriteLine(mbUsage + "mb");
+			mbUsage.Should().Be.LessThan(30);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Castle.DynamicProxy;
-using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCache.Logic;
@@ -10,15 +9,12 @@ namespace MbCache.ProxyImpl.Castle
 	public class CacheInterceptor : IInterceptor
 	{
 		private readonly CacheAdapter _cache;
-		private readonly ICacheKey _cacheKey;
 		private readonly ConfigurationForType _configurationForType;
 
 		public CacheInterceptor(CacheAdapter cache, 
-										ICacheKey cacheKey, 
 										ConfigurationForType configurationForType)
 		{
 			_cache = cache;
-			_cacheKey = cacheKey;
 			_configurationForType = configurationForType;
 		}
 
@@ -40,7 +36,7 @@ namespace MbCache.ProxyImpl.Castle
 			var proxy = (ICachingComponent)invocation.Proxy;
 			var arguments = invocation.Arguments;
 
-			var key = _cacheKey.PutKey(_configurationForType.ComponentType, proxy, method, arguments);
+			var key = _configurationForType.CacheKey.PutKey(_configurationForType.ComponentType, proxy, method, arguments);
 			if (key == null)
 			{
 				invocation.Proceed();

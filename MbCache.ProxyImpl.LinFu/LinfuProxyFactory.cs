@@ -20,13 +20,13 @@ namespace MbCache.ProxyImpl.LinFu
 		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
 			var target = createTarget(configurationForType.ComponentType.ConcreteType, parameters);
-			var interceptor = new CacheInterceptor(_cache, configurationForType.CacheKey, configurationForType, target);
+			var interceptor = new CacheInterceptor(_cache, configurationForType, target);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
-			var interceptor = new CacheInterceptor(_cache, configurationForType.CacheKey, configurationForType, uncachedComponent);
+			var interceptor = new CacheInterceptor(_cache, configurationForType, uncachedComponent);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 

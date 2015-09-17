@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using LinFu.DynamicProxy;
-using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCache.Logic;
@@ -16,21 +15,16 @@ namespace MbCache.ProxyImpl.LinFu
 			typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 
 		private readonly CacheAdapter _cache;
-		private readonly ICacheKey _cacheKey;
 		private readonly ConfigurationForType _configurationForType;
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
 
-		public CacheInterceptor(CacheAdapter cache,
-										ICacheKey cacheKey,
-										ConfigurationForType configurationForType,
-										object target)
+		public CacheInterceptor(CacheAdapter cache, ConfigurationForType configurationForType, object target)
 		{
 			_cache = cache;
-			_cacheKey = cacheKey;
 			_configurationForType = configurationForType;
 			_target = target;
-			_cachingComponent = new CachingComponent(cache, cacheKey, configurationForType);
+			_cachingComponent = new CachingComponent(cache, configurationForType.CacheKey, configurationForType);
 		}
 
 		public object Intercept(InvocationInfo info)
@@ -56,7 +50,7 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private object interceptUsingCache(MethodInfo method, object[] arguments)
 		{
-			var key = _cacheKey.PutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
+			var key = _configurationForType.CacheKey.PutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
 			var eventInformation = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
 			return key == null ? 
 				callOriginalMethod(method, arguments) : 

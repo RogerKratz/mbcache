@@ -23,7 +23,7 @@ namespace MbCache.Logic
 			UniqueId = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
 		}
 
-		public string UniqueId { get; private set; }
+		public string UniqueId { get; }
 
 		public void Invalidate()
 		{

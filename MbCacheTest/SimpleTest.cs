@@ -29,7 +29,7 @@ namespace MbCacheTest
 		protected virtual void TestSetup(){}
 
 		protected CacheBuilder CacheBuilder { get; private set; }
-		protected IProxyFactory ProxyFactory { get; private set; }
+		protected IProxyFactory ProxyFactory { get; }
 
 		protected virtual ICache CreateCache()
 		{

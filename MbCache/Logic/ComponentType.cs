@@ -13,7 +13,7 @@ namespace MbCache.Logic
 
 		public Type ConcreteType { get; private set; }
 		public Type ConfiguredType { get; internal set; }
-		public string TypeAsCacheKeyString { get; private set; }
+		public string TypeAsCacheKeyString { get; }
 
 		public override string ToString()
 		{

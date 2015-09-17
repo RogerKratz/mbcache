@@ -9,7 +9,7 @@ namespace MbCacheTest.TestData
 			Id = Guid.NewGuid();
 		}
 
-		public virtual Guid Id { get; private set; }
+		public virtual Guid Id { get; }
 	}
 
 	public interface IObjectWithIdentifier

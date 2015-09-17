@@ -20,7 +20,7 @@ namespace MbCache.Logic
 		public object GetAndPutIfNonExisting(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod)
 		{
 			var cachedItem = _cache.GetAndPutIfNonExisting(eventInformation, cacheKey, originalMethod);
-			return cachedItem != null ? cachedItem.CachedValue : null;
+			return cachedItem?.CachedValue;
 		}
 
 		public void Delete(EventInformation eventInformation)

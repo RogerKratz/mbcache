@@ -9,9 +9,7 @@ namespace MbCache.Configuration
 
 		protected override string ParameterValue(object parameter)
 		{
-			return parameter == null ? 
-						nullKey : 
-						parameter.ToString();
+			return parameter?.ToString() ?? nullKey;
 		}
 	}
 }

@@ -31,7 +31,8 @@ namespace MbCache.Logic
 		{
 			if (!isProxeable(method))
 			{
-				throw new InvalidOperationException(string.Format("Cached member {0} on type {1} is not virtual. Either make this method virtual or make component from its interface instead (.As<ComponentInterface>()).", method.Name, type));
+				throw new InvalidOperationException(
+					$"Cached member {method.Name} on type {type} is not virtual. Either make this method virtual or make component from its interface instead (.As<ComponentInterface>()).");
 			}
 		}
 

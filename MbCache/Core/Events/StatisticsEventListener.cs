@@ -21,15 +21,9 @@ namespace MbCache.Core.Events
 			Interlocked.Increment(ref _cacheMisses);
 		}
 
-		public long CacheHits
-		{
-			get { return _cacheHits; }
-		}
+		public long CacheHits => _cacheHits;
 
-		public long CacheMisses
-		{
-			get { return _cacheMisses; }
-		}
+		public long CacheMisses => _cacheMisses;
 
 		public void Clear()
 		{

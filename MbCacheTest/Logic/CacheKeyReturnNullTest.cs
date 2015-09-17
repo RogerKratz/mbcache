@@ -84,34 +84,29 @@ namespace MbCacheTest.Logic
 		{
 			public string TheKey { get; set; }
 
-			public string Key(ComponentType type)
+			public string RemoveKey(ComponentType type)
 			{
 				return TheKey;
 			}
 
-			public string Key(ComponentType type, ICachingComponent component)
+			public string RemoveKey(ComponentType type, ICachingComponent component)
 			{
 				return TheKey;
 			}
 
-			public string Key(ComponentType type, ICachingComponent component, MethodInfo method)
+			public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
 			{
 				return TheKey;
 			}
 
-			public string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+			public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 			{
 				return TheKey;
 			}
 
-			public string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+			public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 			{
-				return TheKey;
-			}
-
-			public IEnumerable<string> UnwrapKey(string key)
-			{
-				return new[]{"a"}; //unwrap to something unuseful
+				return new KeyAndItsDependingKeys(TheKey, () => new List<string>());
 			}
 		}
 	}

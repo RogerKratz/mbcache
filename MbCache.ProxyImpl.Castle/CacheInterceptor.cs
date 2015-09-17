@@ -36,16 +36,16 @@ namespace MbCache.ProxyImpl.Castle
 			var proxy = (ICachingComponent)invocation.Proxy;
 			var arguments = invocation.Arguments;
 
-			var key = _configurationForType.CacheKey.PutKey(_configurationForType.ComponentType, proxy, method, arguments);
-			if (key == null)
+			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, proxy, method, arguments);
+			if (keyAndItsDependingKeys.Key == null)
 			{
 				invocation.Proceed();
 			}
 			else
 			{
-				var eventInfo = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, invocation.Method, invocation.Arguments);
+				var eventInfo = new EventInformation(keyAndItsDependingKeys.Key, _configurationForType.ComponentType.ConfiguredType, invocation.Method, invocation.Arguments);
 				var hasCalledOriginalMethod = false;
-				var result = _cache.GetAndPutIfNonExisting(eventInfo, _configurationForType.CacheKey, () =>
+				var result = _cache.GetAndPutIfNonExisting(eventInfo, keyAndItsDependingKeys.DependingRemoveKeys, () =>
 					{
 						invocation.Proceed();
 						hasCalledOriginalMethod = true;

@@ -30,19 +30,19 @@ namespace MbCache.Configuration
 		private const string separator = "|";
 		private const string separatorForParameters = "$";
 
-		public string Key(ComponentType type)
+		public string RemoveKey(ComponentType type)
 		{
 			return type.ToString();
 		}
 
-		public string Key(ComponentType type, ICachingComponent component)
+		public string RemoveKey(ComponentType type, ICachingComponent component)
 		{
-			return string.Concat(Key(type), separator, component.UniqueId);
+			return string.Concat(RemoveKey(type), separator, component.UniqueId);
 		}
 
-		public string Key(ComponentType type, ICachingComponent component, MethodInfo method)
+		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
 		{
-			var ret = new StringBuilder(Key(type, component));
+			var ret = new StringBuilder(RemoveKey(type, component));
 			ret.Append(separator);
 			ret.Append(method.Name);
 			foreach (var parameter in method.GetParameters())
@@ -53,9 +53,9 @@ namespace MbCache.Configuration
 			return ret.ToString();
 		}
 
-		public string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
-			var ret = new StringBuilder(Key(type, component, method));
+			var ret = new StringBuilder(RemoveKey(type, component, method));
 			ret.Append(separator);
 			foreach (var parameter in parameters)
 			{
@@ -70,21 +70,24 @@ namespace MbCache.Configuration
 			return ret.ToString();
 		}
 
-		public string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+		public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
-			var startKey = Key(type, component, method, parameters);
-
+			var startKey = RemoveKey(type, component, method, parameters);
 			if (startKey == null)
-				return null;
+				return new KeyAndItsDependingKeys();
+
 			var scope = Scope();
-			return scope==null ? startKey : string.Concat(startKey, separator, Scope());
+			var completeKey = scope == null ? 
+				startKey : 
+				string.Concat(startKey, separator, Scope());
+			return new KeyAndItsDependingKeys(completeKey, () => allRemoveKeys(completeKey));
 		}
 
-		public IEnumerable<string> UnwrapKey(string key)
+		private static IEnumerable<string> allRemoveKeys(string getAndPutKey)
 		{
 			var keys = new List<string>();
-			var matches = findSeperator.Matches(key);
-			keys.AddRange(from Match match in matches select key.Substring(0, match.Index));
+			var matches = findSeperator.Matches(getAndPutKey);
+			keys.AddRange(from Match match in matches select getAndPutKey.Substring(0, match.Index));
 			return keys;
 		}
 

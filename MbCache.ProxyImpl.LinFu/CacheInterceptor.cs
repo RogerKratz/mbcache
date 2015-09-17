@@ -50,11 +50,12 @@ namespace MbCache.ProxyImpl.LinFu
 
 		private object interceptUsingCache(MethodInfo method, object[] arguments)
 		{
-			var key = _configurationForType.CacheKey.PutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
-			var eventInformation = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
-			return key == null ? 
-				callOriginalMethod(method, arguments) : 
-				_cache.GetAndPutIfNonExisting(eventInformation, _configurationForType.CacheKey, () => callOriginalMethod(method, arguments));
+			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
+			if (keyAndItsDependingKeys.Key == null)
+				return callOriginalMethod(method, arguments);
+
+			var eventInformation = new EventInformation(keyAndItsDependingKeys.Key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
+			return _cache.GetAndPutIfNonExisting(eventInformation, keyAndItsDependingKeys.DependingRemoveKeys, () => callOriginalMethod(method, arguments));
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

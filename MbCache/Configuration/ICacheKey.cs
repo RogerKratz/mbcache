@@ -15,11 +15,11 @@ namespace MbCache.Configuration
 	/// remember every overload with more params
 	/// needs to include the less one.
 	/// 
-	/// Eg, if Key(Type) returns Roger, 
-	/// it's valid for Key(Type, MethodInfo) to return Roger2
+	/// Eg, if RemoveKey(Type) returns Roger, 
+	/// it's valid for RemoveKey(Type, MethodInfo) to return Roger2
 	/// but not Rog2.
 	/// </summary>
-	public interface ICacheKey : ICacheKeyUnwrapper
+	public interface ICacheKey
 	{
 		/// <summary>
 		/// Creates a cache key for a specific type.
@@ -30,10 +30,8 @@ namespace MbCache.Configuration
 		/// </remarks>
 		/// <returns>
 		/// A string representation of the type.
-		/// Null is returned if this type is configured but shouldn't be
-		/// invalidated at this time.
 		/// </returns>
-		string Key(ComponentType type);
+		string RemoveKey(ComponentType type);
 
 		/// <summary>
 		/// Creates a cache key for a specific component.
@@ -47,10 +45,8 @@ namespace MbCache.Configuration
 		/// </remarks>
 		/// <returns>
 		/// A string representation of the component.
-		/// Null is returned if the component is configured but shouldn't be
-		/// invalidated at this time.
 		/// </returns>
-		string Key(ComponentType type, ICachingComponent component);
+		string RemoveKey(ComponentType type, ICachingComponent component);
 
 		/// <summary>
 		/// Creates a cache key for a specific method.
@@ -67,10 +63,8 @@ namespace MbCache.Configuration
 		/// </remarks>
 		/// <returns>
 		/// A string representation of the method.
-		/// Null is returned if the method is configured but shouldn't be 
-		/// invalidated at this time.
 		/// </returns>
-		string Key(ComponentType type, ICachingComponent component, MethodInfo method);
+		string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method);
 
 		/// <summary>
 		/// Creates a cache key for a specific component with specific parameters.
@@ -94,7 +88,7 @@ namespace MbCache.Configuration
 		/// Null is returned if the method is configured but with these specific parameters
 		/// shouldn't be invalidated from the cache.
 		/// </returns>
-		string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+		string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
 
 		/// <summary>
 		/// Creates a cache key for a specific component with specific parameters.
@@ -118,6 +112,6 @@ namespace MbCache.Configuration
 		/// Null is returned if the method is configured but with these specific parameters
 		/// shouldn't be added to the cache.
 		/// </returns>
-		string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+		KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
 	}
 }

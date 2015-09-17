@@ -27,7 +27,7 @@ namespace MbCache.Logic
 
 		public void Invalidate()
 		{
-			var cacheKey = _cacheKey.Key(_componentType, this);
+			var cacheKey = _cacheKey.RemoveKey(_componentType, this);
 			var deleteArgs = new EventInformation(cacheKey, _componentType.ConfiguredType, null, null);
 			_cache.Delete(deleteArgs);
 		}
@@ -40,12 +40,12 @@ namespace MbCache.Logic
 			if (matchParameterValues && methodInfo.GetParameters().Any())
 			{
 				arguments = ExpressionHelper.ExtractArguments(method.Body).ToArray();
-				key = _cacheKey.Key(_componentType, this, methodInfo, arguments);
+				key = _cacheKey.RemoveKey(_componentType, this, methodInfo, arguments);
 			}
 			else
 			{
 				arguments = new object[0];
-				key = _cacheKey.Key(_componentType, this, methodInfo);
+				key = _cacheKey.RemoveKey(_componentType, this, methodInfo);
 			}
 			var deleteInfo = new EventInformation(key, _componentType.ConfiguredType, methodInfo, arguments);
 			_cache.Delete(deleteInfo);

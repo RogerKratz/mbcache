@@ -28,7 +28,7 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod)
+		public CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<IEnumerable<string>> dependingRemoveKeys, Func<object> originalMethod)
 		{
 			var cachedItem = (CachedItem)cache.Get(eventInformation.CacheKey);
 			if (cachedItem != null)
@@ -45,7 +45,7 @@ namespace MbCache.Configuration
 					_eventListenersCallback.OnCacheHit(cachedItem2);
 					return cachedItem2;
 				}
-				var addedValue = executeAndPutInCache(eventInformation,cacheKey, originalMethod);
+				var addedValue = executeAndPutInCache(eventInformation, dependingRemoveKeys(), originalMethod);
 				_eventListenersCallback.OnCacheMiss(addedValue);
 				return addedValue;
 			}
@@ -70,12 +70,12 @@ namespace MbCache.Configuration
 			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
 		}
 
-		private CachedItem executeAndPutInCache(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod)
+		private CachedItem executeAndPutInCache(EventInformation eventInformation, IEnumerable<string> dependingRemoveKeys, Func<object> originalMethod)
 		{
 			var methodResult = originalMethod();
 			var cachedItem = new CachedItem(eventInformation, methodResult);
 			var key = cachedItem.EventInformation.CacheKey;
-			var dependedKeys = cacheKey.UnwrapKey(key).ToList();
+			var dependedKeys = dependingRemoveKeys.ToList();
 			dependedKeys.Add(mainCacheKey);
 			createDependencies(dependedKeys);
 

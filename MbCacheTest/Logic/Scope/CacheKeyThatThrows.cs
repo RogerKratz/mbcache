@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
@@ -8,34 +9,29 @@ namespace MbCacheTest.Logic.Scope
 {
 	public class CacheKeyThatThrows : ICacheKey
 	{
-		public IEnumerable<string> UnwrapKey(string key)
+		public string RemoveKey(ComponentType type)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
-		public string Key(ComponentType type)
+		public string RemoveKey(ComponentType type, ICachingComponent component)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
-		public string Key(ComponentType type, ICachingComponent component)
+		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
-		public string Key(ComponentType type, ICachingComponent component, MethodInfo method)
+		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
-		public string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+		public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
-			throw new System.NotImplementedException();
-		}
-
-		public string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
-		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 }

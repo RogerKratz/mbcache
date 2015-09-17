@@ -3,7 +3,7 @@
 - Version 2.9 (v 2.9.0.0), 2015-09-17
 * IProxyFactory.Initialize no longer takes ICacheKey as arg
 * ICache changed. ICacheKeyUnwrapper moved from Initialize to GetAndPutIfNotExisting
-* ICacheKey.PutKey added
+* ICacheKey methods completly renamed. Methods are named if they are used for get/put or for removing from cache.
 * CacheKeyBase.KeyStart removed. Added CacheKeyBase.Scope instead.
 
 

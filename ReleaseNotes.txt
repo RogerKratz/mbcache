@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- vNext
+- Version 2.9 (v 2.9.0.0), 2015-09-17
 * IProxyFactory.Initialize no longer takes ICacheKey as arg
 * ICache changed. ICacheKeyUnwrapper moved from Initialize to GetAndPutIfNotExisting
 * ICacheKey.PutKey added

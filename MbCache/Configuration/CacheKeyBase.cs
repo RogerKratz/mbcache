@@ -32,7 +32,7 @@ namespace MbCache.Configuration
 
 		public string Key(ComponentType type)
 		{
-			return string.Concat(type, separator);
+			return type.ToString();
 		}
 
 		public string Key(ComponentType type, ICachingComponent component)

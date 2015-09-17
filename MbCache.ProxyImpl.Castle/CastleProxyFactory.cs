@@ -11,18 +11,16 @@ namespace MbCache.ProxyImpl.Castle
 	{
 		private static readonly ProxyGenerator generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
 		private CacheAdapter _cache;
-		private ICacheKey _cacheKey;
 
-		public void Initialize(CacheAdapter cache, ICacheKey cacheKey)
+		public void Initialize(CacheAdapter cache)
 		{
 			_cache = cache;
-			_cacheKey = cacheKey;
 		}
 
 		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
 			var type = typeof(T);
-			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, configurationForType);
+			var cacheInterceptor = new CacheInterceptor(_cache, configurationForType.CacheKey, configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
 			options.AddMixinInstance(createCachingComponent(configurationForType));
 			try
@@ -42,7 +40,7 @@ namespace MbCache.ProxyImpl.Castle
 
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
-			var cacheInterceptor = new CacheInterceptor(_cache, _cacheKey, configurationForType);
+			var cacheInterceptor = new CacheInterceptor(_cache, configurationForType.CacheKey, configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
 			options.AddMixinInstance(createCachingComponent(configurationForType));
 			return typeof (T).IsClass ? 
@@ -52,7 +50,7 @@ namespace MbCache.ProxyImpl.Castle
 
 		private ICachingComponent createCachingComponent(ConfigurationForType configurationForType)
 		{
-			return new CachingComponent(_cache, _cacheKey, configurationForType);
+			return new CachingComponent(_cache, configurationForType.CacheKey, configurationForType);
 		}
 	}
 }

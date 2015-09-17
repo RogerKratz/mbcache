@@ -36,6 +36,12 @@ namespace MbCache.Configuration
 			return this;
 		}
 
+		public IFluentBuilder<T> CacheKey(ICacheKey cacheKey)
+		{
+			_details.CacheKey = cacheKey;
+			return this;
+		}
+
 		public CacheBuilder As<TInterface>()
 		{
 			addToCachedMethods(typeof(TInterface));

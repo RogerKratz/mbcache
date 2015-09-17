@@ -11,7 +11,7 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Called once after this object is instansiated.
 		/// </summary>
-		void Initialize(CacheAdapter cache, ICacheKey cacheKey);
+		void Initialize(CacheAdapter cache);
 
 		/// <summary>
 		/// Creates the proxy.

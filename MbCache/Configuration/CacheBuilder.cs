@@ -39,13 +39,19 @@ namespace MbCache.Configuration
 			{
 				_cache = new InMemoryCache(new FixedNumberOfLockObjects(50), 20);
 			}
-			if (_cacheKey == null)
-			{
-				_cacheKey = new ToStringCacheKey();
-			}
+			setDefaultCacheKeysIfNotExplicitlySet();
 			var events = new EventListenersCallback(_eventListeners);
-			_cache.Initialize(events, _cacheKey);
-			return new MbCacheFactory(_proxyFactory, new CacheAdapter(_cache), _cacheKey, _configuredTypes);
+			_cache.Initialize(events);
+			return new MbCacheFactory(_proxyFactory, new CacheAdapter(_cache), _configuredTypes);
+		}
+
+		private void setDefaultCacheKeysIfNotExplicitlySet()
+		{
+			var toStringCacheKey = new ToStringCacheKey();
+			foreach (var configurationForType in _configuredTypes.Values.Where(configurationForType => configurationForType.CacheKey == null))
+			{
+				configurationForType.CacheKey = _cacheKey ?? toStringCacheKey;
+			}
 		}
 
 		/// <summary>

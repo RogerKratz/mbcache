@@ -19,6 +19,13 @@ namespace MbCache.Configuration
 		IFluentBuilder<T> PerInstance();
 
 		/// <summary>
+		/// Sets a specific <see cref="ICacheKey"/> for this component.
+		/// </summary>
+		/// <param name="cacheKey"></param>
+		/// <returns></returns>
+		IFluentBuilder<T> CacheKey(ICacheKey cacheKey);
+
+		/// <summary>
 		/// Registers the component to specified interface.
 		/// </summary>
 		/// <typeparam name="TInterface"></typeparam>

@@ -60,7 +60,7 @@ namespace MbCache.ProxyImpl.LinFu
 			var eventInformation = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
 			return key == null ? 
 				callOriginalMethod(method, arguments) : 
-				_cache.GetAndPutIfNonExisting(eventInformation, () => callOriginalMethod(method, arguments));
+				_cache.GetAndPutIfNonExisting(eventInformation, _configurationForType.CacheKey, () => callOriginalMethod(method, arguments));
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

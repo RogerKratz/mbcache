@@ -12,19 +12,16 @@ namespace MbCache.Logic
 	{
 		private readonly IProxyFactory _proxyFactory;
 		private readonly CacheAdapter _cache;
-		private readonly ICacheKey _cacheKey;
 		private readonly IDictionary<Type, ConfigurationForType> _configuredTypes;
 		private const string isNotARegisteredComponentMessage = "{0} is not a registered MbCache component!";
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
 									CacheAdapter cache,
-									ICacheKey cacheKey,
 									IDictionary<Type, ConfigurationForType> configuredTypes)
 		{
 			_cache = cache;
-			_cacheKey = cacheKey;
 			_configuredTypes = configuredTypes;
-			proxyFactory.Initialize(_cache, cacheKey);
+			proxyFactory.Initialize(_cache);
 			_proxyFactory = proxyFactory;
 		}
 
@@ -60,7 +57,7 @@ namespace MbCache.Logic
 			var type = typeof (T);
 			//todo - kolla först!
 			var componentType = _configuredTypes[type].ComponentType;
-			var cacheKey = _cacheKey.Key(componentType);
+			var cacheKey = _configuredTypes[type].CacheKey.Key(componentType);
 			var deleteInfo = new EventInformation(cacheKey, componentType.ConfiguredType, null, null);
 			_cache.Delete(deleteInfo);
 		}

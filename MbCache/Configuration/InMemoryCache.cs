@@ -12,7 +12,6 @@ namespace MbCache.Configuration
 	{
 		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly int _timeoutMinutes;
-		private ICacheKeyUnwrapper _cacheKeyUnwrapper;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
 		private EventListenersCallback _eventListenersCallback;
@@ -24,13 +23,12 @@ namespace MbCache.Configuration
 			_timeoutMinutes = timeoutMinutes;
 		}
 
-		public void Initialize(EventListenersCallback eventListenersCallback, ICacheKeyUnwrapper cacheKeyUnwrapper)
+		public void Initialize(EventListenersCallback eventListenersCallback)
 		{
-			_cacheKeyUnwrapper = cacheKeyUnwrapper;
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<object> originalMethod)
+		public CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod)
 		{
 			var cachedItem = (CachedItem)cache.Get(eventInformation.CacheKey);
 			if (cachedItem != null)
@@ -47,7 +45,7 @@ namespace MbCache.Configuration
 					_eventListenersCallback.OnCacheHit(cachedItem2);
 					return cachedItem2;
 				}
-				var addedValue = executeAndPutInCache(eventInformation, originalMethod);
+				var addedValue = executeAndPutInCache(eventInformation,cacheKey, originalMethod);
 				_eventListenersCallback.OnCacheMiss(addedValue);
 				return addedValue;
 			}
@@ -72,12 +70,12 @@ namespace MbCache.Configuration
 			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
 		}
 
-		private CachedItem executeAndPutInCache(EventInformation eventInformation, Func<object> originalMethod)
+		private CachedItem executeAndPutInCache(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod)
 		{
 			var methodResult = originalMethod();
 			var cachedItem = new CachedItem(eventInformation, methodResult);
 			var key = cachedItem.EventInformation.CacheKey;
-			var dependedKeys = _cacheKeyUnwrapper.UnwrapKey(key).ToList();
+			var dependedKeys = cacheKey.UnwrapKey(key).ToList();
 			dependedKeys.Add(mainCacheKey);
 			createDependencies(dependedKeys);
 

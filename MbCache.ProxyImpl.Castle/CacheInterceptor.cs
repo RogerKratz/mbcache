@@ -49,12 +49,12 @@ namespace MbCache.ProxyImpl.Castle
 			{
 				var eventInfo = new EventInformation(key, _configurationForType.ComponentType.ConfiguredType, invocation.Method, invocation.Arguments);
 				var hasCalledOriginalMethod = false;
-				var result = _cache.GetAndPutIfNonExisting(eventInfo, () =>
-				{
-					invocation.Proceed();
-					hasCalledOriginalMethod = true;
-					return invocation.ReturnValue;
-				});
+				var result = _cache.GetAndPutIfNonExisting(eventInfo, _configurationForType.CacheKey, () =>
+					{
+						invocation.Proceed();
+						hasCalledOriginalMethod = true;
+						return invocation.ReturnValue;
+					});
 				if (!hasCalledOriginalMethod)
 				{
 					invocation.ReturnValue = result;

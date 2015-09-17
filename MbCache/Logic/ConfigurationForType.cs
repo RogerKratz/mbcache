@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MbCache.Configuration;
 
 namespace MbCache.Logic
 {
@@ -18,5 +19,6 @@ namespace MbCache.Logic
 		public ComponentType ComponentType { get; private set; }
 		public ICollection<MethodInfo> CachedMethods { get; private set; }
 		public bool CachePerInstance { get; set; }
+		public ICacheKey CacheKey { get; set; }
 	}
 }

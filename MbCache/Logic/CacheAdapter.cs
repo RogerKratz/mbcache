@@ -17,9 +17,9 @@ namespace MbCache.Logic
 			_cache = cache;
 		}
 
-		public object GetAndPutIfNonExisting(EventInformation eventInformation, Func<object> originalMethod)
+		public object GetAndPutIfNonExisting(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod)
 		{
-			var cachedItem = _cache.GetAndPutIfNonExisting(eventInformation, originalMethod);
+			var cachedItem = _cache.GetAndPutIfNonExisting(eventInformation, cacheKey, originalMethod);
 			return cachedItem != null ? cachedItem.CachedValue : null;
 		}
 

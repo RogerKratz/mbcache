@@ -12,15 +12,16 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Called once before caching is used.
 		/// </summary>
-		void Initialize(EventListenersCallback eventListenersCallback, ICacheKeyUnwrapper cacheKeyUnwrapper);
+		void Initialize(EventListenersCallback eventListenersCallback);
 
 		/// <summary>
 		/// Gets cache entry from cache. If not exists, runs <paramref name="originalMethod" /> and puts in cache.
 		/// </summary>
 		/// <param name="eventInformation"></param>
+		/// <param name="cacheKey"></param>
 		/// <param name="originalMethod"></param>
 		/// <returns></returns>
-		CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<object> originalMethod);
+		CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, ICacheKeyUnwrapper cacheKey, Func<object> originalMethod);
 
 		/// <summary>
 		/// Deletes cache entries from cache.

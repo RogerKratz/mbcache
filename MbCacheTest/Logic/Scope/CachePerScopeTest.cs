@@ -3,7 +3,7 @@ using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace MbCacheTest.Logic.CacheKeyPerComponent
+namespace MbCacheTest.Logic.Scope
 {
 	public class CachePerScopeTest : FullTest
 	{

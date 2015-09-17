@@ -3,6 +3,7 @@
 - vNext
 * IProxyFactory.Initialize no longer takes ICacheKey as arg
 * ICache changed. ICacheKeyUnwrapper moved from Initialize to GetAndPutIfNotExisting
+* ICacheKey.PutKey added
 
 
 - Version 2.8 (v 2.8.0.0), 2015-09-02

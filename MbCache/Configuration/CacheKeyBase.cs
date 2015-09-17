@@ -32,7 +32,7 @@ namespace MbCache.Configuration
 
 		public string Key(ComponentType type)
 		{
-			return string.Concat(KeyStart(), type);
+			return string.Concat(type, separator);
 		}
 
 		public string Key(ComponentType type, ICachingComponent component)
@@ -66,7 +66,18 @@ namespace MbCache.Configuration
 				checkIfSuspiousParameter(parameter, parameterKey);
 				ret.Append(parameterKey);
 			}
+
 			return ret.ToString();
+		}
+
+		public string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+		{
+			var startKey = Key(type, component, method, parameters);
+
+			if (startKey == null)
+				return null;
+			var scope = KeyStart();
+			return scope==null ? startKey : string.Concat(startKey, separator, KeyStart());
 		}
 
 		public IEnumerable<string> UnwrapKey(string key)
@@ -96,7 +107,7 @@ namespace MbCache.Configuration
 		/// </summary>
 		protected virtual string KeyStart()
 		{
-			return string.Empty;
+			return null;
 		}
 
 		/// <summary>

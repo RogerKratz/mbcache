@@ -4,7 +4,7 @@ using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Logic;
 
-namespace MbCacheTest.Logic.CacheKeyPerComponent
+namespace MbCacheTest.Logic.Scope
 {
 	public class CacheKeyThatThrows : ICacheKey
 	{
@@ -29,6 +29,11 @@ namespace MbCacheTest.Logic.CacheKeyPerComponent
 		}
 
 		public string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
 			throw new System.NotImplementedException();
 		}

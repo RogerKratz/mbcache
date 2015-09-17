@@ -40,7 +40,7 @@ namespace MbCache.ProxyImpl.Castle
 			var proxy = (ICachingComponent)invocation.Proxy;
 			var arguments = invocation.Arguments;
 
-			var key = _cacheKey.Key(_configurationForType.ComponentType, proxy, method, arguments);
+			var key = _cacheKey.PutKey(_configurationForType.ComponentType, proxy, method, arguments);
 			if (key == null)
 			{
 				invocation.Proceed();

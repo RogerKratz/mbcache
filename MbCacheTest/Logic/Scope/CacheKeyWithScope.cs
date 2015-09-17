@@ -1,6 +1,6 @@
 ﻿using MbCache.Configuration;
 
-namespace MbCacheTest.Logic.CacheKeyPerComponent
+namespace MbCacheTest.Logic.Scope
 {
 	public class CacheKeyWithScope : CacheKeyBase
 	{

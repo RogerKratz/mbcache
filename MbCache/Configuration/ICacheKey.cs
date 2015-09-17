@@ -92,8 +92,32 @@ namespace MbCache.Configuration
 		/// <returns>
 		/// A string representation of the method and its parameters.
 		/// Null is returned if the method is configured but with these specific parameters
-		/// shouldn't be added (or invalidated) from the cache.
+		/// shouldn't be invalidated from the cache.
 		/// </returns>
 		string Key(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+
+		/// <summary>
+		/// Creates a cache key for a specific component with specific parameters.
+		/// </summary>
+		/// <param name="type">Type of the component</param>
+		/// <param name="component">
+		/// The component instance.
+		/// </param>
+		/// <param name="method">
+		/// The method of the component.
+		/// </param>
+		/// <param name="parameters">
+		/// The parameters sent to the component.
+		/// </param>
+		/// <remarks>
+		/// Used by MbCache when invalidating all cache entries for a specific method,
+		/// and when adding an entry to the cache.
+		/// </remarks>
+		/// <returns>
+		/// A string representation of the method and its parameters.
+		/// Null is returned if the method is configured but with these specific parameters
+		/// shouldn't be added to the cache.
+		/// </returns>
+		string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
 	}
 }

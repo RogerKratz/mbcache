@@ -104,6 +104,11 @@ namespace MbCacheTest.Logic
 				return TheKey;
 			}
 
+			public string PutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+			{
+				return TheKey;
+			}
+
 			public IEnumerable<string> UnwrapKey(string key)
 			{
 				return new[]{"a"}; //unwrap to something unuseful

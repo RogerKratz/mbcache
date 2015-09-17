@@ -76,8 +76,8 @@ namespace MbCache.Configuration
 
 			if (startKey == null)
 				return null;
-			var scope = KeyStart();
-			return scope==null ? startKey : string.Concat(startKey, separator, KeyStart());
+			var scope = Scope();
+			return scope==null ? startKey : string.Concat(startKey, separator, Scope());
 		}
 
 		public IEnumerable<string> UnwrapKey(string key)
@@ -105,7 +105,7 @@ namespace MbCache.Configuration
 		/// Can be used to have different cache entries based on some logic,
 		/// eg in tenant scenarios.
 		/// </summary>
-		protected virtual string KeyStart()
+		protected virtual string Scope()
 		{
 			return null;
 		}

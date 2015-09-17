@@ -11,7 +11,7 @@ namespace MbCacheTest.Logic.Scope
 
 		public static string CurrentScope { get; set; }
 
-		protected override string KeyStart()
+		protected override string Scope()
 		{
 			return CurrentScope;
 		}

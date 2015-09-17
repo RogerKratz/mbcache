@@ -76,7 +76,6 @@
     <Compile Include="Caches\Tools.cs" />
     <Compile Include="Configuration\CacheBuilderTest.cs" />
     <Compile Include="Configuration\DefaultConfigurationTest.cs" />
-    <Compile Include="Configuration\NullProxyFactory.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="Events\Statistic\ExplicitDeleteTest.cs" />
     <Compile Include="Events\Statistic\DeleteTestBase.cs" />
@@ -127,7 +126,7 @@
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="NoLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProxyImplThatThrows.cs" />
+    <Compile Include="ProxyImplThatThrowsNotSupportedEx.cs" />
     <Compile Include="SetupFixtureForAssembly.cs" />
     <Compile Include="Events\Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Events\Statistic\ThreadingTest.cs" />

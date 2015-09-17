@@ -9,7 +9,7 @@ namespace MbCacheTest.Configuration
 		[Test]
 		public void ShouldThrowArgumentException()
 		{
-			var builder = new CacheBuilder(new NullProxyFactory());
+			var builder = new CacheBuilder(new ProxyImplThatThrowsNotSupportedEx());
 			var factory = builder.BuildFactory();
 			Assert.Throws<ArgumentException>(() => factory.Create<object>());
 		}

@@ -7,7 +7,7 @@ namespace MbCacheTest
 {
 	public abstract class SimpleTest
 	{
-		protected SimpleTest(): this("MbCacheTest.ProxyImplThatThrows") 
+		protected SimpleTest(): this("MbCacheTest.ProxyImplThatThrowsNotSupportedEx") 
 		{
 		}
 

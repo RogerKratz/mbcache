@@ -58,8 +58,8 @@ namespace MbCache.Logic
 			ConfigurationForType configurationForType;
 			if (_configuredTypes.TryGetValue(type, out configurationForType))
 			{
-				var componentType = _configuredTypes[type].ComponentType;
-				var cacheKey = _configuredTypes[type].CacheKey.RemoveKey(componentType);
+				var componentType = configurationForType.ComponentType;
+				var cacheKey = configurationForType.CacheKey.RemoveKey(componentType);
 				var deleteInfo = new EventInformation(cacheKey, componentType.ConfiguredType, null, null);
 				_cache.Delete(deleteInfo);
 			}

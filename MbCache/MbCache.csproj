@@ -84,7 +84,6 @@
     <Compile Include="Logic\ProxyValidator.cs" />
     <Compile Include="Configuration\ToStringCacheKey.cs" />
     <Compile Include="Core\Events\IEventListener.cs" />
-    <Compile Include="Core\Events\LogEventListener.cs" />
     <Compile Include="Core\Events\StatisticsEventListener.cs" />
     <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />

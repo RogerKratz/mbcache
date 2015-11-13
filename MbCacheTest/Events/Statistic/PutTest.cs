@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using MbCache.Core;
-using MbCache.Core.Events;
-using MbCacheTest.TestData;
+﻿using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -9,7 +6,7 @@ namespace MbCacheTest.Events.Statistic
 {
 	public class PutTest : FullTest
 	{
-		private eventListenerForGet eventListener;
+		private EventListenerForTest eventListener;
 
 		public PutTest(string proxyTypeString)
 			: base(proxyTypeString)
@@ -18,7 +15,7 @@ namespace MbCacheTest.Events.Statistic
 
 		protected override void TestSetup()
 		{
-			eventListener = new eventListenerForGet();
+			eventListener = new EventListenerForTest();
 			CacheBuilder
 				.For<ObjectReturningNull>()
 					.CacheMethod(c => c.ReturnNullIfZero(0))
@@ -34,65 +31,42 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void ShouldBeCalledTwice()
 		{
-			eventListener.CachedItems.Count.Should().Be.EqualTo(2);
+			eventListener.CacheMisses.Count.Should().Be.EqualTo(2);
 		}
 
 		[Test]
 		public void ShouldHaveCorrectCachedValues()
 		{
-			eventListener.CachedItems[0].CachedValue.Should().Be.Null();
-			eventListener.CachedItems[1].CachedValue.Should().Be.EqualTo(1);
+			eventListener.CacheMisses[0].CachedValue.Should().Be.Null();
+			eventListener.CacheMisses[1].CachedValue.Should().Be.EqualTo(1);
 		}
 
 		[Test]
 		public void ShouldHaveCorrectCacheKeys()
 		{
-			eventListener.CachedItems[0].EventInformation.CacheKey.Should().Contain("|$0");
-			eventListener.CachedItems[1].EventInformation.CacheKey.Should().Contain("|$1");
+			eventListener.CacheMisses[0].EventInformation.CacheKey.Should().Contain("|$0");
+			eventListener.CacheMisses[1].EventInformation.CacheKey.Should().Contain("|$1");
 		}
 
 		[Test]
 		public void ShouldHaveCorrectMethodInfo()
 		{
-			eventListener.CachedItems[0].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.CachedItems[1].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CacheMisses[0].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CacheMisses[1].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 		}
 
 		[Test]
 		public void ShouldHaveCorrectType()
 		{
-			eventListener.CachedItems[0].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.CachedItems[1].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CacheMisses[0].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CacheMisses[1].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
 		}
 
 		[Test]
 		public void ShouldHaveCorrectArguments()
 		{
-			eventListener.CachedItems[0].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
-			eventListener.CachedItems[1].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
-		}
-
-		private class eventListenerForGet : IEventListener
-		{
-			public readonly IList<CachedItem> CachedItems = new List<CachedItem>();
-
-			public void OnCacheHit(CachedItem cachedItem)
-			{
-			}
-
-			public void OnCacheRemoval(CachedItem cachedItem)
-			{
-			}
-
-			public void OnCacheMiss(CachedItem cachedItem)
-			{
-				CachedItems.Add(cachedItem);
-			}
-
-			public void Warning(string warnMessage)
-			{
-				throw new System.NotImplementedException();
-			}
+			eventListener.CacheMisses[0].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
+			eventListener.CacheMisses[1].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
 		}
 	}
 }

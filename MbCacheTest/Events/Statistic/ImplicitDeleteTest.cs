@@ -11,7 +11,7 @@ namespace MbCacheTest.Events.Statistic
 
 		protected override void TestSetup()
 		{
-			EventListener = new EventListenerForDelete();
+			EventListener = new EventListenerForTest();
 			CacheBuilder
 				.For<ObjectReturningNull>()
 					.CacheMethod(c => c.ReturnNullIfZero(0))

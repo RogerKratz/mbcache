@@ -23,10 +23,6 @@ namespace MbCache.Configuration
 			_details = new List<ConfigurationForType>();
 			_proxyFactory = proxyFactory;
 			_eventListeners = new List<IEventListener>();
-			if (LogEventListener.IsLoggingEnabled())
-			{
-				_eventListeners.Add(new LogEventListener());
-			}
 		}
 
 		/// <summary>
@@ -39,18 +35,20 @@ namespace MbCache.Configuration
 			{
 				_cache = new InMemoryCache(new FixedNumberOfLockObjects(50), 20);
 			}
-			setDefaultCacheKeysIfNotExplicitlySet();
+			setCacheKeysAndInit();
 			var events = new EventListenersCallback(_eventListeners);
 			_cache.Initialize(events);
 			return new MbCacheFactory(_proxyFactory, new CacheAdapter(_cache), _configuredTypes);
 		}
 
-		private void setDefaultCacheKeysIfNotExplicitlySet()
+		private void setCacheKeysAndInit()
 		{
-			var toStringCacheKey = new ToStringCacheKey();
-			foreach (var configurationForType in _configuredTypes.Values.Where(configurationForType => configurationForType.CacheKey == null))
+			var defaultCacheKey = new ToStringCacheKey();
+			foreach (var configurationForType in _configuredTypes.Values)
 			{
-				configurationForType.CacheKey = _cacheKey ?? toStringCacheKey;
+				if (configurationForType.CacheKey == null)
+					configurationForType.CacheKey = _cacheKey ?? defaultCacheKey;
+				configurationForType.CacheKey.Initialize(_eventListeners);
 			}
 		}
 

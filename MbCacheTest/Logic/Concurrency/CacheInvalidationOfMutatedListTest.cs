@@ -52,35 +52,32 @@ namespace MbCacheTest.Logic.Concurrency
 			var lockK = new object();
 			var tasks = new List<Task>();
 
-			using (new NoLogger())
+			200.Times(d =>
 			{
-				200.Times(d =>
-				{
-					var getOrAddIfMissing = d.ToString();
+				var getOrAddIfMissing = d.ToString();
 
-					100.Times(() =>
+				100.Times(() =>
+				{
+					tasks.Add(Task.Factory.StartNew(() =>
 					{
-						tasks.Add(Task.Factory.StartNew(() =>
+						var match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
+						if (match != null)
+							return;
+
+						lock (lockK)
 						{
-							var match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
+							match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
 							if (match != null)
 								return;
-
-							lock (lockK)
-							{
-								match = instance.GetListContents().SingleOrDefault(x => x == getOrAddIfMissing);
-								if (match != null)
-									return;
-								instance.AddToList(getOrAddIfMissing);
-								invalidate();
-								Console.WriteLine("This line makes test fail more often.");
-							}
-						}));
-					});
+							instance.AddToList(getOrAddIfMissing);
+							invalidate();
+							Console.WriteLine("This line makes test fail more often.");
+						}
+					}));
 				});
+			});
 
-				Task.WaitAll(tasks.ToArray());
-			}
+			Task.WaitAll(tasks.ToArray());
 		}
 	}
 }

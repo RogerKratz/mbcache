@@ -13,7 +13,6 @@
 		<projectUrl>https://github.com/RogerKratz/mbcache</projectUrl>
 		<dependencies>
 			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />
-			<dependency id="log4net" version="2.0" />
 		</dependencies>
 	</metadata>
 	<files>

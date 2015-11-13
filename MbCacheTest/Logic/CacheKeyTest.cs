@@ -1,16 +1,15 @@
-﻿using MbCache.Configuration;
+﻿using System.Linq;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
-using log4net;
-using log4net.Core;
 
 namespace MbCacheTest.Logic
 {
 	public class CacheKeyTest : FullTest
 	{
 		private IMbCacheFactory factory;
+		private EventListenerForTest eventListener;
 
 		public CacheKeyTest(string proxyTypeString) : base(proxyTypeString)
 		{
@@ -18,27 +17,24 @@ namespace MbCacheTest.Logic
 
 		protected override void TestSetup()
 		{
+			eventListener = new EventListenerForTest();
+			CacheBuilder.AddEventListener(eventListener);
+
 			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
 				 .CacheMethod(c => c.CachedMethod(null))
 				 .As<IObjectWithParametersOnCachedMethod>();
-
+			
 			factory = CacheBuilder.BuildFactory();
 		}
 
 		[Test]
 		public void ShouldGiveLogWarningIfSuspectedParameterIsUsed()
 		{
-			var logger = LogManager.GetLogger(typeof (CacheKeyBase));
-			if(!logger.IsWarnEnabled)
-				Assert.Ignore("log4net logging is not enabled - cannot verify test");
 			var comp = factory.Create<IObjectWithParametersOnCachedMethod>();
-			using (var log = new LogSpy(logger, Level.Warn))
-			{
-				comp.CachedMethod(this);
-				var logOutput = log.RenderedMessages();
-				logOutput.Should().Contain(GetType().ToString());
-			}
+			comp.CachedMethod(this);
+
+			eventListener.Warnings.Single().Should().Contain(GetType().ToString());
 		}
 	}
 }

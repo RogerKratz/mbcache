@@ -72,6 +72,11 @@ namespace MbCacheTest.Events.Statistic
 			public void OnCacheMiss(CachedItem cachedItem)
 			{
 			}
+
+			public void Warning(string warnMessage)
+			{
+				throw new System.NotImplementedException();
+			}
 		}
 	}
 }

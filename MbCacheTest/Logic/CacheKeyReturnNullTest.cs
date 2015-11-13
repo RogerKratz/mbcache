@@ -2,6 +2,7 @@
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -83,6 +84,10 @@ namespace MbCacheTest.Logic
 		private class cacheKeyStub : ICacheKey
 		{
 			public string TheKey { get; set; }
+
+			public void Initialize(IEnumerable<IEventListener> eventListeners)
+			{
+			}
 
 			public string RemoveKey(ComponentType type)
 			{

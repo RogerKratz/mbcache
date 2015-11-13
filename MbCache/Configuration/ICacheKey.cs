@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.Configuration
@@ -21,6 +22,12 @@ namespace MbCache.Configuration
 	/// </summary>
 	public interface ICacheKey
 	{
+		/// <summary>
+		/// Will be called once at startup
+		/// </summary>
+		/// <param name="eventListeners"></param>
+		void Initialize(IEnumerable<IEventListener> eventListeners);
+
 		/// <summary>
 		/// Creates a cache key for a specific type.
 		/// </summary>

@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCacheTest.Logic.Scope
 {
 	public class CacheKeyThatThrows : ICacheKey
 	{
+		public void Initialize(IEnumerable<IEventListener> eventListeners)
+		{
+		}
+
 		public string RemoveKey(ComponentType type)
 		{
 			throw new NotImplementedException();

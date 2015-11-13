@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using MbCache.Core;
+using MbCache.Core.Events;
 using MbCache.Logic;
-using log4net;
 
 namespace MbCache.Configuration
 {
@@ -23,12 +24,19 @@ namespace MbCache.Configuration
 	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
 	{
-		private static readonly ILog logger = LogManager.GetLogger(typeof (CacheKeyBase));
+		//private static readonly ILog logger = LogManager.GetLogger(typeof (CacheKeyBase));
 		private const string suspisiousParam =
 			"Cache key of type {0} equals its own type name. Possible bug in your ICacheKey implementation.";
 		private static readonly Regex findSeperator = new Regex(@"\" + separator, RegexOptions.Compiled);
 		private const string separator = "|";
 		private const string separatorForParameters = "$";
+
+		private IEnumerable<IEventListener> _eventListeners;
+
+		public void Initialize(IEnumerable<IEventListener> eventListeners)
+		{
+			_eventListeners = eventListeners;
+		}
 
 		public string RemoveKey(ComponentType type)
 		{
@@ -91,14 +99,17 @@ namespace MbCache.Configuration
 			return keys;
 		}
 
-		private static void checkIfSuspiousParameter(object parameter, string parameterKey)
+		private void checkIfSuspiousParameter(object parameter, string parameterKey)
 		{
-			if (parameter !=null && logger.IsWarnEnabled)
+			if (parameter != null)
 			{
 				var parameterType = parameter.GetType();
 				if (parameterKey.Equals(parameterType.ToString()))
 				{
-					logger.WarnFormat(suspisiousParam, parameterType);
+					foreach (var eventListener in _eventListeners)
+					{
+						eventListener.Warning(string.Format(suspisiousParam, parameterType));
+					}
 				}
 			}
 		}

@@ -21,6 +21,10 @@ namespace MbCache.Core.Events
 			Interlocked.Increment(ref _cacheMisses);
 		}
 
+		public void Warning(string warnMessage)
+		{
+		}
+
 		public long CacheHits => _cacheHits;
 
 		public long CacheMisses => _cacheMisses;

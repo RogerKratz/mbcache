@@ -28,16 +28,15 @@ namespace MbCacheTest.Logic.Performance
 		{
 			const int loops = 300000;
 			var stopwatch = new Stopwatch();
-			using (new NoLogger())
+
+			instance.CachedNumber();
+			stopwatch.Start();
+			for (var i = 0; i < loops; i++)
 			{
 				instance.CachedNumber();
-				stopwatch.Start();
-				for (var i = 0; i < loops; i++)
-				{
-					instance.CachedNumber();
-				}
-				stopwatch.Stop();
 			}
+			stopwatch.Stop();
+
 			Console.WriteLine(stopwatch.Elapsed);
 			//On my computer 
 			//~0.4s, castle

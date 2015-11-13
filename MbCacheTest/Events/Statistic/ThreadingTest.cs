@@ -33,23 +33,20 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void StatisticConcurrency()
 		{
-			using (new NoLogger())
+			var tColl = new List<Thread>(noOfThreads);
+			for (var threadLoop = 0; threadLoop < noOfThreads; threadLoop++)
 			{
-				var tColl = new List<Thread>(noOfThreads);
-				for (var threadLoop = 0; threadLoop < noOfThreads; threadLoop++)
-				{
-					var param = threadLoop;
-					var ts = new ThreadStart(() => createCacheHitOrMiss(param));
-					tColl.Add(new Thread(ts));
-				}
-				foreach (var thread in tColl)
-				{
-					thread.Start();
-				}
-				for (var i = tColl.Count - 1; i >= 0; i--)
-				{
-					tColl[i].Join();
-				}
+				var param = threadLoop;
+				var ts = new ThreadStart(() => createCacheHitOrMiss(param));
+				tColl.Add(new Thread(ts));
+			}
+			foreach (var thread in tColl)
+			{
+				thread.Start();
+			}
+			for (var i = tColl.Count - 1; i >= 0; i--)
+			{
+				tColl[i].Join();
 			}
 
 			Assert.AreEqual(noOfThreads, eventListener.CacheMisses);

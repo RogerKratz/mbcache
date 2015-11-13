@@ -88,6 +88,11 @@ namespace MbCacheTest.Events.Statistic
 			{
 				CachedItems.Add(cachedItem);
 			}
+
+			public void Warning(string warnMessage)
+			{
+				throw new System.NotImplementedException();
+			}
 		}
 	}
 }

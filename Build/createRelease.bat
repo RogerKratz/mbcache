@@ -1,7 +1,7 @@
 @echo off
 SET ROOTDIR=%~dp0
 set ROOTDIR=%ROOTDIR:~0,-7%
-set msbuild="%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
+set msbuild="C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
 set configuration=Release
 set nugetFolder="%ROOTDIR%\.nuget"
 set PackageFolder="%ROOTDIR%\packages"
@@ -34,6 +34,7 @@ echo Remember to...
 echo * Tag current changeset with version %nugetversion%
 echo * Push changes (tag and release notes) to server repo
 echo * Push nuget package to nuget server (and symbol server)
+echo * Rollback the assemblyinfo.cs changes made by this bat file. (Will be handled automatically later!)
 
 echo.
 

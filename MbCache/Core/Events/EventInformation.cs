@@ -18,14 +18,5 @@ namespace MbCache.Core.Events
 		public Type Type { get; }
 		public MethodInfo Method { get; }
 		public IEnumerable<object> Arguments { get; private set; }
-
-		private string _methodName;
-		public string MethodName()
-		{
-			if (_methodName != null)
-				return _methodName;
-			var method = Method?.ToString() ?? "[all methods]";
-			return _methodName = $"{method} on {Type.Name}";
-		}
 	}
 }

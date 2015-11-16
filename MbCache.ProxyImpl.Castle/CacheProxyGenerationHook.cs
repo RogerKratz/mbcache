@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
@@ -8,11 +9,11 @@ namespace MbCache.ProxyImpl.Castle
 {
 	public class CacheProxyGenerationHook : IProxyGenerationHook
 	{
-		private readonly ConfigurationForType _methodData;
+		private readonly IEnumerable<MethodInfo> _cachedMethods;
 
-		public CacheProxyGenerationHook(ConfigurationForType methodData)
+		public CacheProxyGenerationHook(IEnumerable<MethodInfo> cachedMethods)
 		{
-			_methodData = methodData;
+			_cachedMethods = cachedMethods;
 		}
 
 		public bool ShouldInterceptMethod(Type type, MethodInfo methodInfo)
@@ -33,18 +34,18 @@ namespace MbCache.ProxyImpl.Castle
 			//ugly hack for now
 			if (key.IsGenericMethod)
 				return true;
-			return _methodData.CachedMethods.Contains(key, MethodInfoComparer.Instance);
+			return _cachedMethods.Contains(key, MethodInfoComparer.Instance);
 		}
 
 		public override bool Equals(object obj)
 		{
 			var casted = obj as CacheProxyGenerationHook;
-			return casted != null && casted._methodData.CachedMethods.SequenceEqual(_methodData.CachedMethods, MethodInfoComparer.Instance);
+			return casted != null && casted._cachedMethods.SequenceEqual(_cachedMethods, MethodInfoComparer.Instance);
 		}
 
 		public override int GetHashCode()
 		{
-			return _methodData.CachedMethods.GetHashCode();
+			return _cachedMethods.GetHashCode();
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace MbCache.ProxyImpl.Castle
 		{
 			var type = typeof(T);
 			var cacheInterceptor = new CacheInterceptor(_cache, configurationForType);
-			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
+			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType.CachedMethods));
 			options.AddMixinInstance(createCachingComponent(configurationForType));
 			try
 			{
@@ -41,7 +41,7 @@ namespace MbCache.ProxyImpl.Castle
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
 			var cacheInterceptor = new CacheInterceptor(_cache, configurationForType);
-			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType));
+			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType.CachedMethods));
 			options.AddMixinInstance(createCachingComponent(configurationForType));
 			return typeof (T).IsClass ? 
 					generator.CreateClassProxyWithTarget(uncachedComponent, options, cacheInterceptor) : 

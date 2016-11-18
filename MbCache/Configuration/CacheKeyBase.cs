@@ -23,7 +23,6 @@ namespace MbCache.Configuration
 	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
 	{
-		//private static readonly ILog logger = LogManager.GetLogger(typeof (CacheKeyBase));
 		private const string suspisiousParam =
 			"Cache key of type {0} equals its own type name. Possible bug in your ICacheKey implementation.";
 		private static readonly Regex findSeperator = new Regex(@"\" + separator, RegexOptions.Compiled);

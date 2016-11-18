@@ -71,7 +71,7 @@ namespace MbCache.ProxyImpl.LinFu
 			}
 			catch (TargetInvocationException ex)
 			{
-				exceptionInternalPreserveStackTrace.Invoke(ex.InnerException, new Object[] { });
+				exceptionInternalPreserveStackTrace.Invoke(ex.InnerException, new object[] { });
 				throw ex.InnerException;
 			}
 		}

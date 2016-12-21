@@ -5,7 +5,6 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Performance
 {
-	[TestFixture]
 	public class MemoryUsageTest : FullTest
 	{
 		private ObjectWithMultipleParameters component;

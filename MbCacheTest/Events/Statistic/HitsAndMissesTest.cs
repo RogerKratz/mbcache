@@ -1,3 +1,4 @@
+using System;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
@@ -11,7 +12,9 @@ namespace MbCacheTest.Events.Statistic
 		private IMbCacheFactory factory;
 		private StatisticsEventListener eventListener;
 
-		public HitsAndMissesTest(string proxyTypeString) : base(proxyTypeString) {}
+		public HitsAndMissesTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

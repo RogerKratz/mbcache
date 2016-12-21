@@ -1,4 +1,5 @@
-﻿using MbCache.Core;
+﻿using System;
+using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -11,7 +12,9 @@ namespace MbCacheTest.Logic
 		private IMbCacheFactory factory;
 		private StatisticsEventListener eventListener;
 
-		public ReturnNullTest(string proxyTypeString) : base(proxyTypeString) {}
+		public ReturnNullTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

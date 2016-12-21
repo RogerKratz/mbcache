@@ -8,7 +8,7 @@ namespace MbCacheTest.Logic.Wrap
 	{
 		private IMbCacheFactory factory;
 
-		public GeneralTests(string proxyTypeString) : base(proxyTypeString)
+		public GeneralTests(Type proxyType) : base(proxyType)
 		{
 		}
 

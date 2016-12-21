@@ -1,11 +1,11 @@
-﻿using MbCacheTest.TestData;
+﻿using System;
+using MbCacheTest.TestData;
 
 namespace MbCacheTest.Events.Statistic
 {
 	public class ExplicitDeleteTest : DeleteTestBase
 	{
-		public ExplicitDeleteTest(string proxyTypeString)
-			: base(proxyTypeString)
+		public ExplicitDeleteTest(Type proxyType) : base(proxyType)
 		{
 		}
 

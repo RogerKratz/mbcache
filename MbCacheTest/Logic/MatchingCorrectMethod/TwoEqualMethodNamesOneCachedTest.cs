@@ -1,4 +1,5 @@
-﻿using MbCache.Core;
+﻿using System;
+using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -9,8 +10,7 @@ namespace MbCacheTest.Logic.MatchingCorrectMethod
 	{
 		private IMbCacheFactory factory;
 
-		public TwoEqualMethodNamesOneCachedTest(string proxyTypeString)
-			: base(proxyTypeString)
+		public TwoEqualMethodNamesOneCachedTest(Type proxyType) : base(proxyType)
 		{
 		}
 

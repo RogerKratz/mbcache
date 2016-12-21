@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -7,7 +8,9 @@ namespace MbCacheTest.Logic.Concurrency
 {
 	public class SimultaniousCachePutTest : FullTest
 	{
-		public SimultaniousCachePutTest(string proxyTypeString) : base(proxyTypeString) { }
+		public SimultaniousCachePutTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		[Test]
 		public void ShouldNotMakeTheSameCallMoreThanOnce()

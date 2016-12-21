@@ -7,7 +7,7 @@ namespace MbCacheTest.Logic.ClassProxy
 {
 	public class NonVirtualTest : FullTest
 	{
-		public NonVirtualTest(string proxyTypeString) : base(proxyTypeString)
+		public NonVirtualTest(Type proxyType) : base(proxyType)
 		{
 		}
 

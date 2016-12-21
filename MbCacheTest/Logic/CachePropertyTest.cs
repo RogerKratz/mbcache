@@ -6,7 +6,7 @@ namespace MbCacheTest.Logic
 {
 	public class CachePropertyTest : FullTest
 	{
-		public CachePropertyTest(string proxyTypeString) : base(proxyTypeString)
+		public CachePropertyTest(Type proxyType) : base(proxyType)
 		{
 		}
 

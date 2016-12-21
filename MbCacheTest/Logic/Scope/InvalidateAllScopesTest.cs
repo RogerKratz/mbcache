@@ -1,4 +1,5 @@
-﻿using MbCache.Configuration;
+﻿using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -10,7 +11,7 @@ namespace MbCacheTest.Logic.Scope
 	{
 		private IMbCacheFactory factory;
 
-		public InvalidateAllScopesTest(string proxyTypeString) : base(proxyTypeString)
+		public InvalidateAllScopesTest(Type proxyType) : base(proxyType)
 		{
 		}
 

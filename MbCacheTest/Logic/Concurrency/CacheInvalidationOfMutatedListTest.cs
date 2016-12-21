@@ -10,12 +10,12 @@ namespace MbCacheTest.Logic.Concurrency
 {
 	public class CacheInvalidationOfMutatedListTest : FullTest
 	{
-		public CacheInvalidationOfMutatedListTest(string proxyTypeString) : base(proxyTypeString)
-		{
-		}
-
 		private IMbCacheFactory factory;
 		private ObjectWithMutableList instance;
+
+		public CacheInvalidationOfMutatedListTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

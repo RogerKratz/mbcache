@@ -1,4 +1,5 @@
-﻿using MbCache.Configuration;
+﻿using System;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -9,7 +10,7 @@ namespace MbCacheTest.Logic
 	{
 		private cacheKeyStub cacheKey;
 
-		public CacheKeyBaseReturnNullTest(string proxyTypeString) : base(proxyTypeString)
+		public CacheKeyBaseReturnNullTest(Type proxyType) : base(proxyType)
 		{
 		}
 

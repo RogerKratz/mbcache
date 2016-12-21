@@ -9,7 +9,7 @@ namespace MbCacheTest.Logic.Performance
 	{
 		private ObjectWithMultipleParameters component;
 
-		public MemoryUsageTest(string proxyTypeString) : base(proxyTypeString)
+		public MemoryUsageTest(Type proxyType) : base(proxyType)
 		{
 		}
 

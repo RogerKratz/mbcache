@@ -1,4 +1,5 @@
-﻿using MbCacheTest.TestData;
+﻿using System;
+using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -8,8 +9,7 @@ namespace MbCacheTest.Events.Statistic
 	{
 		private EventListenerForTest eventListener;
 
-		public PutTest(string proxyTypeString)
-			: base(proxyTypeString)
+		public PutTest(Type proxyType) : base(proxyType)
 		{
 		}
 

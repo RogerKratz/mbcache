@@ -10,7 +10,9 @@ namespace MbCacheTest.Logic
 	{
 		private IMbCacheFactory factory;
 
-		public InvalidateCacheTest(string proxyTypeString) : base(proxyTypeString) { }
+		public InvalidateCacheTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

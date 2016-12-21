@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
@@ -11,7 +12,7 @@ namespace MbCacheTest.Events.Statistic
 	{
 		private eventListenerForGet eventListener;
 
-		public GetTest(string proxyTypeString) : base(proxyTypeString)
+		public GetTest(Type proxyType) : base(proxyType)
 		{
 		}
 

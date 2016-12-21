@@ -10,7 +10,7 @@ namespace MbCacheTest.Logic.EnableDisable
 	{
 		private IMbCacheFactory factory;
 
-		public DisableTest(string proxyTypeString) : base(proxyTypeString)
+		public DisableTest(Type proxyType) : base(proxyType)
 		{
 		}
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
@@ -14,7 +15,8 @@ namespace MbCacheTest.Logic
 	{
 		private cacheKeyStub cacheKey;
 
-		public CacheKeyReturnNullTest(string proxyTypeString) : base(proxyTypeString)
+
+		public CacheKeyReturnNullTest(Type proxyType) : base(proxyType)
 		{
 		}
 

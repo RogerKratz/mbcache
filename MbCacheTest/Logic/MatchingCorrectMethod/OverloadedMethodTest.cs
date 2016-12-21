@@ -1,3 +1,4 @@
+using System;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -8,7 +9,7 @@ namespace MbCacheTest.Logic.MatchingCorrectMethod
 	{
 		private ObjectWithOverloadedMethod component;
 
-		public OverloadedMethodTest(string proxyTypeString) : base(proxyTypeString)
+		public OverloadedMethodTest(Type proxyType) : base(proxyType)
 		{
 		}
 

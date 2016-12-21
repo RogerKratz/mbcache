@@ -6,7 +6,7 @@ namespace MbCacheTest.Logic.ExplicitCacheKeyForType
 {
 	public class DontAllowDuplicateTest : FullTest
 	{
-		public DontAllowDuplicateTest(string proxyTypeString) : base(proxyTypeString)
+		public DontAllowDuplicateTest(Type proxyType) : base(proxyType)
 		{
 		}
 
@@ -15,13 +15,13 @@ namespace MbCacheTest.Logic.ExplicitCacheKeyForType
 		{
 			const string key = "aklsdjf";
 			CacheBuilder.For<ObjectReturningNewGuids>(key)
-			            .CacheMethod(x => x.CachedMethod())
-			            .As<IObjectReturningNewGuids>();
-      CacheBuilder.For<ObjectReturningNewGuidsNoInterface>(key)
-                  .CacheMethod(x => x.CachedMethod())
-                  .AsImplemented();
+				.CacheMethod(x => x.CachedMethod())
+				.As<IObjectReturningNewGuids>();
+			CacheBuilder.For<ObjectReturningNewGuidsNoInterface>(key)
+				.CacheMethod(x => x.CachedMethod())
+				.AsImplemented();
 			Assert.Throws<InvalidOperationException>(() =>
-			              CacheBuilder.BuildFactory());
+				CacheBuilder.BuildFactory());
 		}
 	}
 }

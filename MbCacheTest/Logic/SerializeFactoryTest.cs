@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using MbCache.Core;
 using MbCacheTest.TestData;
@@ -10,7 +11,7 @@ namespace MbCacheTest.Logic
 	{
 		private IMbCacheFactory factory;
 
-		public SerializeFactoryTest(string proxyTypeString) : base(proxyTypeString)
+		public SerializeFactoryTest(Type proxyType) : base(proxyType)
 		{
 		}
 

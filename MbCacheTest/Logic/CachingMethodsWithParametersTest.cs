@@ -1,3 +1,4 @@
+using System;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -8,7 +9,9 @@ namespace MbCacheTest.Logic
 	{
 		private IMbCacheFactory factory;
 
-		public CachingMethodsWithParametersTest(string proxyTypeString) : base(proxyTypeString) { }
+		public CachingMethodsWithParametersTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

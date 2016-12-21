@@ -1,4 +1,5 @@
-﻿using MbCache.Core;
+﻿using System;
+using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -9,7 +10,7 @@ namespace MbCacheTest.Logic.Generics
 	{
 		private IMbCacheFactory factory;
 
-		public GenericTypeTest(string proxyTypeString) : base(proxyTypeString)
+		public GenericTypeTest(Type proxyType) : base(proxyType)
 		{
 		}
 

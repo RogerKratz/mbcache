@@ -1,4 +1,5 @@
-﻿using System.Runtime.Caching;
+﻿using System;
+using System.Runtime.Caching;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -10,7 +11,7 @@ namespace MbCacheTest.Logic.Performance
 		private ObjectWithMultipleParameters component;
 		private MemoryCache memoryCacheReference;
 
-		public NumberOfCacheEntriesTest(string proxyTypeString) : base(proxyTypeString)
+		public NumberOfCacheEntriesTest(Type proxyType) : base(proxyType)
 		{
 		}
 

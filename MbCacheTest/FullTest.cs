@@ -1,12 +1,15 @@
-﻿using NUnit.Framework;
+﻿using System;
+using MbCache.ProxyImpl.Castle;
+using MbCache.ProxyImpl.LinFu;
+using NUnit.Framework;
 
 namespace MbCacheTest
 {
-	[TestFixture("MbCache.ProxyImpl.Castle.CastleProxyFactory, MbCache.ProxyImpl.Castle")]
-	[TestFixture("MbCache.ProxyImpl.LinFu.LinFuProxyFactory, MbCache.ProxyImpl.LinFu")]
+	[TestFixture(typeof(CastleProxyFactory))]
+	[TestFixture(typeof(LinFuProxyFactory))]
 	public abstract class FullTest : SimpleTest
 	{
-		protected FullTest(string proxyTypeString) : base(proxyTypeString)
+		protected FullTest(Type proxyType) : base(proxyType)
 		{
 		}
 	}

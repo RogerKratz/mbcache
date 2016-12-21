@@ -7,20 +7,17 @@ namespace MbCacheTest
 {
 	public abstract class SimpleTest
 	{
-		protected SimpleTest(): this("MbCacheTest.ProxyImplThatThrowsNotSupportedEx") 
-		{
-		}
+		private readonly IProxyFactory _proxyFactory;
 
-		protected SimpleTest(string proxyTypeString)
+		protected SimpleTest(Type proxyType)
 		{
-			var proxyType = Type.GetType(proxyTypeString, true);
-			ProxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
+			_proxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
 		}
 
 		[SetUp]
 		public void Setup()
 		{
-			CacheBuilder = new CacheBuilder(ProxyFactory)
+			CacheBuilder = new CacheBuilder(_proxyFactory)
 					.SetCache(CreateCache())
 					.SetCacheKey(CreateCacheKey());
 			TestSetup();
@@ -29,7 +26,6 @@ namespace MbCacheTest
 		protected virtual void TestSetup(){}
 
 		protected CacheBuilder CacheBuilder { get; private set; }
-		protected IProxyFactory ProxyFactory { get; }
 
 		protected virtual ICache CreateCache()
 		{

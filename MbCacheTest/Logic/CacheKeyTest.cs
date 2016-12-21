@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace MbCacheTest.Logic
 		private IMbCacheFactory factory;
 		private EventListenerForTest eventListener;
 
-		public CacheKeyTest(string proxyTypeString) : base(proxyTypeString)
+		public CacheKeyTest(Type proxyType) : base(proxyType)
 		{
 		}
 

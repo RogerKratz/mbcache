@@ -1,4 +1,5 @@
-﻿using MbCache.Core;
+﻿using System;
+using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -12,8 +13,7 @@ namespace MbCacheTest.Events.Statistic
 		private eventListenerForMultiple secondEventListener;
 		private eventListenerForMultiple thirdEventListener;
 
-		public MultipleEventHandlers(string proxyTypeString)
-			: base(proxyTypeString)
+		public MultipleEventHandlers(Type proxyType) : base(proxyType)
 		{
 		}
 

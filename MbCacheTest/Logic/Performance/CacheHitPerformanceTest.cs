@@ -9,7 +9,7 @@ namespace MbCacheTest.Logic.Performance
 	{
 		private IReturningRandomNumbers instance;
 
-		public CacheHitPerformanceTest(string proxyTypeString) : base(proxyTypeString)
+		public CacheHitPerformanceTest(Type proxyType) : base(proxyType)
 		{
 		}
 

@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Collections.Generic;
 using MbCache.Core;
@@ -14,8 +15,9 @@ namespace MbCacheTest.Events.Statistic
 		private IMbCacheFactory factory;
 		private StatisticsEventListener eventListener;
 
-		public ThreadingTest(string proxyTypeString) : base(proxyTypeString) { }
-
+		public ThreadingTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

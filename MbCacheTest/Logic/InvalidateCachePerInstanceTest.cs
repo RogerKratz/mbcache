@@ -1,3 +1,4 @@
+using System;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -11,7 +12,9 @@ namespace MbCacheTest.Logic
 		private IObjectReturningNewGuids obj1;
 		private IObjectReturningNewGuids obj2;
 
-		public InvalidateCachePerInstanceTest(string proxyTypeString) : base(proxyTypeString) {}
+		public InvalidateCachePerInstanceTest(Type proxyType) : base(proxyType)
+		{
+		}
 
 		protected override void TestSetup()
 		{

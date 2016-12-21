@@ -7,7 +7,7 @@ namespace MbCacheTest.Configuration
 {
 	public class CacheBuilderTest : FullTest
 	{
-		public CacheBuilderTest(string proxyTypeString) : base(proxyTypeString)
+		public CacheBuilderTest(Type proxyType) : base(proxyType)
 		{
 		}
 

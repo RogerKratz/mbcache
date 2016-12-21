@@ -5,8 +5,13 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
+	[TestFixture(typeof(ProxyImplThatThrowsNotSupportedEx))]
 	public class ImplementationTypeForTest : SimpleTest
 	{
+		public ImplementationTypeForTest(Type proxyType) : base(proxyType)
+		{
+		}
+
 		[Test]
 		public void ShouldReturnCorrectTypeForInterface()
 		{
@@ -40,8 +45,8 @@ namespace MbCacheTest.Logic
 				.AsImplemented();
 			var factory = CacheBuilder.BuildFactory();
 			Assert.Throws<ArgumentException>(() =>
-			                                 factory.ImplementationTypeFor(typeof(IObjectReturningNewGuids))
-														);
+				factory.ImplementationTypeFor(typeof(IObjectReturningNewGuids))
+			);
 		}
 	}
 }

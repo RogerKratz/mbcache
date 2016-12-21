@@ -9,7 +9,7 @@ namespace MbCacheTest.Logic
 	{
 		private IMbCacheFactory factory;
 
-		public SameParameterNamesTest(string proxyTypeString) : base(proxyTypeString)
+		public SameParameterNamesTest(Type proxyType) : base(proxyType)
 		{
 		}
 

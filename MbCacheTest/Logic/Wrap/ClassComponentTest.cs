@@ -1,4 +1,5 @@
-﻿using MbCache.Core;
+﻿using System;
+using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -9,7 +10,7 @@ namespace MbCacheTest.Logic.Wrap
 	{
 		private IMbCacheFactory factory;
 
-		public ClassComponentTest(string proxyTypeString) : base(proxyTypeString)
+		public ClassComponentTest(Type proxyType) : base(proxyType)
 		{
 		}
 

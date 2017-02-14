@@ -3,8 +3,7 @@ using MbCache.Logic;
 namespace MbCache.Configuration
 {
 	/// <summary>
-	/// Creates the proxy. 
-	/// The implementation of this interface needs a default ctor
+	/// Creates the proxy.
 	/// </summary>
 	public interface IProxyFactory
 	{

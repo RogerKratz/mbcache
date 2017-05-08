@@ -85,7 +85,7 @@ namespace MbCache.Configuration
 			var scope = Scope();
 			var completeKey = scope == null ? 
 				startKey : 
-				string.Concat(startKey, separator, Scope());
+				string.Concat(startKey, separator, scope);
 			return new KeyAndItsDependingKeys(completeKey, () => allRemoveKeys(completeKey));
 		}
 

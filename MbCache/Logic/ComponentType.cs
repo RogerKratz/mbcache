@@ -11,7 +11,7 @@ namespace MbCache.Logic
 			TypeAsCacheKeyString = typeAsCacheKeyString ?? concreteType.ToString();
 		}
 
-		public Type ConcreteType { get; private set; }
+		public Type ConcreteType { get; }
 		public Type ConfiguredType { get; internal set; }
 		public string TypeAsCacheKeyString { get; }
 

@@ -16,8 +16,8 @@ namespace MbCache.Logic
 		}
 
 		public bool EnabledCache { get; set; }
-		public ComponentType ComponentType { get; private set; }
-		public ICollection<MethodInfo> CachedMethods { get; private set; }
+		public ComponentType ComponentType { get; }
+		public ICollection<MethodInfo> CachedMethods { get; }
 		public bool CachePerInstance { get; set; }
 		public ICacheKey CacheKey { get; set; }
 	}

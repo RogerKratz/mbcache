@@ -131,7 +131,7 @@ namespace MbCacheTest.Events.Statistic
 
 			public void Warning(string warnMessage)
 			{
-				throw new System.NotImplementedException();
+				throw new NotImplementedException();
 			}
 		}
 	}

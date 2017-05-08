@@ -10,7 +10,7 @@ namespace MbCache.Core
 			CachedValue = cachedValue;
 		}
 
-		public EventInformation EventInformation { get; private set; }
-		public object CachedValue { get; private set; }
+		public EventInformation EventInformation { get; }
+		public object CachedValue { get; }
 	}
 }

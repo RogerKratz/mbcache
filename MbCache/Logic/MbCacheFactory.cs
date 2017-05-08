@@ -28,8 +28,7 @@ namespace MbCache.Logic
 		public T Create<T>(params object[] parameters) where T : class
 		{
 			var type = typeof (T);
-			ConfigurationForType configurationForType;
-			if (_configuredTypes.TryGetValue(type, out configurationForType))
+			if (_configuredTypes.TryGetValue(type, out ConfigurationForType configurationForType))
 			{
 				return _proxyFactory.CreateProxy<T>(configurationForType, parameters);
 			}
@@ -39,8 +38,7 @@ namespace MbCache.Logic
 		public T ToCachedComponent<T>(T uncachedComponent) where T : class
 		{
 			var type = typeof(T);
-			ConfigurationForType configurationForType;
-			if (_configuredTypes.TryGetValue(type, out configurationForType))
+			if (_configuredTypes.TryGetValue(type, out ConfigurationForType configurationForType))
 			{
 				return _proxyFactory.CreateProxyWithTarget(uncachedComponent, configurationForType);
 			}
@@ -55,8 +53,7 @@ namespace MbCache.Logic
 		public void Invalidate<T>()
 		{
 			var type = typeof (T);
-			ConfigurationForType configurationForType;
-			if (_configuredTypes.TryGetValue(type, out configurationForType))
+			if (_configuredTypes.TryGetValue(type, out ConfigurationForType configurationForType))
 			{
 				var componentType = configurationForType.ComponentType;
 				var cacheKey = configurationForType.CacheKey.RemoveKey(componentType);
@@ -86,17 +83,18 @@ namespace MbCache.Logic
 
 		public Type ImplementationTypeFor(Type componentType)
 		{
-			ConfigurationForType configuredType;
-			if (!_configuredTypes.TryGetValue(componentType, out configuredType))
+			if (!_configuredTypes.TryGetValue(componentType, out ConfigurationForType configuredType))
+			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, componentType.FullName));
+			}
+
 			return configuredType.ComponentType.ConcreteType;
 		}
 
 		public void DisableCache<T>(bool evictCacheEntries = true)
 		{
 			var type = typeof(T);
-			ConfigurationForType methods;
-			if (!_configuredTypes.TryGetValue(type, out methods))
+			if (!_configuredTypes.TryGetValue(type, out ConfigurationForType methods))
 			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 			}
@@ -110,9 +108,10 @@ namespace MbCache.Logic
 		public void EnableCache<T>()
 		{
 			var type = typeof (T);
-			ConfigurationForType methods;
-			if (!_configuredTypes.TryGetValue(type, out methods))
+			if (!_configuredTypes.TryGetValue(type, out ConfigurationForType methods))
+			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
+			}
 			methods.EnabledCache = true;
 		}
 
@@ -120,7 +119,10 @@ namespace MbCache.Logic
 		{
 			var comp = component as ICachingComponent;
 			if (comp == null)
+			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, component));
+			}
+
 			return comp;
 		}
 

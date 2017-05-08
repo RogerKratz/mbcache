@@ -1,4 +1,4 @@
-MbCache, or Method based Cache, is a [memoization](http://en.wikipedia.org/wiki/Memoization) library for .net. It is used to define certain methods to be cached in a centralized way, independed on the underlying caching framework.
+MbCache, or Method based Cache, is a [memoization](http://en.wikipedia.org/wiki/Memoization) library for .net. It is used to define certain methods to be cached in a centralized way, independent on the underlying caching framework.
 
 How often have you written c# similar to this?
 ```
@@ -9,7 +9,7 @@ public class Calculator : ICalculator
    var cachedValue = tryGetFromCache(yourKey);
    if(cachedValue != null)
      return cachedValue;
-   var value = someExpansiveOperation();
+   var value = someExpensiveOperation();
    putInCache(yourKey, value);
    return value;
  }
@@ -32,7 +32,7 @@ There's an alternative that solves this for you - MbCache!
     ```
     public SomeType Calculate()
     {
-      return someExpansiveOperation();  
+      return someExpensiveOperation();  
     }
     ```
 2. Tell MbCache at start up what methods to cache (preferably together with your favorite ioc container).

@@ -14,7 +14,7 @@ namespace MbCache.Configuration
 
 		public FixedNumberOfLockObjects(int spread)
 		{
-			_lockobjects = Enumerable.Range(0, spread)
+			_lockobjects = Enumerable.Repeat(0, spread)
 				.Select(x => new object())
 				.ToArray();
 		}

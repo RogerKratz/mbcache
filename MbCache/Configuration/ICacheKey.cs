@@ -54,25 +54,7 @@ namespace MbCache.Configuration
 		/// A string representation of the component.
 		/// </returns>
 		string RemoveKey(ComponentType type, ICachingComponent component);
-
-		/// <summary>
-		/// Creates a cache key for a specific method.
-		/// </summary>
-		/// <param name="type">Type of the component</param>
-		/// <param name="component">
-		/// The component instance.
-		/// </param>
-		/// <param name="method">
-		/// The method of the component.
-		/// </param>
-		/// <remarks>
-		/// Used by MbCache when invalidating all cache entries for a specific method.
-		/// </remarks>
-		/// <returns>
-		/// A string representation of the method.
-		/// </returns>
-		string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method);
-
+		
 		/// <summary>
 		/// Creates a cache key for a specific component with specific parameters.
 		/// </summary>
@@ -95,7 +77,7 @@ namespace MbCache.Configuration
 		/// Null is returned if the method is configured but with these specific parameters
 		/// shouldn't be invalidated from the cache.
 		/// </returns>
-		string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters);
+		string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters = null);
 
 		/// <summary>
 		/// Creates a cache key for a specific component with specific parameters.

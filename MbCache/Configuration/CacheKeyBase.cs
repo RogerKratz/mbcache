@@ -46,31 +46,33 @@ namespace MbCache.Configuration
 			return string.Concat(RemoveKey(type), separator, component.UniqueId);
 		}
 
-		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
+		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters = null)
 		{
 			var ret = new StringBuilder(RemoveKey(type, component));
-			ret.Append(separator);
-			ret.Append(method.Name);
-			foreach (var parameter in method.GetParameters())
-			{
-				ret.Append(separatorForParameters);
-				ret.Append(parameter.ParameterType);
-			}
-			return ret.ToString();
-		}
 
-		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
-		{
-			var ret = new StringBuilder(RemoveKey(type, component, method));
-			ret.Append(separator);
-			foreach (var parameter in parameters)
+			if (method != null)
 			{
-				ret.Append(separatorForParameters);
-				var parameterKey = ParameterValue(parameter);
-				if (parameterKey == null)
-					return null;
-				checkIfSuspiousParameter(parameter, parameterKey);
-				ret.Append(parameterKey);
+				ret.Append(separator);
+				ret.Append(method.Name);
+				foreach (var parameter in method.GetParameters())
+				{
+					ret.Append(separatorForParameters);
+					ret.Append(parameter.ParameterType);
+				}
+			}
+
+			if (parameters != null)
+			{
+				ret.Append(separator);
+				foreach (var parameter in parameters)
+				{
+					ret.Append(separatorForParameters);
+					var parameterKey = ParameterValue(parameter);
+					if (parameterKey == null)
+						return null;
+					checkIfSuspiousParameter(parameter, parameterKey);
+					ret.Append(parameterKey);
+				}
 			}
 
 			return ret.ToString();
@@ -91,10 +93,8 @@ namespace MbCache.Configuration
 
 		private static IEnumerable<string> allRemoveKeys(string getAndPutKey)
 		{
-			var keys = new List<string>();
 			var matches = findSeperator.Matches(getAndPutKey);
-			keys.AddRange(from Match match in matches select getAndPutKey.Substring(0, match.Index));
-			return keys;
+			return from Match match in matches select getAndPutKey.Substring(0, match.Index);
 		}
 
 		private void checkIfSuspiousParameter(object parameter, string parameterKey)

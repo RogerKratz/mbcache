@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- Version 2.11 (v 2.11.0.0), 2017-05-10
+* No known breaking changes
+
+
 - Version 2.10 (v 2.10.0.0), 2015-11-13
 * ICacheKey.Initialize added
 * IEventListener.Warning added

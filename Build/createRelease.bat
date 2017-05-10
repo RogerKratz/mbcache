@@ -1,7 +1,7 @@
 @echo off
 SET ROOTDIR=%~dp0
 set ROOTDIR=%ROOTDIR:~0,-7%
-set msbuild="C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
+set msbuild="%PROGRAMFILES(X86)%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\amd64\MSBuild.exe"
 set configuration=Release
 set nugetFolder="%ROOTDIR%\.nuget"
 set PackageFolder="%ROOTDIR%\packages"

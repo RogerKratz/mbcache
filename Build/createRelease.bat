@@ -34,7 +34,6 @@ echo Remember to...
 echo * Tag current changeset with version %nugetversion%
 echo * Push changes (tag and release notes) to server repo
 echo * Push nuget package to nuget server (and symbol server)
-echo * Rollback the assemblyinfo.cs changes made by this bat file. (Will be handled automatically later!)
 
 echo.
 

@@ -55,8 +55,16 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.5.0\lib\net40\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpTestsEx, Version=1.1.1.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
@@ -66,7 +74,12 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="Z.ExtensionMethods, Version=2.0.11.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.ExtensionMethods.2.0.11\lib\net40\Z.ExtensionMethods.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caches\Tools.cs" />
@@ -81,6 +94,7 @@
     <Compile Include="Events\Statistic\MultipleEventHandlers.cs" />
     <Compile Include="Events\Statistic\PutTest.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Logic\ToStringOrSerializedCacheKeyTest.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyForComponentOverridingTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyThatThrows.cs" />
@@ -137,6 +151,7 @@
     <Compile Include="TestData\ObjectWithMultipleParameters.cs" />
     <Compile Include="TestData\ObjectWithParameterReturningFixedValue.cs" />
     <Compile Include="TestData\ObjectWithOverloadedMethod.cs" />
+    <Compile Include="TestData\ObjectWithComplexProperties.cs" />
     <Compile Include="TestData\ObjectWithProperty.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />
     <Compile Include="TestData\ObjectImplToString.cs" />

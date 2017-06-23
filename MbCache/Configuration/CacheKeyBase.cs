@@ -61,7 +61,7 @@ namespace MbCache.Configuration
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
-				checkIfSuspiousParameter(parameter, parameterKey);
+				checkIfSuspiciousParameter(parameter, parameterKey);
 				ret.Append(parameterKey);
 			}
 
@@ -100,19 +100,32 @@ namespace MbCache.Configuration
 			return from Match match in matches select getAndPutKey.Substring(0, match.Index);
 		}
 
-		private void checkIfSuspiousParameter(object parameter, string parameterKey)
+		/// <summary>
+		/// Add a warning to the <see cref="IEventListener"/>s when parameters is suspicious (<see cref="parameterIsSuspicious"/>)
+		/// </summary>
+		private void checkIfSuspiciousParameter(object parameter, string parameterKey)
+		{
+			if (parameterIsSuspicious(parameter, parameterKey))
+			{
+				var warningMsg = string.Format(suspisiousParam, parameter.GetType());
+				foreach (var eventListener in _eventListeners)
+				{
+					eventListener.Warning(warningMsg);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Parameter is suspicious when his key value equals his type's name
+		/// </summary>
+		protected bool parameterIsSuspicious(object parameter, string parameterKey)
 		{
 			if (parameter != null)
 			{
 				var parameterType = parameter.GetType();
-				if (parameterKey.Equals(parameterType.ToString()))
-				{
-					foreach (var eventListener in _eventListeners)
-					{
-						eventListener.Warning(string.Format(suspisiousParam, parameterType));
-					}
-				}
+				return parameterKey.Equals(parameterType.ToString());
 			}
+			return false;
 		}
 
 		/// <summary>

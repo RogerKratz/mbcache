@@ -19,6 +19,7 @@
 *.sbr
 *.scc
 .vs/
+.idea/
 [Bb]in
 [Db]ebug*/
 obj/

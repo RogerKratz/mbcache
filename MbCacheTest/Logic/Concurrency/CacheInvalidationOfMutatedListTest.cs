@@ -29,19 +29,22 @@ namespace MbCacheTest.Logic.Concurrency
 		}
 
 		[Test]
-		public void ShouldNotGetDuplicatesInList_InvalidateOnType([Range(1, 10)] int attempt)
+		[Repeat(10)]
+		public void ShouldNotGetDuplicatesInList_InvalidateOnType()
 		{
 			runInParallell(() => factory.Invalidate<ObjectWithMutableList>());
 		}
 
 		[Test]
-		public void ShouldNotGetDuplicatesInList_InvalidateOnInstance([Range(1, 10)] int attempt)
+		[Repeat(10)]
+		public void ShouldNotGetDuplicatesInList_InvalidateOnInstance()
 		{
 			runInParallell(() => factory.Invalidate(instance));
 		}
 
 		[Test]
-		public void ShouldNotGetDuplicatesInList_InvalidateOnMethod([Range(1, 10)] int attempt)
+		[Repeat(10)]
+		public void ShouldNotGetDuplicatesInList_InvalidateOnMethod()
 		{
 			//add one for "true" if needed
 			runInParallell(() => factory.Invalidate(instance, x => x.GetListContents(), false));

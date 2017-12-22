@@ -30,16 +30,10 @@ namespace MbCacheTest.Logic.Concurrency
 			
 			var tasks = new List<Task>();
 			
-			1000.Times(x =>
+			500.Times(x =>
 			{
 				tasks.Add(Task.Factory.StartNew(() =>
 				{
-					instance1.Ref(x);
-					instance2.Foo(x);
-				}));
-				tasks.Add(Task.Factory.StartNew(() =>
-				{
-					instance2.Foo(x);
 					instance1.Ref(x);
 				}));
 			});

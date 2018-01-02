@@ -10,16 +10,15 @@ namespace MbCache.Configuration
 	[Serializable]
 	public class InMemoryCache : ICache
 	{
-		private readonly ILockObjectGenerator _lockObjectGenerator;
 		private readonly int _timeoutMinutes;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
+		private static readonly object lockObject = new object();
 		private EventListenersCallback _eventListenersCallback;
 		private const string mainCacheKey = "MainMbCacheKey";
 
-		public InMemoryCache(ILockObjectGenerator lockObjectGenerator, int timeoutMinutes)
+		public InMemoryCache(int timeoutMinutes)
 		{
-			_lockObjectGenerator = lockObjectGenerator;
 			_timeoutMinutes = timeoutMinutes;
 		}
 
@@ -37,7 +36,7 @@ namespace MbCache.Configuration
 				return cachedItem;
 			}
 
-			lock (lockObject(eventInformation))
+			lock (lockObject)
 			{
 				var cachedItem2 = (CachedItem)cache.Get(eventInformation.CacheKey);
 				if (cachedItem2 != null)
@@ -53,21 +52,18 @@ namespace MbCache.Configuration
 
 		public void Delete(EventInformation eventInformation)
 		{
-			lock (lockObject(eventInformation))
+			lock (lockObject)
 			{
-					cache.Remove(eventInformation.CacheKey);
+				cache.Remove(eventInformation.CacheKey);
 			}
 		}
 
 		public void Clear()
 		{
-			//todo: should (maybe?) be a proper lock here
-			cache.Remove(mainCacheKey);
-		}
-
-		private object lockObject(EventInformation eventInformation)
-		{
-			return _lockObjectGenerator.GetFor(eventInformation.Type.FullName);
+			lock (lockObject)
+			{
+				cache.Remove(mainCacheKey);
+			}
 		}
 
 		private CachedItem executeAndPutInCache(EventInformation eventInformation, IEnumerable<string> dependingRemoveKeys, Func<object> originalMethod)

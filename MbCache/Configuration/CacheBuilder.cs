@@ -33,7 +33,7 @@ namespace MbCache.Configuration
 			checkAllImplementationAndMethodsAreOk();
 			if (_cache == null)
 			{
-				_cache = new InMemoryCache(new FixedNumberOfLockObjects(50), 20);
+				_cache = new InMemoryCache(20);
 			}
 			setCacheKeysAndInit();
 			var events = new EventListenersCallback(_eventListeners);

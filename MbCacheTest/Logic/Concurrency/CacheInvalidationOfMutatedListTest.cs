@@ -30,7 +30,6 @@ namespace MbCacheTest.Logic.Concurrency
 
 		[Test]
 		[Repeat(10)]
-		[Ignore("To be fixed")]
 		public void ShouldNotGetDuplicatesInList_InvalidateAll()
 		{
 			runInParallell(() => factory.Invalidate());

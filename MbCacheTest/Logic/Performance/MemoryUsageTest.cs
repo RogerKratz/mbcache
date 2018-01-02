@@ -21,7 +21,7 @@ namespace MbCacheTest.Logic.Performance
 			component = CacheBuilder.BuildFactory().Create<ObjectWithMultipleParameters>();
 		}
 
-		[Test, Explicit]
+		[Test]
 		public void ShouldLowerMemoryUsageCausedByKeyString()
 		{
 			const int uniqueCacheEntries = 10000;

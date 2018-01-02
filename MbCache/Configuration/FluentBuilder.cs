@@ -44,6 +44,8 @@ namespace MbCache.Configuration
 
 		public CacheBuilder As<TInterface>()
 		{
+			if(typeof(TInterface).IsClass)
+				ProxyValidator.Validate(_details);
 			addToCachedMethods(typeof(TInterface));
 			return _cacheBuilder;
 		}

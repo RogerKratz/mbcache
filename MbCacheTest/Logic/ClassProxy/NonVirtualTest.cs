@@ -12,13 +12,23 @@ namespace MbCacheTest.Logic.ClassProxy
 		}
 
 		[Test]
-		public void CachedMethodNeedToBeVirtual()
+		public void CachedMethodNeedToBeVirtual_AsImplemented()
 		{
 			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
 				.CacheMethod(m => m.NonVirtual());
 			Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());
 		}
+		
+		[Test]
+		public void CachedMethodNeedToBeVirtual_As()
+		{
+			var fluentBuilder = CacheBuilder
+				.For<HasNonVirtualMethod>()
+				.CacheMethod(m => m.NonVirtual());
+			Assert.Throws<InvalidOperationException>(() => fluentBuilder.As<HasNonVirtualMethod>());
+		}
+
 
 		[Test]
 		public void TypeWithNonVirtualMethodShouldWork()

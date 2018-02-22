@@ -60,20 +60,16 @@ namespace MbCache.Logic
 			if (expression == null || expression is ParameterExpression)
 				return new object[0];
 
-			var memberExpression = expression as MemberExpression;
-			if (memberExpression != null)
+			if (expression is MemberExpression memberExpression)
 				return extractConstants(memberExpression).ToArray();
 
-			var constantExpression = expression as ConstantExpression;
-			if (constantExpression != null)
+			if (expression is ConstantExpression constantExpression)
 				return extractConstants(constantExpression);
 
-			var newArrayExpression = expression as NewArrayExpression;
-			if (newArrayExpression != null)
+			if (expression is NewArrayExpression newArrayExpression)
 				return extractConstants(newArrayExpression);
 
-			var unaryExpression = expression as UnaryExpression;
-			if (unaryExpression != null)
+			if (expression is UnaryExpression unaryExpression)
 				return extractConstants(unaryExpression);
 
 			throw new InvalidOperationException("Could not fetch the arguments from the provided exception. This may be a bug so please report it");
@@ -100,8 +96,7 @@ namespace MbCache.Logic
 
 		private static IEnumerable<object> extractConstants(ConstantExpression constantExpression)
 		{
-			var valueAsExpression = constantExpression.Value as Expression;
-			if (valueAsExpression != null)
+			if (constantExpression.Value is Expression valueAsExpression)
 			{
 				foreach (var constant in extractConstants(valueAsExpression))
 				{

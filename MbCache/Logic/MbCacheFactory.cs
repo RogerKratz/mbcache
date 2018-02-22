@@ -92,7 +92,7 @@ namespace MbCache.Logic
 		public void DisableCache<T>(bool evictCacheEntries = true)
 		{
 			var type = typeof(T);
-			if (!_configuredTypes.TryGetValue(type, out ConfigurationForType methods))
+			if (!_configuredTypes.TryGetValue(type, out var methods))
 			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 			}

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Castle.DynamicProxy;
 using MbCache.Core;
-using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.Castle
@@ -43,9 +42,8 @@ namespace MbCache.ProxyImpl.Castle
 			}
 			else
 			{
-				var eventInfo = new EventInformation(keyAndItsDependingKeys.Key, _configurationForType.ComponentType.ConfiguredType, invocation.Method, invocation.Arguments);
 				var hasCalledOriginalMethod = false;
-				var result = _cache.GetAndPutIfNonExisting(eventInfo, keyAndItsDependingKeys.DependingRemoveKeys, () =>
+				var result = _cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, invocation.Method, invocation.Arguments, () =>
 					{
 						invocation.Proceed();
 						hasCalledOriginalMethod = true;

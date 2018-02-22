@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCache.Core.Events;
 
 namespace MbCache.Logic
 {
@@ -28,7 +27,7 @@ namespace MbCache.Logic
 		public T Create<T>(params object[] parameters) where T : class
 		{
 			var type = typeof (T);
-			if (_configuredTypes.TryGetValue(type, out ConfigurationForType configurationForType))
+			if (_configuredTypes.TryGetValue(type, out var configurationForType))
 			{
 				return _proxyFactory.CreateProxy<T>(configurationForType, parameters);
 			}
@@ -38,7 +37,7 @@ namespace MbCache.Logic
 		public T ToCachedComponent<T>(T uncachedComponent) where T : class
 		{
 			var type = typeof(T);
-			if (_configuredTypes.TryGetValue(type, out ConfigurationForType configurationForType))
+			if (_configuredTypes.TryGetValue(type, out var configurationForType))
 			{
 				return _proxyFactory.CreateProxyWithTarget(uncachedComponent, configurationForType);
 			}
@@ -53,12 +52,11 @@ namespace MbCache.Logic
 		public void Invalidate<T>()
 		{
 			var type = typeof (T);
-			if (_configuredTypes.TryGetValue(type, out ConfigurationForType configurationForType))
+			if (_configuredTypes.TryGetValue(type, out var configurationForType))
 			{
 				var componentType = configurationForType.ComponentType;
 				var cacheKey = configurationForType.CacheKey.RemoveKey(componentType);
-				var deleteInfo = new EventInformation(cacheKey, componentType.ConfiguredType, null, null);
-				_cache.Delete(deleteInfo);
+				_cache.Delete(cacheKey);
 			}
 			else
 			{
@@ -83,7 +81,7 @@ namespace MbCache.Logic
 
 		public Type ImplementationTypeFor(Type componentType)
 		{
-			if (!_configuredTypes.TryGetValue(componentType, out ConfigurationForType configuredType))
+			if (!_configuredTypes.TryGetValue(componentType, out var configuredType))
 			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, componentType.FullName));
 			}
@@ -108,7 +106,7 @@ namespace MbCache.Logic
 		public void EnableCache<T>()
 		{
 			var type = typeof (T);
-			if (!_configuredTypes.TryGetValue(type, out ConfigurationForType methods))
+			if (!_configuredTypes.TryGetValue(type, out var methods))
 			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 			}
@@ -117,8 +115,7 @@ namespace MbCache.Logic
 
 		private static ICachingComponent castToCachingComponentOrThrow(object component)
 		{
-			var comp = component as ICachingComponent;
-			if (comp == null)
+			if (!(component is ICachingComponent comp))
 			{
 				throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, component));
 			}

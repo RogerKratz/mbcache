@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MbCache.Core;
 using MbCache.Core.Events;
 
@@ -18,17 +17,17 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Gets cache entry from cache. If not exists, runs <paramref name="originalMethod" /> and puts in cache.
 		/// </summary>
-		/// <param name="eventInformation"></param>
-		/// <param name="dependingRemoveKeys"></param>
+		/// <param name="keyAndItsDependingKeys"></param>
+		/// <param name="cachedMethodInformation"></param>
 		/// <param name="originalMethod"></param>
 		/// <returns></returns>
-		CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<IEnumerable<string>> dependingRemoveKeys, Func<object> originalMethod);
+		CachedItem GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod);
 
 		/// <summary>
 		/// Deletes cache entries from cache.
 		/// </summary>
-		/// <param name="eventInformation"></param>
-		void Delete(EventInformation eventInformation);
+		/// <param name="cacheKey"></param>
+		void Delete(string cacheKey);
 
 		/// <summary>
 		/// Deletes all cache entries created by this <see cref="ICache"/> instance.

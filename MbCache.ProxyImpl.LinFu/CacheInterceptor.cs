@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using LinFu.DynamicProxy;
 using MbCache.Core;
-using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.LinFu
@@ -51,11 +50,9 @@ namespace MbCache.ProxyImpl.LinFu
 		private object interceptUsingCache(MethodInfo method, object[] arguments)
 		{
 			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
-			if (keyAndItsDependingKeys.Key == null)
-				return callOriginalMethod(method, arguments);
-
-			var eventInformation = new EventInformation(keyAndItsDependingKeys.Key, _configurationForType.ComponentType.ConfiguredType, method, arguments);
-			return _cache.GetAndPutIfNonExisting(eventInformation, keyAndItsDependingKeys.DependingRemoveKeys, () => callOriginalMethod(method, arguments));
+			return keyAndItsDependingKeys.Key == null ? 
+				callOriginalMethod(method, arguments) : 
+				_cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, arguments, () => callOriginalMethod(method, arguments));
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

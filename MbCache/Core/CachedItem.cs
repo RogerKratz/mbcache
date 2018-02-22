@@ -4,13 +4,13 @@ namespace MbCache.Core
 {
 	public class CachedItem
 	{
-		public CachedItem(EventInformation eventInformation, object cachedValue)
+		public CachedItem(CachedMethodInformation cachedMethodInformation, object cachedValue)
 		{
-			EventInformation = eventInformation;
+			CachedMethodInformation = cachedMethodInformation;
 			CachedValue = cachedValue;
 		}
 
-		public EventInformation EventInformation { get; }
+		public CachedMethodInformation CachedMethodInformation { get; }
 		public object CachedValue { get; }
 	}
 }

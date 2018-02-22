@@ -1,5 +1,13 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- vNext
+* EventInformation.Type removed. Use CachedMethodInformation.Method.DeclaringType instead
+* ICache.GetAndPutIfNotExisting no longer accepts dependingRemoveKeys as param. It's now part of CachedMethodInformation.
+* Adding KeyAndItsDependingKeys to Icache.GetAndPutIfNotExisting
+* ICache.Delete now accept cacheKey as a simple string.
+* EventInformation/CachedMethodInformation.KeyAndItsDependingKeys removed.
+
+
 - Version 2.13 (v 2.13.0.0), 2018-01-03
 * Having non virtual cached methods on class components now always throws
 

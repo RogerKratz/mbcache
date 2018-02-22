@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using MbCacheTest.TestData;
 using NUnit.Framework;
-using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Concurrency
 {

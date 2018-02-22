@@ -27,9 +27,9 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem GetAndPutIfNonExisting(EventInformation eventInformation, Func<IEnumerable<string>> dependingRemoveKeys, Func<object> originalMethod)
+		public CachedItem GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
 		{
-			var cachedItem = (CachedItem)cache.Get(eventInformation.CacheKey);
+			var cachedItem = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
 			if (cachedItem != null)
 			{
 				_eventListenersCallback.OnCacheHit(cachedItem);
@@ -38,23 +38,23 @@ namespace MbCache.Configuration
 
 			lock (lockObject)
 			{
-				var cachedItem2 = (CachedItem)cache.Get(eventInformation.CacheKey);
+				var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
 				if (cachedItem2 != null)
 				{
 					_eventListenersCallback.OnCacheHit(cachedItem2);
 					return cachedItem2;
 				}
-				var addedValue = executeAndPutInCache(eventInformation, dependingRemoveKeys(), originalMethod);
+				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethodInformation, originalMethod);
 				_eventListenersCallback.OnCacheMiss(addedValue);
 				return addedValue;
 			}
 		}
 
-		public void Delete(EventInformation eventInformation)
+		public void Delete(string cacheKey)
 		{
 			lock (lockObject)
 			{
-				cache.Remove(eventInformation.CacheKey);
+				cache.Remove(cacheKey);
 			}
 		}
 
@@ -66,12 +66,12 @@ namespace MbCache.Configuration
 			}
 		}
 
-		private CachedItem executeAndPutInCache(EventInformation eventInformation, IEnumerable<string> dependingRemoveKeys, Func<object> originalMethod)
+		private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
 		{
 			var methodResult = originalMethod();
-			var cachedItem = new CachedItem(eventInformation, methodResult);
-			var key = cachedItem.EventInformation.CacheKey;
-			var dependedKeys = dependingRemoveKeys.ToList();
+			var cachedItem = new CachedItem(cachedMethodInformation, methodResult);
+			var key = keyAndItsDependingKeys.Key;
+			var dependedKeys = keyAndItsDependingKeys.DependingRemoveKeys().ToList();
 			dependedKeys.Add(mainCacheKey);
 			createDependencies(dependedKeys);
 

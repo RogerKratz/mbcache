@@ -27,31 +27,24 @@ namespace MbCacheTest.Events.Statistic
 		}
 
 		[Test]
-		public void ShouldHaveCorrectCacheKeys()
-		{
-			EventListener.CacheRemovals[0].EventInformation.CacheKey.Should().Contain("|$0");
-			EventListener.CacheRemovals[1].EventInformation.CacheKey.Should().Contain("|$1");
-		}
-
-		[Test]
 		public void ShouldHaveCorrectMethodInfo()
 		{
-			EventListener.CacheRemovals[0].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			EventListener.CacheRemovals[1].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			EventListener.CacheRemovals[0].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			EventListener.CacheRemovals[1].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 		}
 
 		[Test]
 		public void ShouldHaveCorrectType()
 		{
-			EventListener.CacheRemovals[0].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			EventListener.CacheRemovals[1].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			EventListener.CacheRemovals[0].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			EventListener.CacheRemovals[1].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
 		}
 
 		[Test]
 		public void ShouldHaveCorrectArguments()
 		{
-			EventListener.CacheRemovals[0].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
-			EventListener.CacheRemovals[1].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
+			EventListener.CacheRemovals[0].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(0);
+			EventListener.CacheRemovals[1].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(1);
 		}
 	}
 }

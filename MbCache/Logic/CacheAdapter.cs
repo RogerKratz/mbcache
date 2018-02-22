@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using MbCache.Core.Events;
 using MbCache.Configuration;
 
@@ -18,17 +19,18 @@ namespace MbCache.Logic
 			_cache = cache;
 		}
 
-		public object GetAndPutIfNonExisting(EventInformation eventInformation, Func<IEnumerable<string>> dependingRemoveKeys, Func<object> originalMethod)
+		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo method, IEnumerable<object> arguments, Func<object> originalMethod)
 		{
-			var cachedItem = _cache.GetAndPutIfNonExisting(eventInformation, dependingRemoveKeys, originalMethod);
+			var eventInformation = new CachedMethodInformation(method, arguments);
+			var cachedItem = _cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, eventInformation, originalMethod);
 			return cachedItem?.CachedValue;
 		}
 
-		public void Delete(EventInformation eventInformation)
+		public void Delete(string cacheKey)
 		{
-			if (eventInformation.CacheKey == null)
+			if (cacheKey == null)
 				return;
-			_cache.Delete(eventInformation);
+			_cache.Delete(cacheKey);
 		}
 
 		public void Clear()

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCache.Core.Events;
 
 namespace MbCache.Logic
 {
@@ -28,27 +27,23 @@ namespace MbCache.Logic
 		public void Invalidate()
 		{
 			var cacheKey = _cacheKey.RemoveKey(_componentType, this);
-			var deleteArgs = new EventInformation(cacheKey, _componentType.ConfiguredType, null, null);
-			_cache.Delete(deleteArgs);
+			_cache.Delete(cacheKey);
 		}
 
 		public void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues)
 		{
 			string key;
-			object[] arguments;
 			var methodInfo = ExpressionHelper.MemberName(method.Body);
 			if (matchParameterValues && methodInfo.GetParameters().Any())
 			{
-				arguments = ExpressionHelper.ExtractArguments(method.Body).ToArray();
+				var arguments = ExpressionHelper.ExtractArguments(method.Body).ToArray();
 				key = _cacheKey.RemoveKey(_componentType, this, methodInfo, arguments);
 			}
 			else
 			{
-				arguments = new object[0];
 				key = _cacheKey.RemoveKey(_componentType, this, methodInfo);
 			}
-			var deleteInfo = new EventInformation(key, _componentType.ConfiguredType, methodInfo, arguments);
-			_cache.Delete(deleteInfo);
+			_cache.Delete(key);
 		}
 	}
 }

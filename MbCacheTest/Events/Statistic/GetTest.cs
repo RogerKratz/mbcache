@@ -56,39 +56,30 @@ namespace MbCacheTest.Events.Statistic
 		}
 
 		[Test]
-		public void ShouldHaveCorrectCacheKeys()
-		{
-			eventListener.CachedItems[0].EventInformation.CacheKey.Should().Contain("|$0");
-			eventListener.CachedItems[1].EventInformation.CacheKey.Should().Contain("|$1");
-			eventListener.CachedItems[2].EventInformation.CacheKey.Should().Contain("|$0");
-			eventListener.CachedItems[3].EventInformation.CacheKey.Should().Contain("|$1");
-		}
-
-		[Test]
 		public void ShouldHaveCorrectMethodInfo()
 		{
-			eventListener.CachedItems[0].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.CachedItems[1].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.CachedItems[2].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			eventListener.CachedItems[3].EventInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CachedItems[0].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CachedItems[1].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CachedItems[2].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			eventListener.CachedItems[3].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
 		}
 
 		[Test]
 		public void ShouldHaveCorrectType()
 		{
-			eventListener.CachedItems[0].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.CachedItems[1].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.CachedItems[2].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			eventListener.CachedItems[3].EventInformation.Type.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CachedItems[0].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CachedItems[1].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CachedItems[2].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			eventListener.CachedItems[3].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
 		}
 
 		[Test]
 		public void ShouldHaveCorrectArguments()
 		{
-			eventListener.CachedItems[0].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
-			eventListener.CachedItems[1].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
-			eventListener.CachedItems[2].EventInformation.Arguments.Should().Have.SameSequenceAs(0);
-			eventListener.CachedItems[3].EventInformation.Arguments.Should().Have.SameSequenceAs(1);
+			eventListener.CachedItems[0].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(0);
+			eventListener.CachedItems[1].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(1);
+			eventListener.CachedItems[2].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(0);
+			eventListener.CachedItems[3].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(1);
 		}
 
 		private class eventListenerForGet : IEventListener

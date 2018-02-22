@@ -22,8 +22,7 @@ namespace MbCache.Logic
 		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo method, IEnumerable<object> arguments, Func<object> originalMethod)
 		{
 			var eventInformation = new CachedMethodInformation(method, arguments);
-			var cachedItem = _cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, eventInformation, originalMethod);
-			return cachedItem?.CachedValue;
+			return _cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, eventInformation, originalMethod);
 		}
 
 		public void Delete(string cacheKey)

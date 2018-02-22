@@ -27,13 +27,13 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public CachedItem GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
+		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
 		{
 			var cachedItem = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
 			if (cachedItem != null)
 			{
 				_eventListenersCallback.OnCacheHit(cachedItem);
-				return cachedItem;
+				return cachedItem.CachedValue;
 			}
 
 			lock (lockObject)
@@ -42,11 +42,11 @@ namespace MbCache.Configuration
 				if (cachedItem2 != null)
 				{
 					_eventListenersCallback.OnCacheHit(cachedItem2);
-					return cachedItem2;
+					return cachedItem2.CachedValue;
 				}
 				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethodInformation, originalMethod);
 				_eventListenersCallback.OnCacheMiss(addedValue);
-				return addedValue;
+				return addedValue.CachedValue;
 			}
 		}
 

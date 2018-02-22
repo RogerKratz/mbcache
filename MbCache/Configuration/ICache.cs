@@ -1,5 +1,4 @@
 using System;
-using MbCache.Core;
 using MbCache.Core.Events;
 
 namespace MbCache.Configuration
@@ -21,7 +20,7 @@ namespace MbCache.Configuration
 		/// <param name="cachedMethodInformation"></param>
 		/// <param name="originalMethod"></param>
 		/// <returns></returns>
-		CachedItem GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod);
+		object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod);
 
 		/// <summary>
 		/// Deletes cache entries from cache.

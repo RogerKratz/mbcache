@@ -61,7 +61,6 @@ namespace MbCache.Configuration
 		{
 			if (_cachedMethods.ContainsKey(type))
 				throw new ArgumentException(string.Format(componentRegisteredMultipleEx, type));
-			_details.ComponentType.ConfiguredType = type;
 			_cachedMethods[type] = _details;
 		}
 	}

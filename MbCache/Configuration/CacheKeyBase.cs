@@ -97,7 +97,7 @@ namespace MbCache.Configuration
 		private static IEnumerable<string> allRemoveKeys(string getAndPutKey)
 		{
 			var matches = findSeperator.Matches(getAndPutKey);
-			return from Match match in matches select getAndPutKey.Substring(0, match.Index);
+			return from Match match in matches select string.Intern(getAndPutKey.Substring(0, match.Index));
 		}
 
 		private void checkIfSuspiousParameter(object parameter, string parameterKey)

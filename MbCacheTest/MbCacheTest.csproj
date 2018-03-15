@@ -83,6 +83,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\Concurrency\RecursiveMethodsTest.cs" />
+    <Compile Include="Logic\Performance\CacheMissPerformanceTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyForComponentOverridingTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyThatThrows.cs" />
     <Compile Include="Logic\Scope\CacheKeyWithScope.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="SimpleTest.cs" />
     <Compile Include="FullTest.cs" />
     <Compile Include="TestData\ObjectRecursive.cs" />
+    <Compile Include="TestData\ObjectTakes100msToFill.cs" />
     <Compile Include="TestData\ObjectWithMutableList.cs" />
     <Compile Include="TestData\HasNonVirtualMethod.cs" />
     <Compile Include="TestData\ObjectOfGenericType.cs" />

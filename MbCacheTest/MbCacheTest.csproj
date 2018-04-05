@@ -81,6 +81,7 @@
     <Compile Include="Events\Statistic\MultipleEventHandlers.cs" />
     <Compile Include="Events\Statistic\PutTest.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Logic\CachedMethodCalledFromWithinSameClassTest.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\Concurrency\RecursiveMethodsTest.cs" />
     <Compile Include="Logic\Performance\CacheMissPerformanceTest.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Events\Statistic\ThreadingTest.cs" />
     <Compile Include="SimpleTest.cs" />
     <Compile Include="FullTest.cs" />
+    <Compile Include="TestData\ObjectCallingMethodOnItSelf.cs" />
     <Compile Include="TestData\ObjectRecursive.cs" />
     <Compile Include="TestData\ObjectTakes100msToFill.cs" />
     <Compile Include="TestData\ObjectWithMutableList.cs" />

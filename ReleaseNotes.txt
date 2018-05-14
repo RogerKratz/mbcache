@@ -1,6 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
 - vNext
+
+
+- Version 2.14 (v 2.14.0.0), 2018-05-14
 * EventInformation.Type removed. Use CachedMethodInformation.Method.DeclaringType instead.
 * ICache.GetAndPutIfNotExisting no longer accepts dependingRemoveKeys as param. It's now part of CachedMethodInformation.
 * Adding KeyAndItsDependingKeys to ICache.GetAndPutIfNotExisting.

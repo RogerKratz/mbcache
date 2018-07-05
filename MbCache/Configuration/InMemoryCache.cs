@@ -60,10 +60,7 @@ namespace MbCache.Configuration
 
 		public void Clear()
 		{
-			lock (lockObject)
-			{
-				cache.Remove(mainCacheKey);
-			}
+			Delete(mainCacheKey);
 		}
 
 		private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)

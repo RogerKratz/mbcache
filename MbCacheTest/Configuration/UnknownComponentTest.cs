@@ -4,22 +4,24 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Configuration
 {
-	public class UnknownComponentTest
+	public class UnknownComponentTest : FullTest
 	{
 		[Test]
 		public void ShouldThrowWhenCreatingNotKnownComponent()
 		{
-			var builder = new CacheBuilder(new ProxyImplThatThrowsNotSupportedEx());
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 			Assert.Throws<ArgumentException>(() => factory.Create<object>());
 		}
 
 		[Test]
 		public void ShouldThrowWhenInvalidatingNotKnownComponent()
 		{
-			var builder = new CacheBuilder(new ProxyImplThatThrowsNotSupportedEx());
-			var factory = builder.BuildFactory();
+			var factory = CacheBuilder.BuildFactory();
 			Assert.Throws<ArgumentException>(() => factory.Invalidate<object>());
+		}
+
+		public UnknownComponentTest(Type proxyType) : base(proxyType)
+		{
 		}
 	}
 }

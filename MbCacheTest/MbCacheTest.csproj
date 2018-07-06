@@ -124,7 +124,6 @@
     <Compile Include="Logic\SameParameterNamesTest.cs" />
     <Compile Include="Logic\SimpleCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProxyImplThatThrowsNotSupportedEx.cs" />
     <Compile Include="Events\Statistic\HitsAndMissesTest.cs" />
     <Compile Include="Events\Statistic\ThreadingTest.cs" />
     <Compile Include="SimpleTest.cs" />

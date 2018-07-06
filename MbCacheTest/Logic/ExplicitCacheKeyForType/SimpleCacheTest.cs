@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.ExplicitCacheKeyForType
 {
-	public class SimpleCacheTest : FullTest
+	public class SimpleCacheTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

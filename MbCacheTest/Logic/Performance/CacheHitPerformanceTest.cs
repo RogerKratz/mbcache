@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Performance
 {
-	public class CacheHitPerformanceTest : FullTest
+	public class CacheHitPerformanceTest : TestCase
 	{
 		private IReturningRandomNumbers instance;
 

@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.ClassProxy
 {
-	public class NonVirtualTest : FullTest
+	public class NonVirtualTest : TestCase
 	{
 		public NonVirtualTest(Type proxyType) : base(proxyType)
 		{

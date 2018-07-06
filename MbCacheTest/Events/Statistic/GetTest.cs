@@ -8,7 +8,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Events.Statistic
 {
-	public class GetTest : FullTest
+	public class GetTest : TestCase
 	{
 		private eventListenerForGet eventListener;
 

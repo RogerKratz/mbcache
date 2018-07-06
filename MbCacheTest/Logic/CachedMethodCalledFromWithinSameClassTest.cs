@@ -7,7 +7,7 @@ using SharpTestsEx;
 namespace MbCacheTest.Logic
 {
 	[Ignore("Not really possible to fix, I think... Let's keep it for a while though...")]
-	public class CachedMethodCalledFromWithinSameClassTest : FullTest
+	public class CachedMethodCalledFromWithinSameClassTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

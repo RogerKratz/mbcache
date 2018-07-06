@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Generics
 {
-	public class GenericParametersTest : FullTest
+	public class GenericParametersTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

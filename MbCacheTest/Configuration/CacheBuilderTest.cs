@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Configuration
 {
-	public class CacheBuilderTest : FullTest
+	public class CacheBuilderTest : TestCase
 	{
 		public CacheBuilderTest(Type proxyType) : base(proxyType)
 		{

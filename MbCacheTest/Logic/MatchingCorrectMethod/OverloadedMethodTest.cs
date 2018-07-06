@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.MatchingCorrectMethod
 {
-	public class OverloadedMethodTest : FullTest
+	public class OverloadedMethodTest : TestCase
 	{
 		private ObjectWithOverloadedMethod component;
 

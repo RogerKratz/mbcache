@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Events.Statistic
 {
-	public class HitsAndMissesTest : FullTest
+	public class HitsAndMissesTest : TestCase
 	{
 		private IMbCacheFactory factory;
 		private StatisticsEventListener eventListener;

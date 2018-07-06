@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Events.Statistic
 {
-	public abstract class DeleteTestBase : FullTest
+	public abstract class DeleteTestBase : TestCase
 	{
 		protected EventListenerForTest EventListener;
 

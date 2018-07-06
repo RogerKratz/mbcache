@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.MatchingCorrectMethod
 {
-	public class TwoEqualMethodNamesBothCachedTest : FullTest
+	public class TwoEqualMethodNamesBothCachedTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Concurrency
 {
-	public class CacheInvalidationOfMutatedListTest : FullTest
+	public class CacheInvalidationOfMutatedListTest : TestCase
 	{
 		private IMbCacheFactory factory;
 		private ObjectWithMutableList instance;

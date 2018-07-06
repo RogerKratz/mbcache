@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Concurrency
 {
-	public class SimultaniousCachePutTest : FullTest
+	public class SimultaniousCachePutTest : TestCase
 	{
 		public SimultaniousCachePutTest(Type proxyType) : base(proxyType)
 		{

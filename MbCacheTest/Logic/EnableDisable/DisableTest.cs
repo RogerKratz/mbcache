@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.EnableDisable
 {
-	public class DisableTest : FullTest
+	public class DisableTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

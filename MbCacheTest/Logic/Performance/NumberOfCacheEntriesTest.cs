@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Performance
 {
-	public class NumberOfCacheEntriesTest : FullTest
+	public class NumberOfCacheEntriesTest : TestCase
 	{
 		private ObjectWithMultipleParameters component;
 		private MemoryCache memoryCacheReference;

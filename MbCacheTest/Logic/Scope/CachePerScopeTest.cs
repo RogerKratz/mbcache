@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Scope
 {
-	public class CachePerScopeTest : FullTest
+	public class CachePerScopeTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

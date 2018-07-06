@@ -8,7 +8,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Performance
 {
-	public class CacheMissPerformanceTest : FullTest
+	public class CacheMissPerformanceTest : TestCase
 	{
 		private ObjectTakes100MsToFill instance;
 		

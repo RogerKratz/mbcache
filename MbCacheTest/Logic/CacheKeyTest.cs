@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class CacheKeyTest : FullTest
+	public class CacheKeyTest : TestCase
 	{
 		private IMbCacheFactory factory;
 		private EventListenerForTest eventListener;

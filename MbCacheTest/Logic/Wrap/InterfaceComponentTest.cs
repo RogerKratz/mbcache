@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Wrap
 {
-	public class InterfaceComponentTest : FullTest
+	public class InterfaceComponentTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

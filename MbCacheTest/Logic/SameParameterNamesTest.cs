@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class SameParameterNamesTest : FullTest
+	public class SameParameterNamesTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

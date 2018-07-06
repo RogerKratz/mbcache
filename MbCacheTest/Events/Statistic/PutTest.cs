@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Events.Statistic
 {
-	public class PutTest : FullTest
+	public class PutTest : TestCase
 	{
 		private EventListenerForTest eventListener;
 

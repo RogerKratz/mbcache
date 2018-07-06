@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class ReturnNullTest : FullTest
+	public class ReturnNullTest : TestCase
 	{
 		private IMbCacheFactory factory;
 		private StatisticsEventListener eventListener;

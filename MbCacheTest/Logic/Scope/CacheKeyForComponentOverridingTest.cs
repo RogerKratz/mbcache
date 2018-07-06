@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Scope
 {
-	public class CacheKeyForComponentOverridingTest : FullTest
+	public class CacheKeyForComponentOverridingTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Events.Statistic
 {
-	public class ThreadingTest : FullTest
+	public class ThreadingTest : TestCase
 	{
 		private IObjectWithParametersOnCachedMethod component;
 		private const int noOfThreads = 100;

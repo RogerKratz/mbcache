@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Concurrency
 {
-	public class RecursiveMethodsTest : FullTest
+	public class RecursiveMethodsTest : TestCase
 	{
 		public RecursiveMethodsTest(Type proxyType) : base(proxyType)
 		{

@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class InvalidateCacheTest : FullTest
+	public class InvalidateCacheTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

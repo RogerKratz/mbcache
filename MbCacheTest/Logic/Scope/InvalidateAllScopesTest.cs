@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Scope
 {
-	public class InvalidateAllScopesTest : FullTest
+	public class InvalidateAllScopesTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

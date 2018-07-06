@@ -11,7 +11,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class CacheKeyReturnNullTest : FullTest
+	public class CacheKeyReturnNullTest : TestCase
 	{
 		private cacheKeyStub cacheKey;
 

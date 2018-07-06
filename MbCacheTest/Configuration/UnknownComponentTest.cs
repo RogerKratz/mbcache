@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Configuration
 {
-	public class UnknownComponentTest : FullTest
+	public class UnknownComponentTest : TestCase
 	{
 		[Test]
 		public void ShouldThrowWhenCreatingNotKnownComponent()

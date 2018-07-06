@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic
 {
-	public class CachePropertyTest : FullTest
+	public class CachePropertyTest : TestCase
 	{
 		public CachePropertyTest(Type proxyType) : base(proxyType)
 		{

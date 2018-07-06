@@ -5,7 +5,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class ImplementationTypeForTest : FullTest
+	public class ImplementationTypeForTest : TestCase
 	{
 		public ImplementationTypeForTest(Type proxyType) : base(proxyType)
 		{

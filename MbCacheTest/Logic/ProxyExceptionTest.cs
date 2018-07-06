@@ -6,7 +6,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
-	public class ProxyExceptionTest : FullTest
+	public class ProxyExceptionTest : TestCase
 	{
 		private IMbCacheFactory factory;
 

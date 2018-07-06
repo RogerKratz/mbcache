@@ -75,7 +75,6 @@
     <Compile Include="Core\Events\CachedMethodInformation.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />
     <Compile Include="Configuration\ICache.cs" />
-    <Compile Include="Configuration\IFluentBuilder.cs" />
     <Compile Include="Configuration\ICacheKey.cs" />
     <Compile Include="Configuration\IProxyFactory.cs" />
     <Compile Include="Configuration\CacheKeyBase.cs" />

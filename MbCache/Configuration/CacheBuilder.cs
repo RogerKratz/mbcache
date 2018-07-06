@@ -57,7 +57,7 @@ namespace MbCache.Configuration
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public IFluentBuilder<T> For<T>()
+		public FluentBuilder<T> For<T>()
 		{
 			return For<T>(null);
 		}
@@ -70,7 +70,7 @@ namespace MbCache.Configuration
 		/// </param>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public IFluentBuilder<T> For<T>(string typeAsCacheKey)
+		public FluentBuilder<T> For<T>(string typeAsCacheKey)
 		{
 			var concreteType = typeof(T);
 			var details = new ConfigurationForType(concreteType, typeAsCacheKey);

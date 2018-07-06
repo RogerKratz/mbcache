@@ -12,12 +12,10 @@ namespace MbCache.Logic
 		private readonly ICacheKey _cacheKey;
 		private readonly ComponentType _componentType;
 
-		public CachingComponent(CacheAdapter cache,
-										ICacheKey cacheKey,
-										ConfigurationForType configurationForType)
+		public CachingComponent(CacheAdapter cache, ConfigurationForType configurationForType)
 		{
 			_cache = cache;
-			_cacheKey = cacheKey;
+			_cacheKey = configurationForType.CacheKey;
 			_componentType = configurationForType.ComponentType;
 			UniqueId = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
 		}

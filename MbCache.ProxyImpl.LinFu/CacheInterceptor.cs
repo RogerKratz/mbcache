@@ -23,7 +23,7 @@ namespace MbCache.ProxyImpl.LinFu
 			_cache = cache;
 			_configurationForType = configurationForType;
 			_target = target;
-			_cachingComponent = new CachingComponent(cache, configurationForType.CacheKey, configurationForType);
+			_cachingComponent = new CachingComponent(cache, configurationForType);
 		}
 
 		public object Intercept(InvocationInfo info)

@@ -55,6 +55,18 @@ namespace MbCache.Configuration
 			_details.CacheKey = cacheKey;
 			return this;
 		}
+		
+		/// <summary>
+		/// Allow having parameters to cached component methods that returns its own type in its <code>ToString()</code> implemention.
+		/// Normally this should not be accepted because this will lead to shared cached data for different parameter values.
+		/// Instead this parameter type needs to be handled in <see cref="CacheKeyBase.ParameterValue"/>.
+		/// </summary>
+		public FluentBuilder<T> AllowDifferentArgumentsShareSameCacheKey()
+		{
+			_details.AllowDifferentArgumentsShareSameCacheKey = true;
+			return this;
+		}
+
 
 		/// <summary>
 		/// Registers the component to specified interface.
@@ -75,8 +87,8 @@ namespace MbCache.Configuration
 			ProxyValidator.Validate(_details);
 			addToCachedMethods(_details.ComponentType.ConcreteType);
 			return _cacheBuilder;
-		}
-
+		}		
+		
 		private void addToCachedMethods(Type type)
 		{
 			if (_cachedMethods.ContainsKey(type))

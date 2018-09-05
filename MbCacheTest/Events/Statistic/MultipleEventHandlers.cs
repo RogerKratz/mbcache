@@ -128,11 +128,6 @@ namespace MbCacheTest.Events.Statistic
 					FirstPut = true;
 				}
 			}
-
-			public void Warning(string warnMessage)
-			{
-				throw new NotImplementedException();
-			}
 		}
 	}
 }

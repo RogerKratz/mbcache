@@ -19,11 +19,5 @@
 		/// Called after a cache miss and the target's returned value has been put into the cache.
 		/// </summary>
 		void OnCacheMiss(CachedItem cachedItem);
-
-		/// <summary>
-		/// Called when MbCache wants to warn user/developer about something, eg that something is misconfigured.
-		/// </summary>
-		/// <param name="warnMessage"></param>
-		void Warning(string warnMessage);
 	}
 }

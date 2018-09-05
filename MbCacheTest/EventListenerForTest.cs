@@ -23,11 +23,5 @@ namespace MbCacheTest
 		{
 			CacheMisses.Add(cachedItem);
 		}
-
-		public IList<string> Warnings { get; } = new List<string>();
-		public void Warning(string warnMessage)
-		{
-			Warnings.Add(warnMessage);
-		}
 	}
 }

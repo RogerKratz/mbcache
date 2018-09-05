@@ -27,5 +27,7 @@ namespace MbCache.Core
 		/// all entries for the specified method are invalidated.
 		/// </summary>
 		void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues);
+		
+		bool AllowDifferentArgumentsShareSameCacheKey { get; }
 	}
 }

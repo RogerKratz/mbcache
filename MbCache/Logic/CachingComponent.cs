@@ -18,10 +18,12 @@ namespace MbCache.Logic
 			_cacheKey = configurationForType.CacheKey;
 			_componentType = configurationForType.ComponentType;
 			UniqueId = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
+			AllowDifferentArgumentsShareSameCacheKey = configurationForType.AllowDifferentArgumentsShareSameCacheKey;
 		}
 
 		public string UniqueId { get; }
-
+		public bool AllowDifferentArgumentsShareSameCacheKey { get; }
+		
 		public void Invalidate()
 		{
 			var cacheKey = _cacheKey.RemoveKey(_componentType, this);

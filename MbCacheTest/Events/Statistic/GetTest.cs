@@ -103,11 +103,6 @@ namespace MbCacheTest.Events.Statistic
 				Successful.Add(false);
 				CachedItems.Add(cachedItem);
 			}
-
-			public void Warning(string warnMessage)
-			{
-				throw new NotImplementedException();
-			}
 		}
 	}
 }

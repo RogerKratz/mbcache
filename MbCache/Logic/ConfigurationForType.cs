@@ -20,5 +20,6 @@ namespace MbCache.Logic
 		public ICollection<MethodInfo> CachedMethods { get; }
 		public bool CachePerInstance { get; set; }
 		public ICacheKey CacheKey { get; set; }
+		public bool AllowDifferentArgumentsShareSameCacheKey { get; set; }
 	}
 }

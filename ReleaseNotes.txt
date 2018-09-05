@@ -1,6 +1,7 @@
 --- RELEASE NOTES, Breaking changes ---
 
 - vNext
+* Replacing IEventListener.Warning with FluentBuilder.AllowDifferentArgumentsShareSameCacheKey
 
 
 - Version 2.14 (v 2.14.0.0), 2018-05-14

@@ -1,5 +1,4 @@
 ﻿using System;
-using MbCache.Configuration;
 using NUnit.Framework;
 
 namespace MbCacheTest.Configuration

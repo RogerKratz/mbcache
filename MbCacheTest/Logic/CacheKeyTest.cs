@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
-using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {

@@ -1,7 +1,6 @@
 using System;
 using Castle.DynamicProxy;
 using MbCache.Configuration;
-using MbCache.Core;
 using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.Castle

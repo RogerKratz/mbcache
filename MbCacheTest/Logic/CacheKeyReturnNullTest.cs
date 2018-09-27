@@ -87,10 +87,6 @@ namespace MbCacheTest.Logic
 		{
 			public string TheKey { get; set; }
 
-			public void Initialize(IEnumerable<IEventListener> eventListeners)
-			{
-			}
-
 			public string RemoveKey(ComponentType type)
 			{
 				return TheKey;

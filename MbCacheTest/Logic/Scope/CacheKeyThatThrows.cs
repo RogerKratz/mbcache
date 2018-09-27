@@ -10,10 +10,6 @@ namespace MbCacheTest.Logic.Scope
 {
 	public class CacheKeyThatThrows : ICacheKey
 	{
-		public void Initialize(IEnumerable<IEventListener> eventListeners)
-		{
-		}
-
 		public string RemoveKey(ComponentType type)
 		{
 			throw new NotImplementedException();

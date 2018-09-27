@@ -140,7 +140,6 @@
     <Compile Include="TestData\ObjectWithGenericMethodParameters.cs" />
     <Compile Include="TestData\ObjectWithIdentifier.cs" />
     <Compile Include="TestData\ObjectWithMultipleParameters.cs" />
-    <Compile Include="TestData\ObjectWithParameterReturningFixedValue.cs" />
     <Compile Include="TestData\ObjectWithOverloadedMethod.cs" />
     <Compile Include="TestData\ObjectWithProperty.cs" />
     <Compile Include="TestData\ReturningRandomNumbers.cs" />

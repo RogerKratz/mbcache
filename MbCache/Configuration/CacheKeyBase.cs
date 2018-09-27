@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using MbCache.Core;
-using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCache.Configuration

@@ -6,7 +6,6 @@ namespace MbCacheTest.TestData
     {
         Guid CachedMethod();
         Guid CachedMethod2();
-        Guid NonCachedMethod();
     }
 
     public class ObjectReturningNewGuids : IObjectReturningNewGuids
@@ -18,11 +17,6 @@ namespace MbCacheTest.TestData
         }
 
         public Guid CachedMethod2()
-        {
-            return Guid.NewGuid();
-        }
-
-        public Guid NonCachedMethod()
         {
             return Guid.NewGuid();
         }

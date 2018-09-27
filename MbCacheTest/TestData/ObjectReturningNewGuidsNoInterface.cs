@@ -13,10 +13,5 @@ namespace MbCacheTest.TestData
 		{
 			return Guid.NewGuid();
 		}
-
-		public virtual Guid NonCachedMethod()
-		{
-			return Guid.NewGuid();
-		} 
 	}
 }

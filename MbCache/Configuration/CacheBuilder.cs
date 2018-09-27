@@ -48,7 +48,6 @@ namespace MbCache.Configuration
 			{
 				if (configurationForType.CacheKey == null)
 					configurationForType.CacheKey = _cacheKey ?? defaultCacheKey;
-				configurationForType.CacheKey.Initialize(_eventListeners);
 			}
 		}
 

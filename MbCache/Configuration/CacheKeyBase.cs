@@ -30,13 +30,6 @@ namespace MbCache.Configuration
 		private const string separator = "|";
 		private const string separatorForParameters = "$";
 
-		private IEnumerable<IEventListener> _eventListeners;
-
-		public void Initialize(IEnumerable<IEventListener> eventListeners)
-		{
-			_eventListeners = eventListeners;
-		}
-
 		public string RemoveKey(ComponentType type)
 		{
 			return type.ToString();

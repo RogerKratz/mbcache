@@ -27,8 +27,8 @@ namespace MbCache.Core.Events
 
 		public void Clear()
 		{
-			_cacheHits = 0;
-			_cacheMisses = 0;
+			Interlocked.Exchange(ref _cacheHits, 0);
+			Interlocked.Exchange(ref _cacheMisses, 0);
 		}
 	}
 }

@@ -13,10 +13,5 @@ namespace MbCache.Logic
 
 		public Type ConcreteType { get; }
 		public string TypeAsCacheKeyString { get; }
-
-		public override string ToString()
-		{
-			return TypeAsCacheKeyString;
-		}
 	}
 }

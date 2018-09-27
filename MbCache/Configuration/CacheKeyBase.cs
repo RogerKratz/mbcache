@@ -28,7 +28,7 @@ namespace MbCache.Configuration
 
 		public string RemoveKey(ComponentType type)
 		{
-			return type.ToString();
+			return type.TypeAsCacheKeyString;
 		}
 
 		public string RemoveKey(ComponentType type, ICachingComponent component)

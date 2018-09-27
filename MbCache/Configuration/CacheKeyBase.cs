@@ -22,9 +22,6 @@ namespace MbCache.Configuration
 	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
 	{
-		private readonly string suspiciousParam =
-			"Cache key of type {0} equals its own type name. You should specify a value for this parameter in your ICacheKey implementation." + Environment.NewLine +
-			"However, even though it's not recommended, you can override this exception by calling AllowDifferentArgumentsShareSameCacheKey when configuring your cached component.";
 		private static readonly Regex findSeparator = new Regex(@"\" + separator, RegexOptions.Compiled);
 		private const string separator = "|";
 		private const string separatorForParameters = "$";
@@ -54,7 +51,7 @@ namespace MbCache.Configuration
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
-				checkIfSuspiciousParameter(component, parameter, parameterKey);
+				component.CheckIfSuspiciousParameter(parameter, parameterKey);
 				ret.Append(parameterKey);
 			}
 
@@ -91,16 +88,6 @@ namespace MbCache.Configuration
 		{
 			var matches = findSeparator.Matches(getAndPutKey);
 			return from Match match in matches select string.Intern(getAndPutKey.Substring(0, match.Index));
-		}
-
-		private void checkIfSuspiciousParameter(ICachingComponent component, object parameter, string parameterKey)
-		{
-			if (component.AllowDifferentArgumentsShareSameCacheKey || parameter == null) 
-				return;
-			if (parameterKey.Equals(parameter.GetType().ToString()))
-			{
-				throw new ArgumentException(string.Format(suspiciousParam, parameterKey), parameterKey);
-			}
 		}
 
 		/// <summary>

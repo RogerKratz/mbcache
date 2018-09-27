@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using MbCache.Configuration;
 
 namespace MbCache.Core
 {
@@ -28,6 +29,10 @@ namespace MbCache.Core
 		/// </summary>
 		void Invalidate<T>(Expression<Func<T, object>> method, bool matchParameterValues);
 		
-		bool AllowDifferentArgumentsShareSameCacheKey { get; }
+		/// <summary>
+		/// Throws if parameter's parameter key equals its <see cref="Type"/>.
+		/// This can be overriden by setting <see cref="FluentBuilder{T}.AllowDifferentArgumentsShareSameCacheKey"/>.
+		/// </summary>
+		void CheckIfSuspiciousParameter(object parameter, string parameterKey);
 	}
 }

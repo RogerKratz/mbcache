@@ -74,7 +74,7 @@ namespace MbCacheTest.Logic
 		}
 
 		[Test]
-		public void InvalideAllByExplicitCall()
+		public void InvalidateAllByExplicitCall()
 		{
 			var obj = factory.Create<IObjectReturningNewGuids>();
 			var value = obj.CachedMethod();

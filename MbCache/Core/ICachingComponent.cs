@@ -21,7 +21,7 @@ namespace MbCache.Core
 		/// <summary>
 		/// Invalidated cache entries for a specific <paramref name="method"/>.
 		/// If <paramref name="matchParameterValues"/> is <code>true</code>,
-		/// only the entry for the method with specified paramater 
+		/// only the entry for the method with specified parameter 
 		/// values is invalidated.
 		/// If <paramref name="matchParameterValues"/> is <code>false</code>,
 		/// all entries for the specified method are invalidated.

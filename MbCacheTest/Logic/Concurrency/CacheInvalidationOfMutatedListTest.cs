@@ -32,21 +32,21 @@ namespace MbCacheTest.Logic.Concurrency
 		[Repeat(10)]
 		public void ShouldNotGetDuplicatesInList_InvalidateAll()
 		{
-			runInParallell(() => factory.Invalidate());
+			runInParallel(() => factory.Invalidate());
 		}
 		
 		[Test]
 		[Repeat(10)]
 		public void ShouldNotGetDuplicatesInList_InvalidateOnType()
 		{
-			runInParallell(() => factory.Invalidate<ObjectWithMutableList>());
+			runInParallel(() => factory.Invalidate<ObjectWithMutableList>());
 		}
 
 		[Test]
 		[Repeat(10)]
 		public void ShouldNotGetDuplicatesInList_InvalidateOnInstance()
 		{
-			runInParallell(() => factory.Invalidate(instance));
+			runInParallel(() => factory.Invalidate(instance));
 		}
 
 		[Test]
@@ -54,10 +54,10 @@ namespace MbCacheTest.Logic.Concurrency
 		public void ShouldNotGetDuplicatesInList_InvalidateOnMethod()
 		{
 			//add one for "true" if needed
-			runInParallell(() => factory.Invalidate(instance, x => x.GetListContents(), false));
+			runInParallel(() => factory.Invalidate(instance, x => x.GetListContents(), false));
 		}
 
-		private void runInParallell(Action invalidate)
+		private void runInParallel(Action invalidate)
 		{
 			var lockK = new object();
 			var tasks = new List<Task>();

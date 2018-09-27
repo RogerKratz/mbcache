@@ -57,7 +57,7 @@ namespace MbCache.Configuration
 		}
 		
 		/// <summary>
-		/// Allow having parameters to cached component methods that returns its own type in its <code>ToString()</code> implemention.
+		/// Allow having parameters to cached component methods that returns its own type in its <code>ToString()</code> implementation.
 		/// Normally this should not be accepted because this will lead to shared cached data for different parameter values.
 		/// Instead this parameter type needs to be handled in <see cref="CacheKeyBase.ParameterValue"/>.
 		/// </summary>

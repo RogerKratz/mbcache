@@ -23,10 +23,10 @@ namespace MbCache.Configuration
 	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
 	{
-		private readonly string suspisiousParam =
+		private readonly string suspiciousParam =
 			"Cache key of type {0} equals its own type name. You should specify a value for this parameter in your ICacheKey implementation." + Environment.NewLine +
 			"However, even though it's not recommended, you can override this exception by calling AllowDifferentArgumentsShareSameCacheKey when configuring your cached component.";
-		private static readonly Regex findSeperator = new Regex(@"\" + separator, RegexOptions.Compiled);
+		private static readonly Regex findSeparator = new Regex(@"\" + separator, RegexOptions.Compiled);
 		private const string separator = "|";
 		private const string separatorForParameters = "$";
 
@@ -62,7 +62,7 @@ namespace MbCache.Configuration
 				var parameterKey = ParameterValue(parameter);
 				if (parameterKey == null)
 					return null;
-				checkIfSuspiousParameter(component, parameter, parameterKey);
+				checkIfSuspiciousParameter(component, parameter, parameterKey);
 				ret.Append(parameterKey);
 			}
 
@@ -97,17 +97,17 @@ namespace MbCache.Configuration
 
 		private static IEnumerable<string> allRemoveKeys(string getAndPutKey)
 		{
-			var matches = findSeperator.Matches(getAndPutKey);
+			var matches = findSeparator.Matches(getAndPutKey);
 			return from Match match in matches select string.Intern(getAndPutKey.Substring(0, match.Index));
 		}
 
-		private void checkIfSuspiousParameter(ICachingComponent component, object parameter, string parameterKey)
+		private void checkIfSuspiciousParameter(ICachingComponent component, object parameter, string parameterKey)
 		{
 			if (component.AllowDifferentArgumentsShareSameCacheKey || parameter == null) 
 				return;
 			if (parameterKey.Equals(parameter.GetType().ToString()))
 			{
-				throw new ArgumentException(string.Format(suspisiousParam, parameterKey), parameterKey);
+				throw new ArgumentException(string.Format(suspiciousParam, parameterKey), parameterKey);
 			}
 		}
 
@@ -126,7 +126,7 @@ namespace MbCache.Configuration
 		/// </summary>
 		/// <param name="parameter">The parameter.</param>
 		/// <returns>
-		/// A string reporesentation of the parameter.
+		/// A string representation of the parameter.
 		/// </returns>
 		protected abstract string ParameterValue(object parameter);
 	}

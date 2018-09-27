@@ -13,7 +13,7 @@ namespace MbCache.Core
 	public interface IMbCacheFactory : IDisposable
 	{
 		/// <summary>
-		/// Creates the cached compoenent with ctor parameters.
+		/// Creates the cached component with ctor parameters.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="parameters">The parameters.</param>
@@ -56,7 +56,7 @@ namespace MbCache.Core
 		/// <param name="matchParameterValues">
 		/// Determines if parameters sent to <para>method</para> should decide what to invalidate.
 		/// If <code>false</code>, all method caches are invalidated, 
-		/// if <code>true</code>, only the one matching with matching paramater values are invalidated.
+		/// if <code>true</code>, only the one matching with matching parameter values are invalidated.
 		/// </param>
 		void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues);
 

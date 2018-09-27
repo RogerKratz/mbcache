@@ -8,7 +8,7 @@ namespace MbCache.Configuration
 	public interface IProxyFactory
 	{
 		/// <summary>
-		/// Called once after this object is instansiated.
+		/// Called once after this object is instantiated.
 		/// </summary>
 		void Initialize(CacheAdapter cache);
 

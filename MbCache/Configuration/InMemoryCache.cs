@@ -74,7 +74,7 @@ namespace MbCache.Configuration
 
 			var policy = new CacheItemPolicy
 			{
-				AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_timeoutMinutes),
+				AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(_timeoutMinutes),
 				RemovedCallback = arguments => _eventListenersCallback.OnCacheRemoval(cachedItem)
 			};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(dependedKeys));

@@ -16,11 +16,11 @@ namespace MbCache.Logic
 			"Cache key of type {0} equals its own type name. You should specify a value for this parameter in your ICacheKey implementation." + Environment.NewLine +
 			"However, even though it's not recommended, you can override this exception by calling AllowDifferentArgumentsShareSameCacheKey when configuring your cached component.";
 
-		public CachingComponent(CacheAdapter cache, ConfigurationForType configurationForType)
+		public CachingComponent(ConfigurationForType configurationForType)
 		{
-			_cache = cache;
 			_cacheKey = configurationForType.CacheKey;
 			_componentType = configurationForType.ComponentType;
+			_cache = configurationForType.CacheAdapter;
 			UniqueId = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
 			_allowDifferentArgumentsShareSameCacheKey = configurationForType.AllowDifferentArgumentsShareSameCacheKey;
 		}

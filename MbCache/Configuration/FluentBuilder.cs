@@ -57,6 +57,15 @@ namespace MbCache.Configuration
 		}
 		
 		/// <summary>
+		/// Sets a specific <see cref="ICache"/> for this component.
+		/// </summary>
+		public FluentBuilder<T> Cache(ICache cache)
+		{
+			_details.SetCache(cache);
+			return this;
+		}
+		
+		/// <summary>
 		/// Allow having parameters to cached component methods that returns its own type in its <code>ToString()</code> implementation.
 		/// Normally this should not be accepted because this will lead to shared cached data for different parameter values.
 		/// Instead this parameter type needs to be handled in <see cref="CacheKeyBase.ParameterValue"/>.

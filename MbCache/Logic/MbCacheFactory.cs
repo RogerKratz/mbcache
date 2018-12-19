@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using MbCache.Configuration;
 using MbCache.Core;
 
@@ -10,17 +11,13 @@ namespace MbCache.Logic
 	public class MbCacheFactory : IMbCacheFactory
 	{
 		private readonly IProxyFactory _proxyFactory;
-		private readonly CacheAdapter _cache;
 		private readonly IDictionary<Type, ConfigurationForType> _configuredTypes;
 		private const string isNotARegisteredComponentMessage = "{0} is not a registered MbCache component!";
 
 		public MbCacheFactory(IProxyFactory proxyFactory,
-									CacheAdapter cache,
 									IDictionary<Type, ConfigurationForType> configuredTypes)
 		{
-			_cache = cache;
 			_configuredTypes = configuredTypes;
-			proxyFactory.Initialize(_cache);
 			_proxyFactory = proxyFactory;
 		}
 
@@ -44,9 +41,13 @@ namespace MbCache.Logic
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}
 
+		[MethodImpl(MethodImplOptions.Synchronized)]
 		public void Invalidate()
 		{
-			_cache.Clear();
+			foreach (var configuredType in _configuredTypes.Values)
+			{
+				configuredType.CacheAdapter.Clear();
+			}
 		}
 
 		public void Invalidate<T>()
@@ -56,7 +57,7 @@ namespace MbCache.Logic
 			{
 				var componentType = configurationForType.ComponentType;
 				var cacheKey = configurationForType.CacheKey.RemoveKey(componentType);
-				_cache.Delete(cacheKey);
+				configurationForType.CacheAdapter.Delete(cacheKey);
 			}
 			else
 			{

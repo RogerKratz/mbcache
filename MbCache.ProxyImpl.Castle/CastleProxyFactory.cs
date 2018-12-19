@@ -9,18 +9,12 @@ namespace MbCache.ProxyImpl.Castle
 	public class CastleProxyFactory : IProxyFactory
 	{
 		private static readonly ProxyGenerator generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
-		private CacheAdapter _cache;
-
-		public void Initialize(CacheAdapter cache)
-		{
-			_cache = cache;
-		}
 
 		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
-			var cacheInterceptor = new CacheInterceptor(_cache, configurationForType);
+			var cacheInterceptor = new CacheInterceptor(configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType.CachedMethods));
-			options.AddMixinInstance(new CachingComponent(_cache, configurationForType));
+			options.AddMixinInstance(new CachingComponent(configurationForType));
 			try
 			{
 				if (typeof(T).IsClass)
@@ -38,9 +32,9 @@ namespace MbCache.ProxyImpl.Castle
 
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
-			var cacheInterceptor = new CacheInterceptor(_cache, configurationForType);
+			var cacheInterceptor = new CacheInterceptor(configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType.CachedMethods));
-			options.AddMixinInstance(new CachingComponent(_cache, configurationForType));
+			options.AddMixinInstance(new CachingComponent(configurationForType));
 			return typeof (T).IsClass ? 
 					generator.CreateClassProxyWithTarget(uncachedComponent, options, cacheInterceptor) : 
 					generator.CreateInterfaceProxyWithTarget(uncachedComponent, options, cacheInterceptor);

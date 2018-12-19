@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
-using MbCache.Core.Events;
 using MbCache.Logic;
 
 namespace MbCacheTest.Logic.Scope

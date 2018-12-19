@@ -9,24 +9,18 @@ namespace MbCache.ProxyImpl.LinFu
 	[Serializable]
 	public class LinFuProxyFactory : IProxyFactory
 	{
-		private CacheAdapter _cache;
 		private static readonly ProxyFactory proxyFactory = new ProxyFactory();
-
-		public void Initialize(CacheAdapter cache)
-		{
-			_cache = cache;
-		}
 
 		public T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class
 		{
 			var target = createTarget(configurationForType.ComponentType.ConcreteType, parameters);
-			var interceptor = new CacheInterceptor(_cache, configurationForType, target);
+			var interceptor = new CacheInterceptor(configurationForType, target);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 
 		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
 		{
-			var interceptor = new CacheInterceptor(_cache, configurationForType, uncachedComponent);
+			var interceptor = new CacheInterceptor(configurationForType, uncachedComponent);
 			return proxyFactory.CreateProxy<T>(interceptor, typeof(ICachingComponent));
 		}
 

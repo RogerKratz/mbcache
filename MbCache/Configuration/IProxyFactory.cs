@@ -8,11 +8,6 @@ namespace MbCache.Configuration
 	public interface IProxyFactory
 	{
 		/// <summary>
-		/// Called once after this object is instantiated.
-		/// </summary>
-		void Initialize(CacheAdapter cache);
-
-		/// <summary>
 		/// Creates the proxy.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>

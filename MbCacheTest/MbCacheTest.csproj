@@ -83,8 +83,12 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Logic\AllowDifferentArgumentsShareSameCacheKeyTest.cs" />
     <Compile Include="Logic\CachedMethodCalledFromWithinSameClassTest.cs" />
+    <Compile Include="Logic\CacheForComponentOverridingTest.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
     <Compile Include="Logic\Concurrency\RecursiveMethodsTest.cs" />
+    <Compile Include="Logic\InitializeCacheOnceTest\CacheWithInitializeCounter.cs" />
+    <Compile Include="Logic\InitializeCacheOnceTest\CallingDefaultCacheInitializeOnceTest.cs" />
+    <Compile Include="Logic\InitializeCacheOnceTest\CallingOverridenCacheInitializeOnceTest.cs" />
     <Compile Include="Logic\Performance\CacheMissPerformanceTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyForComponentOverridingTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyThatThrows.cs" />
@@ -184,7 +188,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

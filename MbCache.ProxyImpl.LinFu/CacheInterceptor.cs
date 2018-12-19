@@ -13,17 +13,15 @@ namespace MbCache.ProxyImpl.LinFu
 		private static readonly MethodInfo exceptionInternalPreserveStackTrace =
 			typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 
-		private readonly CacheAdapter _cache;
 		private readonly ConfigurationForType _configurationForType;
 		private readonly object _target;
 		private readonly ICachingComponent _cachingComponent;
 
-		public CacheInterceptor(CacheAdapter cache, ConfigurationForType configurationForType, object target)
+		public CacheInterceptor(ConfigurationForType configurationForType, object target)
 		{
-			_cache = cache;
 			_configurationForType = configurationForType;
 			_target = target;
-			_cachingComponent = new CachingComponent(cache, configurationForType);
+			_cachingComponent = new CachingComponent(configurationForType);
 		}
 
 		public object Intercept(InvocationInfo info)
@@ -52,7 +50,7 @@ namespace MbCache.ProxyImpl.LinFu
 			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
 			return keyAndItsDependingKeys.Key == null ? 
 				callOriginalMethod(method, arguments) : 
-				_cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, arguments, () => callOriginalMethod(method, arguments));
+				_configurationForType.CacheAdapter.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, arguments, () => callOriginalMethod(method, arguments));
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

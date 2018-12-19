@@ -7,13 +7,10 @@ namespace MbCache.ProxyImpl.Castle
 {
 	public class CacheInterceptor : IInterceptor
 	{
-		private readonly CacheAdapter _cache;
 		private readonly ConfigurationForType _configurationForType;
 
-		public CacheInterceptor(CacheAdapter cache, 
-										ConfigurationForType configurationForType)
+		public CacheInterceptor(ConfigurationForType configurationForType)
 		{
-			_cache = cache;
 			_configurationForType = configurationForType;
 		}
 
@@ -43,7 +40,7 @@ namespace MbCache.ProxyImpl.Castle
 			else
 			{
 				var hasCalledOriginalMethod = false;
-				var result = _cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, invocation.Method, invocation.Arguments, () =>
+				var result = _configurationForType.CacheAdapter.GetAndPutIfNonExisting(keyAndItsDependingKeys, invocation.Method, invocation.Arguments, () =>
 					{
 						invocation.Proceed();
 						hasCalledOriginalMethod = true;

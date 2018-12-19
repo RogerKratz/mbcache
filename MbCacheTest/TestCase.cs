@@ -21,6 +21,7 @@ namespace MbCacheTest
 		[SetUp]
 		public void Setup()
 		{
+			Tools.ClearMemoryCache();
 			CacheBuilder = new CacheBuilder(_proxyFactory)
 					.SetCache(CreateCache())
 					.SetCacheKey(CreateCacheKey());
@@ -33,7 +34,6 @@ namespace MbCacheTest
 
 		protected virtual ICache CreateCache()
 		{
-			Tools.ClearMemoryCache();
 			return new InMemoryCache(20);
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Caching;
 using MbCache.Core;
 using MbCache.Core.Events;
@@ -27,7 +28,7 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
+		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
 		{
 			var cachedItem = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
 			if (cachedItem != null)
@@ -44,7 +45,7 @@ namespace MbCache.Configuration
 					_eventListenersCallback.OnCacheHit(cachedItem2);
 					return cachedItem2.CachedValue;
 				}
-				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethodInformation, originalMethod);
+				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
 				_eventListenersCallback.OnCacheMiss(addedValue);
 				return addedValue.CachedValue;
 			}
@@ -63,10 +64,10 @@ namespace MbCache.Configuration
 			Delete(mainCacheKey);
 		}
 
-		private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
+		private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
 		{
 			var methodResult = originalMethod();
-			var cachedItem = new CachedItem(cachedMethodInformation, methodResult);
+			var cachedItem = new CachedItem(cachedMethod, methodResult);
 			var key = keyAndItsDependingKeys.Key;
 			var dependedKeys = keyAndItsDependingKeys.DependingRemoveKeys().ToList();
 			dependedKeys.Add(mainCacheKey);

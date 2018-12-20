@@ -1,16 +1,16 @@
-﻿using MbCache.Core.Events;
+﻿using System.Reflection;
 
 namespace MbCache.Core
 {
 	public class CachedItem
 	{
-		public CachedItem(CachedMethodInformation cachedMethodInformation, object cachedValue)
+		public CachedItem(MethodInfo cachedMethod, object cachedValue)
 		{
-			CachedMethodInformation = cachedMethodInformation;
+			CachedMethod = cachedMethod;
 			CachedValue = cachedValue;
 		}
 
-		public CachedMethodInformation CachedMethodInformation { get; }
+		public MethodInfo CachedMethod { get; }
 		public object CachedValue { get; }
 	}
 }

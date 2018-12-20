@@ -72,7 +72,6 @@
     <Compile Include="Configuration\KeyAndItsDependingKeys.cs" />
     <Compile Include="Core\CachedItem.cs" />
     <Compile Include="Core\Events\EventListenersCallback.cs" />
-    <Compile Include="Core\Events\CachedMethodInformation.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />
     <Compile Include="Configuration\ICache.cs" />
     <Compile Include="Configuration\ICacheKey.cs" />

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core.Events;
 
@@ -14,7 +15,7 @@ namespace MbCacheTest.Logic.InitializeCacheOnceTest
 		}
 
 		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys,
-			CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
+			MethodInfo cachedMethod, Func<object> originalMethod)
 		{
 			return originalMethod();
 		}

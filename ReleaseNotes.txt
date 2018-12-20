@@ -4,6 +4,8 @@
 * Replacing IEventListener.Warning with FluentBuilder.AllowDifferentArgumentsShareSameCacheKey
 * ICacheKey.Initialize removed
 * IProxyFactory.Initialize removed
+* ICache.GetAndPutIfNonExisting param changed from CachedMethodInformation to MethodInfo
+* CachedItem.CachedMethodInformation replaced with CachedMethod
 
 
 - Version 2.14 (v 2.14.0.0), 2018-05-14

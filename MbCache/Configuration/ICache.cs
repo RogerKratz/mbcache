@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using MbCache.Core.Events;
 
 namespace MbCache.Configuration
@@ -16,11 +17,7 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Gets cache entry from cache. If not exists, runs <paramref name="originalMethod" /> and puts in cache.
 		/// </summary>
-		/// <param name="keyAndItsDependingKeys"></param>
-		/// <param name="cachedMethodInformation"></param>
-		/// <param name="originalMethod"></param>
-		/// <returns></returns>
-		object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, CachedMethodInformation cachedMethodInformation, Func<object> originalMethod);
+		object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod);
 
 		/// <summary>
 		/// Deletes cache entries from cache.

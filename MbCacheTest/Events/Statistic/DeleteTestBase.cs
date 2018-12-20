@@ -29,22 +29,15 @@ namespace MbCacheTest.Events.Statistic
 		[Test]
 		public void ShouldHaveCorrectMethodInfo()
 		{
-			EventListener.CacheRemovals[0].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
-			EventListener.CacheRemovals[1].CachedMethodInformation.Method.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			EventListener.CacheRemovals[0].CachedMethod.Name.Should().Be.EqualTo("ReturnNullIfZero");
+			EventListener.CacheRemovals[1].CachedMethod.Name.Should().Be.EqualTo("ReturnNullIfZero");
 		}
 
 		[Test]
 		public void ShouldHaveCorrectType()
 		{
-			EventListener.CacheRemovals[0].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
-			EventListener.CacheRemovals[1].CachedMethodInformation.Method.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
-		}
-
-		[Test]
-		public void ShouldHaveCorrectArguments()
-		{
-			EventListener.CacheRemovals[0].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(0);
-			EventListener.CacheRemovals[1].CachedMethodInformation.Arguments.Should().Have.SameSequenceAs(1);
+			EventListener.CacheRemovals[0].CachedMethod.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
+			EventListener.CacheRemovals[1].CachedMethod.DeclaringType.Should().Be.EqualTo(typeof(IObjectReturningNull));
 		}
 	}
 }

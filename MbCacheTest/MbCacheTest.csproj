@@ -90,6 +90,7 @@
     <Compile Include="Logic\InitializeCacheOnceTest\CallingDefaultCacheInitializeOnceTest.cs" />
     <Compile Include="Logic\InitializeCacheOnceTest\CallingOverridenCacheInitializeOnceTest.cs" />
     <Compile Include="Logic\Performance\CacheMissPerformanceTest.cs" />
+    <Compile Include="Logic\Performance\MemoryUsageWithLargeParameterTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyForComponentOverridingTest.cs" />
     <Compile Include="Logic\Scope\CacheKeyThatThrows.cs" />
     <Compile Include="Logic\Scope\CacheKeyWithScope.cs" />

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Core.Events;
@@ -57,7 +58,7 @@ namespace MbCacheTest.Logic
 			}
 
 			public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys,
-				CachedMethodInformation cachedMethodInformation, Func<object> originalMethod)
+				MethodInfo cachedMethod, Func<object> originalMethod)
 			{
 				throw new NotImplementedException();
 			}

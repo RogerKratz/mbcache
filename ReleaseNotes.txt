@@ -6,6 +6,7 @@
 * IProxyFactory.Initialize removed
 * ICache.GetAndPutIfNonExisting param changed from CachedMethodInformation to MethodInfo
 * CachedItem.CachedMethodInformation replaced with CachedMethod
+* IFluentBuilder removed. Use FluentBuilder instead.
 * FluentBuilder.CacheKey renamed to FluentBuilder.OverrideCacheKey
 * FluentBuilder.Cache renamed to FluentBuilder.OverrideCache
 

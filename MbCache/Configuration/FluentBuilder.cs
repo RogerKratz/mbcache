@@ -50,7 +50,7 @@ namespace MbCache.Configuration
 		/// </summary>
 		/// <param name="cacheKey"></param>
 		/// <returns></returns>
-		public FluentBuilder<T> CacheKey(ICacheKey cacheKey)
+		public FluentBuilder<T> OverrideCacheKey(ICacheKey cacheKey)
 		{
 			_details.CacheKey = cacheKey;
 			return this;
@@ -59,7 +59,7 @@ namespace MbCache.Configuration
 		/// <summary>
 		/// Sets a specific <see cref="ICache"/> for this component.
 		/// </summary>
-		public FluentBuilder<T> Cache(ICache cache)
+		public FluentBuilder<T> OverrideCache(ICache cache)
 		{
 			_details.SetCache(cache);
 			return this;

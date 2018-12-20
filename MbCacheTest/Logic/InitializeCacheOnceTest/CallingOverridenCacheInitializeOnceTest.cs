@@ -19,11 +19,11 @@ namespace MbCacheTest.Logic.InitializeCacheOnceTest
 			CacheBuilder
 				.For<ReturningRandomNumbers>()
 				.CacheMethod(c => c.CachedNumber())
-				.Cache(overridenCache)
+				.OverrideCache(overridenCache)
 				.As<IReturningRandomNumbers>()
 				.For<ObjectReturningNewGuids>()
 				.CacheMethod(c => c.CachedMethod())
-				.Cache(overridenCache)
+				.OverrideCache(overridenCache)
 				.As<IObjectReturningNewGuids>()
 				.BuildFactory();
 		}

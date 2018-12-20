@@ -26,7 +26,7 @@ namespace MbCacheTest.Logic
 			CacheBuilder
 				.For<ReturningRandomNumbers>()
 					.CacheMethod(c => c.CachedNumber())
-					.Cache(new InMemoryCache(1))
+					.OverrideCache(new InMemoryCache(1))
 					.As<IReturningRandomNumbers>()
 				.For<ObjectReturningNewGuids>()
 					.CacheMethod(c => c.CachedMethod())

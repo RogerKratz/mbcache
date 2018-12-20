@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- vNext
+- Version 2.15 (v 2.15.0.0), 2018-12-20
 * Replacing IEventListener.Warning with FluentBuilder.AllowDifferentArgumentsShareSameCacheKey
 * ICacheKey.Initialize removed
 * IProxyFactory.Initialize removed

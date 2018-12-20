@@ -22,7 +22,7 @@ namespace MbCacheTest.Logic.Performance
 		}
 
 		[Test]
-		public void ShouldLowerMemoryUsageCausedByKeyString()
+		public void MeasureMem()
 		{
 			const int uniqueCacheEntries = 10000;
 			var memUsageAtStart = GC.GetTotalMemory(true);

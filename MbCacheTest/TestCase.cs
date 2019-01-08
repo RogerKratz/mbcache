@@ -34,7 +34,7 @@ namespace MbCacheTest
 
 		protected virtual ICache CreateCache()
 		{
-			return new InMemoryCache(20);
+			return new InMemoryCache(TimeSpan.FromMinutes(20));
 		}
 
 		protected virtual ICacheKey CreateCacheKey()

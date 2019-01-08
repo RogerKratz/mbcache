@@ -11,16 +11,16 @@ namespace MbCache.Configuration
 	[Serializable]
 	public class InMemoryCache : ICache
 	{
-		private readonly int _timeoutMinutes;
+		private readonly TimeSpan _timeout;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
 		private static readonly object lockObject = new object();
 		private EventListenersCallback _eventListenersCallback;
 		private const string mainCacheKey = "MainMbCacheKey";
 
-		public InMemoryCache(int timeoutMinutes)
+		public InMemoryCache(TimeSpan timeout)
 		{
-			_timeoutMinutes = timeoutMinutes;
+			_timeout = timeout;
 		}
 
 		public void Initialize(EventListenersCallback eventListenersCallback)
@@ -75,7 +75,7 @@ namespace MbCache.Configuration
 
 			var policy = new CacheItemPolicy
 			{
-				AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(_timeoutMinutes),
+				AbsoluteExpiration = DateTimeOffset.UtcNow.Add(_timeout),
 				RemovedCallback = arguments => _eventListenersCallback.OnCacheRemoval(cachedItem)
 			};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(dependedKeys));

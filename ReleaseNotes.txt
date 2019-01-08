@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- vNext
+* InMemoryCache's timeout now specified in TimeSpan instead of int.
+
+
 - Version 2.15 (v 2.15.0.0), 2018-12-20
 * Replacing IEventListener.Warning with FluentBuilder.AllowDifferentArgumentsShareSameCacheKey
 * ICacheKey.Initialize removed

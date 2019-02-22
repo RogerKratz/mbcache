@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- vNext
+- Version 2.16 (v 2.16.0.0), 2019-02-22
 * InMemoryCache's timeout now specified in TimeSpan instead of int.
 * MbCacheFactory no longer serializable
 

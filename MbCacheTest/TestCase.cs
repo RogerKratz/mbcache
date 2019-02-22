@@ -2,7 +2,6 @@
 using MbCache.Configuration;
 using MbCache.ProxyImpl.Castle;
 using MbCache.ProxyImpl.LinFu;
-using MbCacheTest.Caches;
 using NUnit.Framework;
 
 namespace MbCacheTest
@@ -19,7 +18,6 @@ namespace MbCacheTest
 		[SetUp]
 		public void Setup()
 		{
-			Tools.ClearMemoryCache();
 			CacheBuilder = new CacheBuilder(ProxyFactory)
 					.SetCache(CreateCache())
 					.SetCacheKey(CreateCacheKey());

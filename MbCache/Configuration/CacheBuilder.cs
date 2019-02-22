@@ -39,7 +39,6 @@ namespace MbCache.Configuration
 		{
 			var defaultCacheKey = new ToStringCacheKey();
 			var events = new EventListenersCallback(_eventListeners);
-			var defaultCache = new InMemoryCache(TimeSpan.FromMinutes(20));
 			var allCaches = new HashSet<ICache>();
 			
 			foreach (var configurationForType in _configuredTypes.Values)
@@ -48,7 +47,7 @@ namespace MbCache.Configuration
 				{
 					configurationForType.CacheKey = _cacheKey ?? defaultCacheKey;
 				}
-				configurationForType.CreateCacheAdapter(_cache ?? defaultCache, allCaches);
+				configurationForType.CreateCacheAdapter(_cache ?? new InMemoryCache(TimeSpan.FromMinutes(20)), allCaches);
 			}
 			foreach (var cache in allCaches)
 			{

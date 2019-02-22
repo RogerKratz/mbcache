@@ -11,18 +11,16 @@ namespace MbCacheTest
 	[TestFixture(typeof(LinFuProxyFactory))]
 	public abstract class TestCase
 	{
-		private readonly IProxyFactory _proxyFactory;
-
 		protected TestCase(Type proxyType)
 		{
-			_proxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
+			ProxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
 		}
 
 		[SetUp]
 		public void Setup()
 		{
 			Tools.ClearMemoryCache();
-			CacheBuilder = new CacheBuilder(_proxyFactory)
+			CacheBuilder = new CacheBuilder(ProxyFactory)
 					.SetCache(CreateCache())
 					.SetCacheKey(CreateCacheKey());
 			TestSetup();
@@ -30,6 +28,8 @@ namespace MbCacheTest
 
 		protected virtual void TestSetup(){}
 
+		protected IProxyFactory ProxyFactory { get; }
+		
 		protected CacheBuilder CacheBuilder { get; private set; }
 
 		protected virtual ICache CreateCache()

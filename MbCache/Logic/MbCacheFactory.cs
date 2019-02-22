@@ -7,7 +7,6 @@ using MbCache.Core;
 
 namespace MbCache.Logic
 {
-	[Serializable]
 	public class MbCacheFactory : IMbCacheFactory
 	{
 		private readonly IProxyFactory _proxyFactory;

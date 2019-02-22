@@ -110,7 +110,6 @@
     <Compile Include="Logic\Performance\NumberOfCacheEntriesTest.cs" />
     <Compile Include="Logic\ProxyExceptionTest.cs" />
     <Compile Include="Logic\Scope\InvalidateAllScopesTest.cs" />
-    <Compile Include="Logic\SerializeFactoryTest.cs" />
     <Compile Include="Logic\Wrap\ClassComponentTest.cs" />
     <Compile Include="Logic\Wrap\GeneralTests.cs" />
     <Compile Include="Logic\Wrap\InterfaceComponentTest.cs" />

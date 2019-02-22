@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MbCache.Core.Events
 {
-	[Serializable]
 	public class EventListenersCallback
 	{
 		private readonly IEnumerable<IEventListener> _eventListeners;

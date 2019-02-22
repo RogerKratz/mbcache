@@ -2,7 +2,6 @@
 
 namespace MbCache.Logic
 {
-	[Serializable]
 	public class ComponentType
 	{
 		public ComponentType(Type concreteType, string typeAsCacheKeyString)

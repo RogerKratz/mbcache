@@ -7,7 +7,6 @@ namespace MbCache.Logic
 	/// <summary>
 	/// Calls <see cref="ICache"/>
 	/// </summary>
-	[Serializable]
 	public class CacheAdapter
 	{
 		private readonly ICache _cache;

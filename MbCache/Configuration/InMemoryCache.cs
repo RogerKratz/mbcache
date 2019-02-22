@@ -8,7 +8,6 @@ using MbCache.Core.Events;
 
 namespace MbCache.Configuration
 {
-	[Serializable]
 	public class InMemoryCache : ICache
 	{
 		private readonly TimeSpan _timeout;

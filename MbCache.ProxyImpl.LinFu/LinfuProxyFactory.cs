@@ -6,7 +6,6 @@ using MbCache.Logic;
 
 namespace MbCache.ProxyImpl.LinFu
 {
-	[Serializable]
 	public class LinFuProxyFactory : IProxyFactory
 	{
 		private static readonly ProxyFactory proxyFactory = new ProxyFactory();

@@ -19,7 +19,6 @@ namespace MbCache.Configuration
 	/// Type|Component|Method|ParamType1|ParamType2
 	/// Type|Component|Method|ParamType1|ParamType2|$ParamValue1$ParamValue2
 	/// </summary>
-	[Serializable]
 	public abstract class CacheKeyBase : ICacheKey
 	{
 		private static readonly Regex findSeparator = new Regex(@"\" + separator, RegexOptions.Compiled);

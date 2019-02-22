@@ -5,7 +5,6 @@ using MbCache.Configuration;
 
 namespace MbCache.Logic
 {
-	[Serializable]
 	public class ConfigurationForType
 	{
 		private ICache _cache;

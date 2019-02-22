@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace MbCache.Configuration
+﻿namespace MbCache.Configuration
 {
-	[Serializable]
 	public class ToStringCacheKey : CacheKeyBase
 	{
 		private const string nullKey = "Null";

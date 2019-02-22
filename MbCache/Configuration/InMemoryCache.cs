@@ -11,7 +11,6 @@ namespace MbCache.Configuration
 	public class InMemoryCache : ICache
 	{
 		private readonly TimeSpan _timeout;
-		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
 		private static readonly object lockObject = new object();
 		private EventListenersCallback _eventListenersCallback;
@@ -20,7 +19,10 @@ namespace MbCache.Configuration
 		public InMemoryCache(TimeSpan timeout)
 		{
 			_timeout = timeout;
+			Cache = new MemoryCache("MbCache");
 		}
+		
+		public MemoryCache Cache { get; }
 
 		public void Initialize(EventListenersCallback eventListenersCallback)
 		{
@@ -29,7 +31,7 @@ namespace MbCache.Configuration
 
 		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
 		{
-			var cachedItem = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
+			var cachedItem = (CachedItem)Cache.Get(keyAndItsDependingKeys.Key);
 			if (cachedItem != null)
 			{
 				_eventListenersCallback.OnCacheHit(cachedItem);
@@ -38,7 +40,7 @@ namespace MbCache.Configuration
 
 			lock (lockObject)
 			{
-				var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
+				var cachedItem2 = (CachedItem)Cache.Get(keyAndItsDependingKeys.Key);
 				if (cachedItem2 != null)
 				{
 					_eventListenersCallback.OnCacheHit(cachedItem2);
@@ -54,7 +56,7 @@ namespace MbCache.Configuration
 		{
 			lock (lockObject)
 			{
-				cache.Remove(cacheKey);
+				Cache.Remove(cacheKey);
 			}
 		}
 
@@ -77,17 +79,17 @@ namespace MbCache.Configuration
 				AbsoluteExpiration = DateTimeOffset.UtcNow.Add(_timeout),
 				RemovedCallback = arguments => _eventListenersCallback.OnCacheRemoval(cachedItem)
 			};
-			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(dependedKeys));
-			cache.Set(key, cachedItem, policy);
+			policy.ChangeMonitors.Add(Cache.CreateCacheEntryChangeMonitor(dependedKeys));
+			Cache.Set(key, cachedItem, policy);
 			return cachedItem;
 		}
 
-		private static void createDependencies(IEnumerable<string> unwrappedKeys)
+		private void createDependencies(IEnumerable<string> unwrappedKeys)
 		{
 			foreach (var key in unwrappedKeys)
 			{
 				var policy = new CacheItemPolicy { Priority = CacheItemPriority.NotRemovable };
-				cache.Add(key, dependencyValue, policy);
+				Cache.Add(key, dependencyValue, policy);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Caching;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -17,7 +18,6 @@ namespace MbCacheTest.Logic.Performance
 
 		protected override void TestSetup()
 		{
-			memoryCacheReference = MemoryCache.Default;
 			CacheBuilder.For<ObjectWithMultipleParameters>()
 				.CacheMethod(x => x.Calculate(0, null, 0))
 				.AsImplemented();
@@ -40,6 +40,13 @@ namespace MbCacheTest.Logic.Performance
 			var noOfCacheItemsBefore = memoryCacheReference.GetCount();
 			component.Calculate(1, "1", 1);
 			(memoryCacheReference.GetCount() - noOfCacheItemsBefore).Should().Be.EqualTo(0);
+		}
+
+		protected override ICache CreateCache()
+		{
+			var cache = (InMemoryCache) base.CreateCache();
+			memoryCacheReference = cache.Cache;
+			return cache;
 		}
 	}
 }

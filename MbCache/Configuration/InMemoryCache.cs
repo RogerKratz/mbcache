@@ -10,11 +10,12 @@ namespace MbCache.Configuration
 {
 	public class InMemoryCache : ICache
 	{
-		private readonly TimeSpan _timeout;
+		private const string mainCacheKey = "MainMbCacheKey";
 		private static readonly object dependencyValue = new object();
 		private static readonly object lockObject = new object();
+
+		private readonly TimeSpan _timeout;
 		private EventListenersCallback _eventListenersCallback;
-		private const string mainCacheKey = "MainMbCacheKey";
 
 		public InMemoryCache(TimeSpan timeout)
 		{

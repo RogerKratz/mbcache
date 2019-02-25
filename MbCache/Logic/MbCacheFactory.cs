@@ -125,10 +125,7 @@ namespace MbCache.Logic
 
 		public void Dispose()
 		{
-			foreach (var configuredType in _configuredTypes)
-			{
-				configuredType.Value.Dispose();
-			}
+			Invalidate();
 		}
 	}
 }

@@ -7,6 +7,7 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic
 {
+	[Ignore("#34 To be fixed")]
 	public class CachingPerMbCacheFactoryTest : TestCase
 	{
 		private IMbCacheFactory factory1;

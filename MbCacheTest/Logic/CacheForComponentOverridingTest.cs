@@ -72,10 +72,6 @@ namespace MbCacheTest.Logic
 			{
 				throw new NotImplementedException();
 			}
-
-			public void Dispose()
-			{
-			}
 		}
 	}
 }

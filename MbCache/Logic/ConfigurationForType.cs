@@ -5,7 +5,7 @@ using MbCache.Configuration;
 
 namespace MbCache.Logic
 {
-	public class ConfigurationForType : IDisposable
+	public class ConfigurationForType
 	{
 		private ICache _cache;
 
@@ -38,11 +38,6 @@ namespace MbCache.Logic
 		public void SetCache(ICache cache)
 		{
 			_cache = cache;
-		}
-
-		public void Dispose()
-		{
-			_cache.Dispose();
 		}
 	}
 }

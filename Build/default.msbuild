@@ -26,7 +26,7 @@
 	</Target>
 	
 	<Target Name="BuildNugetPackage" DependsOnTargets="RunBuild;MakeBuildDirectory;CopyNuget">
-		<Exec Command="$(NugetFolder)\NuGet pack MbCache.nuspec -o $(DeployFolderNuget) -symbols -Prop Configuration=Release -Version $(NugetVersion)"
+		<Exec Command="$(NugetFolder)\NuGet pack MbCache.nuspec -OutputDirectory $(DeployFolderNuget) -symbols -Prop Configuration=Release -Version $(NugetVersion)"
 			  WorkingDirectory="$(MSBuildProjectDirectory)"/>
 	</Target>
 	

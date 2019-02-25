@@ -7,7 +7,7 @@ namespace MbCache.Configuration
 	/// <summary>
 	/// Object communicating with 3rd part cache framework
 	/// </summary>
-	public interface ICache
+	public interface ICache : IDisposable
 	{
 		/// <summary>
 		/// Called once before caching is used.

@@ -27,5 +27,9 @@ namespace MbCacheTest.Logic.InitializeCacheOnceTest
 		public void Clear()
 		{
 		}
+
+		public void Dispose()
+		{
+		}
 	}
 }

@@ -93,5 +93,10 @@ namespace MbCache.Configuration
 				Cache.Add(key, dependencyValue, policy);
 			}
 		}
+
+		public void Dispose()
+		{
+			Cache.Dispose();
+		}
 	}
 }

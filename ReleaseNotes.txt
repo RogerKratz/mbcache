@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- Version 2.18 (v 2.18.0.0), 2019-02-25
+* ICache no longer impl IDisposable
+
+
 - Version 2.17 (v 2.17.0.0), 2019-02-25
 * ICache now impl IDisposable
 

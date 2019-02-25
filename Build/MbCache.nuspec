@@ -11,6 +11,7 @@
 		<language>en-US</language>
 		<tags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop, library, framework</tags>
 		<projectUrl>https://github.com/RogerKratz/mbcache</projectUrl>
+		<license type="expression">MIT</license>
 		<dependencies>
 			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />
 		</dependencies>

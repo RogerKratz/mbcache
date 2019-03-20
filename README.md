@@ -19,7 +19,7 @@ public class Calculator : ICalculator
 
 It sure works. There are some drawback though:
   * A snippet like this tends to repeat itself the next time you want to cache some return value in some other method. Not really [DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself)-ish.
-  * You (might) have a strong dependency to your cache framework. With code like this it's not easy to reuse code amoung different sort of clients. You might, for example, want to use asp.net cache when code is run in web enviroment but something completely different in a desktop application.
+  * You (might) have a strong dependency to your cache framework. With code like this it's not easy to reuse code among different sort of clients. You might, for example, want to use asp.net cache when code is run in web enviroment but something completely different in a desktop application.
   * What if you suddenly want to turn off caching for a method? Or some of them? All of them?
   * [SRP](http://en.wikipedia.org/wiki/Single_responsibility_principle) is broken. It can eg be solved using decorator pattern and split calculation and caching part, but it will lead to even more handwritten code.
   * Can be hard to test.

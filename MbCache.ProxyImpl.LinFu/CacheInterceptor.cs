@@ -9,7 +9,6 @@ namespace MbCache.ProxyImpl.LinFu
 {
 	public class CacheInterceptor : IInterceptor
 	{
-		[NonSerialized]
 		private static readonly MethodInfo exceptionInternalPreserveStackTrace =
 			typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 

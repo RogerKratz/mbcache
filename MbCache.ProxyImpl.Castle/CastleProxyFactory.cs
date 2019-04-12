@@ -8,14 +8,14 @@ namespace MbCache.ProxyImpl.Castle
 	{
 		private static readonly ProxyGenerator generator = new ProxyGenerator(new DefaultProxyBuilder(new ModuleScope(false, true)));
 
-		public T CreateProxyWithTarget<T>(T uncachedComponent, ConfigurationForType configurationForType) where T : class
+		public T CreateProxy<T>(T target, ConfigurationForType configurationForType) where T : class
 		{
 			var cacheInterceptor = new CacheInterceptor(configurationForType);
 			var options = new ProxyGenerationOptions(new CacheProxyGenerationHook(configurationForType.CachedMethods));
 			options.AddMixinInstance(new CachingComponent(configurationForType));
 			return typeof (T).IsClass ? 
-					generator.CreateClassProxyWithTarget(uncachedComponent, options, cacheInterceptor) : 
-					generator.CreateInterfaceProxyWithTarget(uncachedComponent, options, cacheInterceptor);
+					generator.CreateClassProxyWithTarget(target, options, cacheInterceptor) : 
+					generator.CreateInterfaceProxyWithTarget(target, options, cacheInterceptor);
 		}
 	}
 }

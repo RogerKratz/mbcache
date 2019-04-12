@@ -26,7 +26,7 @@ namespace MbCache.Logic
 			if (_configuredTypes.TryGetValue(type, out var configurationForType))
 			{
 				var target = (T)createTarget(configurationForType.ComponentType.ConcreteType, parameters);
-				return _proxyFactory.CreateProxyWithTarget(target, configurationForType);
+				return _proxyFactory.CreateProxy(target, configurationForType);
 			}
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}
@@ -36,7 +36,7 @@ namespace MbCache.Logic
 			var type = typeof(T);
 			if (_configuredTypes.TryGetValue(type, out var configurationForType))
 			{
-				return _proxyFactory.CreateProxyWithTarget(uncachedComponent, configurationForType);
+				return _proxyFactory.CreateProxy(uncachedComponent, configurationForType);
 			}
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}

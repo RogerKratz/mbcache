@@ -8,15 +8,6 @@ namespace MbCache.Configuration
 	public interface IProxyFactory
 	{
 		/// <summary>
-		/// Creates the proxy.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="configurationForType">The method data.</param>
-		/// <param name="parameters">The parameters.</param>
-		/// <returns></returns>
-		T CreateProxy<T>(ConfigurationForType configurationForType, params object[] parameters) where T : class;
-
-		/// <summary>
 		/// Creates the proxy with a specified target.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>

@@ -25,7 +25,8 @@ namespace MbCache.Logic
 			var type = typeof (T);
 			if (_configuredTypes.TryGetValue(type, out var configurationForType))
 			{
-				return _proxyFactory.CreateProxy<T>(configurationForType, parameters);
+				var target = (T)createTarget(configurationForType.ComponentType.ConcreteType, parameters);
+				return _proxyFactory.CreateProxyWithTarget(target, configurationForType);
 			}
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 		}
@@ -121,6 +122,20 @@ namespace MbCache.Logic
 			}
 
 			return comp;
+		}
+		
+		//extract to seperate type
+		private static object createTarget(Type type, object[] ctorParameters)
+		{
+			try
+			{
+				return Activator.CreateInstance(type, ctorParameters);
+			}
+			catch (MissingMethodException ex)
+			{
+				var ctorParamMessage = "Incorrect number of parameters to ctor for type " + type;
+				throw new ArgumentException(ctorParamMessage, ex);
+			}
 		}
 
 		public void Dispose()

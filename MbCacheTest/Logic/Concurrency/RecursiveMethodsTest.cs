@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MbCache.ProxyImpl.Castle;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
@@ -15,6 +16,9 @@ namespace MbCacheTest.Logic.Concurrency
 		[Test]
 		public void ShouldHandleRecursiveCalls()
 		{
+			if(ProxyFactory is CastleProxyFactory)
+				Assert.Ignore("Wrapping class proxies with parameters is not supported in current MbCache.ProxyImpl.Castle implementation.");
+			
 			CacheBuilder.For<ObjectRecursive1>()
 				.CacheMethod(c => c.Ref(1))
 				.AsImplemented();

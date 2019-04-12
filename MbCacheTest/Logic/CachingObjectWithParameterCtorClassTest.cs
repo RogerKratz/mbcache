@@ -17,6 +17,9 @@ namespace MbCacheTest.Logic
 
 		protected override void TestSetup()
 		{
+			if(ProxyFactory is CastleProxyFactory)
+				Assert.Ignore("Wrapping class proxies with parameters is not supported in current MbCache.ProxyImpl.Castle implementation.");
+		
 			CacheBuilder
 				.For<ObjectWithCtorParametersNoInterface>()
 				.CacheMethod(c => c.CachedMethod())
@@ -55,9 +58,6 @@ namespace MbCacheTest.Logic
 		[Test]
 		public void CanWrapUncachingComponent()
 		{
-			if(ProxyFactory is CastleProxyFactory)
-				Assert.Ignore("Wrapping class proxies with parameters is not supported in current MbCache.ProxyImpl.Castle implementation.");
-			
 			var uncachingComponent = new ObjectWithCtorParametersNoInterface(1);
 			var cachedComponent = factory.ToCachedComponent(uncachingComponent);
 

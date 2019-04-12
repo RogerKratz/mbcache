@@ -2,6 +2,7 @@
 
 - vNext
 * .net fw 4.5
+* IProxyFactory changed. Now contains one method only.
 
 
 - Version 2.18 (v 2.18.0.0), 2019-02-25

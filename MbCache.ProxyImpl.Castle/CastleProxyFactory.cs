@@ -18,7 +18,15 @@ namespace MbCache.ProxyImpl.Castle
 			{
 				if (typeof(T).IsClass)
 				{
-					return (T)generator.CreateClassProxy(configurationForType.ComponentType.ConcreteType, options, parameters, cacheInterceptor);
+					try
+					{
+						return (T)generator.CreateClassProxy(configurationForType.ComponentType.ConcreteType, options, parameters, cacheInterceptor);
+					}
+					catch (InvalidProxyConstructorArgumentsException ex)
+					{
+						var ctorParamMessage = "Incorrect number of parameters to ctor for type " + configurationForType.ComponentType.ConcreteType;
+						throw new ArgumentException(ctorParamMessage, ex);
+					}
 				}
 				var target = Activator.CreateInstance(configurationForType.ComponentType.ConcreteType, parameters);
 				return generator.CreateInterfaceProxyWithTarget((T)target, options, cacheInterceptor);

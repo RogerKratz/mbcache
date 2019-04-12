@@ -83,6 +83,7 @@
     <Compile Include="Logic\CachedMethodCalledFromWithinSameClassTest.cs" />
     <Compile Include="Logic\CacheForComponentOverridingTest.cs" />
     <Compile Include="Logic\CacheKeyBaseReturnNullTest.cs" />
+    <Compile Include="Logic\CachingObjectWithParameterCtorClassTest.cs" />
     <Compile Include="Logic\CachingPerMbCacheFactoryTest.cs" />
     <Compile Include="Logic\Concurrency\RecursiveMethodsTest.cs" />
     <Compile Include="Logic\InitializeCacheOnceTest\CacheWithInitializeCounter.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Logic\Wrap\InterfaceComponentTest.cs" />
     <Compile Include="Logic\CacheKeyTest.cs" />
     <Compile Include="Logic\CachingMethodsWithParametersTest.cs" />
-    <Compile Include="Logic\CachingObjectWithParameterCtorTest.cs" />
+    <Compile Include="Logic\CachingObjectWithParameterCtorInterfaceTest.cs" />
     <Compile Include="Logic\CachingPerInstanceTest.cs" />
     <Compile Include="Logic\ClassProxy\NonVirtualTest.cs" />
     <Compile Include="Logic\ClassProxy\SimpleCacheAndInvalidationTest.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="TestData\ObjectCallingMethodOnItSelf.cs" />
     <Compile Include="TestData\ObjectRecursive.cs" />
     <Compile Include="TestData\ObjectTakes100msToFill.cs" />
+    <Compile Include="TestData\ObjectWithCtorParametersNoInterface.cs" />
     <Compile Include="TestData\ObjectWithMutableList.cs" />
     <Compile Include="TestData\HasNonVirtualMethod.cs" />
     <Compile Include="TestData\ObjectOfGenericType.cs" />

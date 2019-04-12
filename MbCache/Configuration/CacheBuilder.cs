@@ -99,7 +99,7 @@ namespace MbCache.Configuration
 			foreach (var detail in _details)
 			{
 				var typeAsCacheKey = detail.ComponentType.TypeAsCacheKeyString;
-				if (!tempHash.Add(detail.ComponentType.TypeAsCacheKeyString))
+				if (!tempHash.Add(typeAsCacheKey))
 				{
 					throw new InvalidOperationException("Component [" + typeAsCacheKey + "] registered multiple times!");
 				}

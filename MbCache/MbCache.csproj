@@ -87,6 +87,8 @@
     <Compile Include="Logic\ConfigurationForType.cs" />
     <Compile Include="Logic\MbCacheFactory.cs" />
     <Compile Include="Logic\MethodInfoComparer.cs" />
+    <Compile Include="Logic\Proxy\ProxyFactory.cs" />
+    <Compile Include="Logic\Proxy\ProxyInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

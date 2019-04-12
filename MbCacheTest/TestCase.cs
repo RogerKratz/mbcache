@@ -1,5 +1,6 @@
 ﻿using System;
 using MbCache.Configuration;
+using MbCache.Logic.Proxy;
 using MbCache.ProxyImpl.Castle;
 using MbCache.ProxyImpl.LinFu;
 using MbCacheTest.Caches;
@@ -9,6 +10,7 @@ namespace MbCacheTest
 {
 	[TestFixture(typeof(CastleProxyFactory))]
 	[TestFixture(typeof(LinFuProxyFactory))]
+	[TestFixture(typeof(ProxyFactory))]
 	public abstract class TestCase
 	{
 		protected TestCase(Type proxyType)

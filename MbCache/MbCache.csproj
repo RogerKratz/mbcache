@@ -81,7 +81,6 @@
     <Compile Include="Core\Events\StatisticsEventListener.cs" />
     <Compile Include="Core\ICachingComponent.cs" />
     <Compile Include="Core\IMbCacheFactory.cs" />
-    <Compile Include="Logic\CacheAdapter.cs" />
     <Compile Include="Logic\CachingComponent.cs" />
     <Compile Include="Logic\ComponentType.cs" />
     <Compile Include="Logic\ExpressionHelper.cs" />

@@ -49,7 +49,7 @@ namespace MbCache.ProxyImpl.LinFu
 			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
 			return keyAndItsDependingKeys.Key == null ? 
 				callOriginalMethod(method, arguments) : 
-				_configurationForType.CacheAdapter.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, () => callOriginalMethod(method, arguments));
+				_configurationForType.Cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, () => callOriginalMethod(method, arguments));
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

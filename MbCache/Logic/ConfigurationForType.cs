@@ -22,7 +22,7 @@ namespace MbCache.Logic
 		public bool CachePerInstance { get; set; }
 		public ICacheKey CacheKey { get; set; }
 		public bool AllowDifferentArgumentsShareSameCacheKey { get; set; }
-		public CacheAdapter CacheAdapter {get; private set;}
+		public ICache Cache {get; private set;}
 
 		public void CreateCacheAdapter(ICache defaultCache, ISet<ICache> allCaches)
 		{
@@ -32,7 +32,7 @@ namespace MbCache.Logic
 			}
 
 			allCaches.Add(_cache);
-			CacheAdapter = new CacheAdapter(_cache);
+			Cache = _cache;
 		}
 
 		public void SetCache(ICache cache)

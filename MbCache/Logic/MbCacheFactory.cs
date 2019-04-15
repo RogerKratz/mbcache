@@ -45,7 +45,7 @@ namespace MbCache.Logic
 		{
 			foreach (var configuredType in _configuredTypes.Values)
 			{
-				configuredType.CacheAdapter.Clear();
+				configuredType.Cache.Clear();
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace MbCache.Logic
 			{
 				var componentType = configurationForType.ComponentType;
 				var cacheKey = configurationForType.CacheKey.RemoveKey(componentType);
-				configurationForType.CacheAdapter.Delete(cacheKey);
+				configurationForType.Cache.Delete(cacheKey);
 			}
 			else
 			{

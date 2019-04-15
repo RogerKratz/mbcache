@@ -8,7 +8,7 @@ namespace MbCache.Logic
 {
 	public class CachingComponent : ICachingComponent
 	{
-		private readonly CacheAdapter _cache;
+		private readonly ICache _cache;
 		private readonly ICacheKey _cacheKey;
 		private readonly ComponentType _componentType;
 		private readonly bool _allowDifferentArgumentsShareSameCacheKey;
@@ -20,7 +20,7 @@ namespace MbCache.Logic
 		{
 			_cacheKey = configurationForType.CacheKey;
 			_componentType = configurationForType.ComponentType;
-			_cache = configurationForType.CacheAdapter;
+			_cache = configurationForType.Cache;
 			UniqueId = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
 			_allowDifferentArgumentsShareSameCacheKey = configurationForType.AllowDifferentArgumentsShareSameCacheKey;
 		}

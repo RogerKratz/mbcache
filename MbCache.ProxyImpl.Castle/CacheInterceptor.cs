@@ -40,7 +40,7 @@ namespace MbCache.ProxyImpl.Castle
 			else
 			{
 				var hasCalledOriginalMethod = false;
-				var result = _configurationForType.CacheAdapter.GetAndPutIfNonExisting(keyAndItsDependingKeys, invocation.Method, () =>
+				var result = _configurationForType.Cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, invocation.Method, () =>
 					{
 						invocation.Proceed();
 						hasCalledOriginalMethod = true;

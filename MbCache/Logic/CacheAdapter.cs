@@ -23,8 +23,6 @@ namespace MbCache.Logic
 
 		public void Delete(string cacheKey)
 		{
-			if (cacheKey == null)
-				return;
 			_cache.Delete(cacheKey);
 		}
 

@@ -95,7 +95,6 @@
     <Compile Include="Logic\Scope\CacheKeyThatThrows.cs" />
     <Compile Include="Logic\Scope\CacheKeyWithScope.cs" />
     <Compile Include="Logic\Scope\CachePerScopeTest.cs" />
-    <Compile Include="Logic\CacheKeyReturnNullTest.cs" />
     <Compile Include="Logic\CachePropertyTest.cs" />
     <Compile Include="Logic\Concurrency\CacheInvalidationOfMutatedListTest.cs" />
     <Compile Include="Logic\EnableDisable\DisableTest.cs" />

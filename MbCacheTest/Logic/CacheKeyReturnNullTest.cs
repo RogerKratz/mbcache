@@ -26,22 +26,7 @@ namespace MbCacheTest.Logic
 		}
 
 		[Test]
-		public void ShouldNotAddToCache()
-		{
-			CacheBuilder
-				 .For<ObjectReturningNewGuids>()
-				 .CacheMethod(c => c.CachedMethod())
-				 .As<IObjectReturningNewGuids>();
-
-			var factory = CacheBuilder.BuildFactory();
-
-			var svc = factory.Create<IObjectReturningNewGuids>();
-			svc.CachedMethod()
-				.Should().Not.Be.EqualTo(svc.CachedMethod());
-		}
-
-		[Test]
-		public void ShouldNotAddToCacheUsingParameters()
+		public void ShouldNotAddToCacheUsingParametersWhenNull()
 		{
 			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
@@ -51,64 +36,45 @@ namespace MbCacheTest.Logic
 			var factory = CacheBuilder.BuildFactory();
 
 			var svc = factory.Create<IObjectWithParametersOnCachedMethod>();
-			var obj = new object();
-			svc.CachedMethod(obj)
-				.Should().Not.Be.EqualTo(svc.CachedMethod(obj));
+			const int param = 1;
+			svc.CachedMethod(param)
+				.Should().Not.Be.EqualTo(svc.CachedMethod(param));
 		}
 
 		[Test]
-		public void ShouldNotInvalidate()
+		public void ShouldNotInvalidateWhenParameterIsNull()
 		{
-			cacheKey.TheKey = "aKey";
+			cacheKey.ParameterReturnsNull = false;
 			CacheBuilder
 				 .For<ObjectWithParametersOnCachedMethod>()
 				 .CacheMethod(c => c.CachedMethod(null))
 				 .As<IObjectWithParametersOnCachedMethod>();
 
 			var factory = CacheBuilder.BuildFactory();
-
 			var svc = factory.Create<IObjectWithParametersOnCachedMethod>();
-			var parameter = new object();
+			const int param = 1;
 
-			var result = svc.CachedMethod(parameter);
+			var result = svc.CachedMethod(param);
 
-			cacheKey.TheKey = null;
-			factory.Invalidate<IObjectWithParametersOnCachedMethod>();
-			factory.Invalidate(svc);
-			factory.Invalidate(svc, method => method.CachedMethod(null), false);
-			factory.Invalidate(svc, method => method.CachedMethod(parameter), true);
-			cacheKey.TheKey = "aKey";
+			cacheKey.ParameterReturnsNull = true;
+			factory.Invalidate(svc, method => method.CachedMethod(param), true);
+			cacheKey.ParameterReturnsNull = false;
 
-			svc.CachedMethod(parameter).Should().Be.EqualTo(result);
+			svc.CachedMethod(param).Should().Be.EqualTo(result);
 		}
 
-		private class cacheKeyStub : ICacheKey
+		private class cacheKeyStub : CacheKeyBase
 		{
-			public string TheKey { get; set; }
+			public bool ParameterReturnsNull { get; set; }
 
-			public string RemoveKey(ComponentType type)
+			public cacheKeyStub()
 			{
-				return TheKey;
+				ParameterReturnsNull = true;
 			}
-
-			public string RemoveKey(ComponentType type, ICachingComponent component)
+			
+			protected override string ParameterValue(object parameter)
 			{
-				return TheKey;
-			}
-
-			public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
-			{
-				return TheKey;
-			}
-
-			public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
-			{
-				return TheKey;
-			}
-
-			public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
-			{
-				return new KeyAndItsDependingKeys(TheKey, () => new List<string>());
+				return ParameterReturnsNull ? null : parameter.ToString();
 			}
 		}
 	}

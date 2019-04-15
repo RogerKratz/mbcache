@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 using MbCache.Configuration;
-using MbCache.Core;
-using MbCache.Logic;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;

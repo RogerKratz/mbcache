@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -17,9 +16,7 @@ namespace MbCache.Logic.Proxy
 		public T CreateProxy<T>(T target, ConfigurationForType configurationForType) where T : class
 		{
 			var componentType = typeof(T);
-			var proxyType = _proxyTypeCache.GetOrAdd(componentType,
-				t => createProxyType(componentType));
-			
+			var proxyType = _proxyTypeCache.GetOrAdd(componentType, t => createProxyType(componentType));
 			var ctor = proxyType.GetConstructors().Single();
 			var proxyInterceptorArg = Expression.Parameter(typeof(ProxyInterceptor));
 			var proxyInterceptor = new ProxyInterceptor(target, configurationForType, new CachingComponent(configurationForType));
@@ -29,21 +26,19 @@ namespace MbCache.Logic.Proxy
 			return func(proxyInterceptor);
 		}
 
-
 		private TypeInfo createProxyType(Type componentType)
 		{
 			var typeName = $"{componentType.Name}MbCacheProxy";
 			var assemblyName = $"{typeName}Assembly";
-			var asmFileName = $"{typeName}MbCacheModule.dll";
+			var asmFileName = $"{typeName}Module.dll";
 
-			var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(assemblyName), AssemblyBuilderAccess.RunAndSave);
-			var moduleBuilder = assemblyBuilder.DefineDynamicModule(asmFileName, asmFileName, true);
+			var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(assemblyName), AssemblyBuilderAccess.Run);
+			var moduleBuilder = assemblyBuilder.DefineDynamicModule(asmFileName);
 			
 			const TypeAttributes typeAttributes = TypeAttributes.AutoClass | TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.BeforeFieldInit;
 
 			Type parentType;
 			Type[] interfaces;
-
 			if (componentType.IsInterface)
 			{
 				parentType = typeof(object);
@@ -61,19 +56,10 @@ namespace MbCache.Logic.Proxy
 			implementCachingComponent(typeBuilder, proxyInterceptorField);
 			overrideComponentMethods(typeBuilder, componentType, proxyInterceptorField);
 
-			var proxyType = typeBuilder.CreateTypeInfo();
-
-			//TODO: not saving ass here!
-			assemblyBuilder.Save(asmFileName);
-			var file = "d:\\temp\\proxy.dll";
-			File.Delete(file);
-			File.Copy(asmFileName, file);
-			//
-			
-			return proxyType;
+			return typeBuilder.CreateTypeInfo();
 		}
 
-		private void implementConstructor(TypeBuilder typeBuilder, FieldBuilder proxyInterceptorField)
+		private static void implementConstructor(TypeBuilder typeBuilder, FieldBuilder proxyInterceptorField)
 		{
 			const MethodAttributes constructorAttributes = MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
 
@@ -93,72 +79,47 @@ namespace MbCache.Logic.Proxy
 		
 		private void implementCachingComponent(TypeBuilder typeBuilder, FieldBuilder proxyInterceptorField)
 		{
-			/*
-				return this.__proxyInterceptor.Component.[SameMethod]([sameParams]);
-			 */
-			
-			const MethodAttributes attributes = MethodAttributes.HideBySig | MethodAttributes.Virtual;
 			foreach (var methodInfo in typeof(ICachingComponent).GetMethods())
 			{
-				var method = typeBuilder.DefineMethod(methodInfo.Name, attributes, methodInfo.ReturnType, methodInfo.GetParameters().Select(x => x.ParameterType).ToArray());
-				var typeArgs = methodInfo.GetGenericArguments();
-				if (typeArgs.Length > 0)
-				{
-					var typeNames = GenerateTypeNames(typeArgs.Length);
-					method.DefineGenericParameters(typeNames);
-				}
-				var IL = method.GetILGenerator();
+				var methodBuilder = defineMethod(typeBuilder, methodInfo);
+				
+				var IL = methodBuilder.GetILGenerator();
 				IL.Emit(OpCodes.Ldarg_0); 
 				IL.Emit(OpCodes.Ldfld, proxyInterceptorField);
 				IL.Emit(OpCodes.Callvirt, typeof(ProxyInterceptor).GetProperty(nameof(ProxyInterceptor.Component)).GetMethod);
-				EmitCallMethod(IL, OpCodes.Callvirt, methodInfo);
+				for (var i = 0; i < methodInfo.GetParameters().Length; i++)
+				{
+					IL.Emit(OpCodes.Ldarg_S, (sbyte) (1 + i));
+				}
+				IL.Emit(OpCodes.Callvirt, methodInfo);
 				IL.Emit(OpCodes.Ret);
 				
-				typeBuilder.DefineMethodOverride(method, methodInfo);
+				typeBuilder.DefineMethodOverride(methodBuilder, methodInfo);
 			}
 		}
 		
 		private void overrideComponentMethods(TypeBuilder typeBuilder, Type targetType, FieldBuilder proxyInterceptorField)
 		{
-			var getGenericMethodFromHandle = typeof(MethodBase).GetMethod("GetMethodFromHandle", BindingFlags.Public | BindingFlags.Static, null, new Type[] { typeof(RuntimeMethodHandle), typeof(RuntimeTypeHandle) }, null);
+			var getGenericMethodFromHandle = typeof(MethodBase).GetMethod("GetMethodFromHandle", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RuntimeMethodHandle), typeof(RuntimeTypeHandle) }, null);
 			var getMethodFromHandle = typeof(MethodBase).GetMethod("GetMethodFromHandle", new[] { typeof(RuntimeMethodHandle) });
 			var getTypeFromHandle = typeof (Type).GetMethod("GetTypeFromHandle");
-			
-			
-			/*
-			 	var methodInfo = (MethodInfo) MethodBase.GetCurrentMethod();
-			 	var parameters = new []{param1, param2...};
-			 				
-				return this.__proxyInterceptor.DecorateMethodCall(methodInfo, parameters);
-			 */
-
-			const MethodAttributes attributes = MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual;
 			foreach (var methodInfo in targetType.GetMethods())
 			{
-			
 				if(methodInfo.DeclaringType == typeof(object))
 					continue;
 				if(!methodInfo.IsVirtual)
 					continue;
 				
-				var methodBuilder = typeBuilder.DefineMethod(methodInfo.Name, attributes, methodInfo.ReturnType, methodInfo.GetParameters().Select(x => x.ParameterType).ToArray());
-				var typeArgs = methodInfo.GetGenericArguments();
-				if (typeArgs.Length > 0)
-				{
-					var typeNames = GenerateTypeNames(typeArgs.Length);
-					methodBuilder.DefineGenericParameters(typeNames);
-					
-				}
+				var methodBuilder = defineMethod(typeBuilder, methodInfo);
 
 				var parameters = methodInfo.GetParameters();
 				var IL = methodBuilder.GetILGenerator();
 				var localMethodInfo = IL.DeclareLocal(typeof(MethodInfo));
 				var localParameters = IL.DeclareLocal(typeof(object[]));
 				var localParameterTypes = IL.DeclareLocal(typeof(Type));
-				
-			
 				var declaringType = methodInfo.DeclaringType;
             
+				//methodinfo
 				IL.Emit(OpCodes.Ldtoken, methodInfo);
 				if (declaringType.IsGenericType)
 				{
@@ -171,7 +132,6 @@ namespace MbCache.Logic.Proxy
 				}
 				IL.Emit(OpCodes.Stloc_0, localMethodInfo); 
 			
-				
 				//arguments as array
 				IL.Emit(OpCodes.Ldc_I4_S, parameters.Length);
 				IL.Emit(OpCodes.Newarr, typeof(object));
@@ -181,11 +141,10 @@ namespace MbCache.Logic.Proxy
 					IL.Emit(OpCodes.Dup);
 					IL.Emit(OpCodes.Ldc_I4, i);
 					IL.Emit(OpCodes.Ldarg, i+1);
-					IL.Emit(OpCodes.Box, parameter.ParameterType); //TODO: why?
+					IL.Emit(OpCodes.Box, parameter.ParameterType);
 					IL.Emit(OpCodes.Stelem_Ref);
 				}
 				IL.Emit(OpCodes.Stloc_1, localParameters);
-				//
 				
 				//argument types
 				var typeParameters = methodInfo.GetGenericArguments();
@@ -205,11 +164,20 @@ namespace MbCache.Logic.Proxy
 				}
 				IL.Emit(OpCodes.Stloc_2, localParameterTypes);
 				//
+				
+				//
+				if (methodInfo.ContainsGenericParameters)
+				{
+					//methodInfo = methodInfo.MakeGenericMethod(typeArguments) 
+					IL.Emit(OpCodes.Ldloc_0, localMethodInfo);
+					IL.Emit(OpCodes.Ldloc_2, localParameterTypes);
+					IL.Emit(OpCodes.Callvirt, typeof(MethodInfo).GetMethod(nameof(methodInfo.MakeGenericMethod)));
+					IL.Emit(OpCodes.Stloc_0, localMethodInfo); 
+				}
 			
 				IL.Emit(OpCodes.Ldarg_0);
 				IL.Emit(OpCodes.Ldfld, proxyInterceptorField);
 				IL.Emit(OpCodes.Ldloc_0, localMethodInfo);
-				IL.Emit(OpCodes.Ldloc_2, localParameterTypes);
 				IL.Emit(OpCodes.Ldloc_1, localParameters);
 				IL.Emit(OpCodes.Callvirt, typeof(ProxyInterceptor).GetMethod(nameof(ProxyInterceptor.DecorateMethodCall)));
 				if (methodBuilder.ReturnType == typeof(void))
@@ -218,7 +186,7 @@ namespace MbCache.Logic.Proxy
 				}
 				else
 				{
-					IL.Emit(OpCodes.Unbox_Any, methodBuilder.ReturnType); //TODO: why?					
+					IL.Emit(OpCodes.Unbox_Any, methodBuilder.ReturnType);				
 				}
 				
 				IL.Emit(OpCodes.Ret);
@@ -226,23 +194,24 @@ namespace MbCache.Logic.Proxy
 				typeBuilder.DefineMethodOverride(methodBuilder, methodInfo);
 			}
 		}
-		
-		private static string[] GenerateTypeNames(int count)
+
+		private static MethodBuilder defineMethod(TypeBuilder typeBuilder, MethodInfo methodInfo)
 		{
-			var result = new string[count];
-			for (var index = 0; index < count; index++)
+			const MethodAttributes attributes = MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual;
+			var methodBuilder = typeBuilder.DefineMethod(methodInfo.Name, attributes, methodInfo.ReturnType,
+				methodInfo.GetParameters().Select(x => x.ParameterType).ToArray());
+			var typeArgs = methodInfo.GetGenericArguments();
+			if (typeArgs.Length > 0)
 			{
-				result[index] = $"T{index}"; 
+				var typeNames = new string[typeArgs.Length];
+				for (var index = 0; index < typeArgs.Length; index++)
+				{
+					typeNames[index] = $"T{index}"; 
+				}
+				methodBuilder.DefineGenericParameters(typeNames);
 			}
-			return result;
-		}
 
-		private static void EmitCallMethod(ILGenerator IL, OpCode opCode, MethodInfo method)
-		{
-			for (var i = 0; i < method.GetParameters().Length; i++)
-				IL.Emit(OpCodes.Ldarg_S, (sbyte) (1 + i));
-			IL.Emit(opCode, method);
+			return methodBuilder;
 		}
-
 	}
 }

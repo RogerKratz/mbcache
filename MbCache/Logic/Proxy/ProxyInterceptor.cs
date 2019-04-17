@@ -23,11 +23,8 @@ namespace MbCache.Logic.Proxy
 		
 		public ICachingComponent Component { get; }
 
-		public object DecorateMethodCall(MethodInfo method, Type[] argumentTypes, object[] arguments)
+		public object DecorateMethodCall(MethodInfo method, object[] arguments)
 		{
-			//TODO: emit this code instead!
-			method = createGenericMethodInfoIfNeeded(method, argumentTypes);
-			//
 			if (_configurationForType.CachedMethods.Contains(method, MethodInfoComparer.Instance) && _configurationForType.EnabledCache)
 			{
 				var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, Component, method, arguments);
@@ -38,14 +35,7 @@ namespace MbCache.Logic.Proxy
 
 			return callOriginalMethod(method, arguments);
 		}
-		
-		private static MethodInfo createGenericMethodInfoIfNeeded(MethodInfo orgMethodInfo, Type[] typeArguments)
-		{
-			return orgMethodInfo.ContainsGenericParameters ? 
-				orgMethodInfo.MakeGenericMethod(typeArguments) : 
-				orgMethodInfo;
-		}
-		
+
 		private object callOriginalMethod(MethodInfo method, object[] arguments)
 		{
 			try

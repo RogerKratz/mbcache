@@ -24,7 +24,8 @@ namespace MbCacheTest.Logic
 				.CacheMethod(c => c.CachedMethod())
 				.As<IObjectReturningNewGuids>();
 			
-			var cacheBuilder2 = new CacheBuilder(ProxyFactory)
+			var cacheBuilder2 = new CacheBuilder()
+				.SetProxyFactory(ProxyFactory)
 				.SetCache(CreateCache())
 				.SetCacheKey(CreateCacheKey())
 				.For<ObjectReturningNewGuids>()

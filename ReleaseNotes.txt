@@ -1,8 +1,10 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- vNext
+- Version 3.0-Beta (v 3.0.0.0)
 * .net fw 4.5
 * IProxyFactory changed. Now contains one method only.
+* ProxyFactory removed from CacheBuilder's ctor. Use SetProxyFactory instead.
+* A built in ProxyFactory is shipped. In GA version of 3.0 nuget package, linfu's proxyfactory impl wont be included.
 
 
 - Version 2.18 (v 2.18.0.0), 2019-02-25

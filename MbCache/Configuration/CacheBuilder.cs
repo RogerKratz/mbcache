@@ -5,6 +5,7 @@ using System.Linq;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCache.Logic;
+using MbCache.Logic.Proxy;
 
 namespace MbCache.Configuration
 {
@@ -12,16 +13,16 @@ namespace MbCache.Configuration
 	{
 		private readonly IDictionary<Type, ConfigurationForType> _configuredTypes;
 		private readonly ICollection<ConfigurationForType> _details;
-		private readonly IProxyFactory _proxyFactory;
+		private IProxyFactory _proxyFactory;
 		private ICache _cache;
 		private ICacheKey _cacheKey;
 		private readonly ICollection<IEventListener> _eventListeners;
 
-		public CacheBuilder(IProxyFactory proxyFactory)
+		public CacheBuilder()
 		{
 			_configuredTypes = new Dictionary<Type, ConfigurationForType>();
 			_details = new List<ConfigurationForType>();
-			_proxyFactory = proxyFactory;
+			_proxyFactory = new ProxyFactory();
 			_eventListeners = new List<IEventListener>();
 			_cacheKey = new ToStringCacheKey();
 			_cache = new InMemoryCache(TimeSpan.FromMinutes(20));
@@ -119,6 +120,17 @@ namespace MbCache.Configuration
 		public CacheBuilder AddEventListener(IEventListener eventListener)
 		{
 			_eventListeners.Add(eventListener);
+			return this;
+		}
+		
+		/// <summary>
+		/// Sets the <see cref="IProxyFactory"/> to be used to create the proxies.
+		/// </summary>
+		/// <param name="proxyFactory"></param>
+		/// <returns></returns>
+		public CacheBuilder SetProxyFactory(IProxyFactory proxyFactory)
+		{
+			_proxyFactory = proxyFactory;
 			return this;
 		}
 

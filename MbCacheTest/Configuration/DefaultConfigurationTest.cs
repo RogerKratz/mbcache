@@ -21,7 +21,8 @@ namespace MbCacheTest.Configuration
 		[Test] 
 		public void ShouldCache()
 		{
-			using (var factory = new CacheBuilder(_proxyFactory)
+			using (var factory = new CacheBuilder()
+				.SetProxyFactory(_proxyFactory)
 				.For<ObjectReturningNewGuids>()
 				.CacheMethod(c => c.CachedMethod())
 				.As<IObjectReturningNewGuids>()

@@ -22,9 +22,10 @@ namespace MbCacheTest
 		public void Setup()
 		{
 			Tools.ClearMemoryCache();
-			CacheBuilder = new CacheBuilder(ProxyFactory)
-					.SetCache(CreateCache())
-					.SetCacheKey(CreateCacheKey());
+			CacheBuilder = new CacheBuilder()
+				.SetProxyFactory(ProxyFactory)
+				.SetCache(CreateCache())
+				.SetCacheKey(CreateCacheKey());
 			TestSetup();
 		}
 

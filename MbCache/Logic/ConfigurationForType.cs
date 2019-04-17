@@ -20,21 +20,6 @@ namespace MbCache.Logic
 		public bool CachePerInstance { get; set; }
 		public ICacheKey CacheKey { get; set; }
 		public bool AllowDifferentArgumentsShareSameCacheKey { get; set; }
-		public ICache Cache {get; private set;}
-
-		public void CreateCacheAdapter(ICache defaultCache, ISet<ICache> allCaches)
-		{
-			if (Cache == null)
-			{
-				Cache = defaultCache;
-			}
-
-			allCaches.Add(Cache);
-		}
-
-		public void SetCache(ICache cache)
-		{
-			Cache = cache;
-		}
+		public ICache Cache {get; set;}
 	}
 }

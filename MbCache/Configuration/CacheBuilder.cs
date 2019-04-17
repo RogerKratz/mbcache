@@ -47,7 +47,11 @@ namespace MbCache.Configuration
 				{
 					configurationForType.CacheKey = _cacheKey ?? defaultCacheKey;
 				}
-				configurationForType.CreateCacheAdapter(_cache ?? new InMemoryCache(TimeSpan.FromMinutes(20)), allCaches);
+				if (configurationForType.Cache == null)
+				{
+					configurationForType.Cache = _cache ?? new InMemoryCache(TimeSpan.FromMinutes(20));
+				}
+				allCaches.Add(configurationForType.Cache);
 			}
 			foreach (var cache in allCaches)
 			{

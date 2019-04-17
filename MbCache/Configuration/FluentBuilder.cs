@@ -61,7 +61,7 @@ namespace MbCache.Configuration
 		/// </summary>
 		public FluentBuilder<T> OverrideCache(ICache cache)
 		{
-			_details.SetCache(cache);
+			_details.Cache = cache;
 			return this;
 		}
 		

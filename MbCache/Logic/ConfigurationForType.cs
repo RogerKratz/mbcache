@@ -7,8 +7,6 @@ namespace MbCache.Logic
 {
 	public class ConfigurationForType
 	{
-		private ICache _cache;
-
 		public ConfigurationForType(Type clrType, string typeAsCacheKeyString)
 		{
 			ComponentType = new ComponentType(clrType, typeAsCacheKeyString);
@@ -26,18 +24,17 @@ namespace MbCache.Logic
 
 		public void CreateCacheAdapter(ICache defaultCache, ISet<ICache> allCaches)
 		{
-			if (_cache == null)
+			if (Cache == null)
 			{
-				_cache = defaultCache;
+				Cache = defaultCache;
 			}
 
-			allCaches.Add(_cache);
-			Cache = _cache;
+			allCaches.Add(Cache);
 		}
 
 		public void SetCache(ICache cache)
 		{
-			_cache = cache;
+			Cache = cache;
 		}
 	}
 }

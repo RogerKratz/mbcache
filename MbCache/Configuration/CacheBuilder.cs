@@ -61,7 +61,7 @@ namespace MbCache.Configuration
 		}
 
 		/// <summary>
-		/// Creates a caching component for <see cref="T"/>.
+		/// Creates a caching component.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
@@ -71,7 +71,7 @@ namespace MbCache.Configuration
 		}
 
 		/// <summary>
-		/// Creates a caching component for <see cref="T"/>.
+		/// Creates a caching component with a specific cache key name.
 		/// </summary>
 		/// <param name="typeAsCacheKey">
 		/// Gives a name to this type to be used as cache key.

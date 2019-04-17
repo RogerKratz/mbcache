@@ -23,6 +23,8 @@ namespace MbCache.Configuration
 			_details = new List<ConfigurationForType>();
 			_proxyFactory = proxyFactory;
 			_eventListeners = new List<IEventListener>();
+			_cacheKey = new ToStringCacheKey();
+			_cache = new InMemoryCache(TimeSpan.FromMinutes(20));
 		}
 
 		/// <summary>
@@ -37,7 +39,6 @@ namespace MbCache.Configuration
 
 		private void setCacheAndCacheKeys()
 		{
-			var defaultCacheKey = new ToStringCacheKey();
 			var events = new EventListenersCallback(_eventListeners);
 			var allCaches = new HashSet<ICache>();
 			
@@ -45,11 +46,11 @@ namespace MbCache.Configuration
 			{
 				if (configurationForType.CacheKey == null)
 				{
-					configurationForType.CacheKey = _cacheKey ?? defaultCacheKey;
+					configurationForType.CacheKey = _cacheKey;
 				}
 				if (configurationForType.Cache == null)
 				{
-					configurationForType.Cache = _cache ?? new InMemoryCache(TimeSpan.FromMinutes(20));
+					configurationForType.Cache = _cache;
 				}
 				allCaches.Add(configurationForType.Cache);
 			}

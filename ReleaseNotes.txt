@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- Version 3.0-Beta (v 3.0.0.0)
+- Version 3.0-Beta (v 3.0.0.0), 2019-04-17
 * .net fw 4.5
 * IProxyFactory changed. Now contains one method only.
 * ProxyFactory removed from CacheBuilder's ctor. Use SetProxyFactory instead.

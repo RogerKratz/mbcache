@@ -38,7 +38,7 @@ There's an alternative that solves this for you - MbCache!
 2. Tell MbCache at start up what methods to cache (preferably together with your favorite ioc container).
 
     ```
-    var builder = new CacheBuilder(new LinFuProxyFactory());
+    var builder = new CacheBuilder();
     builder.For<Calculator>()
       .CacheMethod(c => c.Calculate())
       .As<ICalculator>();

@@ -12,16 +12,11 @@
 		<tags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop, library, framework</tags>
 		<projectUrl>https://github.com/RogerKratz/mbcache</projectUrl>
 		<license type="expression">MIT</license>
-		<dependencies>
-			<dependency id="LinFu.DynamicProxy.OfficialRelease" version="1.0.5" />
-		</dependencies>
 	</metadata>
 	<files>
 		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.dll" target="lib\net40" />
 		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.xml" target="lib\net40" />
-		<file src="..\MbCache.ProxyImpl.LinFu\bin\Release\MbCache.ProxyImpl.LinFu.dll" target="lib\net40" />
 		<file src="..\MbCache\**\*.cs" target="src"/>
-		<file src="..\MbCache.ProxyImpl.LinFu\*.cs" target="src"/>
 		<file src="..\releasenotes.txt" target="readme.txt"/>
 	</files>
 </package>

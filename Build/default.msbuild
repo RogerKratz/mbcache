@@ -25,15 +25,9 @@
 			ReplacementText="$(Version)"/>
 	</Target>
 	
-	<Target Name="BuildNugetPackage" DependsOnTargets="RunBuild;MakeBuildDirectory;CopyNuget">
+	<Target Name="BuildNugetPackage" DependsOnTargets="MakeBuildDirectory;CopyNuget">
 		<Exec Command="$(NugetFolder)\NuGet pack MbCache.nuspec -OutputDirectory $(DeployFolderNuget) -symbols -Prop Configuration=Release -Version $(NugetVersion)"
 			  WorkingDirectory="$(MSBuildProjectDirectory)"/>
-	</Target>
-	
-	<Target Name="RunBuild">
-		<MSBuild Projects="$(SourceDir)\MbCache.ProxyImpl.LinFu\MbCache.ProxyImpl.LinFu.csproj" Targets="Clean;Build" >
-			<Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
-		</MSBuild>
 	</Target>
 	
 	<Target Name="CopyNuget">

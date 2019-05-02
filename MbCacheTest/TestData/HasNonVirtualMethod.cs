@@ -13,5 +13,16 @@ namespace MbCacheTest.TestData
 		{
 			return Guid.NewGuid();
 		}
+
+		private int _internalState;
+		public int NonVirtualWithInternalState()
+		{
+			return _internalState;
+		}
+
+		public virtual void SetInternalState(int value)
+		{
+			_internalState = value;
+		}
 	}
 }

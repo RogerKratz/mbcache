@@ -1,7 +1,7 @@
 --- RELEASE NOTES, Breaking changes ---
 
 
-- vNext
+- Version 3.0 (v 3.0.1.0), 2019-05-02
 * Linfu nor Linfu's proxyfactory implementation no longer shipped with nuget package
 
 

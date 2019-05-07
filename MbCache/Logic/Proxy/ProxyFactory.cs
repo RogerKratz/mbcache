@@ -107,9 +107,7 @@ namespace MbCache.Logic.Proxy
 			{
 				if(methodInfo.DeclaringType == typeof(object))
 					continue;
-				if(!methodInfo.IsVirtual)
-					continue;
-				
+
 				var methodBuilder = defineMethod(typeBuilder, methodInfo);
 
 				var parameters = methodInfo.GetParameters();

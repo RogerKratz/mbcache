@@ -2,7 +2,7 @@
 
 namespace MbCacheTest.TestData
 {
-	public class HasNonVirtualMethod
+	public class HasNonVirtualMethod : IHasNonVirtualMethod
 	{
 		public Guid NonVirtual()
 		{
@@ -13,16 +13,10 @@ namespace MbCacheTest.TestData
 		{
 			return Guid.NewGuid();
 		}
+	}
 
-		private int _internalState;
-		public int NonVirtualWithInternalState()
-		{
-			return _internalState;
-		}
-
-		public virtual void SetInternalState(int value)
-		{
-			_internalState = value;
-		}
+	public interface IHasNonVirtualMethod
+	{
+		Guid Virtual();
 	}
 }

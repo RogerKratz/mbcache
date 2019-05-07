@@ -7,14 +7,14 @@ namespace MbCache.Logic
 	{
 		public static void Validate(ConfigurationForType configurationForType)
 		{
-			checkCachedMethodsAreVirtual(configurationForType);
+			checkAllMethodsAreVirtual(configurationForType);
 		}
 
-		private static void checkCachedMethodsAreVirtual(ConfigurationForType configurationForType)
+		private static void checkAllMethodsAreVirtual(ConfigurationForType configurationForType)
 		{
-			foreach (var methodInfo in configurationForType.CachedMethods)
+			foreach (var memberInfo in configurationForType.ComponentType.ConcreteType.GetMembers())
 			{
-				checkMethod(configurationForType.ComponentType.ConcreteType, methodInfo);
+				checkMethod(configurationForType.ComponentType.ConcreteType, memberInfo);
 			}
 		}
 
@@ -32,7 +32,7 @@ namespace MbCache.Logic
 			if (!isProxeable(method))
 			{
 				throw new InvalidOperationException(
-					$"Cached member {method.Name} on type {type} is not virtual. Either make this method virtual or make component from its interface instead (.As<ComponentInterface>()).");
+					$"{method.Name} on type {type} is not virtual. Either make this method virtual or make component from its interface instead (.As<ComponentInterface>()).");
 			}
 		}
 

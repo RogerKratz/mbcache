@@ -1,5 +1,4 @@
 ﻿using System;
-using MbCache.ProxyImpl.Castle;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -13,51 +12,32 @@ namespace MbCacheTest.Logic.ClassProxy
 		}
 
 		[Test]
-		public void CachedMethodNeedToBeVirtual_AsImplemented()
-		{
-			var fluentBuilder = CacheBuilder
-				.For<HasNonVirtualMethod>()
-				.CacheMethod(m => m.NonVirtual());
-			Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());
-		}
-		
-		[Test]
-		public void CachedMethodNeedToBeVirtual_As()
-		{
-			var fluentBuilder = CacheBuilder
-				.For<HasNonVirtualMethod>()
-				.CacheMethod(m => m.NonVirtual());
-			Assert.Throws<InvalidOperationException>(() => fluentBuilder.As<HasNonVirtualMethod>());
-		}
-
-
-		[Test]
-		public void TypeWithNonVirtualMethodShouldWork()
+		public void ShouldWorkIfComponentIsInterface()
 		{
 			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
 				.CacheMethod(m => m.Virtual())
-				.AsImplemented();
+				.As<IHasNonVirtualMethod>();
 
-			var instance = fluentBuilder.BuildFactory().Create<HasNonVirtualMethod>();
+			var instance = fluentBuilder.BuildFactory().Create<IHasNonVirtualMethod>();
 
 			instance.Virtual().Should().Be.EqualTo(instance.Virtual());
-			instance.NonVirtual().Should().Not.Be.EqualTo(instance.NonVirtual());
 		}
 
 		[Test]
-		[Ignore("Needs to be fixed (or not allowing non virtual methods on class proxies at all?)")]
-		public void NonVirtualMethodWithStateShouldWork()
+		public void ShouldNotWorkIfComponentIsClass()
 		{
 			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
-				.CacheMethod(m => m.Virtual())
-				.AsImplemented();
-
-			const int value = 17;
-			var instance = fluentBuilder.BuildFactory().Create<HasNonVirtualMethod>();
-			instance.SetInternalState(value);
-			instance.NonVirtualWithInternalState().Should().Be.EqualTo(value);
+				.CacheMethod(m => m.Virtual());
+			Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());
+			
+			
+			//the reason we prevent this all together is because issue #35 doesn't work, eg these asserts...
+			// const int value = 17;
+			// var instance = fluentBuilder.BuildFactory().Create<HasNonVirtualMethod>();
+			// instance.SetInternalState(value);
+			// instance.NonVirtualWithInternalState().Should().Be.EqualTo(value);
 		}
 	}
 }

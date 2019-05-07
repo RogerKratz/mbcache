@@ -1,6 +1,10 @@
 --- RELEASE NOTES, Breaking changes ---
 
 
+- vNext
+* If class components are used, _all_ methods (also non cached) needs to be virtual
+
+
 - Version 3.0 (v 3.0.1.0), 2019-05-02
 * Linfu nor Linfu's proxyfactory implementation no longer shipped with nuget package
 

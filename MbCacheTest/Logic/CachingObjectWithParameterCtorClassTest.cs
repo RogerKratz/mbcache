@@ -1,6 +1,5 @@
 using System;
 using MbCache.Core;
-using MbCache.ProxyImpl.Castle;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -17,9 +16,6 @@ namespace MbCacheTest.Logic
 
 		protected override void TestSetup()
 		{
-			if(ProxyFactory is CastleProxyFactory)
-				Assert.Ignore("Wrapping class proxies with parameters is not supported in current MbCache.ProxyImpl.Castle implementation.");
-		
 			CacheBuilder
 				.For<ObjectWithCtorParametersNoInterface>()
 				.CacheMethod(c => c.CachedMethod())

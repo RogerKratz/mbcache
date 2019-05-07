@@ -46,11 +46,9 @@ namespace MbCacheTest.Logic.ClassProxy
 		}
 
 		[Test]
+		[Ignore("Needs to be fixed (or not allowing non virtual methods on class proxies at all?)")]
 		public void NonVirtualMethodWithStateShouldWork()
 		{
-			if(!(ProxyFactory is CastleProxyFactory))
-				Assert.Ignore("Needs to be fixed (or not allowing non virtual methods on class proxies at all?)");
-			
 			var fluentBuilder = CacheBuilder
 				.For<HasNonVirtualMethod>()
 				.CacheMethod(m => m.Virtual())

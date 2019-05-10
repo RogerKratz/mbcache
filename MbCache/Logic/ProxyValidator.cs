@@ -29,14 +29,14 @@ namespace MbCache.Logic
 
 		private static void checkMethodIsVirtual(Type type, MethodInfo method)
 		{
-			if (!isProxeable(method))
+			if (!canBeProxied(method))
 			{
 				throw new InvalidOperationException(
 					$"{method.Name} on type {type} is not virtual. Either make this method virtual or make component from its interface instead (.As<ComponentInterface>()).");
 			}
 		}
 
-		private static bool isProxeable(MethodInfo method)
+		private static bool canBeProxied(MethodInfo method)
 		{
 			// In NET if IsVirtual is false or IsFinal is true, then the method cannot be overridden.
 			return !(method.DeclaringType != typeof(object) && !isDisposeMethod(method)

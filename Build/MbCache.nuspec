@@ -6,7 +6,7 @@
 		<authors>Roger Kratz</authors>
 		<summary>Cache method results.</summary>
 		<description>
-			MbCache, or Method based Cache, is used to define certain methods to be cached in a centralized way, independed on the underlying caching framework(s).
+			MbCache, or Method based Cache, is used to define certain methods to be cached in a centralized way, independent on the underlying caching framework(s).
 		</description>
 		<language>en-US</language>
 		<tags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop, library, framework</tags>

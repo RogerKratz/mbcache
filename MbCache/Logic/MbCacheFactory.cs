@@ -124,7 +124,7 @@ namespace MbCache.Logic
 			return comp;
 		}
 		
-		//extract to seperate type
+		//extract to separate type
 		private static object createTarget(Type type, object[] ctorParameters)
 		{
 			try

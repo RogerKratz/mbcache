@@ -15,8 +15,8 @@ namespace MbCache.Configuration
 	/// Will build cache key in format
 	/// Type
 	/// Type|Component
-	/// Type|Component|Method|ParamType1|ParamType2
-	/// Type|Component|Method|ParamType1|ParamType2|$ParamValue1$ParamValue2
+	/// Type|Component|Method$ParamType1$ParamType2
+	/// Type|Component|Method$ParamType1$ParamType2|$ParamValue1$ParamValue2
 	/// </summary>
 	public abstract class CacheKeyBase : ICacheKey
 	{

@@ -177,7 +177,7 @@ namespace MbCache.Logic.Proxy
 				IL.Emit(OpCodes.Ldfld, proxyInterceptorField);
 				IL.Emit(OpCodes.Ldloc_0, localMethodInfo);
 				IL.Emit(OpCodes.Ldloc_1, localParameters);
-				IL.Emit(OpCodes.Callvirt, typeof(ProxyInterceptor).GetMethod(nameof(ProxyInterceptor.DecorateMethodCall)));
+				IL.Emit(OpCodes.Call, typeof(ProxyInterceptor).GetMethod(nameof(ProxyInterceptor.DecorateMethodCall)));
 				if (methodBuilder.ReturnType == typeof(void))
 				{
 					IL.Emit(OpCodes.Pop);

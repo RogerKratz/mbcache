@@ -5,7 +5,7 @@ using MbCache.Core;
 
 namespace MbCache.Logic.Proxy
 {
-	public class ProxyInterceptor
+	public sealed class ProxyInterceptor
 	{
 		private readonly object _target;
 		private readonly ConfigurationForType _configurationForType;

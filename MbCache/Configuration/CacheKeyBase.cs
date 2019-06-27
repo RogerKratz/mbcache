@@ -36,12 +36,20 @@ namespace MbCache.Configuration
 
 		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
 		{
-			return stringBuilderForMethodBody(type, component, method).ToString();
+			var ret = new StringBuilder(RemoveKey(type, component));
+			ret.Append(separator);
+			ret.Append(method.Name);
+			foreach (var parameter in method.GetParameters())
+			{
+				ret.Append(separatorForParameters);
+				ret.Append(parameter.ParameterType);
+			}
+			return ret.ToString();
 		}
 
 		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
 		{
-			var ret = stringBuilderForMethodBody(type, component, method);
+			var ret = new StringBuilder(RemoveKey(type, component, method));
 			ret.Append(separator);
 			foreach (var parameter in parameters)
 			{
@@ -54,19 +62,6 @@ namespace MbCache.Configuration
 			}
 
 			return ret.ToString();
-		}
-
-		private StringBuilder stringBuilderForMethodBody(ComponentType type, ICachingComponent component, MethodInfo method)
-		{
-			var ret = new StringBuilder(RemoveKey(type, component));
-			ret.Append(separator);
-			ret.Append(method.Name);
-			foreach (var parameter in method.GetParameters())
-			{
-				ret.Append(separatorForParameters);
-				ret.Append(parameter.ParameterType);
-			}
-			return ret;
 		}
 
 		public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)

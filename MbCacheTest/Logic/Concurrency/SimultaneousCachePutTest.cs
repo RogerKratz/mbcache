@@ -22,7 +22,7 @@ namespace MbCacheTest.Logic.Concurrency
 
 			var factory = CacheBuilder.BuildFactory();
 
-			10.Times(() =>
+			1000.Times(() =>
 			{
 				var instance = factory.Create<IObjectWithCallCounter>();
 

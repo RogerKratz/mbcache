@@ -27,7 +27,6 @@ namespace MbCacheTest.Logic.Performance
 		}
 		
 		[Test]
-		[Ignore("Fix by using smarter/slimmer lock in InMemoryCache")]
 		public void MeasureCacheMissPerf()
 		{
 			var tasks = new List<Task>();

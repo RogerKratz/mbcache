@@ -13,19 +13,25 @@ namespace MbCache.Configuration
 		private readonly TimeSpan _timeout;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
-		private static readonly object lockObject = new object();
+		private static readonly object globalLockObject = new object();
 		private EventListenersCallback _eventListenersCallback;
+		private readonly LockObjectGenerator _lockObjectGenerator;
 		private const string mainCacheKey = "MainMbCacheKey";
 
 		public InMemoryCache(TimeSpan timeout)
 		{
 			_timeout = timeout;
+			_lockObjectGenerator = new LockObjectGenerator(1000);
 		}
 
 		public void Initialize(EventListenersCallback eventListenersCallback)
 		{
 			_eventListenersCallback = eventListenersCallback;
 		}
+		
+		
+		[ThreadStatic]
+		private static bool nestedCall;
 
 		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
 		{
@@ -36,17 +42,28 @@ namespace MbCache.Configuration
 				return cachedItem.CachedValue;
 			}
 
-			lock (lockObject)
+			var lockToUse = nestedCall ? globalLockObject : _lockObjectGenerator.GetFor(keyAndItsDependingKeys);
+			try
 			{
-				var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
-				if (cachedItem2 != null)
+				nestedCall = true;
+
+				lock (lockToUse)
 				{
-					_eventListenersCallback.OnCacheHit(cachedItem2);
-					return cachedItem2.CachedValue;
+					var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
+					if (cachedItem2 != null)
+					{
+						_eventListenersCallback.OnCacheHit(cachedItem2);
+						return cachedItem2.CachedValue;
+					}
+
+					var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
+					_eventListenersCallback.OnCacheMiss(addedValue);
+					return addedValue.CachedValue;
 				}
-				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
-				_eventListenersCallback.OnCacheMiss(addedValue);
-				return addedValue.CachedValue;
+			}
+			finally
+			{
+				nestedCall = false;
 			}
 		}
 

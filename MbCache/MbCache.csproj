@@ -69,7 +69,6 @@
     <Compile Include="Configuration\InMemoryCache.cs" />
     <Compile Include="Configuration\CacheBuilder.cs" />
     <Compile Include="Configuration\KeyAndItsDependingKeys.cs" />
-    <Compile Include="Configuration\LockObjectGenerator.cs" />
     <Compile Include="Core\CachedItem.cs" />
     <Compile Include="Core\Events\EventListenersCallback.cs" />
     <Compile Include="Configuration\FluentBuilder.cs" />

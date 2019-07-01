@@ -13,25 +13,19 @@ namespace MbCache.Configuration
 		private readonly TimeSpan _timeout;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
-		private static readonly object globalLockObject = new object();
+		private static readonly object lockObject = new object();
 		private EventListenersCallback _eventListenersCallback;
-		private readonly LockObjectGenerator _lockObjectGenerator;
 		private const string mainCacheKey = "MainMbCacheKey";
 
 		public InMemoryCache(TimeSpan timeout)
 		{
 			_timeout = timeout;
-			_lockObjectGenerator = new LockObjectGenerator(1000);
 		}
 
 		public void Initialize(EventListenersCallback eventListenersCallback)
 		{
 			_eventListenersCallback = eventListenersCallback;
 		}
-		
-		
-		[ThreadStatic]
-		private static bool nestedCall;
 
 		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
 		{
@@ -42,28 +36,17 @@ namespace MbCache.Configuration
 				return cachedItem.CachedValue;
 			}
 
-			var lockToUse = nestedCall ? globalLockObject : _lockObjectGenerator.GetFor(keyAndItsDependingKeys);
-			try
+			lock (lockObject)
 			{
-				nestedCall = true;
-
-				lock (lockToUse)
+				var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
+				if (cachedItem2 != null)
 				{
-					var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
-					if (cachedItem2 != null)
-					{
-						_eventListenersCallback.OnCacheHit(cachedItem2);
-						return cachedItem2.CachedValue;
-					}
-
-					var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
-					_eventListenersCallback.OnCacheMiss(addedValue);
-					return addedValue.CachedValue;
+					_eventListenersCallback.OnCacheHit(cachedItem2);
+					return cachedItem2.CachedValue;
 				}
-			}
-			finally
-			{
-				nestedCall = false;
+				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
+				_eventListenersCallback.OnCacheMiss(addedValue);
+				return addedValue.CachedValue;
 			}
 		}
 

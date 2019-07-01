@@ -52,7 +52,10 @@ namespace MbCache.Configuration
 
 		public void Delete(string cacheKey)
 		{
-			cache.Remove(cacheKey);
+			lock (lockObject)
+			{
+				cache.Remove(cacheKey);
+			}
 		}
 
 		public void Clear()

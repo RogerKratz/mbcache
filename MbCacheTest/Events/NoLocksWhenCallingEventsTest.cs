@@ -51,29 +51,6 @@ namespace MbCacheTest.Events
 				Assert.Fail("Seems to be calling event listener from within lock");
 		}
 
-		[Test]
-		[Ignore("Need to get rid of lock InMemoryCache.Delete to fix this")]
-		public void ShouldCallRemoveOutsideLock()
-		{
-			if(Environment.ProcessorCount < 4)
-				Assert.Ignore("Not reliable if too few processors.");
-			var instance = factory.Create<IObjectWithParametersOnCachedMethod>();
-			var tasks = new List<Task>();
-
-			var stopwatch = Stopwatch.StartNew();
-			10.Times(x =>
-			{
-				tasks.Add(Task.Factory.StartNew(() =>
-				{
-					instance.CachedMethod(x);
-					factory.Invalidate();
-				}));
-			});
-			Task.WaitAll(tasks.ToArray());
-			if (stopwatch.Elapsed > TimeSpan.FromMilliseconds(800))
-				Assert.Fail("Seems to be calling event listener from within lock");
-		}
-		
 		private class slowEventListener : IEventListener
 		{
 			public void OnCacheHit(CachedItem cachedItem)
@@ -83,7 +60,7 @@ namespace MbCacheTest.Events
 
 			public void OnCacheRemoval(CachedItem cachedItem)
 			{
-				Thread.Sleep(100);
+				throw new NotImplementedException();
 			}
 
 			public void OnCacheMiss(CachedItem cachedItem)

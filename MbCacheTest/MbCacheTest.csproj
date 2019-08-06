@@ -157,10 +157,6 @@
     <Compile Include="TestData\ObjectWithParametersOnCachedMethod.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MbCache.ProxyImpl.Castle\MbCache.ProxyImpl.Castle.csproj">
-      <Project>{DFF76416-A68E-4A11-A46E-2C1B6C307F58}</Project>
-      <Name>MbCache.ProxyImpl.Castle</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MbCache.ProxyImpl.LinFu\MbCache.ProxyImpl.LinFu.csproj">
       <Project>{58384CBB-86FC-4A8D-B47C-D7949C1CC31B}</Project>
       <Name>MbCache.ProxyImpl.LinFu</Name>

@@ -6,7 +6,6 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Configuration
 {
-	[TestFixture("MbCache.ProxyImpl.Castle.CastleProxyFactory, MbCache.ProxyImpl.Castle")]
 	[TestFixture("MbCache.ProxyImpl.LinFu.LinFuProxyFactory, MbCache.ProxyImpl.LinFu")]
 	public class DefaultConfigurationTest
 	{

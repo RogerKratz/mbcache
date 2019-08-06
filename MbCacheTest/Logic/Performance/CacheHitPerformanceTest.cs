@@ -39,7 +39,6 @@ namespace MbCacheTest.Logic.Performance
 
 			Console.WriteLine(stopwatch.Elapsed);
 			//On my computer 
-			//~0.4s, castle
 			//~0.5s, linfu
 		}
 	}

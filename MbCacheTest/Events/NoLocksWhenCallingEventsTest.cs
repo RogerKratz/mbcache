@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using MbCache.Core;
+using MbCache.Core.Events;
+using MbCacheTest.TestData;
+using NUnit.Framework;
+
+namespace MbCacheTest.Events
+{
+	public class NoLocksWhenCallingEventsTest : TestCase
+	{
+		private IMbCacheFactory factory;
+		
+		public NoLocksWhenCallingEventsTest(Type proxyType) : base(proxyType)
+		{
+		}
+		
+		protected override void TestSetup()
+		{
+			CacheBuilder
+				.For<ObjectWithParametersOnCachedMethod>()
+				.CacheMethod(c => c.CachedMethod(null))
+				.As<IObjectWithParametersOnCachedMethod>()
+				.AddEventListener(new slowEventListener());
+
+			factory = CacheBuilder.BuildFactory();
+		}
+
+		[Test]
+		public void ShouldCallHitAndMissOutsideLock()
+		{
+			if(Environment.ProcessorCount < 4)
+				Assert.Ignore("Not reliable if too few processors.");
+			var instance = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var tasks = new List<Task>();
+
+			var stopwatch = Stopwatch.StartNew();
+			10.Times(x =>
+			{
+				tasks.Add(Task.Factory.StartNew(() =>
+				{
+					instance.CachedMethod(x);
+				}));
+			});
+			Task.WaitAll(tasks.ToArray());
+			Console.WriteLine(stopwatch.Elapsed);
+			if (stopwatch.Elapsed > TimeSpan.FromMilliseconds(500))
+				Assert.Fail("Seems to be calling event listener from within lock");
+		}
+
+		[Test]
+		[Ignore("Need to get rid of lock InMemoryCache.Delete to fix this")]
+		public void ShouldCallRemoveOutsideLock()
+		{
+			if(Environment.ProcessorCount < 4)
+				Assert.Ignore("Not reliable if too few processors.");
+			var instance = factory.Create<IObjectWithParametersOnCachedMethod>();
+			var tasks = new List<Task>();
+
+			var stopwatch = Stopwatch.StartNew();
+			10.Times(x =>
+			{
+				tasks.Add(Task.Factory.StartNew(() =>
+				{
+					instance.CachedMethod(x);
+					factory.Invalidate();
+				}));
+			});
+			Task.WaitAll(tasks.ToArray());
+			if (stopwatch.Elapsed > TimeSpan.FromMilliseconds(800))
+				Assert.Fail("Seems to be calling event listener from within lock");
+		}
+		
+		private class slowEventListener : IEventListener
+		{
+			public void OnCacheHit(CachedItem cachedItem)
+			{
+				Thread.Sleep(100);
+			}
+
+			public void OnCacheRemoval(CachedItem cachedItem)
+			{
+				Thread.Sleep(100);
+			}
+
+			public void OnCacheMiss(CachedItem cachedItem)
+			{
+				Thread.Sleep(100);
+			}
+		}
+	}
+}

@@ -72,6 +72,7 @@
     <Compile Include="Configuration\DefaultConfigurationTest.cs" />
     <Compile Include="Configuration\UnknownComponentTest.cs" />
     <Compile Include="EventListenerForTest.cs" />
+    <Compile Include="Events\NoLocksWhenCallingEventsTest.cs" />
     <Compile Include="Events\Statistic\ExplicitDeleteTest.cs" />
     <Compile Include="Events\Statistic\DeleteTestBase.cs" />
     <Compile Include="Events\Statistic\GetTest.cs" />

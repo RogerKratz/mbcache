@@ -36,18 +36,30 @@ namespace MbCache.Configuration
 				return cachedItem.CachedValue;
 			}
 
+			Func<object> actionOutsideLock;
 			lock (lockObject)
 			{
 				var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
-				if (cachedItem2 != null)
+				if (cachedItem2 == null)
 				{
-					_eventListenersCallback.OnCacheHit(cachedItem2);
-					return cachedItem2.CachedValue;
+					var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
+					actionOutsideLock = () =>
+					{
+						_eventListenersCallback.OnCacheMiss(addedValue);
+						return addedValue.CachedValue;
+					};
 				}
-				var addedValue = executeAndPutInCache(keyAndItsDependingKeys, cachedMethod, originalMethod);
-				_eventListenersCallback.OnCacheMiss(addedValue);
-				return addedValue.CachedValue;
+				else
+				{
+					actionOutsideLock = () =>
+					{
+						_eventListenersCallback.OnCacheHit(cachedItem2);
+						return cachedItem2.CachedValue;
+					};
+				}
 			}
+
+			return actionOutsideLock();
 		}
 
 		public void Delete(string cacheKey)

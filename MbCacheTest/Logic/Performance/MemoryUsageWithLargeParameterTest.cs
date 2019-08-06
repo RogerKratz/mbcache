@@ -32,7 +32,7 @@ namespace MbCacheTest.Logic.Performance
 				component.CachedMethod(new parameter());
 			}
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
-			var mbUsage = memUsage / 1000 / 1000;
+			var mbUsage = memUsage / 1024 / 1024;
 			Console.WriteLine(mbUsage + "mb");
 			mbUsage.Should().Be.LessThan(21);
 		}

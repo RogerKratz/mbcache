@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace MbCache.Configuration
 		private readonly TimeSpan _timeout;
 		private static readonly MemoryCache cache = MemoryCache.Default;
 		private static readonly object dependencyValue = new object();
-		private static readonly object lockObject = new object();
+		private readonly ConcurrentDictionary<string, object> lockObjects = new ConcurrentDictionary<string, object>();
 		private EventListenersCallback _eventListenersCallback;
 		private const string mainCacheKey = "MainMbCacheKey";
 
@@ -36,8 +37,11 @@ namespace MbCache.Configuration
 				return cachedItem.CachedValue;
 			}
 
+			//this may result in two different locks for same key if old entry was removed at this time.
+			//let's see if it's a real problem...
+			var locker = lockObjects.GetOrAdd(keyAndItsDependingKeys.Key, key => new object());
 			Func<object> actionOutsideLock;
-			lock (lockObject)
+			lock (locker)
 			{
 				var cachedItem2 = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
 				if (cachedItem2 == null)
@@ -64,10 +68,7 @@ namespace MbCache.Configuration
 
 		public void Delete(string cacheKey)
 		{
-			lock (lockObject)
-			{
-				cache.Remove(cacheKey);
-			}
+			cache.Remove(cacheKey);
 		}
 
 		public void Clear()
@@ -87,7 +88,11 @@ namespace MbCache.Configuration
 			var policy = new CacheItemPolicy
 			{
 				AbsoluteExpiration = DateTimeOffset.UtcNow.Add(_timeout),
-				RemovedCallback = arguments => _eventListenersCallback.OnCacheRemoval(cachedItem)
+				RemovedCallback = arguments =>
+				{
+					_eventListenersCallback.OnCacheRemoval(cachedItem);
+					lockObjects.TryRemove(key, out _);
+				}
 			};
 			policy.ChangeMonitors.Add(cache.CreateCacheEntryChangeMonitor(dependedKeys));
 			cache.Set(key, cachedItem, policy);

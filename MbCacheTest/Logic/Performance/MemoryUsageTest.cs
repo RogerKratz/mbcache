@@ -37,7 +37,7 @@ namespace MbCacheTest.Logic.Performance
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
 			var mbUsage = memUsage / 1024 / 1024;
 			Console.WriteLine(mbUsage + "mb");
-			mbUsage.Should().Be.LessThan(20);
+			mbUsage.Should().Be.LessThan(21);
 		}
 
 		[Test]

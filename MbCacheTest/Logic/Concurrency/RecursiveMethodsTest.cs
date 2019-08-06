@@ -38,7 +38,8 @@ namespace MbCacheTest.Logic.Concurrency
 			{
 				tasks.Add(Task.Factory.StartNew(() =>
 				{
-					instance1.Ref(x);
+					instance1.Ref(x)
+						.Should().Be.EqualTo(x);
 				}));
 			});
 			

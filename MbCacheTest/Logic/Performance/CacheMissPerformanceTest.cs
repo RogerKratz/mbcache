@@ -29,6 +29,8 @@ namespace MbCacheTest.Logic.Performance
 		[Test]
 		public void MeasureCacheMissPerf()
 		{
+			if(Environment.ProcessorCount < 3)
+				Assert.Ignore("Not enough power...");
 			var tasks = new List<Task>();
 			10.Times(i =>
 			{
@@ -42,7 +44,8 @@ namespace MbCacheTest.Logic.Performance
 
 			var timeTaken = stopwatch.Elapsed;
 			Console.WriteLine(timeTaken);
-			timeTaken.TotalMilliseconds.Should().Be.LessThan(100 * 3);
+			//If global lock, approx 10 * 0.1 => 1s
+			timeTaken.TotalMilliseconds.Should().Be.LessThan(700);
 		}
 	}
 }

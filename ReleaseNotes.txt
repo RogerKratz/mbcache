@@ -1,7 +1,7 @@
 --- RELEASE NOTES, Breaking changes ---
 
 
-- vNext
+- Version 3.1 (v 3.1.0.0), 2019-08-07
 * If class components are used, _all_ methods (also non cached) needs to be virtual
 
 

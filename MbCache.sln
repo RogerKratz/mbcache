@@ -17,18 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCacheTest", "MbCacheTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCache.ProxyImpl.LinFu", "MbCache.ProxyImpl.LinFu\MbCache.ProxyImpl.LinFu.csproj", "{58384CBB-86FC-4A8D-B47C-D7949C1CC31B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D9CD0D47-37CC-4E08-938D-E794C9A0F2CA}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3376973C-B821-4AF6-B093-FCE8F670004F}"
 	ProjectSection(SolutionItems) = preProject
 		Build\default.msbuild = Build\default.msbuild
-		Build\MbCache.nuspec = Build\MbCache.nuspec
 	EndProjectSection
 EndProject
 Global

@@ -27,4 +27,4 @@ obj/
 *resharper*
 _ReSharper*/
 packages/
-Build/output
+Build/deploy

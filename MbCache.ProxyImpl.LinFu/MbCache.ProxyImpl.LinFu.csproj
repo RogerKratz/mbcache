@@ -9,6 +9,5 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy $(TargetPath) $(ProjectDir)\..\mbcachetest\$(OutDir) /y" />
-    <Exec Command="xcopy $(ProjectDir)\..\packages\LinFu.DynamicProxy.OfficialRelease.1.0.5\lib\net\linfu.*  $(ProjectDir)\..\mbcachetest\$(OutDir) /y" />
   </Target>
 </Project>

@@ -6,7 +6,7 @@
     <PackageProjectUrl>https://github.com/RogerKratz/mbcache</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageTags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop</PackageTags>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyOriginatorKeyFile>mbcacheKey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>

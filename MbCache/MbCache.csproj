@@ -4,7 +4,7 @@
     <Authors>Roger Kratz</Authors>
     <Description>Cache method results</Description>
     <PackageProjectUrl>https://github.com/RogerKratz/mbcache</PackageProjectUrl>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop</PackageTags>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyOriginatorKeyFile>mbcacheKey.snk</AssemblyOriginatorKeyFile>

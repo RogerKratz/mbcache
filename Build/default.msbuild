@@ -2,23 +2,13 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<SourceDir>$(MSBuildProjectDirectory)\..</SourceDir>
-		<NugetFolder>$([System.IO.Path]::Combine($(SourceDir), ".nuget"))</NugetFolder>
 		<DeployFolder>$(MSBuildProjectDirectory)\Deploy</DeployFolder>
 	</PropertyGroup>
 	
-	<Target Name="MakeRelease" DependsOnTargets="BuildNugetPackage">
-	</Target>
-		
-	<Target Name="BuildNugetPackage" DependsOnTargets="MakeBuildDirectory;CopyNuget">
+	<Target Name="MakeRelease" DependsOnTargets="MakeBuildDirectory">
 		<Exec Command="dotnet pack $(SourceDir)/MbCache/MbCache.csproj -c Release -o $(DeployFolder) /p:Version=$(Version)" />
 	</Target>
-	
-	<Target Name="CopyNuget">
-		<!-- copying nuget.exe to deplayfolder - to make easier manual push to nuget server -->
-		<Copy SourceFiles="$(NugetFolder)\NuGet.exe"
-				DestinationFolder="$(DeployFolder)"/>
-	</Target>
-	
+		
 	<Target Name="MakeBuildDirectory">
 		<RemoveDir Directories="$(DeployFolder)" />
 		<MakeDir Directories="$(DeployFolder)" />

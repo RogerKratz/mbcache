@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- Version 4.0.0, XXXXX
+* dotnetcore support (netstandard 2.0)
+* Minimum .net fw 4.61
+
 
 - Version 3.1 (v 3.1.0.0), 2019-08-07
 * If class components are used, _all_ methods (also non cached) needs to be virtual

@@ -6,22 +6,12 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Configuration
 {
-	[TestFixture("MbCache.ProxyImpl.LinFu.LinFuProxyFactory, MbCache.ProxyImpl.LinFu")]
 	public class DefaultConfigurationTest
 	{
-		private readonly IProxyFactory _proxyFactory;
-
-		public DefaultConfigurationTest(string proxyTypeString)
-		{
-			var proxyType = Type.GetType(proxyTypeString, true);
-			_proxyFactory = (IProxyFactory)Activator.CreateInstance(proxyType);
-		}
-
 		[Test] 
 		public void ShouldCache()
 		{
 			using (var factory = new CacheBuilder()
-				.SetProxyFactory(_proxyFactory)
 				.For<ObjectReturningNewGuids>()
 				.CacheMethod(c => c.CachedMethod())
 				.As<IObjectReturningNewGuids>()

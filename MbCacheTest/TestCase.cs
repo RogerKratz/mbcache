@@ -1,13 +1,11 @@
 ﻿using System;
 using MbCache.Configuration;
 using MbCache.Logic.Proxy;
-using MbCache.ProxyImpl.LinFu;
 using MbCacheTest.Caches;
 using NUnit.Framework;
 
 namespace MbCacheTest
 {
-	[TestFixture(typeof(LinFuProxyFactory))]
 	[TestFixture(typeof(ProxyFactory))]
 	public abstract class TestCase
 	{

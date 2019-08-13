@@ -1,6 +1,6 @@
 --- RELEASE NOTES, Breaking changes ---
 
-- Version 4.0.0, XXXXX
+- Version 4.0.0, 2019-08-13
 * dotnetcore support (netstandard 2.0)
 * Minimum .net fw 4.61
 

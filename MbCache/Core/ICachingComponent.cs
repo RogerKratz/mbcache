@@ -15,7 +15,7 @@ namespace MbCache.Core
 		string UniqueId { get; }
 
 		/// <summary>
-		/// Invalidates cache entries for this component.
+		/// Invalidates all cache entries for this component.
 		/// </summary>
 		void Invalidate();
 

@@ -36,7 +36,6 @@ namespace MbCacheTest.Logic.Performance
 			}
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
 			var mbUsage = memUsage / 1024 / 1024;
-			Console.WriteLine(mbUsage + "mb");
 			mbUsage.Should().Be.LessThan(21);
 		}
 
@@ -53,8 +52,7 @@ namespace MbCacheTest.Logic.Performance
 			factory.Invalidate(component);
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
 			var mbUsage = memUsage / 1024 / 1024;
-			Console.WriteLine(mbUsage + "mb");
-			mbUsage.Should().Be.LessThan(2);
+			mbUsage.Should().Be.LessThan(3);
 		}
 	}
 }

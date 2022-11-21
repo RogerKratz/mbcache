@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using MbCache.Logic;
 
@@ -27,11 +28,13 @@ namespace MbCache.Configuration
 		/// Use caching for specified method
 		/// </summary>
 		/// <param name="expression">Method to cache as an expression</param>
+		/// <param name="returnValuesNotToCache">Return values not to cache</param>
 		/// <returns></returns>
-		public FluentBuilder<T> CacheMethod(Expression<Func<T, object>> expression)
+		public FluentBuilder<T> CacheMethod<T2>(Expression<Func<T, T2>> expression, IEnumerable<T2> returnValuesNotToCache = null)
 		{
 			var method = ExpressionHelper.MemberName(expression.Body);
-			_details.CachedMethods.Add(method);
+			var valuesNotToCache = returnValuesNotToCache == null ? Enumerable.Empty<object>() : returnValuesNotToCache.OfType<object>();
+			_details.CachedMethods.Add(new CachedMethod(method, valuesNotToCache));
 			return this;
 		}
 

@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LinFu.DynamicProxy;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Logic;
 
@@ -26,9 +28,14 @@ namespace MbCache.ProxyImpl.LinFu
 		public object Intercept(InvocationInfo info)
 		{
 			var realTargetMethod = createGenericMethodInfoIfNeeded(info.TargetMethod, info.TypeArguments);
-			return methodMarkedForCaching(realTargetMethod) ?
-					  interceptUsingCache(realTargetMethod, info.Arguments) : 
-					  callOriginalMethod(realTargetMethod, info.Arguments);
+			
+			var cachedMethod = _configurationForType.CachedMethods.SingleOrDefault(x => x.SameMethodAs(realTargetMethod));
+			if (_configurationForType.EnabledCache && cachedMethod != null)
+			{
+				return interceptUsingCache(realTargetMethod, info.Arguments, cachedMethod.ReturnValuesNotToCache);
+			}
+
+			return callOriginalMethod(realTargetMethod, info.Arguments);
 		}
 
 		private static MethodInfo createGenericMethodInfoIfNeeded(MethodInfo orgMethodInfo, Type[] typeArguments)
@@ -38,18 +45,17 @@ namespace MbCache.ProxyImpl.LinFu
 				orgMethodInfo;
 		}
 
-		private bool methodMarkedForCaching(MethodInfo method)
+		private object interceptUsingCache(MethodInfo methodInfo, object[] arguments, IEnumerable<object> returnValuesNotToCache)
 		{
-			return _configurationForType.CachedMethods.Contains(method, MethodInfoComparer.Instance) &&
-								_configurationForType.EnabledCache;
-		}
-
-		private object interceptUsingCache(MethodInfo method, object[] arguments)
-		{
-			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, _cachingComponent, method, arguments);
+			var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, _cachingComponent, methodInfo, arguments);
 			return keyAndItsDependingKeys.Key == null ? 
-				callOriginalMethod(method, arguments) : 
-				_configurationForType.Cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, () => callOriginalMethod(method, arguments));
+				callOriginalMethod(methodInfo, arguments) : 
+				_configurationForType.Cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, methodInfo, () =>
+				{
+					var returnValue = callOriginalMethod(methodInfo, arguments);
+					var shouldBeCached = !returnValuesNotToCache.Contains(returnValue);
+					return new OriginalMethodResult(returnValue, shouldBeCached);
+				});
 		}
 
 		private object callOriginalMethod(MethodInfo method, object[] arguments)

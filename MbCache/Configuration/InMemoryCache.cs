@@ -28,7 +28,7 @@ namespace MbCache.Configuration
 			_eventListenersCallback = eventListenersCallback;
 		}
 
-		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
+		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
 		{
 			var cachedItem = (CachedItem)cache.Get(keyAndItsDependingKeys.Key);
 			if (cachedItem != null)
@@ -76,10 +76,12 @@ namespace MbCache.Configuration
 			Delete(mainCacheKey);
 		}
 
-		private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod)
+		private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
 		{
 			var methodResult = originalMethod();
-			var cachedItem = new CachedItem(cachedMethod, methodResult);
+			var cachedItem = new CachedItem(cachedMethod, methodResult.Value);
+			if (!methodResult.ShouldBeCached)
+				return cachedItem;
 			var key = keyAndItsDependingKeys.Key;
 			var dependedKeys = keyAndItsDependingKeys.DependingRemoveKeys().ToList();
 			dependedKeys.Add(mainCacheKey);

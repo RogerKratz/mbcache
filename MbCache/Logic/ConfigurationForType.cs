@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MbCache.Configuration;
 
 namespace MbCache.Logic
@@ -10,13 +9,13 @@ namespace MbCache.Logic
 		public ConfigurationForType(Type clrType, string typeAsCacheKeyString)
 		{
 			ComponentType = new ComponentType(clrType, typeAsCacheKeyString);
-			CachedMethods = new HashSet<MethodInfo>();
+			CachedMethods = new HashSet<CachedMethod>();
 			EnabledCache = true;
 		}
 
 		public bool EnabledCache { get; set; }
 		public ComponentType ComponentType { get; }
-		public ICollection<MethodInfo> CachedMethods { get; }
+		public ICollection<CachedMethod> CachedMethods { get; }
 		public bool CachePerInstance { get; set; }
 		public ICacheKey CacheKey { get; set; }
 		public bool AllowDifferentArgumentsShareSameCacheKey { get; set; }

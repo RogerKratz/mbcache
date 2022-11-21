@@ -1,5 +1,9 @@
 --- RELEASE NOTES, Breaking changes ---
 
+- vNext
+* ICache.GetAndPutIfNonExisting now has Func<OriginalMethodResult> as an argument
+
+
 - Version 4.0.0, 2019-08-13
 * dotnetcore support (netstandard 2.0)
 * Minimum .net fw 4.61

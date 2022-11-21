@@ -15,7 +15,7 @@ namespace MbCacheTest.Logic.InitializeCacheOnceTest
 		}
 
 		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys,
-			MethodInfo cachedMethod, Func<object> originalMethod)
+			MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
 		{
 			return originalMethod();
 		}

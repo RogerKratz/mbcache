@@ -15,9 +15,10 @@ namespace MbCache.Configuration
 		void Initialize(EventListenersCallback eventListenersCallback);
 
 		/// <summary>
-		/// Gets cache entry from cache. If not exists, runs <paramref name="originalMethod" /> and puts in cache.
+		/// Gets cache entry from cache.
+		/// If not exists, runs <paramref name="originalMethod" /> and puts the result in cache if originalMethod.ShouldBeCached is true
 		/// </summary>
-		object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<object> originalMethod);
+		object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod);
 
 		/// <summary>
 		/// Deletes cache entries from cache.

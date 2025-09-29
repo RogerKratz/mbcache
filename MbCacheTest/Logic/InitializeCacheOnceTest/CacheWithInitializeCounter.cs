@@ -3,29 +3,28 @@ using System.Reflection;
 using MbCache.Configuration;
 using MbCache.Core.Events;
 
-namespace MbCacheTest.Logic.InitializeCacheOnceTest
+namespace MbCacheTest.Logic.InitializeCacheOnceTest;
+
+public class CacheWithInitializeCounter : ICache
 {
-	public class CacheWithInitializeCounter : ICache
-	{
-		public int InitializeCounter { get; private set; }
+	public int InitializeCounter { get; private set; }
 			
-		public void Initialize(EventListenersCallback eventListenersCallback)
-		{
-			InitializeCounter++;
-		}
+	public void Initialize(EventListenersCallback eventListenersCallback)
+	{
+		InitializeCounter++;
+	}
 
-		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys,
-			MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
-		{
-			return originalMethod();
-		}
+	public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys,
+		MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
+	{
+		return originalMethod();
+	}
 
-		public void Delete(string cacheKey)
-		{
-		}
+	public void Delete(string cacheKey)
+	{
+	}
 
-		public void Clear()
-		{
-		}
+	public void Clear()
+	{
 	}
 }

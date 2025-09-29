@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public class ObjectThrowingError
 {
-	public class ObjectThrowingError
+	public virtual int ThrowsArgumentOutOfRangeException()
 	{
-		public virtual int ThrowsArgumentOutOfRangeException()
-		{
-			throw new ArgumentOutOfRangeException();
-		}
+		throw new ArgumentOutOfRangeException();
 	}
 }

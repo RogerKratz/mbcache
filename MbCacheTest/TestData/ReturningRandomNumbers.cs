@@ -1,31 +1,30 @@
 using System;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public interface IReturningRandomNumbers
 {
-    public interface IReturningRandomNumbers
-    {
-        int CachedNumber();
-        int CachedNumber2();
-        int NonCachedNumber();
-    }
+	int CachedNumber();
+	int CachedNumber2();
+	int NonCachedNumber();
+}
 
-    public class ReturningRandomNumbers : IReturningRandomNumbers
-    {
-        private readonly Random r = new Random();
+public class ReturningRandomNumbers : IReturningRandomNumbers
+{
+	private readonly Random r = new Random();
 
-        public int CachedNumber()
-        {
-            return r.Next();
-        }
+	public int CachedNumber()
+	{
+		return r.Next();
+	}
 
-        public int CachedNumber2()
-        {
-            return r.Next();
-        }
+	public int CachedNumber2()
+	{
+		return r.Next();
+	}
 
-        public int NonCachedNumber()
-        {
-            return r.Next();
-        }
-    }
+	public int NonCachedNumber()
+	{
+		return r.Next();
+	}
 }

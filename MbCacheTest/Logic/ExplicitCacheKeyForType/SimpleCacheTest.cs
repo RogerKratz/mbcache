@@ -4,33 +4,32 @@ using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace MbCacheTest.Logic.ExplicitCacheKeyForType
+namespace MbCacheTest.Logic.ExplicitCacheKeyForType;
+
+public class SimpleCacheTest : TestCase
 {
-	public class SimpleCacheTest : TestCase
+	private IMbCacheFactory factory;
+
+	public SimpleCacheTest(Type proxyType) : base(proxyType)
 	{
-		private IMbCacheFactory factory;
+	}
 
-		public SimpleCacheTest(Type proxyType) : base(proxyType)
-		{
-		}
+	protected override void TestSetup()
+	{
+		CacheBuilder.For<ReturningRandomNumbers>("someKey")
+			.CacheMethod(c => c.CachedNumber())
+			.CacheMethod(c => c.CachedNumber2())
+			.As<IReturningRandomNumbers>();
 
-		protected override void TestSetup()
-		{
-			CacheBuilder.For<ReturningRandomNumbers>("someKey")
-				 .CacheMethod(c => c.CachedNumber())
-				 .CacheMethod(c => c.CachedNumber2())
-				 .As<IReturningRandomNumbers>();
+		factory = CacheBuilder.BuildFactory();
+	}
 
-			factory = CacheBuilder.BuildFactory();
-		}
-
-		[Test]
-		public void VerifyCacheIsWorking()
-		{
-			var obj1 = factory.Create<IReturningRandomNumbers>();
-			var obj2 = factory.Create<IReturningRandomNumbers>();
-			obj1.CachedNumber().Should().Be.EqualTo(obj2.CachedNumber());
-			obj1.CachedNumber2().Should().Be.EqualTo(obj2.CachedNumber2());
-		}
+	[Test]
+	public void VerifyCacheIsWorking()
+	{
+		var obj1 = factory.Create<IReturningRandomNumbers>();
+		var obj2 = factory.Create<IReturningRandomNumbers>();
+		obj1.CachedNumber().Should().Be.EqualTo(obj2.CachedNumber());
+		obj1.CachedNumber2().Should().Be.EqualTo(obj2.CachedNumber2());
 	}
 }

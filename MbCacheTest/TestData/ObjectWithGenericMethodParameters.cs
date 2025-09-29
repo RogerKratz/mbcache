@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public class ObjectWithGenericMethodParameters
 {
-	public class ObjectWithGenericMethodParameters
+	public virtual Guid CachedMethod1<T1, T2>(T1 first, T2 second)
 	{
-		public virtual Guid CachedMethod1<T1, T2>(T1 first, T2 second)
-		{
-			return Guid.NewGuid();
-		}
+		return Guid.NewGuid();
 	}
 }

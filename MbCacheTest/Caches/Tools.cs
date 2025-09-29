@@ -1,16 +1,15 @@
 ﻿using System.Linq;
 using System.Runtime.Caching;
 
-namespace MbCacheTest.Caches
+namespace MbCacheTest.Caches;
+
+public static class Tools
 {
-	public static class Tools
+	public static void ClearMemoryCache()
 	{
-		public static void ClearMemoryCache()
+		foreach (var cacheKey in MemoryCache.Default.Select(kvp => kvp.Key).ToList())
 		{
-			foreach (var cacheKey in MemoryCache.Default.Select(kvp => kvp.Key).ToList())
-			{
-				MemoryCache.Default.Remove(cacheKey);
-			}
+			MemoryCache.Default.Remove(cacheKey);
 		}
 	}
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public class ObjectWithMultipleParameters
 {
-	public class ObjectWithMultipleParameters
+	public virtual Guid Calculate(int a, string b, long c)
 	{
-		public virtual Guid Calculate(int a, string b, long c)
-		{
-			return Guid.NewGuid();
-		}
+		return Guid.NewGuid();
 	}
 }

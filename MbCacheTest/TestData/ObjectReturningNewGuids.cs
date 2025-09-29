@@ -1,24 +1,23 @@
 using System;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public interface IObjectReturningNewGuids
 {
-    public interface IObjectReturningNewGuids
-    {
-        Guid CachedMethod();
-        Guid CachedMethod2();
-    }
+	Guid CachedMethod();
+	Guid CachedMethod2();
+}
 
-    public class ObjectReturningNewGuids : IObjectReturningNewGuids
-    {
+public class ObjectReturningNewGuids : IObjectReturningNewGuids
+{
 
-        public Guid CachedMethod()
-        {
-            return Guid.NewGuid();
-        }
+	public Guid CachedMethod()
+	{
+		return Guid.NewGuid();
+	}
 
-        public Guid CachedMethod2()
-        {
-            return Guid.NewGuid();
-        }
-    }
+	public Guid CachedMethod2()
+	{
+		return Guid.NewGuid();
+	}
 }

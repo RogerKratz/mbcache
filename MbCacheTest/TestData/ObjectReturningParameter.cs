@@ -1,15 +1,14 @@
-﻿namespace MbCacheTest.TestData
-{
-	public class ObjectReturningNull : IObjectReturningNull
-	{
-		public object ReturnNullIfZero(int parameter)
-		{
-			return parameter == 0 ? (object) null : parameter;
-		}
-	}
+﻿namespace MbCacheTest.TestData;
 
-	public interface IObjectReturningNull
+public class ObjectReturningNull : IObjectReturningNull
+{
+	public object ReturnNullIfZero(int parameter)
 	{
-		object ReturnNullIfZero(int parameter);
+		return parameter == 0 ? (object) null : parameter;
 	}
+}
+
+public interface IObjectReturningNull
+{
+	object ReturnNullIfZero(int parameter);
 }

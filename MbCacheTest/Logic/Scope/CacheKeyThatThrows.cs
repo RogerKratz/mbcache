@@ -5,33 +5,32 @@ using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Logic;
 
-namespace MbCacheTest.Logic.Scope
+namespace MbCacheTest.Logic.Scope;
+
+public class CacheKeyThatThrows : ICacheKey
 {
-	public class CacheKeyThatThrows : ICacheKey
+	public string RemoveKey(ComponentType type)
 	{
-		public string RemoveKey(ComponentType type)
-		{
-			throw new NotImplementedException();
-		}
+		throw new NotImplementedException();
+	}
 
-		public string RemoveKey(ComponentType type, ICachingComponent component)
-		{
-			throw new NotImplementedException();
-		}
+	public string RemoveKey(ComponentType type, ICachingComponent component)
+	{
+		throw new NotImplementedException();
+	}
 
-		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
-		{
-			throw new NotImplementedException();
-		}
+	public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
+	{
+		throw new NotImplementedException();
+	}
 
-		public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
-		{
-			throw new NotImplementedException();
-		}
+	public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+	{
+		throw new NotImplementedException();
+	}
 
-		public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
-		{
-			throw new NotImplementedException();
-		}
+	public KeyAndItsDependingKeys GetAndPutKey(ComponentType type, ICachingComponent component, MethodInfo method, IEnumerable<object> parameters)
+	{
+		throw new NotImplementedException();
 	}
 }

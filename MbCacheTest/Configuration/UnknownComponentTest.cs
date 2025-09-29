@@ -1,26 +1,25 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace MbCacheTest.Configuration
+namespace MbCacheTest.Configuration;
+
+public class UnknownComponentTest : TestCase
 {
-	public class UnknownComponentTest : TestCase
+	[Test]
+	public void ShouldThrowWhenCreatingNotKnownComponent()
 	{
-		[Test]
-		public void ShouldThrowWhenCreatingNotKnownComponent()
-		{
-			var factory = CacheBuilder.BuildFactory();
-			Assert.Throws<ArgumentException>(() => factory.Create<object>());
-		}
+		var factory = CacheBuilder.BuildFactory();
+		Assert.Throws<ArgumentException>(() => factory.Create<object>());
+	}
 
-		[Test]
-		public void ShouldThrowWhenInvalidatingNotKnownComponent()
-		{
-			var factory = CacheBuilder.BuildFactory();
-			Assert.Throws<ArgumentException>(() => factory.Invalidate<object>());
-		}
+	[Test]
+	public void ShouldThrowWhenInvalidatingNotKnownComponent()
+	{
+		var factory = CacheBuilder.BuildFactory();
+		Assert.Throws<ArgumentException>(() => factory.Invalidate<object>());
+	}
 
-		public UnknownComponentTest(Type proxyType) : base(proxyType)
-		{
-		}
+	public UnknownComponentTest(Type proxyType) : base(proxyType)
+	{
 	}
 }

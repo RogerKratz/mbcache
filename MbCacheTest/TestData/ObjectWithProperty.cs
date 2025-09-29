@@ -1,7 +1,6 @@
-﻿namespace MbCacheTest.TestData
+﻿namespace MbCacheTest.TestData;
+
+public class ObjectWithProperty
 {
-	public class ObjectWithProperty
-	{
-		public virtual string Thing { get; set; } 
-	}
+	public virtual string Thing { get; set; } 
 }

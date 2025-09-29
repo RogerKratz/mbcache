@@ -4,38 +4,37 @@ using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace MbCacheTest.Logic.Generics
+namespace MbCacheTest.Logic.Generics;
+
+public class GenericParametersTest : TestCase
 {
-	public class GenericParametersTest : TestCase
+	private IMbCacheFactory factory;
+
+	public GenericParametersTest(Type proxyType) : base(proxyType)
 	{
-		private IMbCacheFactory factory;
+	}
 
-		public GenericParametersTest(Type proxyType) : base(proxyType)
-		{
-		}
+	protected override void TestSetup()
+	{
+		factory = CacheBuilder.For<ObjectWithGenericMethodParameters>()
+			.CacheMethod(m => m.CachedMethod1(1, "1"))
+			.AsImplemented()
+			.BuildFactory();
+	}
 
-		protected override void TestSetup()
-		{
-			factory = CacheBuilder.For<ObjectWithGenericMethodParameters>()
-				.CacheMethod(m => m.CachedMethod1(1, "1"))
-				.AsImplemented()
-				.BuildFactory();
-		}
+	[Test]
+	public void ShouldCache()
+	{
+		var component = factory.Create<ObjectWithGenericMethodParameters>();
+		component.CachedMethod1(1, "1")
+			.Should().Be.EqualTo(component.CachedMethod1(1, "1"));
+	}
 
-		[Test]
-		public void ShouldCache()
-		{
-			var component = factory.Create<ObjectWithGenericMethodParameters>();
-			component.CachedMethod1(1, "1")
-				.Should().Be.EqualTo(component.CachedMethod1(1, "1"));
-		}
-
-		[Test]
-		public void ShouldNotCache()
-		{
-			var component = factory.Create<ObjectWithGenericMethodParameters>();
-			component.CachedMethod1("1", "1")
-				.Should().Not.Be.EqualTo(component.CachedMethod1("1", "1"));
-		}
+	[Test]
+	public void ShouldNotCache()
+	{
+		var component = factory.Create<ObjectWithGenericMethodParameters>();
+		component.CachedMethod1("1", "1")
+			.Should().Not.Be.EqualTo(component.CachedMethod1("1", "1"));
 	}
 }

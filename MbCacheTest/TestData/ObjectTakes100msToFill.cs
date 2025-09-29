@@ -1,13 +1,12 @@
 ﻿using System.Threading;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public class ObjectTakes100MsToFill
 {
-	public class ObjectTakes100MsToFill
+	public virtual int Execute(int a)
 	{
-		public virtual int Execute(int a)
-		{
-			Thread.Sleep(100);
-			return a;
-		}
+		Thread.Sleep(100);
+		return a;
 	}
 }

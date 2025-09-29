@@ -1,24 +1,23 @@
 ﻿using System;
 
-namespace MbCacheTest
+namespace MbCacheTest;
+
+public static class Extensions
 {
-	public static class Extensions
+	public static void Times(this int count, Action action)
 	{
-		public static void Times(this int count, Action action)
+		for (var i = 0; i < count; i++)
 		{
-			for (var i = 0; i < count; i++)
-			{
-				action.Invoke();
-			}
+			action.Invoke();
 		}
-
-		public static void Times(this int count, Action<int> action)
-		{
-			for (var i = 0; i < count; i++)
-			{
-				action.Invoke(i);
-			}
-		}
-
 	}
+
+	public static void Times(this int count, Action<int> action)
+	{
+		for (var i = 0; i < count; i++)
+		{
+			action.Invoke(i);
+		}
+	}
+
 }

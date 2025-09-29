@@ -3,36 +3,35 @@ using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace MbCacheTest.Logic.InitializeCacheOnceTest
+namespace MbCacheTest.Logic.InitializeCacheOnceTest;
+
+public class CallingOverridenCacheInitializeOnceTest : TestCase
 {
-	public class CallingOverridenCacheInitializeOnceTest : TestCase
+	private CacheWithInitializeCounter overridenCache;
+
+	public CallingOverridenCacheInitializeOnceTest(Type proxyType) : base(proxyType)
 	{
-		private CacheWithInitializeCounter overridenCache;
-
-		public CallingOverridenCacheInitializeOnceTest(Type proxyType) : base(proxyType)
-		{
-		}
+	}
 		
-		protected override void TestSetup()
-		{
-			overridenCache = new CacheWithInitializeCounter();
-			CacheBuilder
-				.For<ReturningRandomNumbers>()
-				.CacheMethod(c => c.CachedNumber())
-				.OverrideCache(overridenCache)
-				.As<IReturningRandomNumbers>()
-				.For<ObjectReturningNewGuids>()
-				.CacheMethod(c => c.CachedMethod())
-				.OverrideCache(overridenCache)
-				.As<IObjectReturningNewGuids>()
-				.BuildFactory();
-		}
+	protected override void TestSetup()
+	{
+		overridenCache = new CacheWithInitializeCounter();
+		CacheBuilder
+			.For<ReturningRandomNumbers>()
+			.CacheMethod(c => c.CachedNumber())
+			.OverrideCache(overridenCache)
+			.As<IReturningRandomNumbers>()
+			.For<ObjectReturningNewGuids>()
+			.CacheMethod(c => c.CachedMethod())
+			.OverrideCache(overridenCache)
+			.As<IObjectReturningNewGuids>()
+			.BuildFactory();
+	}
 
-		[Test]
-		public void ShouldOnlyInitializeOnce()
-		{
-			overridenCache.InitializeCounter
-				.Should().Be.EqualTo(1);
-		}
+	[Test]
+	public void ShouldOnlyInitializeOnce()
+	{
+		overridenCache.InitializeCounter
+			.Should().Be.EqualTo(1);
 	}
 }

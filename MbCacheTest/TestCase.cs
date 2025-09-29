@@ -5,42 +5,41 @@ using MbCache.ProxyImpl.LinFu;
 using MbCacheTest.Caches;
 using NUnit.Framework;
 
-namespace MbCacheTest
+namespace MbCacheTest;
+
+[TestFixture(typeof(LinFuProxyFactory))]
+[TestFixture(typeof(ProxyFactory))]
+public abstract class TestCase
 {
-	[TestFixture(typeof(LinFuProxyFactory))]
-	[TestFixture(typeof(ProxyFactory))]
-	public abstract class TestCase
+	protected TestCase(Type proxyType)
 	{
-		protected TestCase(Type proxyType)
-		{
-			ProxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
-		}
+		ProxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
+	}
 
-		[SetUp]
-		public void Setup()
-		{
-			Tools.ClearMemoryCache();
-			CacheBuilder = new CacheBuilder()
-				.SetProxyFactory(ProxyFactory)
-				.SetCache(CreateCache())
-				.SetCacheKey(CreateCacheKey());
-			TestSetup();
-		}
+	[SetUp]
+	public void Setup()
+	{
+		Tools.ClearMemoryCache();
+		CacheBuilder = new CacheBuilder()
+			.SetProxyFactory(ProxyFactory)
+			.SetCache(CreateCache())
+			.SetCacheKey(CreateCacheKey());
+		TestSetup();
+	}
 
-		protected virtual void TestSetup(){}
+	protected virtual void TestSetup(){}
 
-		protected IProxyFactory ProxyFactory { get; }
+	protected IProxyFactory ProxyFactory { get; }
 		
-		protected CacheBuilder CacheBuilder { get; private set; }
+	protected CacheBuilder CacheBuilder { get; private set; }
 
-		protected virtual ICache CreateCache()
-		{
-			return new InMemoryCache(TimeSpan.FromMinutes(20));
-		}
+	protected virtual ICache CreateCache()
+	{
+		return new InMemoryCache(TimeSpan.FromMinutes(20));
+	}
 
-		protected virtual ICacheKey CreateCacheKey()
-		{
-			return new ToStringCacheKey();
-		}
+	protected virtual ICacheKey CreateCacheKey()
+	{
+		return new ToStringCacheKey();
 	}
 }

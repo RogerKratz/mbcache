@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace MbCacheTest.TestData
+namespace MbCacheTest.TestData;
+
+public class ObjectWithIdentifier : IObjectWithIdentifier
 {
-	public class ObjectWithIdentifier : IObjectWithIdentifier
+	public ObjectWithIdentifier()
 	{
-		public ObjectWithIdentifier()
-		{
-			Id = Guid.NewGuid();
-		}
-
-		public virtual Guid Id { get; }
+		Id = Guid.NewGuid();
 	}
 
-	public interface IObjectWithIdentifier
-	{
-		Guid Id { get; }
-	}
+	public virtual Guid Id { get; }
+}
+
+public interface IObjectWithIdentifier
+{
+	Guid Id { get; }
 }

@@ -1,38 +1,37 @@
 ﻿using System.Collections.Generic;
 
-namespace MbCache.Core.Events
+namespace MbCache.Core.Events;
+
+public class EventListenersCallback
 {
-	public class EventListenersCallback
+	private readonly IEnumerable<IEventListener> _eventListeners;
+
+	public EventListenersCallback(IEnumerable<IEventListener> eventListeners)
 	{
-		private readonly IEnumerable<IEventListener> _eventListeners;
+		_eventListeners = eventListeners;
+	}
 
-		public EventListenersCallback(IEnumerable<IEventListener> eventListeners)
+	public void OnCacheRemoval(CachedItem cachedItem)
+	{
+		foreach (var eventHandler in _eventListeners)
 		{
-			_eventListeners = eventListeners;
+			eventHandler.OnCacheRemoval(cachedItem);
 		}
+	}
 
-		public void OnCacheRemoval(CachedItem cachedItem)
+	public void OnCacheMiss(CachedItem cachedItem)
+	{
+		foreach (var eventHandler in _eventListeners)
 		{
-			foreach (var eventHandler in _eventListeners)
-			{
-				eventHandler.OnCacheRemoval(cachedItem);
-			}
+			eventHandler.OnCacheMiss(cachedItem);
 		}
+	}
 
-		public void OnCacheMiss(CachedItem cachedItem)
+	public void OnCacheHit(CachedItem cachedItem)
+	{
+		foreach (var eventListener in _eventListeners)
 		{
-			foreach (var eventHandler in _eventListeners)
-			{
-				eventHandler.OnCacheMiss(cachedItem);
-			}
-		}
-
-		public void OnCacheHit(CachedItem cachedItem)
-		{
-			foreach (var eventListener in _eventListeners)
-			{
-				eventListener.OnCacheHit(cachedItem);
-			}
+			eventListener.OnCacheHit(cachedItem);
 		}
 	}
 }

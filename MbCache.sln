@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCache", "MbCache\MbCache.csproj", "{45BA5406-F8E5-4931-8114-FFFC821DE7A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MbCacheTest", "MbCacheTest\MbCacheTest.csproj", "{E6434E94-11CE-471C-9652-1571EB3A87C9}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58384CBB-86FC-4A8D-B47C-D7949C1CC31B} = {58384CBB-86FC-4A8D-B47C-D7949C1CC31B}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3376973C-B821-4AF6-B093-FCE8F670004F}"
 	ProjectSection(SolutionItems) = preProject

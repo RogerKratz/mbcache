@@ -20,8 +20,8 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore mbcache.sln --configuration Release "-p:Version=5.0.${{ github.run_number }}" "-p:PackageVersion=5.0.${{ github.run_number }}"
+        run: dotnet build --no-restore --configuration Release "-p:Version=5.0.${{ github.run_number }}" "-p:PackageVersion=5.0.${{ github.run_number }}"
       - name: Test
-        run: dotnet test --no-build --verbosity normal --configuration Release mbcache.sln
+        run: dotnet test --no-build --configuration Release
       - name: Push to nuget.org
         run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

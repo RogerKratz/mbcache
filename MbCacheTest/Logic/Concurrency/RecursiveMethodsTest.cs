@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -7,20 +8,20 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Concurrency;
 
-public class RecursiveMethodsTest : TestCase
+public class RecursiveMethodsTest
 {
 	private IMbCacheFactory factory;
 
-	protected override void TestSetup()
-	{
-		CacheBuilder.For<ObjectRecursive1>()
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
+			.For<ObjectRecursive1>()
 			.CacheMethod(c => c.Ref(1))
-			.AsImplemented();
-		CacheBuilder.For<ObjectRecursive2>()
+			.AsImplemented()
+			.For<ObjectRecursive2>()
 			.CacheMethod(c => c.Foo(1))
-			.AsImplemented();
-		factory = CacheBuilder.BuildFactory();
-	}
+			.AsImplemented()
+			.BuildFactory();
 
 	[Test]
 	public void ShouldNotDeadLockDueToRecursiveCalls()

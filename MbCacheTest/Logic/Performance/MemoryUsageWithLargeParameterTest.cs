@@ -29,7 +29,7 @@ namespace MbCacheTest.Logic.Performance
 
 			for (var i = 0; i < uniqueCacheEntries; i++)
 			{
-				component.CachedMethod(new parameter());
+				component.CachedMethod(new theParameter());
 			}
 			var memUsage = GC.GetTotalMemory(true) - memUsageAtStart;
 			var mbUsage = memUsage / 1024 / 1024;
@@ -37,9 +37,9 @@ namespace MbCacheTest.Logic.Performance
 			mbUsage.Should().Be.LessThan(21);
 		}
 
-		private class parameter
+		private class theParameter
 		{
-			public parameter()
+			public theParameter()
 			{
 				LargeState = new long[10000];
 			}

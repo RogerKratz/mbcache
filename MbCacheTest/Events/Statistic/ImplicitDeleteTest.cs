@@ -1,19 +1,22 @@
-﻿using MbCacheTest.TestData;
+﻿using MbCache.Configuration;
+using MbCacheTest.TestData;
+using NUnit.Framework;
 
 namespace MbCacheTest.Events.Statistic;
 
 public class ImplicitDeleteTest : DeleteTestBase
 {
-	protected override void TestSetup()
+	[SetUp]
+	public void Setup()
 	{
 		EventListener = new EventListenerForTest();
-		CacheBuilder
+		
+		var factory = new CacheBuilder()
 			.For<ObjectReturningNull>()
 			.CacheMethod(c => c.ReturnNullIfZero(0))
 			.As<IObjectReturningNull>()
-			.AddEventListener(EventListener);
-
-		var factory = CacheBuilder.BuildFactory();
+			.AddEventListener(EventListener)
+			.BuildFactory();
 		var comp = factory.Create<IObjectReturningNull>();
 		comp.ReturnNullIfZero(0);
 		comp.ReturnNullIfZero(1);

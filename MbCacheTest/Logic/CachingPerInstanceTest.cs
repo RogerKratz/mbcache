@@ -1,3 +1,4 @@
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -5,21 +6,18 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class CachingPerInstanceTest : TestCase
+public class CachingPerInstanceTest
 {
 	private IMbCacheFactory factory;
-
-
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod())
 			.PerInstance()
-			.As<IObjectReturningNewGuids>();
-
-		factory = CacheBuilder.BuildFactory();
-	}
+			.As<IObjectReturningNewGuids>()
+			.BuildFactory();
 
 
 	[Test]

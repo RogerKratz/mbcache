@@ -6,23 +6,20 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Scope;
 
-public class CacheKeyForComponentOverridingTest : TestCase
+public class CacheKeyForComponentOverridingTest
 {
 	private IMbCacheFactory factory;
-
-	protected override ICacheKey CreateCacheKey()
+	
+	[SetUp]
+	public void Setup()
 	{
-		return new CacheKeyThatThrows();
-	}
-
-	protected override void TestSetup()
-	{
-		CacheBuilder.For<ReturningRandomNumbers>()
-			.CacheMethod(c => c.CachedNumber())
-			.OverrideCacheKey(new ToStringCacheKey())
-			.As<IReturningRandomNumbers>();
-
-		factory = CacheBuilder.BuildFactory();
+		factory = new CacheBuilder()
+			.SetCacheKey(new CacheKeyThatThrows())
+			.For<ReturningRandomNumbers>()
+				.CacheMethod(c => c.CachedNumber())
+				.OverrideCacheKey(new ToStringCacheKey())
+				.As<IReturningRandomNumbers>()
+			.BuildFactory();
 	}
 
 	[Test]
@@ -32,5 +29,4 @@ public class CacheKeyForComponentOverridingTest : TestCase
 		instance.CachedNumber()
 			.Should().Be.EqualTo(instance.CachedNumber());
 	}
-
 }

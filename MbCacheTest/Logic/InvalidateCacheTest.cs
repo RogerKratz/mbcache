@@ -1,4 +1,5 @@
 ﻿using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -6,25 +7,23 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class InvalidateCacheTest : TestCase
+public class InvalidateCacheTest
 {
+	private CacheBuilder builder;
 	private IMbCacheFactory factory;
-
-
-	protected override void TestSetup()
+	
+	[SetUp]
+	public void Setup()
 	{
-		CacheBuilder
+		builder = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
-			.CacheMethod(c => c.CachedMethod())
-			.CacheMethod(c => c.CachedMethod2())
-			.As<IObjectReturningNewGuids>();
-
-		CacheBuilder
+				.CacheMethod(c => c.CachedMethod())
+				.CacheMethod(c => c.CachedMethod2())
+				.As<IObjectReturningNewGuids>()
 			.For<ObjectWithParametersOnCachedMethod>()
-			.CacheMethod(c => c.CachedMethod(null))
-			.As<IObjectWithParametersOnCachedMethod>();
-
-		factory = CacheBuilder.BuildFactory();
+				.CacheMethod(c => c.CachedMethod(null))
+				.As<IObjectWithParametersOnCachedMethod>();
+		factory = builder.BuildFactory();
 	}
 
 
@@ -174,7 +173,7 @@ public class InvalidateCacheTest : TestCase
 		var obj = factory.Create<IObjectReturningNewGuids>();
 		var value = obj.CachedMethod();
 		factory.Dispose();
-		var newFactory = CacheBuilder.BuildFactory();
+		var newFactory = builder.BuildFactory();
 		newFactory.Create<IObjectReturningNewGuids>().CachedMethod()
 			.Should().Not.Be.EqualTo(value);
 	}

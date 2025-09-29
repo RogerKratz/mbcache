@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;

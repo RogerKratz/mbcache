@@ -1,5 +1,4 @@
-﻿using System;
-using MbCacheTest.TestData;
+﻿using MbCacheTest.TestData;
 
 namespace MbCacheTest.Events.Statistic;
 

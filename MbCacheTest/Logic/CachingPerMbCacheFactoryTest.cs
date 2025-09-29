@@ -1,4 +1,3 @@
-using System;
 using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;

@@ -1,5 +1,4 @@
-﻿using System;
-using MbCache.Configuration;
+﻿using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;

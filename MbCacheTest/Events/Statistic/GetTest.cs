@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;

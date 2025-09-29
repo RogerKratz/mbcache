@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
@@ -10,20 +11,19 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Events;
 
-public class NoLocksWhenCallingEventsTest : TestCase
+public class NoLocksWhenCallingEventsTest
 {
 	private IMbCacheFactory factory;
-		
 
-	protected override void TestSetup()
+	[SetUp]
+	public void Setup()
 	{
-		CacheBuilder
+		factory = new CacheBuilder()
 			.For<ObjectWithParametersOnCachedMethod>()
 			.CacheMethod(c => c.CachedMethod(null))
 			.As<IObjectWithParametersOnCachedMethod>()
-			.AddEventListener(new slowEventListener());
-
-		factory = CacheBuilder.BuildFactory();
+			.AddEventListener(new slowEventListener())
+			.BuildFactory();
 	}
 
 	[Test]

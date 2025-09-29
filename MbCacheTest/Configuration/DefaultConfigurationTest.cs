@@ -1,5 +1,4 @@
 ﻿using MbCache.Configuration;
-using MbCache.ProxyImpl.LinFu;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -12,7 +11,6 @@ public class DefaultConfigurationTest
 	public void ShouldCache()
 	{
 		using (var factory = new CacheBuilder()
-			       .SetProxyFactory(new LinFuProxyFactory())
 			       .For<ObjectReturningNewGuids>()
 			       .CacheMethod(c => c.CachedMethod())
 			       .As<IObjectReturningNewGuids>()

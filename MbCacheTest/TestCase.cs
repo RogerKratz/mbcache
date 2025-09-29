@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest;
 
-[TestFixture(typeof(LinFuProxyFactory))]
+
 [TestFixture(typeof(ProxyFactory))]
 public abstract class TestCase
 {

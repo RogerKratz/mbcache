@@ -9,6 +9,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyOriginatorKeyFile>mbcacheKey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />

@@ -7,20 +7,14 @@ using NUnit.Framework;
 namespace MbCacheTest;
 
 
-[TestFixture(typeof(ProxyFactory))]
 public abstract class TestCase
 {
-	protected TestCase(Type proxyType)
-	{
-		ProxyFactory = (IProxyFactory) Activator.CreateInstance(proxyType);
-	}
-
 	[SetUp]
 	public void Setup()
 	{
 		Tools.ClearMemoryCache();
 		CacheBuilder = new CacheBuilder()
-			.SetProxyFactory(ProxyFactory)
+			.SetProxyFactory(new ProxyFactory())
 			.SetCache(CreateCache())
 			.SetCacheKey(CreateCacheKey());
 		TestSetup();

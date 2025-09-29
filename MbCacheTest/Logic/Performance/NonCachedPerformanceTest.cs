@@ -9,9 +9,6 @@ public class NonCachedPerformanceTest : TestCase
 {
 	private ObjectWithMutableList instance;
 
-	public NonCachedPerformanceTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

@@ -9,10 +9,7 @@ namespace MbCacheTest.Logic.EnableDisable;
 public class DisableTest : TestCase
 {
 	private IMbCacheFactory factory;
-
-	public DisableTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

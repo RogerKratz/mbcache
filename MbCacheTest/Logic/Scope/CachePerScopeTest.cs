@@ -10,9 +10,6 @@ public class CachePerScopeTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public CachePerScopeTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

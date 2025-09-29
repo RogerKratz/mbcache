@@ -8,10 +8,7 @@ namespace MbCacheTest.Events.Statistic;
 public abstract class DeleteTestBase : TestCase
 {
 	protected EventListenerForTest EventListener;
-
-	protected DeleteTestBase(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	[Test]
 	public void ShouldBeCalledTwice()

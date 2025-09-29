@@ -12,10 +12,6 @@ public class ReturnNullTest : TestCase
 	private IMbCacheFactory factory;
 	private StatisticsEventListener eventListener;
 
-	public ReturnNullTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		eventListener = new StatisticsEventListener();

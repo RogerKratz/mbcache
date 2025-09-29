@@ -8,11 +8,8 @@ namespace MbCacheTest.Logic.InitializeCacheOnceTest;
 public class CallingDefaultCacheInitializeOnceTest : TestCase
 {
 	private CacheWithInitializeCounter defaultCache;
-
-	public CallingDefaultCacheInitializeOnceTest(Type proxyType) : base(proxyType)
-	{
-	}
-		
+	
+	
 	protected override void TestSetup()
 	{
 		defaultCache = new CacheWithInitializeCounter();

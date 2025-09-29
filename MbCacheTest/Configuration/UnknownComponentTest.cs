@@ -18,8 +18,4 @@ public class UnknownComponentTest : TestCase
 		var factory = CacheBuilder.BuildFactory();
 		Assert.Throws<ArgumentException>(() => factory.Invalidate<object>());
 	}
-
-	public UnknownComponentTest(Type proxyType) : base(proxyType)
-	{
-	}
 }

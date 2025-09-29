@@ -10,10 +10,6 @@ public class ClassComponentTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public ClassComponentTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ObjectReturningNewGuidsNoInterface>()

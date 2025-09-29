@@ -7,10 +7,6 @@ namespace MbCacheTest.Logic;
 
 public class ImplementationTypeForTest : TestCase
 {
-	public ImplementationTypeForTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	[Test]
 	public void ShouldReturnCorrectTypeForInterface()
 	{

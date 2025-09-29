@@ -14,10 +14,7 @@ public class NoLocksWhenCallingEventsTest : TestCase
 {
 	private IMbCacheFactory factory;
 		
-	public NoLocksWhenCallingEventsTest(Type proxyType) : base(proxyType)
-	{
-	}
-		
+
 	protected override void TestSetup()
 	{
 		CacheBuilder

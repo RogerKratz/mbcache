@@ -10,9 +10,6 @@ public class InvalidateCacheTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public InvalidateCacheTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

@@ -11,10 +11,7 @@ public class InvalidateCachePerInstanceTest : TestCase
 	private IMbCacheFactory factory;
 	private IObjectReturningNewGuids obj1;
 	private IObjectReturningNewGuids obj2;
-
-	public InvalidateCachePerInstanceTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

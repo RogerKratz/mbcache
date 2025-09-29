@@ -10,10 +10,6 @@ public class TwoEqualMethodNamesOneCachedTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public TwoEqualMethodNamesOneCachedTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ObjectWithCtorParameters>()

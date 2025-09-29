@@ -8,10 +8,6 @@ namespace MbCacheTest.Logic.Concurrency;
 
 public class SimultaneousCachePutTest : TestCase
 {
-	public SimultaneousCachePutTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	[Test]
 	public void ShouldNotMakeTheSameCallMoreThanOnce()
 	{

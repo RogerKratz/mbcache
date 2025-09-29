@@ -8,9 +8,6 @@ public class GeneralTests : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public GeneralTests(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

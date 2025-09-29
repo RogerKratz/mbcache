@@ -10,10 +10,6 @@ public class CacheKeyBaseReturnNullTest : TestCase
 {
 	private cacheKeyStub cacheKey;
 
-	public CacheKeyBaseReturnNullTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override ICacheKey CreateCacheKey()
 	{
 		cacheKey =  new cacheKeyStub();

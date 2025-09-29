@@ -9,10 +9,6 @@ public class CachingMethodsWithParametersTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public CachingMethodsWithParametersTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder

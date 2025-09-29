@@ -12,10 +12,6 @@ public class HitsAndMissesTest : TestCase
 	private IMbCacheFactory factory;
 	private StatisticsEventListener eventListener;
 
-	public HitsAndMissesTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		eventListener = new StatisticsEventListener();

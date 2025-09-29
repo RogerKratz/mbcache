@@ -12,10 +12,7 @@ public class MultipleEventHandlers : TestCase
 	private eventListenerForMultiple firstEventListener;
 	private eventListenerForMultiple secondEventListener;
 	private eventListenerForMultiple thirdEventListener;
-
-	public MultipleEventHandlers(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

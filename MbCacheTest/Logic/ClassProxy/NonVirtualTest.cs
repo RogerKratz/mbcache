@@ -7,10 +7,6 @@ namespace MbCacheTest.Logic.ClassProxy;
 
 public class NonVirtualTest : TestCase
 {
-	public NonVirtualTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	[Test]
 	public void ShouldWorkIfComponentIsInterface()
 	{

@@ -12,10 +12,7 @@ public class CachingPerMbCacheFactoryTest : TestCase
 {
 	private IMbCacheFactory factory1;
 	private IMbCacheFactory factory2;
-		
-	public CachingPerMbCacheFactoryTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 		
 	protected override void TestSetup()
 	{

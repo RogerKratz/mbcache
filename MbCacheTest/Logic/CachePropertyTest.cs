@@ -6,10 +6,6 @@ namespace MbCacheTest.Logic;
 
 public class CachePropertyTest : TestCase
 {
-	public CachePropertyTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	[Test]
 	public void ShouldThrowIfPropertyIsCached()
 	{

@@ -11,11 +11,6 @@ public class CacheKeyForComponentOverridingTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-
-	public CacheKeyForComponentOverridingTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override ICacheKey CreateCacheKey()
 	{
 		return new CacheKeyThatThrows();

@@ -8,10 +8,7 @@ namespace MbCacheTest.Logic.MatchingCorrectMethod;
 public class OverloadedMethodTest : TestCase
 {
 	private ObjectWithOverloadedMethod component;
-
-	public OverloadedMethodTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

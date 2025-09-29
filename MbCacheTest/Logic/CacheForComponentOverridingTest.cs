@@ -12,10 +12,6 @@ public class CacheForComponentOverridingTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public CacheForComponentOverridingTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override ICache CreateCache()
 	{
 		return new cacheThatThrows();

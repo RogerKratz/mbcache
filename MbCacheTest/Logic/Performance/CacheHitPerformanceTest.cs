@@ -9,9 +9,6 @@ public class CacheHitPerformanceTest : TestCase
 {
 	private IReturningRandomNumbers instance;
 
-	public CacheHitPerformanceTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

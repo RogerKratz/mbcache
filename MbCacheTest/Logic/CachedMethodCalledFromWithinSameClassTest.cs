@@ -11,11 +11,6 @@ public class CachedMethodCalledFromWithinSameClassTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-		
-	public CachedMethodCalledFromWithinSameClassTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ObjectCallingMethodOnItSelf>()

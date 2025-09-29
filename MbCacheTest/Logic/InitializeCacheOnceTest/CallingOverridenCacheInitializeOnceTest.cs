@@ -9,10 +9,7 @@ public class CallingOverridenCacheInitializeOnceTest : TestCase
 {
 	private CacheWithInitializeCounter overridenCache;
 
-	public CallingOverridenCacheInitializeOnceTest(Type proxyType) : base(proxyType)
-	{
-	}
-		
+
 	protected override void TestSetup()
 	{
 		overridenCache = new CacheWithInitializeCounter();

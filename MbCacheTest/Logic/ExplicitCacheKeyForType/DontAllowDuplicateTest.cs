@@ -6,10 +6,6 @@ namespace MbCacheTest.Logic.ExplicitCacheKeyForType;
 
 public class DontAllowDuplicateTest : TestCase
 {
-	public DontAllowDuplicateTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	[Test]
 	public void ShouldThrowIfMultiple()
 	{

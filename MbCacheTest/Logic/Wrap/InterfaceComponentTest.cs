@@ -10,10 +10,6 @@ public class InterfaceComponentTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public InterfaceComponentTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ReturningRandomNumbers>()

@@ -11,11 +11,7 @@ namespace MbCacheTest.Events.Statistic;
 public class GetTest : TestCase
 {
 	private eventListenerForGet eventListener;
-
-	public GetTest(Type proxyType) : base(proxyType)
-	{
-	}
-
+	
 	protected override void TestSetup()
 	{
 		eventListener = new eventListenerForGet();

@@ -10,10 +10,7 @@ public class NumberOfCacheEntriesTest : TestCase
 {
 	private ObjectWithMultipleParameters component;
 	private MemoryCache memoryCacheReference;
-
-	public NumberOfCacheEntriesTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

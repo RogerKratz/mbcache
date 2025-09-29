@@ -8,10 +8,7 @@ namespace MbCacheTest.Logic;
 public class KnownInstanceTest : TestCase
 {
 	private IMbCacheFactory factory;
-
-	public KnownInstanceTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

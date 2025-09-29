@@ -9,9 +9,6 @@ public class PutTest : TestCase
 {
 	private EventListenerForTest eventListener;
 
-	public PutTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

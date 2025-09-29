@@ -7,10 +7,6 @@ namespace MbCacheTest.Logic;
 
 public class IgnoreCacheBasedOnReturnValueTest : TestCase
 {
-	public IgnoreCacheBasedOnReturnValueTest(Type proxyType) : base(proxyType)
-	{
-	}
-		
 	[Test]
 	public void ShouldNotCache()
 	{

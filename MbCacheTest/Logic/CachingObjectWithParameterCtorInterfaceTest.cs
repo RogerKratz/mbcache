@@ -9,11 +9,7 @@ namespace MbCacheTest.Logic;
 public class CachingObjectWithParameterCtorInterfaceTest : TestCase
 {
 	private IMbCacheFactory factory;
-
-	public CachingObjectWithParameterCtorInterfaceTest(Type proxyType) : base(proxyType)
-	{
-	}
-
+	
 	protected override void TestSetup()
 	{
 		CacheBuilder

@@ -15,9 +15,6 @@ public class ThreadingTest : TestCase
 	private IMbCacheFactory factory;
 	private StatisticsEventListener eventListener;
 
-	public ThreadingTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

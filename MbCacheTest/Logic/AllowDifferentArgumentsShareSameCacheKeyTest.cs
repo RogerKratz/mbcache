@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace MbCacheTest.Logic;
 
-public class AllowDifferentArgumentsShareSameCacheKeyTest(Type proxyType) : TestCase(proxyType)
+public class AllowDifferentArgumentsShareSameCacheKeyTest : TestCase
 {
 	private IMbCacheFactory factory;
 

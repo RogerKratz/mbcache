@@ -5,10 +5,6 @@ namespace MbCacheTest.Events.Statistic;
 
 public class ImplicitDeleteTest : DeleteTestBase
 {
-	public ImplicitDeleteTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		EventListener = new EventListenerForTest();

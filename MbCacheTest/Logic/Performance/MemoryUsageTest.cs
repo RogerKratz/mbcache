@@ -11,9 +11,6 @@ public class MemoryUsageTest : TestCase
 	private ObjectWithMultipleParameters component;
 	private IMbCacheFactory factory;
 
-	public MemoryUsageTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

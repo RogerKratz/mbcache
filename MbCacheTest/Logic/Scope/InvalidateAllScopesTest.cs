@@ -11,10 +11,6 @@ public class InvalidateAllScopesTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public InvalidateAllScopesTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ObjectWithMultipleParameters>()

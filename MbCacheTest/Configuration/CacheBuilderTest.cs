@@ -7,10 +7,6 @@ namespace MbCacheTest.Configuration;
 
 public class CacheBuilderTest : TestCase
 {
-	public CacheBuilderTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	[Test]
 	public void OnlyDeclareTypeOnce()
 	{

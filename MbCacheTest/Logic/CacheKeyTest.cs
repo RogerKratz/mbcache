@@ -9,10 +9,6 @@ public class CacheKeyTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public CacheKeyTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder

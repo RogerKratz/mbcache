@@ -9,11 +9,7 @@ namespace MbCacheTest.Logic.Generics;
 public class GenericTypeTest : TestCase
 {
 	private IMbCacheFactory factory;
-
-	public GenericTypeTest(Type proxyType) : base(proxyType)
-	{
-	}
-
+	
 	protected override void TestSetup()
 	{
 		factory = CacheBuilder.For<ObjectOfGenericType<string>>()

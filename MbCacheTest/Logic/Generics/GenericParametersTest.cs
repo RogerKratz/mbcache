@@ -10,10 +10,6 @@ public class GenericParametersTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public GenericParametersTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		factory = CacheBuilder.For<ObjectWithGenericMethodParameters>()

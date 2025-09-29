@@ -11,10 +11,7 @@ namespace MbCacheTest.Logic.Performance;
 public class CacheMissPerformanceTest : TestCase
 {
 	private ObjectTakes100MsToFill instance;
-		
-	public CacheMissPerformanceTest(Type proxyType) : base(proxyType)
-	{
-	}
+
 
 	protected override void TestSetup()
 	{

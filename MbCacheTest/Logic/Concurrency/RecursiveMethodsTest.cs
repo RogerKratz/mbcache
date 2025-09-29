@@ -11,10 +11,6 @@ namespace MbCacheTest.Logic.Concurrency;
 public class RecursiveMethodsTest : TestCase
 {
 	private IMbCacheFactory factory;
-		
-	public RecursiveMethodsTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

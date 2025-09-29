@@ -10,10 +10,6 @@ public class CachingObjectWithParameterCtorClassTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public CachingObjectWithParameterCtorClassTest(Type proxyType) : base(proxyType)
-	{
-	}
-
 	protected override void TestSetup()
 	{
 		CacheBuilder

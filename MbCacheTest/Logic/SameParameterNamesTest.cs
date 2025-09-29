@@ -8,10 +8,7 @@ namespace MbCacheTest.Logic;
 public class SameParameterNamesTest : TestCase
 {
 	private IMbCacheFactory factory;
-
-	public SameParameterNamesTest(Type proxyType) : base(proxyType)
-	{
-	}
+	
 
 	protected override void TestSetup()
 	{

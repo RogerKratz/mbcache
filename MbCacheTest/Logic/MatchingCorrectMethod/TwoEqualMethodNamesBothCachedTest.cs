@@ -10,9 +10,6 @@ public class TwoEqualMethodNamesBothCachedTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public TwoEqualMethodNamesBothCachedTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

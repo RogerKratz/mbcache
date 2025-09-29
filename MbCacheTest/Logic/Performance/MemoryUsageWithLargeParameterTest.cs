@@ -9,10 +9,6 @@ public class MemoryUsageWithLargeParameterTest : TestCase
 {
 	private IObjectWithParametersOnCachedMethod component;
 
-	public MemoryUsageWithLargeParameterTest(Type proxyType) : base(proxyType)
-	{
-	}
-		
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ObjectWithParametersOnCachedMethod>()

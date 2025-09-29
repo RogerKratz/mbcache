@@ -10,9 +10,6 @@ public class ProxyExceptionTest : TestCase
 {
 	private IMbCacheFactory factory;
 
-	public ProxyExceptionTest(Type proxyType) : base(proxyType)
-	{
-	}
 
 	protected override void TestSetup()
 	{

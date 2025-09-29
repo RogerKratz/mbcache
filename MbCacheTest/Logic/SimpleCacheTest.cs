@@ -8,11 +8,7 @@ namespace MbCacheTest.Logic;
 public class SimpleCacheTest : TestCase
 {
 	private IMbCacheFactory factory;
-
-	public SimpleCacheTest(Type proxyType) : base(proxyType)
-	{
-	}
-
+	
 	protected override void TestSetup()
 	{
 		CacheBuilder.For<ReturningRandomNumbers>()

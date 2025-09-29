@@ -11,22 +11,12 @@ namespace MbCache.Configuration;
 
 public class CacheBuilder
 {
-	private readonly IDictionary<Type, ConfigurationForType> _configuredTypes;
-	private readonly ICollection<ConfigurationForType> _details;
-	private IProxyFactory _proxyFactory;
-	private ICache _cache;
-	private ICacheKey _cacheKey;
-	private readonly ICollection<IEventListener> _eventListeners;
-
-	public CacheBuilder()
-	{
-		_configuredTypes = new Dictionary<Type, ConfigurationForType>();
-		_details = new List<ConfigurationForType>();
-		_proxyFactory = new ProxyFactory();
-		_eventListeners = new List<IEventListener>();
-		_cacheKey = new ToStringCacheKey();
-		_cache = new InMemoryCache(TimeSpan.FromMinutes(20));
-	}
+	private readonly IDictionary<Type, ConfigurationForType> _configuredTypes = new Dictionary<Type, ConfigurationForType>();
+	private readonly ICollection<ConfigurationForType> _details = new List<ConfigurationForType>();
+	private IProxyFactory _proxyFactory = new ProxyFactory();
+	private ICache _cache = new InMemoryCache(TimeSpan.FromMinutes(20));
+	private ICacheKey _cacheKey = new ToStringCacheKey();
+	private readonly ICollection<IEventListener> _eventListeners = new List<IEventListener>();
 
 	/// <summary>
 	/// Builds the <see cref="IMbCacheFactory"/>.

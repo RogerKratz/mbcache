@@ -3,22 +3,14 @@ using System.Reflection;
 
 namespace MbCache.Logic;
 
-public class CachedMethod
+public class CachedMethod(MethodInfo info, IEnumerable<object> returnValuesNotToCache)
 {
-	private readonly MethodInfo _methodInfo;
-
-	public IEnumerable<object> ReturnValuesNotToCache { get; }
-
-	public CachedMethod(MethodInfo methodInfo, IEnumerable<object> returnValuesNotToCache)
-	{
-		_methodInfo = methodInfo;
-		ReturnValuesNotToCache = returnValuesNotToCache;
-	}
+	public IEnumerable<object> ReturnValuesNotToCache { get; } = returnValuesNotToCache;
 
 	public bool SameMethodAs(MethodInfo methodInfo)
 	{
 		var x = methodInfo;
-		var y = _methodInfo;
+		var y = info;
 		if (!x.Name.Equals(y.Name))
 			return false;
 		var xParams = x.GetParameters();

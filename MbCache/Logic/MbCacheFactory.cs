@@ -7,26 +7,20 @@ using MbCache.Core;
 
 namespace MbCache.Logic;
 
-public class MbCacheFactory : IMbCacheFactory
+public class MbCacheFactory(
+	IProxyFactory proxyFactory,
+	IDictionary<Type, ConfigurationForType> configuredTypes)
+	: IMbCacheFactory
 {
-	private readonly IProxyFactory _proxyFactory;
-	private readonly IDictionary<Type, ConfigurationForType> _configuredTypes;
 	private const string isNotARegisteredComponentMessage = "{0} is not a registered MbCache component!";
-
-	public MbCacheFactory(IProxyFactory proxyFactory,
-		IDictionary<Type, ConfigurationForType> configuredTypes)
-	{
-		_configuredTypes = configuredTypes;
-		_proxyFactory = proxyFactory;
-	}
 
 	public T Create<T>(params object[] parameters) where T : class
 	{
 		var type = typeof (T);
-		if (_configuredTypes.TryGetValue(type, out var configurationForType))
+		if (configuredTypes.TryGetValue(type, out var configurationForType))
 		{
 			var target = (T)createTarget(configurationForType.ComponentType.ConcreteType, parameters);
-			return _proxyFactory.CreateProxy(target, configurationForType);
+			return proxyFactory.CreateProxy(target, configurationForType);
 		}
 		throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 	}
@@ -34,9 +28,9 @@ public class MbCacheFactory : IMbCacheFactory
 	public T ToCachedComponent<T>(T uncachedComponent) where T : class
 	{
 		var type = typeof(T);
-		if (_configuredTypes.TryGetValue(type, out var configurationForType))
+		if (configuredTypes.TryGetValue(type, out var configurationForType))
 		{
-			return _proxyFactory.CreateProxy(uncachedComponent, configurationForType);
+			return proxyFactory.CreateProxy(uncachedComponent, configurationForType);
 		}
 		throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type));
 	}
@@ -44,7 +38,7 @@ public class MbCacheFactory : IMbCacheFactory
 	[MethodImpl(MethodImplOptions.Synchronized)]
 	public void Invalidate()
 	{
-		foreach (var configuredType in _configuredTypes.Values)
+		foreach (var configuredType in configuredTypes.Values)
 		{
 			configuredType.Cache.Clear();
 		}
@@ -53,7 +47,7 @@ public class MbCacheFactory : IMbCacheFactory
 	public void Invalidate<T>()
 	{
 		var type = typeof (T);
-		if (_configuredTypes.TryGetValue(type, out var configurationForType))
+		if (configuredTypes.TryGetValue(type, out var configurationForType))
 		{
 			var componentType = configurationForType.ComponentType;
 			var cacheKey = configurationForType.CacheKey.RemoveKey(componentType);
@@ -82,7 +76,7 @@ public class MbCacheFactory : IMbCacheFactory
 
 	public Type ImplementationTypeFor(Type componentType)
 	{
-		if (!_configuredTypes.TryGetValue(componentType, out var configuredType))
+		if (!configuredTypes.TryGetValue(componentType, out var configuredType))
 		{
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, componentType.FullName));
 		}
@@ -93,7 +87,7 @@ public class MbCacheFactory : IMbCacheFactory
 	public void DisableCache<T>(bool evictCacheEntries = true)
 	{
 		var type = typeof(T);
-		if (!_configuredTypes.TryGetValue(type, out var methods))
+		if (!configuredTypes.TryGetValue(type, out var methods))
 		{
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 		}
@@ -107,7 +101,7 @@ public class MbCacheFactory : IMbCacheFactory
 	public void EnableCache<T>()
 	{
 		var type = typeof (T);
-		if (!_configuredTypes.TryGetValue(type, out var methods))
+		if (!configuredTypes.TryGetValue(type, out var methods))
 		{
 			throw new ArgumentException(string.Format(isNotARegisteredComponentMessage, type.FullName));
 		}

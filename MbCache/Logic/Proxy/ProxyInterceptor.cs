@@ -6,35 +6,27 @@ using MbCache.Core;
 
 namespace MbCache.Logic.Proxy;
 
-public sealed class ProxyInterceptor
+public sealed class ProxyInterceptor(
+	object target,
+	ConfigurationForType configurationForType,
+	ICachingComponent cachingComponent)
 {
-	private readonly object _target;
-	private readonly ConfigurationForType _configurationForType;
 	private static readonly MethodInfo exceptionInternalPreserveStackTrace =
 		typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
 
-	public ProxyInterceptor(object target, 
-		ConfigurationForType configurationForType, 
-		ICachingComponent cachingComponent)
-	{
-		_target = target;
-		_configurationForType = configurationForType;
-		Component = cachingComponent;
-	}
-		
-	public ICachingComponent Component { get; }
+	public ICachingComponent Component { get; } = cachingComponent;
 
 	public object DecorateMethodCall(MethodInfo method, object[] arguments)
 	{
-		if (_configurationForType.EnabledCache)
+		if (configurationForType.EnabledCache)
 		{
-			var cachedMethod = _configurationForType.CachedMethods.SingleOrDefault(x => x.SameMethodAs(method)); 
+			var cachedMethod = configurationForType.CachedMethods.SingleOrDefault(x => x.SameMethodAs(method)); 
 			if (cachedMethod != null)
 			{
-				var keyAndItsDependingKeys = _configurationForType.CacheKey.GetAndPutKey(_configurationForType.ComponentType, Component, method, arguments);
+				var keyAndItsDependingKeys = configurationForType.CacheKey.GetAndPutKey(configurationForType.ComponentType, Component, method, arguments);
 				return keyAndItsDependingKeys.Key == null ? 
 					callOriginalMethod(method, arguments) : 
-					_configurationForType.Cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, () =>
+					configurationForType.Cache.GetAndPutIfNonExisting(keyAndItsDependingKeys, method, () =>
 					{
 						var returnValue = callOriginalMethod(method, arguments);
 						var shouldBeCached = !cachedMethod.ReturnValuesNotToCache.Contains(returnValue);
@@ -50,7 +42,7 @@ public sealed class ProxyInterceptor
 	{
 		try
 		{
-			return method.Invoke(_target, arguments);
+			return method.Invoke(target, arguments);
 		}
 		catch (TargetInvocationException ex)
 		{

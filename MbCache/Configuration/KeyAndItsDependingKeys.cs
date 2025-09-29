@@ -3,14 +3,8 @@ using System.Collections.Generic;
 
 namespace MbCache.Configuration;
 
-public struct KeyAndItsDependingKeys
+public readonly struct KeyAndItsDependingKeys(string key, Func<IEnumerable<string>> dependingRemoveKeys)
 {
-	public KeyAndItsDependingKeys(string key, Func<IEnumerable<string>> dependingRemoveKeys)
-	{
-		Key = key;
-		DependingRemoveKeys = dependingRemoveKeys;
-	}
-
-	public string Key { get; }
-	public Func<IEnumerable<string>> DependingRemoveKeys { get; }
+	public string Key { get; } = key;
+	public Func<IEnumerable<string>> DependingRemoveKeys { get; } = dependingRemoveKeys;
 }

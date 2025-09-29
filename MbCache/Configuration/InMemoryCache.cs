@@ -9,24 +9,16 @@ using MbCache.Core.Events;
 
 namespace MbCache.Configuration;
 
-public class InMemoryCache : ICache
+public class InMemoryCache(TimeSpan timeout) : ICache
 {
-	private readonly TimeSpan _timeout;
 	private static readonly MemoryCache cache = MemoryCache.Default;
-	private static readonly object dependencyValue = new object();
-	private readonly ConcurrentDictionary<string, object> lockObjects = new ConcurrentDictionary<string, object>();
+	private static readonly object dependencyValue = new();
+	private readonly ConcurrentDictionary<string, object> lockObjects = new();
 	private EventListenersCallback _eventListenersCallback;
 	private const string mainCacheKey = "MainMbCacheKey";
 
-	public InMemoryCache(TimeSpan timeout)
-	{
-		_timeout = timeout;
-	}
-
-	public void Initialize(EventListenersCallback eventListenersCallback)
-	{
+	public void Initialize(EventListenersCallback eventListenersCallback) => 
 		_eventListenersCallback = eventListenersCallback;
-	}
 
 	public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
 	{
@@ -66,15 +58,11 @@ public class InMemoryCache : ICache
 		return actionOutsideLock();
 	}
 
-	public void Delete(string cacheKey)
-	{
+	public void Delete(string cacheKey) => 
 		cache.Remove(cacheKey);
-	}
 
-	public void Clear()
-	{
+	public void Clear() => 
 		Delete(mainCacheKey);
-	}
 
 	private CachedItem executeAndPutInCache(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
 	{
@@ -89,7 +77,7 @@ public class InMemoryCache : ICache
 
 		var policy = new CacheItemPolicy
 		{
-			AbsoluteExpiration = DateTimeOffset.UtcNow.Add(_timeout),
+			AbsoluteExpiration = DateTimeOffset.UtcNow.Add(timeout),
 			RemovedCallback = arguments =>
 			{
 				_eventListenersCallback.OnCacheRemoval(cachedItem);

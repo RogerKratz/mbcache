@@ -6,23 +6,13 @@ using MbCache.Logic;
 
 namespace MbCache.Configuration;
 
-public class FluentBuilder<T>
+public class FluentBuilder<T>(
+	CacheBuilder cacheBuilder,
+	IDictionary<Type, ConfigurationForType> cachedMethods,
+	ConfigurationForType details)
 {
-	private readonly CacheBuilder _cacheBuilder;
-	private readonly IDictionary<Type, ConfigurationForType> _cachedMethods;
-	private readonly ConfigurationForType _details;
-
 	private const string componentRegisteredMultipleEx =
-		@"Type {0} is already in CacheBuilder. If you want to cache multiple methods on one type, simply call CacheMethod multiple times instead.";
-
-	public FluentBuilder(CacheBuilder cacheBuilder,
-		IDictionary<Type, ConfigurationForType> cachedMethods, 
-		ConfigurationForType details)
-	{
-		_cacheBuilder = cacheBuilder;
-		_cachedMethods = cachedMethods;
-		_details = details;
-	}
+		"Type {0} is already in CacheBuilder. If you want to cache multiple methods on one type, simply call CacheMethod multiple times instead.";
 
 	/// <summary>
 	/// Use caching for specified method
@@ -34,7 +24,7 @@ public class FluentBuilder<T>
 	{
 		var method = ExpressionHelper.MemberName(expression.Body);
 		var valuesNotToCache = returnValuesNotToCache == null ? Enumerable.Empty<object>() : returnValuesNotToCache.OfType<object>();
-		_details.CachedMethods.Add(new CachedMethod(method, valuesNotToCache));
+		details.CachedMethods.Add(new CachedMethod(method, valuesNotToCache));
 		return this;
 	}
 
@@ -44,7 +34,7 @@ public class FluentBuilder<T>
 	/// <returns></returns>
 	public FluentBuilder<T> PerInstance()
 	{
-		_details.CachePerInstance = true;
+		details.CachePerInstance = true;
 		return this;
 	}
 
@@ -55,7 +45,7 @@ public class FluentBuilder<T>
 	/// <returns></returns>
 	public FluentBuilder<T> OverrideCacheKey(ICacheKey cacheKey)
 	{
-		_details.CacheKey = cacheKey;
+		details.CacheKey = cacheKey;
 		return this;
 	}
 		
@@ -64,7 +54,7 @@ public class FluentBuilder<T>
 	/// </summary>
 	public FluentBuilder<T> OverrideCache(ICache cache)
 	{
-		_details.Cache = cache;
+		details.Cache = cache;
 		return this;
 	}
 		
@@ -75,7 +65,7 @@ public class FluentBuilder<T>
 	/// </summary>
 	public FluentBuilder<T> AllowDifferentArgumentsShareSameCacheKey()
 	{
-		_details.AllowDifferentArgumentsShareSameCacheKey = true;
+		details.AllowDifferentArgumentsShareSameCacheKey = true;
 		return this;
 	}
 
@@ -87,24 +77,24 @@ public class FluentBuilder<T>
 	public CacheBuilder As<TInterface>()
 	{
 		if(typeof(TInterface).IsClass)
-			ProxyValidator.Validate(_details);
+			ProxyValidator.Validate(details);
 		addToCachedMethods(typeof(TInterface));
-		return _cacheBuilder;
+		return cacheBuilder;
 	}
 	/// <summary>
 	/// Registers the component on the class itself.
 	/// </summary>
 	public CacheBuilder AsImplemented()
 	{
-		ProxyValidator.Validate(_details);
-		addToCachedMethods(_details.ComponentType.ConcreteType);
-		return _cacheBuilder;
+		ProxyValidator.Validate(details);
+		addToCachedMethods(details.ComponentType.ConcreteType);
+		return cacheBuilder;
 	}		
 		
 	private void addToCachedMethods(Type type)
 	{
-		if (_cachedMethods.ContainsKey(type))
+		if (cachedMethods.ContainsKey(type))
 			throw new ArgumentException(string.Format(componentRegisteredMultipleEx, type));
-		_cachedMethods[type] = _details;
+		cachedMethods[type] = details;
 	}
 }

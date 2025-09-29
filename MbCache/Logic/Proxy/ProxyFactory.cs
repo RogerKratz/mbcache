@@ -11,7 +11,7 @@ namespace MbCache.Logic.Proxy;
 
 public class ProxyFactory : IProxyFactory
 {
-	private readonly ConcurrentDictionary<Type, Type> _proxyTypeCache = new ConcurrentDictionary<Type, Type>();
+	private readonly ConcurrentDictionary<Type, Type> _proxyTypeCache = new();
 		
 	public T CreateProxy<T>(T target, ConfigurationForType configurationForType) where T : class
 	{

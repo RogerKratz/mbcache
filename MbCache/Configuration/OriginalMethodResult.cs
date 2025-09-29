@@ -1,13 +1,7 @@
 namespace MbCache.Configuration;
 
-public class OriginalMethodResult
+public class OriginalMethodResult(object value, bool shouldBeCached)
 {
-	public OriginalMethodResult(object value, bool shouldBeCached)
-	{
-		Value = value;
-		ShouldBeCached = shouldBeCached;
-	}
-		
-	public object Value { get; }
-	public bool ShouldBeCached { get; }
+	public object Value { get; } = value;
+	public bool ShouldBeCached { get; } = shouldBeCached;
 }

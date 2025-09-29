@@ -2,18 +2,11 @@
 
 namespace MbCache.Core.Events;
 
-public class EventListenersCallback
+public class EventListenersCallback(IEnumerable<IEventListener> eventListeners)
 {
-	private readonly IEnumerable<IEventListener> _eventListeners;
-
-	public EventListenersCallback(IEnumerable<IEventListener> eventListeners)
-	{
-		_eventListeners = eventListeners;
-	}
-
 	public void OnCacheRemoval(CachedItem cachedItem)
 	{
-		foreach (var eventHandler in _eventListeners)
+		foreach (var eventHandler in eventListeners)
 		{
 			eventHandler.OnCacheRemoval(cachedItem);
 		}
@@ -21,7 +14,7 @@ public class EventListenersCallback
 
 	public void OnCacheMiss(CachedItem cachedItem)
 	{
-		foreach (var eventHandler in _eventListeners)
+		foreach (var eventHandler in eventListeners)
 		{
 			eventHandler.OnCacheMiss(cachedItem);
 		}
@@ -29,7 +22,7 @@ public class EventListenersCallback
 
 	public void OnCacheHit(CachedItem cachedItem)
 	{
-		foreach (var eventListener in _eventListeners)
+		foreach (var eventListener in eventListeners)
 		{
 			eventListener.OnCacheHit(cachedItem);
 		}

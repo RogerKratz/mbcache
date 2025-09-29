@@ -2,14 +2,8 @@
 
 namespace MbCache.Core;
 
-public class CachedItem
+public class CachedItem(MethodInfo cachedMethod, object cachedValue)
 {
-	public CachedItem(MethodInfo cachedMethod, object cachedValue)
-	{
-		CachedMethod = cachedMethod;
-		CachedValue = cachedValue;
-	}
-
-	public MethodInfo CachedMethod { get; }
-	public object CachedValue { get; }
+	public MethodInfo CachedMethod { get; } = cachedMethod;
+	public object CachedValue { get; } = cachedValue;
 }

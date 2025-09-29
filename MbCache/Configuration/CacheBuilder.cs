@@ -56,10 +56,8 @@ public class CacheBuilder
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public FluentBuilder<T> For<T>()
-	{
-		return For<T>(null);
-	}
+	public FluentBuilder<T> For<T>() =>
+		For<T>(null);
 
 	/// <summary>
 	/// Creates a caching component with a specific cache key name.

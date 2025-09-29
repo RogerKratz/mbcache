@@ -20,19 +20,15 @@ namespace MbCache.Configuration;
 /// </summary>
 public abstract class CacheKeyBase : ICacheKey
 {
-	private static readonly Regex findSeparator = new Regex(@"\" + separator, RegexOptions.Compiled);
+	private static readonly Regex findSeparator = new(@"\" + separator, RegexOptions.Compiled);
 	private const string separator = "|";
 	private const string separatorForParameters = "$";
 
-	public string RemoveKey(ComponentType type)
-	{
-		return type.TypeAsCacheKeyString;
-	}
+	public string RemoveKey(ComponentType type) => 
+		type.TypeAsCacheKeyString;
 
-	public string RemoveKey(ComponentType type, ICachingComponent component)
-	{
-		return string.Concat(RemoveKey(type), separator, component.UniqueId);
-	}
+	public string RemoveKey(ComponentType type, ICachingComponent component) => 
+		string.Concat(RemoveKey(type), separator, component.UniqueId);
 
 	public string RemoveKey(ComponentType type, ICachingComponent component, MethodInfo method)
 	{
@@ -88,10 +84,7 @@ public abstract class CacheKeyBase : ICacheKey
 	/// Can be used to have different cache entries based on some logic,
 	/// eg in tenant scenarios.
 	/// </summary>
-	protected virtual string Scope()
-	{
-		return null;
-	}
+	protected virtual string Scope() => null;
 
 	/// <summary>
 	/// Adds string to cache key for parameter values  

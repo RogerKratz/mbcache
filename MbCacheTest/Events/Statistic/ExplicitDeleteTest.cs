@@ -1,25 +1,12 @@
-﻿using MbCache.Configuration;
+﻿using MbCache.Core;
 using MbCacheTest.TestData;
-using NUnit.Framework;
 
 namespace MbCacheTest.Events.Statistic;
 
 public class ExplicitDeleteTest : DeleteTestBase
 {
-	[SetUp]
-	public void Setup()
+	protected override void Invalidate(IMbCacheFactory factory, IObjectReturningNull comp)
 	{
-		EventListener = new EventListenerForTest();
-	
-		var factory = new CacheBuilder()
-			.For<ObjectReturningNull>()
-			.CacheMethod(c => c.ReturnNullIfZero(0))
-			.As<IObjectReturningNull>()
-			.AddEventListener(EventListener)
-			.BuildFactory();
-		var comp = factory.Create<IObjectReturningNull>();
-		comp.ReturnNullIfZero(0);
-		comp.ReturnNullIfZero(1);
 		factory.Invalidate(comp, c => c.ReturnNullIfZero(0), true);
 		factory.Invalidate(comp, c => c.ReturnNullIfZero(1), true);
 	}

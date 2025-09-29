@@ -1,4 +1,5 @@
 ﻿using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -6,20 +7,17 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.EnableDisable;
 
-public class DisableTest : TestCase
+public class DisableTest
 {
 	private IMbCacheFactory factory;
 	
-
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod())
-			.As<IObjectReturningNewGuids>();
-
-		factory = CacheBuilder.BuildFactory();
-	}
+			.As<IObjectReturningNewGuids>()
+			.BuildFactory();
 
 
 	[Test]

@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Diagnostics;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Performance;
 
-public class CacheHitPerformanceTest : TestCase
+public class CacheHitPerformanceTest
 {
 	private IReturningRandomNumbers instance;
-
-
-	protected override void TestSetup()
+	
+	[SetUp]
+	public void Setup()
 	{
-		CacheBuilder.For<ReturningRandomNumbers>()
+		var factory = new CacheBuilder()
+			.For<ReturningRandomNumbers>()
 			.CacheMethod(c => c.CachedNumber())
-			.As<IReturningRandomNumbers>();
+			.As<IReturningRandomNumbers>()
+			.BuildFactory();
 
-		var factory = CacheBuilder.BuildFactory();
 		instance = factory.Create<IReturningRandomNumbers>();
 	}
 

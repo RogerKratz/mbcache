@@ -1,23 +1,22 @@
 ﻿using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic;
 
-public class CacheKeyTest : TestCase
+public class CacheKeyTest
 {
 	private IMbCacheFactory factory;
 
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
 			.For<ObjectWithParametersOnCachedMethod>()
 			.CacheMethod(c => c.CachedMethod(null))
-			.As<IObjectWithParametersOnCachedMethod>();
-			
-		factory = CacheBuilder.BuildFactory();
-	}
+			.As<IObjectWithParametersOnCachedMethod>()
+			.BuildFactory();
 
 	[Test]
 	public void ShouldThrowIfSuspiciousParameterIsUsed()

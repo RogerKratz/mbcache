@@ -10,6 +10,8 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageTags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop</PackageTags>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <AssemblyOriginatorKeyFile>mbcacheKey.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />

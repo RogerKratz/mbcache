@@ -1,22 +1,15 @@
 ﻿using System;
-using MbCache.Core;
+using MbCache.Configuration;
 using NUnit.Framework;
 
 namespace MbCacheTest.Logic.Wrap;
 
-public class GeneralTests : TestCase
+public class GeneralTests
 {
-	private IMbCacheFactory factory;
-
-
-	protected override void TestSetup()
-	{
-		factory = CacheBuilder.BuildFactory();
-	}
-
 	[Test]
 	public void ShouldThrowIfNonCachedComponentIsUsed()
 	{
+		var factory = new CacheBuilder().BuildFactory();
 		Assert.Throws<ArgumentException>(() => factory.ToCachedComponent(new object()));
 	}
 }

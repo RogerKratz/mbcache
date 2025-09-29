@@ -9,29 +9,22 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class CacheForComponentOverridingTest : TestCase
+public class CacheForComponentOverridingTest
 {
 	private IMbCacheFactory factory;
 
-	protected override ICache CreateCache()
-	{
-		return new cacheThatThrows();
-	}
-
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
+			.SetCache(new cacheThatThrows())
 			.For<ReturningRandomNumbers>()
-			.CacheMethod(c => c.CachedNumber())
-			.OverrideCache(new InMemoryCache(TimeSpan.FromMinutes(1)))
-			.As<IReturningRandomNumbers>()
+				.CacheMethod(c => c.CachedNumber())
+				.OverrideCache(new InMemoryCache(TimeSpan.FromMinutes(1)))
+				.As<IReturningRandomNumbers>()
 			.For<ObjectReturningNewGuids>()
-			.CacheMethod(c => c.CachedMethod())
-			.As<IObjectReturningNewGuids>();
-			
-
-		factory = CacheBuilder.BuildFactory();
-	}
+				.CacheMethod(c => c.CachedMethod())
+				.As<IObjectReturningNewGuids>()
+			.BuildFactory();
 
 	[Test]
 	public void ShouldUseDefault()
@@ -54,8 +47,7 @@ public class CacheForComponentOverridingTest : TestCase
 		{
 		}
 
-		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys,
-			MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
+		public object GetAndPutIfNonExisting(KeyAndItsDependingKeys keyAndItsDependingKeys, MethodInfo cachedMethod, Func<OriginalMethodResult> originalMethod)
 		{
 			throw new NotImplementedException();
 		}

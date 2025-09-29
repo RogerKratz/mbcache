@@ -59,20 +59,14 @@ public class MbCacheFactory(
 		}
 	}
 
-	public void Invalidate(object component)
-	{
+	public void Invalidate(object component) => 
 		castToCachingComponentOrThrow(component).Invalidate();
-	}
 
-	public void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues)
-	{
+	public void Invalidate<T>(T component, Expression<Func<T, object>> method, bool matchParameterValues) => 
 		castToCachingComponentOrThrow(component).Invalidate(method, matchParameterValues);
-	}
 
-	public bool IsKnownInstance(object component)
-	{
-		return component is ICachingComponent;
-	}
+	public bool IsKnownInstance(object component) => 
+		component is ICachingComponent;
 
 	public Type ImplementationTypeFor(Type componentType)
 	{
@@ -117,8 +111,7 @@ public class MbCacheFactory(
 
 		return comp;
 	}
-		
-	//extract to separate type
+	
 	private static object createTarget(Type type, object[] ctorParameters)
 	{
 		try
@@ -132,8 +125,5 @@ public class MbCacheFactory(
 		}
 	}
 
-	public void Dispose()
-	{
-		Invalidate();
-	}
+	public void Dispose() => Invalidate();
 }

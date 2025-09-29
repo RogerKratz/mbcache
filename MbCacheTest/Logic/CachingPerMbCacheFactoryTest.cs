@@ -21,7 +21,6 @@ public class CachingPerMbCacheFactoryTest : TestCase
 			.As<IObjectReturningNewGuids>();
 			
 		var cacheBuilder2 = new CacheBuilder()
-			.SetProxyFactory(ProxyFactory)
 			.SetCache(CreateCache())
 			.SetCacheKey(CreateCacheKey())
 			.For<ObjectReturningNewGuids>()

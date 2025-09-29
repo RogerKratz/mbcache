@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace MbCacheTest;
 
-
 public abstract class TestCase
 {
 	[SetUp]
@@ -21,8 +20,6 @@ public abstract class TestCase
 	}
 
 	protected virtual void TestSetup(){}
-
-	protected IProxyFactory ProxyFactory { get; }
 		
 	protected CacheBuilder CacheBuilder { get; private set; }
 

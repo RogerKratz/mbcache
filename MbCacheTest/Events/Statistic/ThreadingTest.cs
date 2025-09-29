@@ -4,6 +4,7 @@ using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Events.Statistic;
 
@@ -47,7 +48,7 @@ public class ThreadingTest : TestCase
 			tColl[i].Join();
 		}
 
-		Assert.AreEqual(noOfThreads, eventListener.CacheMisses);
+		noOfThreads.Should().Be.EqualTo(eventListener.CacheMisses);
 	}
 
 	private void createCacheHitOrMiss(int param)

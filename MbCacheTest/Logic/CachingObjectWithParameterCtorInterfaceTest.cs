@@ -24,8 +24,8 @@ public class CachingObjectWithParameterCtorInterfaceTest : TestCase
 	public void CanReadProps()
 	{
 		var obj = factory.Create<IObjectWithCtorParameters>(11, 12);
-		Assert.AreEqual(11, obj.Value1);
-		Assert.AreEqual(12, obj.Value2);
+		obj.Value1.Should().Be.EqualTo(11);
+		obj.Value2.Should().Be.EqualTo(12);
 	}
 
 	[Test]
@@ -37,15 +37,15 @@ public class CachingObjectWithParameterCtorInterfaceTest : TestCase
 	[Test]
 	public void VerifyCacheWorks()
 	{
-		Assert.AreEqual(factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod(),
-			factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod());
+		factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod()
+			.Should().Be.EqualTo(factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod());
 	}
 
 	[Test]
 	public void VerifyCacheDifferentParameters()
 	{
-		Assert.AreEqual(factory.Create<IObjectWithCtorParameters>(4, 4).CachedMethod(),
-			factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod());
+		factory.Create<IObjectWithCtorParameters>(4, 4).CachedMethod()
+			.Should().Be.EqualTo(factory.Create<IObjectWithCtorParameters>(4, 3).CachedMethod());
 	}
 
 	[Test]

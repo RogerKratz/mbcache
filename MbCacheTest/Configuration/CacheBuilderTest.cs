@@ -42,7 +42,8 @@ public class CacheBuilderTest : TestCase
 
 		var factory = CacheBuilder.BuildFactory();
 
-		Assert.AreEqual(factory.Create<IObjectReturningNewGuids>().GetType(), factory.Create<IObjectReturningNewGuids>().GetType());
+		factory.Create<IObjectReturningNewGuids>().GetType()
+			.Should().Be.EqualTo(factory.Create<IObjectReturningNewGuids>().GetType());
 	}
 
 	[Test]
@@ -54,8 +55,8 @@ public class CacheBuilderTest : TestCase
 		var factory = CacheBuilder.BuildFactory();
 		var obj1 = factory.Create<IObjectWithIdentifier>();
 		var obj2 = factory.Create<IObjectWithIdentifier>();
-		Assert.AreNotSame(obj1, obj2);
-		Assert.AreNotEqual(obj1.Id, obj2.Id);
+		obj1.Should().Not.Be.SameInstanceAs(obj2);
+		obj1.Id.Should().Not.Be.EqualTo(obj2.Id);
 	}
 
 	[Test]

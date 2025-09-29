@@ -1,6 +1,7 @@
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
@@ -8,7 +9,6 @@ public class KnownInstanceTest : TestCase
 {
 	private IMbCacheFactory factory;
 	
-
 	protected override void TestSetup()
 	{
 		CacheBuilder
@@ -23,7 +23,7 @@ public class KnownInstanceTest : TestCase
 	[Test]
 	public void CanAskFactoryIfComponentIsKnownType()
 	{
-		Assert.IsTrue(factory.IsKnownInstance(factory.Create<IObjectReturningNewGuids>()));
-		Assert.IsFalse(factory.IsKnownInstance(new object()));
+		factory.IsKnownInstance(factory.Create<IObjectReturningNewGuids>()).Should().Be.True();
+		factory.IsKnownInstance(new object()).Should().Be.False();
 	}
 }

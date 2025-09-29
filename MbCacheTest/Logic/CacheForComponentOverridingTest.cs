@@ -5,6 +5,7 @@ using MbCache.Core;
 using MbCache.Core.Events;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
@@ -44,7 +45,7 @@ public class CacheForComponentOverridingTest : TestCase
 	{
 		var obj1 = factory.Create<IReturningRandomNumbers>();
 		var obj2 = factory.Create<IReturningRandomNumbers>();
-		Assert.AreEqual(obj1.CachedNumber(), obj2.CachedNumber());
+		obj1.CachedNumber().Should().Be.EqualTo(obj2.CachedNumber());
 	}
 
 	private class cacheThatThrows : ICache

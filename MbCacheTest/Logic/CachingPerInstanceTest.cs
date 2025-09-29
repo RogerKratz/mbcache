@@ -1,6 +1,7 @@
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
@@ -27,7 +28,7 @@ public class CachingPerInstanceTest : TestCase
 		var obj = factory.Create<IObjectReturningNewGuids>();
 		var obj2 = factory.Create<IObjectReturningNewGuids>();
 
-		Assert.AreEqual(obj.CachedMethod(), obj.CachedMethod());
-		Assert.AreNotEqual(obj.CachedMethod(), obj2.CachedMethod());
+		obj.CachedMethod().Should().Be.EqualTo(obj.CachedMethod());
+		obj.CachedMethod().Should().Not.Be.EqualTo(obj2.CachedMethod());
 	}
 }

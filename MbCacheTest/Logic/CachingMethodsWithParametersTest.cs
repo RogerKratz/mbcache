@@ -1,6 +1,7 @@
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
@@ -21,24 +22,24 @@ public class CachingMethodsWithParametersTest : TestCase
 	[Test]
 	public void VerifySameParameterGivesCacheHit()
 	{
-		Assert.AreEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("hej"),
-			factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("hej"));
+		factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("hej")
+			.Should().Be.EqualTo(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("hej"));
 	}
 
 	[Test]
 	public void VerifyDifferentParameterGivesNoCacheHit()
 	{
-		Assert.AreNotEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("roger"),
-			factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
+		factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("roger")
+			.Should().Not.Be.EqualTo(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
 	}
 
 	[Test]
 	public void NullAsParameter()
 	{
-		Assert.AreNotEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null),
-			factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
-		Assert.AreEqual(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null),
-			factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null));
+		factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null)
+			.Should().Not.Be.EqualTo(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod("moore"));
+		factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null)
+			.Should().Be.EqualTo(factory.Create<IObjectWithParametersOnCachedMethod>().CachedMethod(null));
 	}
 
 	[Test]
@@ -47,7 +48,8 @@ public class CachingMethodsWithParametersTest : TestCase
 		var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
 		var value = obj.CachedMethod("hej");
 		factory.Invalidate<IObjectWithParametersOnCachedMethod>();
-		Assert.AreNotEqual(value, obj.CachedMethod("hej"));
+		
+		value.Should().Not.Be.EqualTo(obj.CachedMethod("hej"));
 	}
 
 	[Test]
@@ -56,6 +58,7 @@ public class CachingMethodsWithParametersTest : TestCase
 		var obj = factory.Create<IObjectWithParametersOnCachedMethod>();
 		var value = obj.CachedMethod("hej");
 		factory.Invalidate(obj);
-		Assert.AreNotEqual(value, obj.CachedMethod("hej"));
+		
+		value.Should().Not.Be.EqualTo(obj.CachedMethod("hej"));
 	}
 }

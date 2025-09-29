@@ -1,6 +1,7 @@
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
@@ -23,9 +24,10 @@ public class SimpleCacheTest : TestCase
 	{
 		var obj1 = factory.Create<IReturningRandomNumbers>();
 		var obj2 = factory.Create<IReturningRandomNumbers>();
-		Assert.AreEqual(obj1.CachedNumber(), obj2.CachedNumber());
-		Assert.AreEqual(obj1.CachedNumber2(), obj2.CachedNumber2());
-		Assert.AreNotEqual(obj1.CachedNumber(), obj1.CachedNumber2());
-		Assert.AreNotEqual(obj1.NonCachedNumber(), obj2.NonCachedNumber());
+		
+		obj1.CachedNumber().Should().Be.EqualTo(obj2.CachedNumber());
+		obj1.CachedNumber2().Should().Be.EqualTo(obj2.CachedNumber2());
+		obj1.CachedNumber().Should().Not.Be.EqualTo(obj2.CachedNumber2());
+		obj1.NonCachedNumber().Should().Not.Be.EqualTo(obj2.NonCachedNumber());
 	}
 }

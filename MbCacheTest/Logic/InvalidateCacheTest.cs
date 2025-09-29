@@ -34,12 +34,12 @@ public class InvalidateCacheTest : TestCase
 		var obj = factory.Create<IObjectReturningNewGuids>();
 		var value1 = obj.CachedMethod();
 		var value2 = obj.CachedMethod2();
-		Assert.AreEqual(value1, obj.CachedMethod());
-		Assert.AreEqual(value2, obj.CachedMethod2());
-		Assert.AreNotEqual(value1, value2);
+		obj.CachedMethod().Should().Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Be.EqualTo(value2);
+		value1.Should().Not.Be.EqualTo(value2);
 		factory.Invalidate<IObjectReturningNewGuids>();
-		Assert.AreNotEqual(value1, obj.CachedMethod());
-		Assert.AreNotEqual(value2, obj.CachedMethod2());
+		obj.CachedMethod().Should().Not.Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Not.Be.EqualTo(value2);
 	}
 
 	[Test]
@@ -61,12 +61,13 @@ public class InvalidateCacheTest : TestCase
 		var obj2 = factory.Create<IObjectReturningNewGuids>();
 		var value1 = obj.CachedMethod();
 		var value2 = obj2.CachedMethod2();
-		Assert.AreEqual(value1, obj.CachedMethod());
-		Assert.AreEqual(value2, obj.CachedMethod2());
-		Assert.AreNotEqual(value1, value2);
+
+		obj.CachedMethod().Should().Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Be.EqualTo(value2);
+		value1.Should().Not.Be.EqualTo(value2);
 		factory.Invalidate(obj);
-		Assert.AreNotEqual(value1, obj.CachedMethod());
-		Assert.AreNotEqual(value2, obj.CachedMethod2());
+		obj.CachedMethod().Should().Not.Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Not.Be.EqualTo(value2);
 	}
 
 
@@ -77,7 +78,7 @@ public class InvalidateCacheTest : TestCase
 		var value = obj.CachedMethod();
 
 		((ICachingComponent)obj).Invalidate();
-		Assert.AreNotEqual(value, obj.CachedMethod());
+		obj.CachedMethod().Should().Not.Be.EqualTo(value);
 	}
 
 	[Test]
@@ -86,12 +87,13 @@ public class InvalidateCacheTest : TestCase
 		var obj = factory.Create<IObjectReturningNewGuids>();
 		var value1 = obj.CachedMethod();
 		var value2 = obj.CachedMethod2();
-		Assert.AreEqual(value1, obj.CachedMethod());
-		Assert.AreEqual(value2, obj.CachedMethod2());
-		Assert.AreNotEqual(value1, value2);
+
+		obj.CachedMethod().Should().Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Be.EqualTo(value2);
+		value1.Should().Not.Be.EqualTo(value2);
 		factory.Invalidate(obj, method => obj.CachedMethod(), false);
-		Assert.AreNotEqual(value1, obj.CachedMethod());
-		Assert.AreEqual(value2, obj.CachedMethod2());
+		obj.CachedMethod().Should().Not.Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Be.EqualTo(value2);
 	}
 
 	[Test]
@@ -100,12 +102,13 @@ public class InvalidateCacheTest : TestCase
 		var obj = factory.Create<IObjectReturningNewGuids>();
 		var value1 = obj.CachedMethod();
 		var value2 = obj.CachedMethod2();
-		Assert.AreEqual(value1, obj.CachedMethod());
-		Assert.AreEqual(value2, obj.CachedMethod2());
-		Assert.AreNotEqual(value1, value2);
+		
+		obj.CachedMethod().Should().Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Be.EqualTo(value2);
+		value1.Should().Not.Be.EqualTo(value2);
 		factory.Invalidate(obj, method => obj.CachedMethod(), true);
-		Assert.AreNotEqual(value1, obj.CachedMethod());
-		Assert.AreEqual(value2, obj.CachedMethod2());
+		obj.CachedMethod().Should().Not.Be.EqualTo(value1);
+		obj.CachedMethod2().Should().Be.EqualTo(value2);
 	}
 
 	[Test]

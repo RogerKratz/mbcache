@@ -28,11 +28,11 @@ public class HitsAndMissesTest : TestCase
 	{
 		var comp = factory.Create<IObjectReturningNewGuids>();
 		comp.CachedMethod();
-		Assert.AreEqual(0, eventListener.CacheHits);
+		eventListener.CacheHits.Should().Be.EqualTo(0);
 		comp.CachedMethod();
-		Assert.AreEqual(1, eventListener.CacheHits);
+		eventListener.CacheHits.Should().Be.EqualTo(1);
 		comp.CachedMethod2();
-		Assert.AreEqual(1, eventListener.CacheHits);
+		eventListener.CacheHits.Should().Be.EqualTo(1);
 	}
 
 	[Test]
@@ -40,11 +40,11 @@ public class HitsAndMissesTest : TestCase
 	{
 		var comp = factory.Create<IObjectReturningNewGuids>();
 		comp.CachedMethod();
-		Assert.AreEqual(1, eventListener.CacheMisses);
+		eventListener.CacheMisses.Should().Be.EqualTo(1);
 		comp.CachedMethod();
-		Assert.AreEqual(1, eventListener.CacheMisses);
+		eventListener.CacheMisses.Should().Be.EqualTo(1);
 		comp.CachedMethod2();
-		Assert.AreEqual(1, eventListener.CacheMisses);
+		eventListener.CacheMisses.Should().Be.EqualTo(1);
 	}
 
 	[Test]

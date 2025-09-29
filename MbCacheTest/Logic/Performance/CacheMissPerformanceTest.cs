@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Performance;
 
-public class CacheMissPerformanceTest : TestCase
+public class CacheMissPerformanceTest
 {
 	private ObjectTakes100MsToFill instance;
 
-
-	protected override void TestSetup()
+	[SetUp]
+	public void Setup()
 	{
-		CacheBuilder.For<ObjectTakes100MsToFill>()
+		var factory = new CacheBuilder()
+			.For<ObjectTakes100MsToFill>()
 			.CacheMethod(c => c.Execute(0))
-			.AsImplemented();
-
-		var factory = CacheBuilder.BuildFactory();
+			.AsImplemented()
+			.BuildFactory();
 		instance = factory.Create<ObjectTakes100MsToFill>();
 	}
 		

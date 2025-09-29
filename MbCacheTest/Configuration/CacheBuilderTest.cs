@@ -1,47 +1,47 @@
 using System;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Configuration;
 
-public class CacheBuilderTest : TestCase
+public class CacheBuilderTest
 {
 	[Test]
 	public void OnlyDeclareTypeOnce()
 	{
-		CacheBuilder
+		var builder = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod())
 			.As<IObjectReturningNewGuids>();
 		Assert.Throws<ArgumentException>(()
 			=>
-			CacheBuilder
+			builder
 				.For<ObjectReturningNewGuids>()
 				.CacheMethod(c => c.CachedMethod2())
 				.As<IObjectReturningNewGuids>());
-
 	}
 
 	[Test]
 	public void ReturnTypeMustBeDeclared()
 	{
-		CacheBuilder
+		var builder = new CacheBuilder();
+		builder
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod());
-		Assert.Throws<InvalidOperationException>(() => CacheBuilder.BuildFactory());
+		Assert.Throws<InvalidOperationException>(() => builder.BuildFactory());
 	}
 
 	[Test]
 	public void CreatingProxiesOfSameDeclaredTypeShouldReturnIdenticalTypes()
 	{
-		CacheBuilder
+		var factory = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod())
-			.As<IObjectReturningNewGuids>();
-
-		var factory = CacheBuilder.BuildFactory();
-
+			.As<IObjectReturningNewGuids>()
+			.BuildFactory();
+		
 		factory.Create<IObjectReturningNewGuids>().GetType()
 			.Should().Be.EqualTo(factory.Create<IObjectReturningNewGuids>().GetType());
 	}
@@ -49,10 +49,10 @@ public class CacheBuilderTest : TestCase
 	[Test]
 	public void FactoryReturnsNewInterfaceInstances()
 	{
-		CacheBuilder
+		var factory = new CacheBuilder()
 			.For<ObjectWithIdentifier>()
-			.As<IObjectWithIdentifier>();
-		var factory = CacheBuilder.BuildFactory();
+			.As<IObjectWithIdentifier>()
+			.BuildFactory();
 		var obj1 = factory.Create<IObjectWithIdentifier>();
 		var obj2 = factory.Create<IObjectWithIdentifier>();
 		obj1.Should().Not.Be.SameInstanceAs(obj2);
@@ -62,7 +62,7 @@ public class CacheBuilderTest : TestCase
 	[Test]
 	public void CanConfigureMultipleComponents()
 	{
-		var factory = CacheBuilder
+		var factory = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(m => m.CachedMethod())
 			.As<IObjectReturningNewGuids>()

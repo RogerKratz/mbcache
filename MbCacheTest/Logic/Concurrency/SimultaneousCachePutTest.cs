@@ -1,21 +1,22 @@
 ﻿using System.Threading;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Concurrency;
 
-public class SimultaneousCachePutTest : TestCase
+public class SimultaneousCachePutTest
 {
 	[Test]
 	public void ShouldNotMakeTheSameCallMoreThanOnce()
 	{
-		CacheBuilder.For<ObjectWithCallCounter>()
+		var factory = new CacheBuilder()
+			.For<ObjectWithCallCounter>()
 			.CacheMethod(c => c.Increment())
 			.PerInstance()
-			.As<IObjectWithCallCounter>();
-
-		var factory = CacheBuilder.BuildFactory();
+			.As<IObjectWithCallCounter>()
+			.BuildFactory();
 
 		1000.Times(() =>
 		{

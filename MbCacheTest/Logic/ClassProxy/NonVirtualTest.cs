@@ -1,29 +1,30 @@
 ﻿using System;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic.ClassProxy;
 
-public class NonVirtualTest : TestCase
+public class NonVirtualTest
 {
 	[Test]
 	public void ShouldWorkIfComponentIsInterface()
 	{
-		var fluentBuilder = CacheBuilder
+		var factory = new CacheBuilder()
 			.For<HasNonVirtualMethod>()
 			.CacheMethod(m => m.Virtual())
-			.As<IHasNonVirtualMethod>();
+			.As<IHasNonVirtualMethod>()
+			.BuildFactory();
 
-		var instance = fluentBuilder.BuildFactory().Create<IHasNonVirtualMethod>();
-
+		var instance = factory.Create<IHasNonVirtualMethod>();
 		instance.Virtual().Should().Be.EqualTo(instance.Virtual());
 	}
 
 	[Test]
 	public void ShouldNotWorkIfComponentIsClass()
 	{
-		var fluentBuilder = CacheBuilder
+		var fluentBuilder = new CacheBuilder()
 			.For<HasNonVirtualMethod>()
 			.CacheMethod(m => m.Virtual());
 		Assert.Throws<InvalidOperationException>(() => fluentBuilder.AsImplemented());

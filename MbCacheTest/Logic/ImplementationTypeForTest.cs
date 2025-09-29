@@ -1,44 +1,45 @@
 ﻿using System;
+using MbCache.Configuration;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class ImplementationTypeForTest : TestCase
+public class ImplementationTypeForTest
 {
 	[Test]
 	public void ShouldReturnCorrectTypeForInterface()
 	{
-		CacheBuilder
+		var factory = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod())
-			.As<IObjectReturningNewGuids>();
-		var factory = CacheBuilder.BuildFactory();
+			.As<IObjectReturningNewGuids>()
+			.BuildFactory();
 		factory.ImplementationTypeFor(typeof(IObjectReturningNewGuids))
-			.Should().Be.EqualTo(typeof (ObjectReturningNewGuids));
+			.Should().Be.EqualTo<ObjectReturningNewGuids>();
 	}
 
 	[Test] 
 	public void ShouldReturnCorrectTypeForClass()
 	{
-		CacheBuilder
+		var factory = new CacheBuilder()
 			.For<ObjectWithNonInterfaceMethod>()
 			.CacheMethod(c => c.ReturnsFour())
-			.AsImplemented();
-		var factory = CacheBuilder.BuildFactory();
+			.AsImplemented()
+			.BuildFactory();
 		factory.ImplementationTypeFor(typeof(ObjectWithNonInterfaceMethod))
-			.Should().Be.EqualTo(typeof(ObjectWithNonInterfaceMethod));
+			.Should().Be.EqualTo<ObjectWithNonInterfaceMethod>();
 	}
 
 	[Test]
 	public void ShouldThrowIfUnknownType()
 	{
-		CacheBuilder
+		var factory = new CacheBuilder()
 			.For<ObjectWithNonInterfaceMethod>()
 			.CacheMethod(c => c.ReturnsFour())
-			.AsImplemented();
-		var factory = CacheBuilder.BuildFactory();
+			.AsImplemented()
+			.BuildFactory();
 		Assert.Throws<ArgumentException>(() =>
 			factory.ImplementationTypeFor(typeof(IObjectReturningNewGuids))
 		);

@@ -10,9 +10,7 @@ public class StatisticsEventListener : IEventListener
 	void IEventListener.OnCacheHit(CachedItem cachedItem) => 
 		Interlocked.Increment(ref _cacheHits);
 
-	void IEventListener.OnCacheRemoval(CachedItem cachedItem)
-	{
-	}
+	void IEventListener.OnCacheRemoval(CachedItem cachedItem) { }
 
 	void IEventListener.OnCacheMiss(CachedItem cachedItem) => 
 		Interlocked.Increment(ref _cacheMisses);

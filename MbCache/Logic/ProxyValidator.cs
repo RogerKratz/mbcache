@@ -5,10 +5,8 @@ namespace MbCache.Logic;
 
 public static class ProxyValidator
 {
-	public static void Validate(ConfigurationForType configurationForType)
-	{
+	public static void Validate(ConfigurationForType configurationForType) => 
 		checkAllMethodsAreVirtual(configurationForType);
-	}
 
 	private static void checkAllMethodsAreVirtual(ConfigurationForType configurationForType)
 	{
@@ -44,8 +42,6 @@ public static class ProxyValidator
 		                                                && (!method.IsVirtual || method.IsFinal || (method.IsVirtual && method.IsAssembly)));
 	}
 
-	private static bool isDisposeMethod(MethodBase method)
-	{
-		return method.Name.Equals("Dispose") && method.MemberType == MemberTypes.Method && method.GetParameters().Length == 0;
-	}
+	private static bool isDisposeMethod(MethodBase method) => 
+		method.Name.Equals("Dispose") && method.MemberType == MemberTypes.Method && method.GetParameters().Length == 0;
 }

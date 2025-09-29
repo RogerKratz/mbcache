@@ -6,27 +6,18 @@ using MbCache.Core;
 
 namespace MbCache.Logic;
 
-public class CachingComponent : ICachingComponent
+public class CachingComponent(ConfigurationForType configurationForType) : ICachingComponent
 {
-	private readonly ICache _cache;
-	private readonly ICacheKey _cacheKey;
-	private readonly ComponentType _componentType;
-	private readonly bool _allowDifferentArgumentsShareSameCacheKey;
+	private readonly ICache _cache = configurationForType.Cache;
+	private readonly ICacheKey _cacheKey = configurationForType.CacheKey;
+	private readonly ComponentType _componentType = configurationForType.ComponentType;
+	private readonly bool _allowDifferentArgumentsShareSameCacheKey = configurationForType.AllowDifferentArgumentsShareSameCacheKey;
 	private readonly string suspiciousParam =
 		"Cache key of type {0} equals its own type name. You should specify a value for this parameter in your ICacheKey implementation." + Environment.NewLine +
 		"However, even though it's not recommended, you can override this exception by calling AllowDifferentArgumentsShareSameCacheKey when configuring your cached component.";
 
-	public CachingComponent(ConfigurationForType configurationForType)
-	{
-		_cacheKey = configurationForType.CacheKey;
-		_componentType = configurationForType.ComponentType;
-		_cache = configurationForType.Cache;
-		UniqueId = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
-		_allowDifferentArgumentsShareSameCacheKey = configurationForType.AllowDifferentArgumentsShareSameCacheKey;
-	}
+	public string UniqueId { get; } = configurationForType.CachePerInstance ? Guid.NewGuid().ToString() : "Global";
 
-	public string UniqueId { get; }
-		
 	public void Invalidate()
 	{
 		var cacheKey = _cacheKey.RemoveKey(_componentType, this);
@@ -56,8 +47,6 @@ public class CachingComponent : ICachingComponent
 		if (_allowDifferentArgumentsShareSameCacheKey || parameter == null) 
 			return;
 		if (parameterKey.Equals(parameter.GetType().ToString()))
-		{
 			throw new ArgumentException(string.Format(suspiciousParam, parameterKey), parameterKey);
-		}
 	}
 }

@@ -31,7 +31,7 @@ public class InMemoryCache(TimeSpan timeout) : ICache
 
 		//this may result in two different locks for same key if old entry was removed at this time.
 		//let's see if it's a real problem...
-		var locker = lockObjects.GetOrAdd(keyAndItsDependingKeys.Key, key => new object());
+		var locker = lockObjects.GetOrAdd(keyAndItsDependingKeys.Key, _ => new object());
 		Func<object> actionOutsideLock;
 		lock (locker)
 		{

@@ -26,7 +26,7 @@ public class ProxyFactory : IProxyFactory
 		return func(proxyInterceptor);
 	}
 
-	private TypeInfo createProxyType(Type componentType)
+	private static TypeInfo createProxyType(Type componentType)
 	{
 		var typeName = $"{componentType.Name}MbCacheProxy";
 		var assemblyName = $"{typeName}Assembly";
@@ -77,7 +77,7 @@ public class ProxyFactory : IProxyFactory
 		IL.Emit(OpCodes.Ret);
 	}
 		
-	private void implementCachingComponent(TypeBuilder typeBuilder, FieldBuilder proxyInterceptorField)
+	private static void implementCachingComponent(TypeBuilder typeBuilder, FieldBuilder proxyInterceptorField)
 	{
 		foreach (var methodInfo in typeof(ICachingComponent).GetMethods())
 		{
@@ -98,7 +98,7 @@ public class ProxyFactory : IProxyFactory
 		}
 	}
 		
-	private void overrideComponentMethods(TypeBuilder typeBuilder, Type targetType, FieldBuilder proxyInterceptorField)
+	private static void overrideComponentMethods(TypeBuilder typeBuilder, Type targetType, FieldBuilder proxyInterceptorField)
 	{
 		var getGenericMethodFromHandle = typeof(MethodBase).GetMethod("GetMethodFromHandle", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RuntimeMethodHandle), typeof(RuntimeTypeHandle) }, null);
 		var getMethodFromHandle = typeof(MethodBase).GetMethod("GetMethodFromHandle", new[] { typeof(RuntimeMethodHandle) });

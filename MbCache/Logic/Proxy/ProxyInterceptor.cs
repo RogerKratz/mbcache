@@ -46,7 +46,7 @@ public sealed class ProxyInterceptor(
 		}
 		catch (TargetInvocationException ex)
 		{
-			exceptionInternalPreserveStackTrace.Invoke(ex.InnerException, new object[] { });
+			exceptionInternalPreserveStackTrace.Invoke(ex.InnerException, []);
 			throw ex.InnerException;
 		}
 	}

@@ -1,4 +1,5 @@
 using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -6,19 +7,16 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class CachingObjectWithParameterCtorClassTest : TestCase
+public class CachingObjectWithParameterCtorClassTest
 {
 	private IMbCacheFactory factory;
 
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
 			.For<ObjectWithCtorParametersNoInterface>()
 			.CacheMethod(c => c.CachedMethod())
-			.AsImplemented();
-
-		factory = CacheBuilder.BuildFactory();
-	}
+			.AsImplemented().BuildFactory();
 
 	[Test]
 	public void CanReadProps()

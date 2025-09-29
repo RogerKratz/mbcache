@@ -1,4 +1,5 @@
 ﻿using System;
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -6,20 +7,16 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class ProxyExceptionTest : TestCase
+public class ProxyExceptionTest
 {
 	private IMbCacheFactory factory;
-
-
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
 			.For<ObjectThrowingError>()
 			.CacheMethod(c => c.ThrowsArgumentOutOfRangeException())
-			.AsImplemented();
-
-		factory = CacheBuilder.BuildFactory();
-	}
+			.AsImplemented().BuildFactory();
 
 	[Test]
 	public void ShouldThrowOriginalException()

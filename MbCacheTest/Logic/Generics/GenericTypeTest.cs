@@ -1,21 +1,22 @@
-﻿using MbCache.Core;
+﻿using MbCache.Configuration;
+using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Generics;
 
-public class GenericTypeTest : TestCase
+public class GenericTypeTest
 {
 	private IMbCacheFactory factory;
 	
-	protected override void TestSetup()
-	{
-		factory = CacheBuilder.For<ObjectOfGenericType<string>>()
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
+			.For<ObjectOfGenericType<string>>()
 			.CacheMethod(m => m.CachedMethod(1, "1"))
 			.As<IObjectOfGenericType<string>>()
 			.BuildFactory();
-	}
 
 	[Test]
 	public void ShouldCache()

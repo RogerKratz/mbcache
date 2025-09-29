@@ -1,23 +1,23 @@
-﻿using MbCache.Core;
+﻿using MbCache.Configuration;
+using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
 using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Wrap;
 
-public class InterfaceComponentTest : TestCase
+public class InterfaceComponentTest
 {
 	private IMbCacheFactory factory;
 
-	protected override void TestSetup()
-	{
-		CacheBuilder.For<ReturningRandomNumbers>()
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
+			.For<ReturningRandomNumbers>()
 			.CacheMethod(c => c.CachedNumber())
 			.CacheMethod(c => c.CachedNumber2())
-			.As<IReturningRandomNumbers>();
-
-		factory = CacheBuilder.BuildFactory();
-	}
+			.As<IReturningRandomNumbers>()
+			.BuildFactory();
 
 	[Test]
 	public void ShouldWrapUncachingComponent()

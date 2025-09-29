@@ -1,3 +1,4 @@
+using MbCache.Configuration;
 using MbCache.Core;
 using MbCacheTest.TestData;
 using NUnit.Framework;
@@ -5,20 +6,18 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic;
 
-public class KnownInstanceTest : TestCase
+public class KnownInstanceTest
 {
 	private IMbCacheFactory factory;
 	
-	protected override void TestSetup()
-	{
-		CacheBuilder
+	[SetUp]
+	public void Setup() =>
+		factory = new CacheBuilder()
 			.For<ObjectReturningNewGuids>()
 			.CacheMethod(c => c.CachedMethod())
 			.CacheMethod(c => c.CachedMethod2())
-			.As<IObjectReturningNewGuids>();
-
-		factory = CacheBuilder.BuildFactory();
-	}
+			.As<IObjectReturningNewGuids>()
+			.BuildFactory();
 
 	[Test]
 	public void CanAskFactoryIfComponentIsKnownType()

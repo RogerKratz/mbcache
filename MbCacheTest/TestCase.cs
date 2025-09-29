@@ -1,7 +1,6 @@
 ﻿using System;
 using MbCache.Configuration;
 using MbCache.Logic.Proxy;
-using MbCacheTest.Caches;
 using NUnit.Framework;
 
 namespace MbCacheTest;
@@ -11,7 +10,6 @@ public abstract class TestCase
 	[SetUp]
 	public void Setup()
 	{
-		Tools.ClearMemoryCache();
 		CacheBuilder = new CacheBuilder()
 			.SetProxyFactory(new ProxyFactory())
 			.SetCache(CreateCache())

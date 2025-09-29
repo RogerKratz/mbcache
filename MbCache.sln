@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3376973C
 	ProjectSection(SolutionItems) = preProject
 		Build\default.msbuild = Build\default.msbuild
 		Build\createRelease.bat = Build\createRelease.bat
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
 Global

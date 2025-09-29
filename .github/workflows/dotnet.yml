@@ -12,18 +12,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET 5.0.x
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Setup .NET Core 2.0
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.0.x
-    - name: Restore dependencies
-      run: dotnet restore mbcache.sln
-    - name: Build
-      run: dotnet build --no-restore mbcache.sln
-    - name: Test
-      run: dotnet test --no-build --verbosity normal mbcache.sln
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore mbcache.sln --configuration Release "-p:Version=5.0.${{ github.run_number }}" "-p:PackageVersion=5.0.${{ github.run_number }}"
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --configuration Release mbcache.sln
+      - name: Push to nuget.org
+        run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

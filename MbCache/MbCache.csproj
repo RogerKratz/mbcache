@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <PackageId>MbCache</PackageId>
-    <Authors>Roger Kratz</Authors>
-    <Description>Cache method results</Description>
-    <PackageProjectUrl>https://github.com/RogerKratz/mbcache</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop</PackageTags>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyOriginatorKeyFile>mbcacheKey.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <LangVersion>default</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+      
+        <PackageId>MbCache</PackageId>
+        <Authors>Roger Kratz</Authors>
+        <Description>Cache method results</Description>
+        <PackageProjectUrl>https://github.com/RogerKratz/mbcache</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>cache, c#, centralized, configure, .net, mbcache, memoization, memoize, aop</PackageTags>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
+        <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    </ItemGroup>
 </Project>

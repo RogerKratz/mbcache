@@ -6,23 +6,20 @@ using SharpTestsEx;
 
 namespace MbCacheTest.Logic.Scope;
 
-public class InvalidateAllScopesTest : TestCase
+public class InvalidateAllScopesTest
 {
 	private IMbCacheFactory factory;
 
-	protected override void TestSetup()
+	[SetUp]
+	public void Setup()
 	{
-		CacheBuilder.For<ObjectWithMultipleParameters>()
+		factory = new CacheBuilder()
+			.SetCacheKey(new CacheKeyWithScope())
+			.For<ObjectWithMultipleParameters>()
 			.CacheMethod(c => c.Calculate(0, "", 0))
 			.PerInstance()
-			.AsImplemented();
-
-		factory = CacheBuilder.BuildFactory();
-	}
-
-	protected override ICacheKey CreateCacheKey()
-	{
-		return new CacheKeyWithScope();
+			.AsImplemented()
+			.BuildFactory();
 	}
 
 	[Test]

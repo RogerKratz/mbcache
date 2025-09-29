@@ -22,6 +22,6 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release "-p:Version=5.0.${{ github.run_number }}" "-p:PackageVersion=5.0.${{ github.run_number }}"
       - name: Test
-        run: dotnet test --no-build --configuration Release MbCacheTest/MbCacheTest.csproj
+        run: dotnet test --no-build
       - name: Push to nuget.org
         run: dotnet nuget push "**/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
